@@ -30,12 +30,16 @@
 	}
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>.sp-helpful-text {
-  padding-right: 8px;
-}
-
-.sp-helpful-percent, .sp-helpful-response {
-  padding-left: 8px;
+        <css>.sp-helpful-text {&#13;
+  padding-right: 8px;&#13;
+}&#13;
+&#13;
+.sp-helpful-percent, .sp-helpful-response {&#13;
+  padding-left: 8px;&#13;
+}&#13;
+&#13;
+div.myMargin {&#13;
+  margin-bottom:15px;&#13;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -60,13 +64,9 @@
 			gs.getProperty("glide.knowman.show_rating_options", "true") == "true" &&
 			gs.hasRole(gs.getProperty("glide.knowman.show_rating_options.roles"))) {
 				data.sys_id = $sp.getParameter('sys_id');
-				gs.info('b4: '+data.sys_id);
 				data.percent = myGlobal.u_GetKbArtPercentHelpful(data.sys_id);
-				gs.info('a4: '+data.sys_id);
 				data.title = options.title || gs.getMessage("Helpful?");
-				gs.info('a42: '+data.sys_id);
 				data.isValidArticle = isValidArticle(data.sys_id);
-				gs.info('a43: '+data.sys_id);
 				data.submittingMsg = gs.getMessage("Submitting");
 		}
 
@@ -116,15 +116,15 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-11-30 16:33:26</sys_created_on>
         <sys_id>3106ea5a4fce2300f006121f9310c784</sys_id>
-        <sys_mod_count>8</sys_mod_count>
+        <sys_mod_count>10</sys_mod_count>
         <sys_name>UTASSP KB Article Helpful Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_3106ea5a4fce2300f006121f9310c784</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-03 19:17:42</sys_updated_on>
-        <template><![CDATA[<div ng-if="data.isValidArticle && !c.hide">
+        <sys_updated_on>2018-12-05 23:25:39</sys_updated_on>
+        <template><![CDATA[<div ng-if="data.isValidArticle && !c.hide" class='myMargin'>
   <span ng-if="!c.submitted" class="sp-helpful-text">{{::data.title}}</span>
   <button type="button" ng-if="!c.submitted" name="useful_yes" class="btn btn-success btn-question" ng-click="c.action('useful_yes')">${Yes}</button>
   <button type="button" ng-if="!c.submitted" name="useful_no" class="btn btn-default btn-question" ng-click="c.action('useful_no')">${No}</button>
