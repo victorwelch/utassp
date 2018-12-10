@@ -7,52 +7,63 @@
 	/* widget controller */
 	var c = this;
 	var paramList = $location.search();
+	var isHomePage = !u_cutassp.utilIsValueValid(paramList.id);
 	var isHeaderMenu = u_cutassp.utilIsValueValid(paramList.ishdrmenu);
 	var isRootScopeBc = u_cutassp.utilIsValueValid($rootScope.bc);
 	var iLen=0;
 	var bcitem = {label: $scope.page.title, url: window.location.search, level: 1};
-	if (isRootScopeBc && !isHeaderMenu) {
-		var isSamePage = false;
-		var idx = $rootScope.bc.length - 1;
-		if (idx>-1)
-		{
-			if ($rootScope.bc[idx].label == bcitem.label)
-			{
-				isSamePage=true;
-			}
-		}
-		if (isSamePage) 
-		{
-			c.data.breadcrumbs = $rootScope.bc;	
-			c.data.breadcrumbs[idx].url = bcitem.url;
-		} 
-		else if (u_cutassp.utilIsValueValid(paramList.level))
-		{
-			iLen = parseInt(paramList.level);
-			c.data.breadcrumbs = $rootScope.bc.slice(0,iLen);
-		}
-		else
-		{
-			c.data.breadcrumbs = $rootScope.bc;	
-			bcitem.level = c.data.breadcrumbs.length+1;
-			c.data.breadcrumbs.push(bcitem);			
-		}
+	if (isHomePage)
+	{
+		//We are at the home page, so reset root breadcrumb stack
+		$rootScope.bc = [];
 	}
 	else
 	{
-		c.data.breadcrumbs = [ bcitem ];
+		//We are not at the home page, so process the breadrumb stack
+		if (isRootScopeBc && !isHeaderMenu) {
+			var isSamePage = false;
+			var idx = $rootScope.bc.length - 1;
+			if (idx>-1)
+			{
+				if ($rootScope.bc[idx].label == bcitem.label)
+				{
+					isSamePage=true;
+				}
+			}
+			if (isSamePage) 
+			{
+				c.data.breadcrumbs = $rootScope.bc;	
+				c.data.breadcrumbs[idx].url = bcitem.url;
+			} 
+			else if (u_cutassp.utilIsValueValid(paramList.level))
+			{
+				iLen = parseInt(paramList.level);
+				c.data.breadcrumbs = $rootScope.bc.slice(0,iLen);
+			}
+			else
+			{
+				c.data.breadcrumbs = $rootScope.bc;	
+				bcitem.level = c.data.breadcrumbs.length+1;
+				c.data.breadcrumbs.push(bcitem);			
+			}
+		}
+		else
+		{
+			c.data.breadcrumbs = [ bcitem ];
+		}
+
+		// *************************************************************************
+		// *** Make sure we fire 'sp.update.breadcrumbs' event
+		c.server.update().then(function(){
+			console.log($scope.data.infotag+'2: '+(new Date()).getTime());
+			$scope.data.breadcrumbs = c.data.breadcrumbs;
+			$timeout(function() {
+				$rootScope.$broadcast("sp.update.breadcrumbs", $scope.data.breadcrumbs);
+			});	
+		});		
+		//		
 	}
-	
-	// *************************************************************************
-	// *** Make sure we fire 'sp.update.breadcrumbs' event
-	c.server.update().then(function(){
-		console.log($scope.data.infotag+'2: '+(new Date()).getTime());
-		$scope.data.breadcrumbs = c.data.breadcrumbs;
-		$timeout(function() {
-			$rootScope.$broadcast("sp.update.breadcrumbs", $scope.data.breadcrumbs);
-		});	
-	});		
-	//				
+				
 }]]></client_script>
         <controller_as>c</controller_as>
         <css/>
@@ -135,15 +146,15 @@
         <sys_created_on>2018-12-04 15:39:43</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3d108fa34f022300f006121f9310c7df</sys_id>
-        <sys_mod_count>17</sys_mod_count>
+        <sys_mod_count>20</sys_mod_count>
         <sys_name>UTASSP Bread Data Std Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_3d108fa34f022300f006121f9310c7df</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-08 00:18:43</sys_updated_on>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2018-12-10 21:28:13</sys_updated_on>
         <template><![CDATA[<!-- dummy widget template
 <div>
 </div>

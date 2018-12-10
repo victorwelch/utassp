@@ -24,9 +24,20 @@
 }
 ]]></client_script>
         <controller_as>c</controller_as>
-        <css>i {&#13;
-margin-top: 10px;&#13;
-}</css>
+        <css>i {
+margin-top: 10px;
+}
+@media  (max-width: 800px) {
+	.myBcFontSize {
+  	font-size:10px;
+	}
+}
+@media  (min-width: 800.1px) {
+	.myBcFontSize {
+  	font-size:11px;
+	}
+}
+</css>
         <data_table>sp_instance_link</data_table>
         <demo_data/>
         <description/>
@@ -53,16 +64,16 @@ margin-top: 10px;&#13;
         <sys_created_on>2018-11-07 20:30:17</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>76af300b4fa12300f006121f9310c79a</sys_id>
-        <sys_mod_count>80</sys_mod_count>
+        <sys_mod_count>82</sys_mod_count>
         <sys_name>UTASSP Breadcrumbs Std Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_76af300b4fa12300f006121f9310c79a</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-08 00:21:18</sys_updated_on>
-        <template><![CDATA[<ul class="nav nav-pills nav-sm" aria-label="${Navigation breadcrumbs}">
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2018-12-10 22:29:44</sys_updated_on>
+        <template><![CDATA[<ul class="nav nav-pills nav-sm myBcFontSize" aria-label="${Navigation breadcrumbs}">
   <li><a ng-href="?id={{portal.homepage_dv}}">${Home}</a></li>
   <li aria-hidden="true"><i class="fa fa-chevron-right"></i></li>
   <li ng-if="!c.breadcrumbs"><a href>{{c.myLabel(page.title)}}</a></li>

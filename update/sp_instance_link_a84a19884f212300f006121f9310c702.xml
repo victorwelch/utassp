@@ -34,6 +34,7 @@
         <sys_updated_on>2018-10-29 14:45:45</sys_updated_on>
         <title>Request Something</title>
         <type>page</type>
+        <u_image/>
         <url/>
         <widget_parameters><![CDATA[{
 	"link_template": {
