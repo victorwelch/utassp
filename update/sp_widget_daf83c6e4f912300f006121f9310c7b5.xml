@@ -2,6 +2,8 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[function ($scope, $http, spUtil, nowAttachmentHandler, $rootScope, $sanitize, $window, $sce, i18n, $timeout, $log, spAriaUtil) {
+	console.log($scope.data.infotag+(new Date()).getTime());
+	//
 	var c = this;
 	c.quantity = 1;
 	if ($scope.data.sc_cat_item)
@@ -244,7 +246,7 @@
         <docs/>
         <field_list>color</field_list>
         <has_preview>false</has_preview>
-        <id>utassp01_catalog item_widget</id>
+        <id>utassp01_catalog_item_widget</id>
         <internal>false</internal>
         <link><![CDATA[function(scope, elem){
     scope.setFocusToAttachment = function () {
@@ -259,8 +261,13 @@
         <option_schema>[{"name":"show_add_cart_button","label":"Show Add Cart Button","type":"boolean"},{"hint":"Define a URL Format for successful order page","name":"url","label":"Custom URL Format","type":"string"},{"displayValue":"Page","name":"page","label":"Successful Order Page","type":"reference","value":"sp_page","ed":{"reference":"sp_page"}},{"displayValue":"Table","name":"table","label":"Successful Order Table","type":"reference","value":"sys_db_object","ed":{"reference":"sys_db_object"}},{"hint":"Enable auto-redirection after ordering an item","name":"auto_redirect","label":"Auto Redirect on Successful Order","type":"boolean"}]</option_schema>
         <public>false</public>
         <roles>snc_external,snc_internal</roles>
-        <script><![CDATA[// populate the 'data' variable with catalog item, variables, and variable view
-(function() {
+        <script><![CDATA[(function($sp, input, data, options, gs){
+// populate the 'data' variable with catalog item, variables, and variable view
+	data.widgettitle =  $sp.getDisplayValue("title");
+	data.widgetpage = $sp.getParameter('id') || 'utassp01_index';
+	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+	gs.info(data.infotag +(new Date()).getTime());
+	//
 	// portal can specify a catalog and catalog category home page
 	data.sc_catalog_page = $sp.getDisplayValue("sc_catalog_page") || "sc_home";
 	data.sc_category_page = $sp.getDisplayValue("sc_category_page") || "sc_category";
@@ -330,20 +337,20 @@
 	data._attachmentTable = athTblName;
 
 	$sp.logStat('Catalog View', data.sc_cat_item.sys_class_name, data.sys_id, data.sc_cat_item.name);
-})()]]></script>
+})($sp, input, data, options, gs);]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-24 20:28:22</sys_created_on>
         <sys_id>daf83c6e4f912300f006121f9310c7b5</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>UTASSP Catalog Item Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_daf83c6e4f912300f006121f9310c7b5</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-10-24 20:29:05</sys_updated_on>
+        <sys_updated_on>2018-12-07 22:56:59</sys_updated_on>
         <template><![CDATA[<div id="sc_cat_item" >
   <div class="row" ng-if="::data.sc_cat_item" >
     <div ng-if="::data.sc_cat_item.picture" class="col-sm-3">

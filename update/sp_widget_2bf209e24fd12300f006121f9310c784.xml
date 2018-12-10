@@ -180,6 +180,7 @@ a.color_box .image-container {&#13;
         <script><![CDATA[(function(){
 	var gr = $sp.getInstanceRecord();
 	data.href = $sp.getMenuHREF(gr);
+	data.imagesrc = gr.getElement('u_image').getRefRecord().getValue('name');
 	data.target = options.target || "";
 })();]]></script>
         <servicenow>false</servicenow>
@@ -187,19 +188,19 @@ a.color_box .image-container {&#13;
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-24 21:12:08</sys_created_on>
         <sys_id>2bf209e24fd12300f006121f9310c784</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>9</sys_mod_count>
         <sys_name>UTASSP NewRocket  Image Link Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_2bf209e24fd12300f006121f9310c784</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-11-20 17:47:07</sys_updated_on>
+        <sys_updated_on>2018-12-06 20:17:01</sys_updated_on>
         <template><![CDATA[<div class="iconlink">
   <!--// Top Icon -->
   <a ng-if="::(options.link_template == 'Top Icon' || !options.link_template)" ng-href="{{::data.href}}" class="top_icon {{::options.class_name}} icon-link-background-{{::options.color}}" target="{{::data.target}}">
     <div class="image-container" ng-if="options.u_image">
-      <img class="media-object" src="{{::options.u_image}}" width="60" height="52" alt="${{{options.title}}}">
+      <img class="media-object" src="{{::data.imagesrc}}" width="60" height="52" alt="${{{options.title}}}">
     </div>
     <h3>{{::options.title}}</h3>
     <span>{{::options.short_description}}</span>
@@ -208,7 +209,7 @@ a.color_box .image-container {&#13;
   <!--// Circle Icon -->
   <a ng-if="::(options.link_template == 'Circle Icon')" ng-href="{{::data.href}}" class="circle_icon {{::options.class_name}} text-{{::options.color}}" target="{{::data.target}}">
     <span class="image-container" ng-if="options.u_image">
-      <img class="media-object" src="{{::options.u_image}}" width="55" height="55" alt="${{{options.title}}}">
+      <img class="media-object" src="{{::data.imagesrc}}" width="55" height="55" alt="${{{options.title}}}">
     </span>
     <h3>{{::options.title}}</h3>
     <span class="text-muted">{{::options.short_description}}</span>
@@ -217,7 +218,7 @@ a.color_box .image-container {&#13;
   <!--// Color Box -->
   <a ng-if="::(options.link_template == 'Color Box')" ng-href="{{::data.href}}" class="color_box {{::options.class_name}} icon-link-background-{{::options.color}}" target="{{::data.target}}">
     <div class="image-container" ng-if="options.u_image">
-      <img class="media-object" src="{{::options.u_image}}" width="60" height="52" alt="${{{options.title}}}">
+      <img class="media-object" src="{{::data.imagesrc}}" width="60" height="52" alt="${{{options.title}}}">
     </div>
     <h3>{{::options.title}}</h3>
     <span>{{::options.short_description}}</span>

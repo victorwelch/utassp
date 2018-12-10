@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>other</category>
-        <client_script><![CDATA[function() {  /* widget controller */  var c = this;}]]></client_script>
+        <client_script><![CDATA[function($scope) { 
+	console.log($scope.data.infotag+(new Date()).getTime());
+	//
+	/* widget controller */  
+	var c = this;
+}]]></client_script>
         <controller_as>c</controller_as>
         <css>.bs-callout {
   margin: 10px 0 !important;
@@ -48,6 +53,11 @@
         <public>false</public>
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
+	data.widgettitle =  $sp.getDisplayValue("title");
+	data.widgetpage = $sp.getParameter('id') || 'utassp01_index';
+	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+	gs.info(data.infotag +(new Date()).getTime());
+	//
 // ***
 // ***  Note: Within our instance of ServiceNow, we are using Cmdb_Ci Items for outage tracking;
 // ***        and these do not map directly to Cmdbi_Ci_Service Services.  
@@ -104,14 +114,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-11-14 20:28:19</sys_created_on>
         <sys_id>665201d54ff12300f006121f9310c7b0</sys_id>
-        <sys_mod_count>10</sys_mod_count>
+        <sys_mod_count>15</sys_mod_count>
         <sys_name>UTASSP Planned Maintenance Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_665201d54ff12300f006121f9310c7b0</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-11-15 19:01:25</sys_updated_on>
+        <sys_updated_on>2018-12-07 23:01:17</sys_updated_on>
         <template><![CDATA[<div ng-if="!data.service || data.outages.length > 0" class="panel panel-{{options.color}} b">
   <div class="panel-heading">
     <h2 class="panel-title">${Planned Maintenance}<span ng-if="data.serviceDisplay"> - {{data.serviceDisplay}}</span></h2>

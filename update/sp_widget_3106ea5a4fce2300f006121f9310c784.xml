@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>kb</category>
-        <client_script><![CDATA[function ($timeout) {
+        <client_script><![CDATA[function ($scope,$timeout) {
+	console.log($scope.data.infotag+(new Date()).getTime());
+	//
 	var c = this;	
 	c.hide = false;
 	c.submitted = false;
@@ -11,13 +13,13 @@
 		c.data.state = state;
 		c.data.response = c.data.submittingMsg;
 		c.server.update().then(c.hideIt);		
-	}	
+	};
 	
 	c.hideIt = function() {
 		$timeout(function() {
 			c.hide = true;
 		}, 2000);
-	}
+	};
 	
 	c.showPercentHelpful = function() {
 		if (c.submitted)
@@ -54,7 +56,12 @@ div.myMargin {&#13;
         <option_schema>[{"hint":"Hide percentage of people who found this article helpful","name":"hide_percent_helpful","section":"Presentation","label":"Hide percent helpful","type":"boolean"},{"hint":"Response to show once viewer has clicked Yes or No","name":"response","section":"Behavior","label":"Response","type":"string"}]</option_schema>
         <public>true</public>
         <roles/>
-        <script><![CDATA[(function ($sp, input, data, options, gs) {	
+        <script><![CDATA[(function ($sp, input, data, options, gs) {
+	data.widgettitle =  $sp.getDisplayValue("title");
+	data.widgetpage = $sp.getParameter('id') || 'utassp01_index';
+	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+	gs.info(data.infotag +(new Date()).getTime());
+	//
 	var myU = new u_utassp();
 	if (myU.utilIsValueValid(data))
 	{
@@ -116,14 +123,14 @@ div.myMargin {&#13;
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-11-30 16:33:26</sys_created_on>
         <sys_id>3106ea5a4fce2300f006121f9310c784</sys_id>
-        <sys_mod_count>10</sys_mod_count>
+        <sys_mod_count>15</sys_mod_count>
         <sys_name>UTASSP KB Article Helpful Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_3106ea5a4fce2300f006121f9310c784</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-05 23:25:39</sys_updated_on>
+        <sys_updated_on>2018-12-07 23:12:50</sys_updated_on>
         <template><![CDATA[<div ng-if="data.isValidArticle && !c.hide" class='myMargin'>
   <span ng-if="!c.submitted" class="sp-helpful-text">{{::data.title}}</span>
   <button type="button" ng-if="!c.submitted" name="useful_yes" class="btn btn-success btn-question" ng-click="c.action('useful_yes')">${Yes}</button>

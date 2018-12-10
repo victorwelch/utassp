@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[function($rootScope,$timeout) {  
+        <client_script><![CDATA[function($scope,$rootScope,$timeout) {  
+	console.log($scope.data.infotag+(new Date()).getTime());
+	//
 	/* widget controller */  
 	var c = this;
 	// *************************************************************************
@@ -136,6 +138,11 @@ a.kbLink &gt; div.kbCard &gt; span.kb-card-details &gt; span.kb-count { &#13;
         <public>false</public>
         <roles>admin</roles>
         <script><![CDATA[(function($sp, input, data, options, gs) {
+	data.widgettitle =  $sp.getDisplayValue("title");
+	data.widgetpage = $sp.getParameter('id') || 'utassp01_index';
+	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+	gs.info(data.infotag +(new Date()).getTime());
+	//
 	var gr = $sp.getInstanceRecord();
 	data.href = $sp.getMenuHREF(gr);
 	data.target = options.target || "";
@@ -168,14 +175,14 @@ a.kbLink &gt; div.kbCard &gt; span.kb-card-details &gt; span.kb-count { &#13;
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-11-07 20:14:04</sys_created_on>
         <sys_id>9dfbf4434fa12300f006121f9310c73c</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>9</sys_mod_count>
         <sys_name>UTASSP KB Link Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_9dfbf4434fa12300f006121f9310c73c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-11-13 18:40:38</sys_updated_on>
+        <sys_updated_on>2018-12-07 23:03:35</sys_updated_on>
         <template><![CDATA[<div ng-if='data.canRead==true' class='myPanel'>
   <a class="kbLink" ng-href="{{::data.href}}" target="{{::data.target}}">
     <div class="kbCard kbCard-border-left-{{::options.color}}">

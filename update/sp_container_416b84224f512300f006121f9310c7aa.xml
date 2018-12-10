@@ -14,16 +14,16 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-24 17:09:13</sys_created_on>
         <sys_id>416b84224f512300f006121f9310c7aa</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>UTASSP Service Portal - Container 1</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_container_416b84224f512300f006121f9310c7aa</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-10-25 18:00:18</sys_updated_on>
+        <sys_updated_on>2018-12-06 21:38:45</sys_updated_on>
         <title>How Can We Help?</title>
-        <width>container</width>
+        <width>container-fluid</width>
     </sp_container>
     <sys_attachment action="INSERT_OR_UPDATE">
         <average_image_color>#27599e</average_image_color>

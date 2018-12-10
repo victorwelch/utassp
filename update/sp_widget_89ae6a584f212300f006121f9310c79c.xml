@@ -2,6 +2,8 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>sp_platform</category>
         <client_script><![CDATA[function($rootScope, $scope, $timeout, $location, $log, $window, spUtil, nowAttachmentHandler, spAriaUtil, spNavStateManager) {
+	console.log($scope.data.infotag+(new Date()).getTime());
+	//
   $scope.submitting = false;
   $scope.mandatory = [];
   $scope.errorMessages = [];
@@ -385,6 +387,11 @@
         <roles>snc_external,snc_internal</roles>
         <script><![CDATA[// form functionality - URL parameter driven
 (function($sp, input, data, options, gs) {
+	data.widgettitle =  $sp.getDisplayValue("title");
+	data.widgetpage = $sp.getParameter('id') || 'utassp01_index';
+	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+	gs.info(data.infotag +(new Date()).getTime());
+	//
 	//*** use custom global for scoped app access to restricted global functionality *** vcw 10/30/2018
 	var myGlobal = new global.u_utaglobalapi();
 	var myU = new u_utassp();
@@ -501,14 +508,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-30 15:31:50</sys_created_on>
         <sys_id>89ae6a584f212300f006121f9310c79c</sys_id>
-        <sys_mod_count>28</sys_mod_count>
+        <sys_mod_count>33</sys_mod_count>
         <sys_name>UTASSP Form Widget 2</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_89ae6a584f212300f006121f9310c79c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-04 18:49:05</sys_updated_on>
+        <sys_updated_on>2018-12-07 23:13:04</sys_updated_on>
         <template><![CDATA[<div ng-if="::!data.isValid && !data.emptyStateTemplate" class="panel panel-default">
   <div class="panel-body wrapper-lg text-center">
     <span ng-if="!data.tableUnsupported">${Record not found}</span>

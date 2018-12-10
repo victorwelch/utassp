@@ -53,7 +53,7 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-11-26 19:28:11</sys_created_on>
-        <sys_id>3c9fa0484f522300f006121f9310c7eb</sys_id>
+        <sys_id>5f675d584f122300f006121f9310c75f</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Score</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
@@ -61,7 +61,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sys_dictionary_x_287765_utassp_service_portal_search_results_score</sys_update_name>
         <sys_updated_by>system</sys_updated_by>
-        <sys_updated_on>2018-12-05 18:25:19</sys_updated_on>
+        <sys_updated_on>2018-12-06 15:57:54</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

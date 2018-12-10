@@ -2,6 +2,8 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>standard</category>
         <client_script><![CDATA[function ($http, $filter, $location,spAriaUtil, $window, $scope, spAriaFocusManager) {
+	console.log($scope.data.infotag+(new Date()).getTime());
+	//
 	var c = this;
 
 	c.options.glyph = c.options.glyph || 'search';
@@ -203,7 +205,12 @@ color: black;&#13;
 ]</option_schema>
         <public>true</public>
         <roles/>
-        <script><![CDATA[(function() {
+        <script><![CDATA[(function() {	
+	data.widgettitle =  $sp.getDisplayValue("title") || '???';
+	data.widgetpage = $sp.getParameter('id') || 'utassp01_index';
+	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+	gs.info(data.infotag +(new Date()).getTime());
+	//
 	var myGlobal = new global.u_utaglobalapi();
 	if (options.title) {
 		options.title = gs.getMessage(options.title);
@@ -232,7 +239,6 @@ color: black;&#13;
 	data.typeaheadTemplates = {};
 	data.searchSourceConfiguration = {};
 	searchSources.forEach(function(source) {
-		gs.info('utassp type ahead -- source.id: '+source.id);
 		if (source.isTypeaheadEnabled) {
 			data.searchSources.push(source.id);
 		}
@@ -256,14 +262,14 @@ color: black;&#13;
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-11-16 18:29:17</sys_created_on>
         <sys_id>ce4ab23d4f7d2300f006121f9310c7ae</sys_id>
-        <sys_mod_count>20</sys_mod_count>
+        <sys_mod_count>29</sys_mod_count>
         <sys_name>UTASSP Typeahead Search Widget 2</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_ce4ab23d4f7d2300f006121f9310c7ae</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-05 22:37:18</sys_updated_on>
+        <sys_updated_on>2018-12-08 00:03:57</sys_updated_on>
         <template><![CDATA[<form ng-submit="c.submitSearch()">
   <input type="hidden" name="id" value="search"/>
   <input type="hidden" name="t" value="{{c.searchType}}"/>
