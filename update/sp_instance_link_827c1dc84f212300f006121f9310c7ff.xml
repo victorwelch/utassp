@@ -17,7 +17,7 @@
         <size>md</size>
         <sp_column display_value="4">62e8b9434f112300f006121f9310c74f</sp_column>
         <sp_page display_value="utassp01_kbs">e723642e4f512300f006121f9310c7da</sp_page>
-        <sp_widget display_value="UTASSP NewRocket  Image Link Widget">2bf209e24fd12300f006121f9310c784</sp_widget>
+        <sp_widget/>
         <sys_class_name>sp_instance_link</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-29 14:54:21</sys_created_on>
