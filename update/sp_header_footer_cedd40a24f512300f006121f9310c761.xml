@@ -39,611 +39,489 @@
 }
 		]]></client_script>
         <controller_as>c</controller_as>
-        <css>header {&#13;
-  background-color: #0064b1;&#13;
-}&#13;
-&#13;
-.nav &gt; li &gt; a {&#13;
-    padding: 20px 10px 20px 10px;&#13;
-}&#13;
-&#13;
-.navbar {&#13;
-  transition: 250ms opacity ease-in-out;&#13;
-  -webkit-transition: 250ms opacity ease-in-out;&#13;
-  border: 0;&#13;
-  border-bottom: 4px solid $sp-navbar-divider-color;&#13;
-}&#13;
-&#13;
-nav div.navbar-header &#13;
-.navbar-fade {&#13;
-  opacity: 0.4;&#13;
-}&#13;
-&#13;
-.navbar-inverse .navbar-toggle {&#13;
-  border-color: rgba(255, 255, 255, 0.25);&#13;
-}&#13;
-&#13;
-header[role="banner"],&#13;
-.nav &gt; li &gt; a {&#13;
-  max-height: 60px;&#13;
-}&#13;
-&#13;
-div#navbar.collapse.navbar-collapse,navbar-right { padding-left:0px; }&#13;
-div.navbar-collapse { padding-left: 0px; }&#13;
-&#13;
-/* @media screen and (max-width: 800px){ */&#13;
-@media screen and (max-width:890px){&#13;
-  div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 85px;&#13;
-    padding-right:15px;&#13;
-    padding-bottom:8px;&#13;
-    float:left;&#13;
-  	&amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	}    &#13;
-  }&#13;
-  .nav &gt; li &gt; a {&#13;
-    padding-right: 0.5rem;&#13;
-    padding-left: 0.5rem;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-      background-image: url(utassp_icon_logo.png);&#13;
-		  background-size: contain;&#13;
-      //background-size: 55px 48px;&#13;
-      width: 55px;&#13;
-      height: 48px;&#13;
-      margin: 8px auto auto 15px;&#13;
-  }  &#13;
-  li.header-menu-item {&#13;
-    font-size:10px;&#13;
-    &amp;:hover { &#13;
-      text-decoration:underline;&#13;
-      font-weight:bold;&#13;
-      background-color: #f58025;&#13;
-    }&#13;
-  } &#13;
-  li.myHeaderFont&#13;
-  {&#13;
-    font-size:10px;&#13;
-    &amp;:hover { &#13;
-      text-decoration:underline;&#13;
-      font-weight:bold;&#13;
-      background-color: #f58025;&#13;
-    }    &#13;
-  }&#13;
-}&#13;
-/* */&#13;
-@media screen and (max-width:767.9px){&#13;
-  li.header-menu-item {&#13;
-    font-size:12px;&#13;
-    &amp;:hover { &#13;
-      text-decoration:underline;&#13;
-      font-weight:bold;&#13;
-      background-color: #f58025;&#13;
-    }&#13;
-  }&#13;
-  li.myHeaderFont&#13;
-  {&#13;
-    font-size:12px;&#13;
-    &amp;:hover { &#13;
-      text-decoration:underline;&#13;
-      font-weight:bold;&#13;
-      background-color: #f58025;&#13;
-    }    &#13;
-  }  &#13;
-}&#13;
-&#13;
-.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {&#13;
-    background-color: transparent;&#13;
-}&#13;
-&#13;
-.navbar-toggle {&#13;
-  border: none;&#13;
-}&#13;
-&#13;
-.navbar-brand {&#13;
-  max-height: 60px;&#13;
-  padding: 0;&#13;
-  padding-bottom: 0.5rem;&#13;
-}&#13;
-&#13;
-.navbar-brand img, .navbar-brand span {&#13;
-  margin-left: $sp-logo-margin-x;&#13;
-  margin-right: $sp-logo-margin-x;&#13;
-  margin-top: $sp-logo-margin-y;&#13;
-  margin-bottom: $sp-logo-margin-y;&#13;
-  display: block;&#13;
-  max-height: $sp-logo-max-height;&#13;
-  max-width: $sp-logo-max-width;&#13;
-  position: relative;&#13;
-  top: 50%;&#13;
-  -webkit-transform: translateY(-50%);&#13;
-  -ms-transform: translateY(-50%);&#13;
-  transform: translateY(-50%);&#13;
-}&#13;
-.breadcrumb-container {&#13;
-  background-color: $panel-bg;&#13;
-}&#13;
-&#13;
-/* for mobile app */&#13;
-.navbar-inverse.is-native {&#13;
-  background-color: #405060;&#13;
-}&#13;
-&#13;
-nav{&#13;
- margin-bottom: 0px;&#13;
- border-radius: 0px;&#13;
-}&#13;
-&#13;
-.navbar-collapse{&#13;
-padding-right: 0px;&#13;
-}&#13;
-&#13;
-.navbar-nav {&#13;
-margin: 0px;&#13;
-}&#13;
-&#13;
-/* PRB923910: Fix for Service Portal - Header Poorly Aligned in Safari */&#13;
-/* @media screen and (min-width: 768px) { */&#13;
-@media screen and (min-width:768px) {&#13;
-  li.dropdown &#13;
-  {&#13;
-    display:flex;&#13;
-    flex-wrap:nowrap;&#13;
-  }&#13;
-  li.dropdown &gt; a.dropdown-toggle&#13;
-  {&#13;
-    display:flex;&#13;
-    flex-wrap:nowrap;&#13;
-  }  &#13;
-  li.myHeaderFont&#13;
-  {&#13;
-    font-size:10px;&#13;
-    &amp;:hover { &#13;
-      text-decoration:underline;&#13;
-      font-weight:bold;&#13;
-      background-color: #f58025;&#13;
-    }    &#13;
-  }&#13;
-}&#13;
-@media screen and (min-width:890.01px) {&#13;
-  div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 144px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 145px 15px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 21px auto auto auto ;&#13;
-    width: 144px;&#13;
-    height: 16px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-  li.header-menu-item {&#13;
-    font-size:10px;&#13;
-    &amp;:hover { &#13;
-      text-decoration:underline;&#13;
-      font-weight:bold;&#13;
-      background-color: #f58025;&#13;
-    }&#13;
-  }&#13;
-  li.myHeaderFont&#13;
-  {&#13;
-    font-size:10px;&#13;
-    &amp;:hover { &#13;
-      text-decoration:underline;&#13;
-      font-weight:bold;&#13;
-      background-color: #f58025;&#13;
-    }    &#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:900.01px) {&#13;
-  div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 150px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 150px 15px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 21px auto auto auto ;&#13;
-    width: 150px;&#13;
-    height: 16px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-  li.header-menu-item {&#13;
-    font-size:10px;&#13;
-    &amp;:hover { &#13;
-      text-decoration:underline;&#13;
-      font-weight:bold;&#13;
-      background-color: #f58025;&#13;
-    }&#13;
-  } &#13;
-  li.myHeaderFont&#13;
-  {&#13;
-    font-size:10px;&#13;
-    &amp;:hover { &#13;
-      text-decoration:underline;&#13;
-      font-weight:bold;&#13;
-      background-color: #f58025;&#13;
-    }    &#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:921.01px) {&#13;
-  div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 160px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 160px 15px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 21px auto auto auto ;&#13;
-    width: 160px;&#13;
-    height: 16px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-  li.header-menu-item {&#13;
-    font-size:12px;&#13;
-    &amp;:hover { &#13;
-      text-decoration:underline;&#13;
-      font-weight:bold;&#13;
-      background-color: #f58025;&#13;
-    }&#13;
-  } &#13;
-  li.myHeaderFont&#13;
-  {&#13;
-    font-size:12px;&#13;
-    &amp;:hover { &#13;
-      text-decoration:underline;&#13;
-      font-weight:bold;&#13;
-      background-color: #f58025;&#13;
-    }    &#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:950.01px) {&#13;
-  div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 170px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 170px 15px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 20px auto auto auto ;&#13;
-    width: 170px;&#13;
-    height: 16px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:992.01px) {&#13;
-  div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 180px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 180px 17px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 19px auto auto auto ;&#13;
-    width: 180px;&#13;
-    height: 17px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:995.01px) {&#13;
-  div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 190px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 190px 18px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 18px auto auto auto ;&#13;
-    width: 190px;&#13;
-    height: 18px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:1005.01px) {&#13;
-	div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 200px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 200px 19px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 17.5px auto auto auto ;&#13;
-    width: 200px;&#13;
-    height: 19px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:1015.01px) {&#13;
-	div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 210px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 210px 20px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 17.5px auto auto auto ;&#13;
-    width: 210px;&#13;
-    height: 20px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:1025.01px) {&#13;
-	div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 220px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 220px 21px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 16.5px auto auto auto ;&#13;
-    width: 220px;&#13;
-    height: 21px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:1035.01px) {&#13;
-	div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 230px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 220px 22px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 16px auto auto auto ;&#13;
-    width: 230px;&#13;
-    height: 22px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:1045.01px) {&#13;
-	div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 240px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 230px 23px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 15px auto auto auto ;&#13;
-    width: 240px;&#13;
-    height: 23px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:1055.01px) {&#13;
-	div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 250px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 240px 24px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 14px auto auto auto ;&#13;
-    width: 250px;&#13;
-    height: 24px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:1065.01px) {&#13;
-	div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 260px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 260px 25px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 13.5px auto auto auto ;&#13;
-    width: 260px;&#13;
-    height: 25px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:1075.01px) {&#13;
-	div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 270px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 270px 26px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 13px auto auto auto ;&#13;
-    width: 270px;&#13;
-    height: 26px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:1085.01px) {&#13;
-	div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 280px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 290px 27px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 12px auto auto auto ;&#13;
-    width: 280px;&#13;
-    height: 27px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:1095.01px) {&#13;
-	div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 290px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 290px 27px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 12px auto auto auto ;&#13;
-    width: 290px;&#13;
-    height: 28px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-@media screen and (min-width:1105.01px) {&#13;
-	div.myLinkContainer {&#13;
-    height: 60px;&#13;
-    width: 300px;&#13;
-    &amp;:hover { &#13;
-    	background-color: #f58025;&#13;
-  	} &#13;
-  }  &#13;
-  .navbar-collapse {&#13;
-    display: flex !important;&#13;
-  }&#13;
-  .navbar-brand-logo {&#13;
-    background-image: url(utassp_logo.png);&#13;
-    background-size: 300px 28px;&#13;
-    background-repeat: no-repeat;&#13;
-    margin: 12px auto auto auto ;&#13;
-    width: 300px;&#13;
-    height: 29px;&#13;
-    text-indent: -99999px;&#13;
-  }  &#13;
-}&#13;
-&#13;
-&#13;
-@media only screen and (max-width: 480px) {&#13;
-  .navbar-brand-logo {&#13;
-      background-image: url(utassp_icon_logo.png);&#13;
-		  background-size: contain;&#13;
-      //background-size: 55px 48px;&#13;
-      width: 55px;&#13;
-      height: 48px;&#13;
-      margin: 8px auto auto 15px;&#13;
-  }&#13;
-}&#13;
-&#13;
-span.myHiLite {&#13;
-    display: inline-block;&#13;
-    background: transparent;&#13;
-    padding: 0 5px;&#13;
-    min-width: 24px;&#13;
-    height: 14px;&#13;
-    line-height: 12px;&#13;
-    border-radius: 15px;&#13;
-    color: #fff;&#13;
-    border: 1px solid #fff;&#13;
-    //right: 0;&#13;
-    top: 50%;&#13;
-    margin-top: -8px;&#13;
-    margin-left: 10px;&#13;
-    text-align: left;&#13;
-}	</css>
+        <css>header {
+  background-color: #0064b1;
+}
+
+.nav &gt; li &gt; a {
+    padding: 20px 10px 20px 10px;
+}
+
+.navbar {
+  transition: 250ms opacity ease-in-out;
+  -webkit-transition: 250ms opacity ease-in-out;
+  border: 0;
+  border-bottom: 4px solid $sp-navbar-divider-color;
+}
+
+nav div.navbar-header 
+.navbar-fade {
+  opacity: 0.4;
+}
+
+.navbar-inverse .navbar-toggle {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+header[role="banner"],
+.nav &gt; li &gt; a {
+  max-height: 60px;
+}
+
+div#navbar.collapse.navbar-collapse,navbar-right { padding-left:0px; }
+div.navbar-collapse { padding-left: 0px; padding-right: 0px;}
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+    background-color: transparent;
+}
+
+.navbar-toggle {
+  border: none;
+}
+
+.navbar-brand {
+  max-height: 60px;
+  padding: 0;
+  padding-bottom: 0.5rem;
+}
+
+.navbar-brand img, .navbar-brand span {
+  margin-left: $sp-logo-margin-x;
+  margin-right: $sp-logo-margin-x;
+  margin-top: $sp-logo-margin-y;
+  margin-bottom: $sp-logo-margin-y;
+  display: block;
+  max-height: $sp-logo-max-height;
+  max-width: $sp-logo-max-width;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.breadcrumb-container {
+  background-color: $panel-bg;
+}
+
+/*** for mobile app ****/
+.navbar-inverse.is-native {
+  background-color: #405060;
+}
+
+nav {
+ margin-bottom: 0px;
+ border-radius: 0px;
+}
+
+.navbar-nav {
+margin: 0px;
+}
+/*** *************** ***/
+.navbar-nav &gt; li &gt; .dropdown-menu {
+ background:#0064b1;
+ border:1px solid #cccccc;
+}
+
+// *** std stuff I modified for our portal *** vcw //
+li.header-menu-item {
+  &amp;:hover { 
+    text-decoration:underline;
+    font-weight:bold;
+    background-color: #f58025;
+  }
+}
+
+.navbar-brand-logo {
+  background-image: url(utassp_logo.png);
+  background-repeat: no-repeat;
+  text-indent: -99999px;
+} 
+
+// *** *********************************** *** vcw //
+
+// *** "my" stuff *** vcw //
+div.myDivDisplayFlexToggle {
+  display:flex;
+}
+div.myDivFlexWrap {
+  flex-wrap:nowrap;
+}
+div.myLinkContainer {
+  	&amp;:hover { 
+    	background-color: #f58025;
+  	}    
+}
+li.myHeaderFont {
+    &amp;:hover { 
+      text-decoration:underline;
+      font-weight:bold;
+      background-color: #f58025;
+    }    
+}
+li.myHeaderFont &gt; a {
+    color:#ffffff;
+    &amp;:hover { 
+      text-decoration:underline;
+      font-weight:bold;
+      background-color: #f58025;
+    }    
+}
+span.myHiLite {
+    display: inline-block;
+    background: transparent;
+    padding: 0 5px;
+    min-width: 24px;
+    height: 14px;
+    line-height: 12px;
+    border-radius: 15px;
+    color: #fff;
+    border: 1px solid #fff;
+    //right: 0;
+    top: 50%;
+    margin-top: -8px;
+    margin-left: 10px;
+    text-align: left;
+}	
+// *** ********* *** vcw //
+
+@media screen and (max-width:890px){
+  div.myLinkContainer {
+    height: 60px;
+    width: 85px;
+    padding-right:15px;
+    padding-bottom:8px;
+    float:left;  
+  }
+  .nav &gt; li &gt; a {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+  .navbar-brand-logo {
+      background-image: url(utassp_icon_logo.png);
+		  background-size: contain;
+      //background-size: 55px 48px;
+      width: 55px;
+      height: 48px;
+      margin: 8px auto auto 15px;
+  }  
+  li.header-menu-item {
+    font-size:10px;
+  } 
+  li.myHeaderFont
+  {
+    font-size:10px;  
+  }
+}
+/* */
+@media screen and (max-width:767.9px){
+  li.header-menu-item {
+    font-size:12px;
+  }
+  li.myHeaderFont
+  {
+    font-size:12px;
+  }  
+	.nav &gt; li &gt; a {
+    padding:2px 10px 2px 10px;
+  }
+	div.myDivDisplayFlexToggle {
+  	display:inherit;
+	}
+  div.myDivFlexWrap {
+    flex-wrap:wrap;
+  }
+}
+
+/* PRB923910: Fix for Service Portal - Header Poorly Aligned in Safari */
+/* @media screen and (min-width: 768px) { */
+@media screen and (min-width:768px) { 
+  li.myHeaderFont
+  {
+    font-size:10px;
+  }
+}
+@media screen and (min-width:890.01px) {
+  div.myLinkContainer {
+    height: 60px;
+    width: 144px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 145px 15px;
+    //background-repeat: no-repeat;
+    margin: 21px auto auto auto ;
+    width: 144px;
+    height: 16px;
+   //text-indent: -99999px;
+  }  
+  li.header-menu-item {
+    font-size:10px;
+  }
+  li.myHeaderFont
+  {
+    font-size:10px;
+  }  
+}
+@media screen and (min-width:900.01px) {
+  div.myLinkContainer {
+    height: 60px;
+    width: 150px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 150px 15px;
+    //background-repeat: no-repeat;
+    margin: 21px auto auto auto ;
+    width: 150px;
+    height: 16px;
+    //text-indent: -99999px;
+  }  
+  li.header-menu-item {
+    font-size:10px;
+  } 
+  li.myHeaderFont
+  {
+    font-size:10px;
+  }  
+}
+@media screen and (min-width:921.01px) {
+  div.myLinkContainer {
+    height: 60px;
+    width: 160px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 160px 15px;
+    //background-repeat: no-repeat;
+    margin: 21px auto auto auto ;
+    width: 160px;
+    height: 16px;
+    //text-indent: -99999px;
+  }  
+  li.header-menu-item {
+    font-size:12px;
+  } 
+  li.myHeaderFont
+  {
+    font-size:12px;
+  }  
+}
+@media screen and (min-width:950.01px) {
+  div.myLinkContainer {
+    height: 60px;
+    width: 170px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 170px 15px;
+    //background-repeat: no-repeat;
+    margin: 20px auto auto auto ;
+    width: 170px;
+    height: 16px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:992.01px) {
+  div.myLinkContainer {
+    height: 60px;
+    width: 180px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 180px 17px;
+    //background-repeat: no-repeat;
+    margin: 19px auto auto auto ;
+    width: 180px;
+    height: 17px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:995.01px) {
+  div.myLinkContainer {
+    height: 60px;
+    width: 190px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 190px 18px;
+    //background-repeat: no-repeat;
+    margin: 18px auto auto auto ;
+    width: 190px;
+    height: 18px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:1005.01px) {
+	div.myLinkContainer {
+    height: 60px;
+    width: 200px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 200px 19px;
+    //background-repeat: no-repeat;
+    margin: 17.5px auto auto auto ;
+    width: 200px;
+    height: 19px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:1015.01px) {
+	div.myLinkContainer {
+    height: 60px;
+    width: 210px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 210px 20px;
+    //background-repeat: no-repeat;
+    margin: 17.5px auto auto auto ;
+    width: 210px;
+    height: 20px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:1025.01px) {
+	div.myLinkContainer {
+    height: 60px;
+    width: 220px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 220px 21px;
+    //background-repeat: no-repeat;
+    margin: 16.5px auto auto auto ;
+    width: 220px;
+    height: 21px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:1035.01px) {
+	div.myLinkContainer {
+    height: 60px;
+    width: 230px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 220px 22px;
+    //background-repeat: no-repeat;
+    margin: 16px auto auto auto ;
+    width: 230px;
+    height: 22px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:1045.01px) {
+	div.myLinkContainer {
+    height: 60px;
+    width: 240px;
+    &amp;:hover { 
+    	background-color: #f58025;
+  	} 
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 230px 23px;
+    //background-repeat: no-repeat;
+    margin: 15px auto auto auto ;
+    width: 240px;
+    height: 23px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:1055.01px) {
+	div.myLinkContainer {
+    height: 60px;
+    width: 250px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 240px 24px;
+    //background-repeat: no-repeat;
+    margin: 14px auto auto auto ;
+    width: 250px;
+    height: 24px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:1065.01px) {
+	div.myLinkContainer {
+    height: 60px;
+    width: 260px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 260px 25px;
+    //background-repeat: no-repeat;
+    margin: 13.5px auto auto auto ;
+    width: 260px;
+    height: 25px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:1075.01px) {
+	div.myLinkContainer {
+    height: 60px;
+    width: 270px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 270px 26px;
+    //background-repeat: no-repeat;
+    margin: 13px auto auto auto ;
+    width: 270px;
+    height: 26px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:1085.01px) {
+	div.myLinkContainer {
+    height: 60px;
+    width: 280px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 290px 27px;
+    //background-repeat: no-repeat;
+    margin: 12px auto auto auto ;
+    width: 280px;
+    height: 27px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:1095.01px) {
+	div.myLinkContainer {
+    height: 60px;
+    width: 290px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 290px 27px;
+    //background-repeat: no-repeat;
+    margin: 12px auto auto auto ;
+    width: 290px;
+    height: 28px;
+    //text-indent: -99999px;
+  }  
+}
+@media screen and (min-width:1105.01px) {
+	div.myLinkContainer {
+    height: 60px;
+    width: 300px;
+  }  
+  .navbar-brand-logo {
+    //background-image: url(utassp_logo.png);
+    background-size: 300px 28px;
+    //background-repeat: no-repeat;
+    margin: 12px auto auto auto ;
+    width: 300px;
+    height: 29px;
+    //text-indent: -99999px;
+  }  
+}
+
+
+</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
@@ -760,7 +638,7 @@ span.myHiLite {&#13;
         <sys_created_on>2018-10-24 17:19:56</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>cedd40a24f512300f006121f9310c761</sys_id>
-        <sys_mod_count>133</sys_mod_count>
+        <sys_mod_count>162</sys_mod_count>
         <sys_name>UTASSP Header Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -768,7 +646,7 @@ span.myHiLite {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_header_footer_cedd40a24f512300f006121f9310c761</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2018-12-13 15:38:13</sys_updated_on>
+        <sys_updated_on>2018-12-13 17:41:55</sys_updated_on>
         <template><![CDATA[<header>
 <div class=container>
   <nav class="navbar-inverse" ng-class="::{'navbar':!isViewNative, 'is-native': isViewNative}"
@@ -787,11 +665,11 @@ span.myHiLite {&#13;
 
     <div sp-navbar-toggle="" class="collapse navbar-collapse navbar-right" id="sp-nav-bar">
       <!-- Include The Menu -->
-      <div style="display:flex; flex-wrap:nowrap;">
-        <div style="display:flex;">
+      <div class="myDivDisplayFlexToggle myDivFlexWrap">
+        <div class="myDivDisplayFlexToggle">
 	      <sp-widget widget="data.menu"></sp-widget>
         </div>
-        <div style="display:flex;">
+        <div class="myDivDisplayFlexToggle">
           <ul ng-if="::(!user.logged_in && page.id != portal.login_page_dv && !data.hasLogin)" class="nav navbar-nav">
             <li><a href ng-click="openLogin()">${Login}</a></li>
           </ul>
