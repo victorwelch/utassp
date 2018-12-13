@@ -143,8 +143,6 @@
   }&#13;
 }&#13;
 &#13;
-&#13;
-&#13;
 .item-added-tooltip {&#13;
   width: 184px;&#13;
   font-size: 14px;&#13;
@@ -222,7 +220,7 @@
         <sys_created_on>2018-10-24 19:01:20</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>eb0560624f912300f006121f9310c7a5</sys_id>
-        <sys_mod_count>34</sys_mod_count>
+        <sys_mod_count>35</sys_mod_count>
         <sys_name>UTASSP Header Menu Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -230,7 +228,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_eb0560624f912300f006121f9310c7a5</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2018-12-12 19:39:38</sys_updated_on>
+        <sys_updated_on>2018-12-13 15:40:31</sys_updated_on>
         <template><![CDATA[<ul class="nav navbar-nav" aria-label="${Header menu}">
   <div class="header-loader" ng-show="loadingIndicator">
     <div class="hidden-xs sp-loading-indicator la-sm">
