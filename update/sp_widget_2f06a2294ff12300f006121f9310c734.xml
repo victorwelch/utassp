@@ -40,8 +40,9 @@
         <public>false</public>
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();
 	data.widgettitle =  $sp.getDisplayValue("title");
-	data.widgetpage = $sp.getParameter('id') || 'utassp01_index';
+	data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
 	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
 	gs.info(data.infotag +(new Date()).getTime());
 	//
@@ -107,15 +108,15 @@
         <sys_created_on>2018-11-15 22:22:25</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>2f06a2294ff12300f006121f9310c734</sys_id>
-        <sys_mod_count>15</sys_mod_count>
+        <sys_mod_count>16</sys_mod_count>
         <sys_name>UTASSP Item Status History Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_2f06a2294ff12300f006121f9310c734</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-07 23:00:03</sys_updated_on>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2018-12-14 17:05:45</sys_updated_on>
         <template><![CDATA[<div class="panel panel-{{::c.options.color}} b">
   <div class="panel-heading">
     <h4 class="panel-title">${STATUS: }{{::c.data.serviceDisplay}} <span class="text-muted">(${last 90 days})</span></h4>    

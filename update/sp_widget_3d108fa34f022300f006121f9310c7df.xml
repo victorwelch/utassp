@@ -7,7 +7,15 @@
 	/* widget controller */
 	var c = this;
 	var paramList = $location.search();
-	var isHomePage = !u_cutassp.utilIsValueValid(paramList.id);
+	var isHomePage = false;
+	if (u_cutassp.utilIsValueValid(paramList.id)) {
+		if (paramList.id.toString().indexOf('index')>-1) {
+			isHomePage = true;
+		}		
+	}
+	else {
+		isHomePage = true;
+	}
 	var isHeaderMenu = u_cutassp.utilIsValueValid(paramList.ishdrmenu);
 	var isRootScopeBc = u_cutassp.utilIsValueValid($rootScope.bc);
 	var iLen=0;
@@ -55,7 +63,7 @@
 		// *************************************************************************
 		// *** Make sure we fire 'sp.update.breadcrumbs' event
 		c.server.update().then(function(){
-			console.log($scope.data.infotag+'2: '+(new Date()).getTime());
+			console.log($scope.data.infotag+(new Date()).getTime());
 			$scope.data.breadcrumbs = c.data.breadcrumbs;
 			$timeout(function() {
 				$rootScope.$broadcast("sp.update.breadcrumbs", $scope.data.breadcrumbs);
@@ -81,18 +89,25 @@
         <public>false</public>
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();
+	data.isSecondTime = false;
+	if (myU.utilIsValueValid(input)) {
+		data.isSecondTime = true;
+	} 
 	data.widgettitle =  $sp.getDisplayValue("title");
-	data.widgetpage = $sp.getParameter('id') || 'utassp01_index';
-	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+	data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+	data.infotag = data.widgetpage+' > '+data.widgettitle;
+	if (data.isSecondTime) {
+		data.infotag +=' 2';		
+	}
+	data.infotag +=': ';
 	gs.info(data.infotag +(new Date()).getTime());
-	//
 	//
 // 	/* populate the 'data' object */
 // 	/* e.g., data.table = $sp.getValue('table'); */	
 // 	/* ***************************************** */
 	//
-	var myU = new u_utassp();
-	if (myU.utilIsValueValid(input))  //Ignore if client script has not run
+	if (data.isSecondTime)  //Ignore if client script has not run
 	{
 		if (myU.utilIsValueValid(input.breadcrumbs))  //Ignore if no breadcrumbs
 		{		
@@ -146,7 +161,7 @@
         <sys_created_on>2018-12-04 15:39:43</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3d108fa34f022300f006121f9310c7df</sys_id>
-        <sys_mod_count>20</sys_mod_count>
+        <sys_mod_count>33</sys_mod_count>
         <sys_name>UTASSP Bread Data Std Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -154,7 +169,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_3d108fa34f022300f006121f9310c7df</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2018-12-10 21:28:13</sys_updated_on>
+        <sys_updated_on>2018-12-14 20:37:17</sys_updated_on>
         <template><![CDATA[<!-- dummy widget template
 <div>
 </div>

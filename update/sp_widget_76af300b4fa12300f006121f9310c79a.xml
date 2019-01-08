@@ -9,7 +9,7 @@
 	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	//
 	var deregister = $rootScope.$on("sp.update.breadcrumbs", function (e, list) {
-		console.log($scope.data.infotag+' 2:'+(new Date()).getTime());
+		console.log($scope.data.infotag.replace(':',' 2:')+(new Date()).getTime());
 		if ( (u_cutassp.utilIsValueValid(list)) ) 
 		{
 			$rootScope.bc=list;
@@ -37,7 +37,12 @@ margin-top: 10px;
   	font-size:11px;
 	}
 }
-</css>
+.myDivDisplayFlexToggle {
+  display:flex;
+}
+.myDivFlexWrap {
+  flex-wrap:nowrap;
+}</css>
         <data_table>sp_instance_link</data_table>
         <demo_data/>
         <description/>
@@ -52,10 +57,11 @@ margin-top: 10px;
         <public>true</public>
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();
 	data.widgettitle =  $sp.getDisplayValue("title");
-	data.widgetpage = $sp.getParameter('id') || 'utassp01_index';
+	data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
 	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-	gs.info(data.infotag + (new Date()).getTime());
+	gs.info(data.infotag +(new Date()).getTime());
 	//
 })($sp, input, data, options, gs);]]></script>
         <servicenow>false</servicenow>
@@ -64,7 +70,7 @@ margin-top: 10px;
         <sys_created_on>2018-11-07 20:30:17</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>76af300b4fa12300f006121f9310c79a</sys_id>
-        <sys_mod_count>82</sys_mod_count>
+        <sys_mod_count>86</sys_mod_count>
         <sys_name>UTASSP Breadcrumbs Std Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -72,18 +78,20 @@ margin-top: 10px;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_76af300b4fa12300f006121f9310c79a</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2018-12-10 22:29:44</sys_updated_on>
-        <template><![CDATA[<ul class="nav nav-pills nav-sm myBcFontSize" aria-label="${Navigation breadcrumbs}">
-  <li><a ng-href="?id={{portal.homepage_dv}}">${Home}</a></li>
-  <li aria-hidden="true"><i class="fa fa-chevron-right"></i></li>
-  <li ng-if="!c.breadcrumbs"><a href>{{c.myLabel(page.title)}}</a></li>
-  <li ng-repeat-start="item in c.breadcrumbs">
-    <a ng-href="{{item.url}}&level={{item.level}}">{{c.myLabel(item.label)}}</a> 
-  </li>
-  <li aria-hidden="true" ng-if="!$last" ng-repeat-end>
-    <i class="fa fa-chevron-right"></i>
-  </li>
-</ul>
+        <sys_updated_on>2018-12-14 20:36:30</sys_updated_on>
+        <template><![CDATA[<div class="myDivDisplayFlexToggle myDivFlexWrap">
+  <ul class="nav nav-pills nav-sm myBcFontSize myDivDisplayFlexToggle" aria-label="${Navigation breadcrumbs}">
+    <li class="myDivDisplayFlexToggle"><a ng-href="?id={{portal.homepage_dv}}">${Home}</a></li>
+    <li aria-hidden="true" class="myDivDisplayFlexToggle"><i class="fa fa-chevron-right"></i></li>
+    <li ng-if="!c.breadcrumbs" class="myDivDisplayFlexToggle"><a href>{{c.myLabel(page.title)}}</a></li>
+    <li ng-repeat-start="item in c.breadcrumbs" class="myDivDisplayFlexToggle">
+      <a ng-href="{{item.url}}&level={{item.level}}">{{c.myLabel(item.label)}}</a> 
+    </li>
+    <li aria-hidden="true" ng-if="!$last" ng-repeat-end class="myDivDisplayFlexToggle">
+      <i class="fa fa-chevron-right"></i>
+    </li>
+  </ul>  
+</div>
 ]]></template>
     </sp_widget>
 </record_update>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="question_choice">
+    <question_choice action="INSERT_OR_UPDATE">
+        <misc>0</misc>
+        <order>300</order>
+        <question display_value="Please choose one of the following:">50b513b21b3ee300715941d8cd4bcb80</question>
+        <rec_misc>0</rec_misc>
+        <sys_class_name>question_choice</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-01-08 16:12:56</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>2447dfb21b3ee300715941d8cd4bcb63</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>I can't work at all</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>question_choice_2447dfb21b3ee300715941d8cd4bcb63</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-01-08 16:12:56</sys_updated_on>
+        <text>I can't work at all</text>
+        <value>1</value>
+    </question_choice>
+    <fx_price action="delete_multiple" query="id=2447dfb21b3ee300715941d8cd4bcb63"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>misc</field>
+        <id>2447dfb21b3ee300715941d8cd4bcb63</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-01-08 16:12:56</sys_created_on>
+        <sys_id>a55793f21b3ee300715941d8cd4bcb74</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-01-08 16:12:56</sys_updated_on>
+        <table>question_choice</table>
+        <type>calculated</type>
+    </fx_price>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>rec_misc</field>
+        <id>2447dfb21b3ee300715941d8cd4bcb63</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-01-08 16:12:56</sys_created_on>
+        <sys_id>6d5793f21b3ee300715941d8cd4bcb73</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-01-08 16:12:56</sys_updated_on>
+        <table>question_choice</table>
+        <type>calculated</type>
+    </fx_price>
+</record_update>

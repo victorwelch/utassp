@@ -9,7 +9,7 @@
         <choice_table>incident</choice_table>
         <create_roles/>
         <default_html_value/>
-        <default_value/>
+        <default_value>javascript: (function() {var gr = new GlideRecord('sys_user'); gr.get(gs.getUserID());return gr.phone;})()</default_value>
         <delete_roles/>
         <delivery_plan/>
         <description/>
@@ -18,7 +18,7 @@
         <dynamic_default_value/>
         <dynamic_ref_qual/>
         <example_text/>
-        <field>impact</field>
+        <field>u_call_back_number</field>
         <global>false</global>
         <help_tag>More information</help_tag>
         <help_text>A measure of the effect that the Incident is having on the business. Often equal to the extent to which agreed or expected levels of service may be distorted. Together with urgency, it is the major means of assigning priority for dealing with Incidents.</help_text>
@@ -36,11 +36,11 @@
         <map_to_field>true</map_to_field>
         <mask_use_confirmation>false</mask_use_confirmation>
         <mask_use_encryption>false</mask_use_encryption>
-        <name>impact</name>
+        <name>u_call_back_number</name>
         <order>300</order>
         <price_if_checked>0</price_if_checked>
         <pricing_implications>false</pricing_implications>
-        <question_text>Impact</question_text>
+        <question_text>Callback number</question_text>
         <read_roles/>
         <rec_lookup_price/>
         <rec_price_if_checked>0</rec_price_if_checked>
@@ -60,18 +60,18 @@
         <sys_created_on>2018-11-08 18:03:42</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>9737219f4f2d2300f006121f9310c7be</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name>Impact</sys_name>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Callback number</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>item_option_new_9737219f4f2d2300f006121f9310c7be</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-11-08 18:03:42</sys_updated_on>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-01-08 14:39:56</sys_updated_on>
         <table/>
         <tooltip/>
-        <type>5</type>
+        <type>6</type>
         <ui_page/>
         <use_dynamic_default>false</use_dynamic_default>
         <use_reference_qualifier>simple</use_reference_qualifier>

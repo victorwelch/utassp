@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="item_option_new">
     <item_option_new action="INSERT_OR_UPDATE">
         <active>true</active>
-        <attributes/>
+        <attributes>ref_auto_completer=AJAXTableCompleter,ref_ac_columns=name,ref_ac_columns_search=true,ref_ac_order_by=u_short_name,ref_ac_display_value=true</attributes>
         <cat_item display_value="UTASSP INCIDENT: Something Broken">64f0215b4f2d2300f006121f9310c71e</cat_item>
         <category/>
         <choice_direction>down</choice_direction>
@@ -9,7 +9,7 @@
         <choice_table/>
         <create_roles/>
         <default_html_value/>
-        <default_value>No</default_value>
+        <default_value/>
         <delete_roles/>
         <delivery_plan/>
         <description/>
@@ -18,7 +18,7 @@
         <dynamic_default_value/>
         <dynamic_ref_qual/>
         <example_text/>
-        <field/>
+        <field>location</field>
         <global>false</global>
         <help_tag>More information</help_tag>
         <help_text>Does this relate to a previously-closed incident about the same (or similar) issue?</help_text>
@@ -32,21 +32,21 @@
         <lookup_unique>false</lookup_unique>
         <lookup_value/>
         <macro/>
-        <mandatory>true</mandatory>
-        <map_to_field>false</map_to_field>
+        <mandatory>false</mandatory>
+        <map_to_field>true</map_to_field>
         <mask_use_confirmation>false</mask_use_confirmation>
         <mask_use_encryption>false</mask_use_encryption>
-        <name>previous_incident</name>
-        <order>400</order>
+        <name>location</name>
+        <order>500</order>
         <price_if_checked>0</price_if_checked>
         <pricing_implications>false</pricing_implications>
-        <question_text>Previous incident?</question_text>
+        <question_text>Location</question_text>
         <read_roles/>
         <rec_lookup_price/>
         <rec_price_if_checked>0</rec_price_if_checked>
         <record/>
         <record_producer_table>incident</record_producer_table>
-        <reference/>
+        <reference>cmn_location</reference>
         <reference_qual/>
         <reference_qual_condition/>
         <scale_max>5</scale_max>
@@ -60,18 +60,18 @@
         <sys_created_on>2018-11-08 18:08:19</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>add7e59f4f2d2300f006121f9310c7f4</sys_id>
-        <sys_mod_count>2</sys_mod_count>
-        <sys_name>Previous incident?</sys_name>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Location</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>item_option_new_add7e59f4f2d2300f006121f9310c7f4</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-11-12 16:19:38</sys_updated_on>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-01-08 15:15:41</sys_updated_on>
         <table/>
         <tooltip/>
-        <type>1</type>
+        <type>8</type>
         <ui_page/>
         <use_dynamic_default>false</use_dynamic_default>
         <use_reference_qualifier>simple</use_reference_qualifier>

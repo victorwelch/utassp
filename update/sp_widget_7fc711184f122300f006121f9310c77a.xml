@@ -10,11 +10,21 @@
         <controller_as>c</controller_as>
         <css>div.iconlink {
   display:block;
+  height: 188px;
 }
-
-@media (max-width: 768px) { 
-  div.iconlink {
-    margin-bottom:5px;
+@media (max-width: 991.9px) { 
+   div.iconlink {
+    height: 168px;
+  }
+}
+@media (max-width: 641.9px) { 
+   div.iconlink {
+    height:198px;
+  }
+}
+@media (max-width: 479.9px) { 
+   div.iconlink {
+    height:auto;
   }
 }
 
@@ -164,8 +174,9 @@ a.color_box .image-container {
         <public>false</public>
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();
 	data.widgettitle =  $sp.getDisplayValue("title");
-	data.widgetpage = $sp.getParameter('id') || 'utassp01_index';
+	data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
 	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
 	gs.info(data.infotag +(new Date()).getTime());
 	//
@@ -181,15 +192,15 @@ a.color_box .image-container {
         <sys_created_on>2018-12-06 15:59:33</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>7fc711184f122300f006121f9310c77a</sys_id>
-        <sys_mod_count>39</sys_mod_count>
+        <sys_mod_count>54</sys_mod_count>
         <sys_name>UTASSP Image Link Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_7fc711184f122300f006121f9310c77a</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-07 23:09:38</sys_updated_on>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2018-12-14 16:53:54</sys_updated_on>
         <template><![CDATA[<div class="iconlink">
   <!--// Color Box -->
   <a ng-href="{{::data.href}}" class="color_box {{::options.class_name}} icon-link-background-white myShadow" target="{{::data.target}}">
