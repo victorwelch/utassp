@@ -128,7 +128,8 @@ u_utassp.prototype = {
 		if (uCategoryList.length>0) {
 			uLevel += 1;
 			for (var i=0, iL=uCategoryList.length;i<iL;i++) {
-				uCategoryList[i].level = uLevel;				this.setKbCategoryListDepth(uCategoryList[i].uCategoryList,uLevel);
+				uCategoryList[i].level = uLevel;
+				this.setKbCategoryListDepth(uCategoryList[i].uCategoryList,uLevel);
 			}
 		}
 	},	
@@ -188,16 +189,13 @@ u_utassp.prototype = {
 		return thisCatStr;	
 	},
 	getKbCategoryListForArticle: function(_pArtSysId) {
-		gs.info('u_utassp kbcatlist4art -- sys_id: '+_pArtSysId);
 		var myCatListStr = '';
 		var myGr = new GlideRecord('kb_knowledge');
 		if (myGr.get(_pArtSysId))
 		{
 			var l_title = myGr.getValue('short_description');
 			var l_catSysId = myGr.getValue('kb_category');
-			gs.info('u_utassp kbcatlist4art -- B4 getTree');
 			myCatListStr = this.getKbCategoryTreeStr(l_catSysId);
-			gs.info('u_utassp kbcatlist4art -- A4 getTree: '+myCatListStr);
 			//myCatListStr = myCatListStr.replace(/ > /g,'>');
 			myCatListStr = myCatListStr.trim();
 			myCatListStr = (myCatListStr.length>0)?myCatListStr+' > "'+l_title+'"':'"'+l_title+'"';
@@ -361,6 +359,16 @@ u_utassp.prototype = {
 			}
 		}
 	},	
+	utilIsValueValidAndTrue: function(_p) {
+		if (this.utilIsValueValid(_p)) {
+			if (Array.isArray(_p)) {
+				if (_p[0]==true || _p[0]=='true') { return true; }
+			} else {
+				if (_p==true || _p=='true') { return true; }
+			}
+		}
+		return false;
+	},		
 	utilGetIsPageIdList: function(_p) {
 		var _pId = _p.split('&')[0];
 		var myRtnObj = {};
@@ -412,14 +420,14 @@ u_utassp.prototype = {
         <sys_created_on>2018-10-29 15:10:11</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3edf1d4c4f212300f006121f9310c732</sys_id>
-        <sys_mod_count>33</sys_mod_count>
+        <sys_mod_count>35</sys_mod_count>
         <sys_name>u_utassp</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy>read</sys_policy>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sys_script_include_3edf1d4c4f212300f006121f9310c732</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-05 23:36:53</sys_updated_on>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-01-15 19:24:25</sys_updated_on>
     </sys_script_include>
 </record_update>

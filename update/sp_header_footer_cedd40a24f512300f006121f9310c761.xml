@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_header_footer">
     <sp_header_footer action="INSERT_OR_UPDATE">
         <category>standard</category>
-        <client_script><![CDATA[function ($rootScope, $scope, snRecordWatcher, spUtil, $location, $uibModal, cabrillo, $timeout) {
-	console.log($scope.data.infotag+(new Date()).getTime());
+        <client_script><![CDATA[function ($rootScope, $scope, snRecordWatcher, spUtil, $location, $uibModal, cabrillo, $timeout, u_cutassp) {
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
 	//
+	var c = this;	
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
+	//	
 	$scope.userID = $scope.user.sys_id;
 	if (cabrillo.isNative())
 		$scope.isViewNative = true;
@@ -573,12 +583,17 @@ span.myHiLite {
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs){
 	var myU = new u_utassp();
-	data.widgettitle =  $sp.getDisplayValue("title");
-	data.widgettitle = myU.utilIsValueValid(data.widgettitle) ? 'header -- '+data.widgettitle : 'header';
-	data.widgetpage = $sp.getParameter('id');
-	data.widgetpage = myU.utilIsValueValid(data.widgetpage) ? data.widgetpage : 'utassp01_index';
-	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-	gs.info(data.infotag + (new Date()).getTime());
+// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =  'utassp01_header_widget > '+$sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
 	//
 	// Defines the support queue ID that will be linked to by the Live Chat link in header
 	data.connect_support_queue_id = $sp.getValue('sp_chat_queue');
@@ -638,7 +653,7 @@ span.myHiLite {
         <sys_created_on>2018-10-24 17:19:56</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>cedd40a24f512300f006121f9310c761</sys_id>
-        <sys_mod_count>162</sys_mod_count>
+        <sys_mod_count>172</sys_mod_count>
         <sys_name>UTASSP Header Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -646,8 +661,8 @@ span.myHiLite {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_header_footer_cedd40a24f512300f006121f9310c761</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2018-12-13 17:41:55</sys_updated_on>
-        <template><![CDATA[<header>
+        <sys_updated_on>2019-01-15 20:12:19</sys_updated_on>
+        <template><![CDATA[<header dummy="{{::c.myLog()}}">
 <div class=container>
   <nav class="navbar-inverse" ng-class="::{'navbar':!isViewNative, 'is-native': isViewNative}"
        role="navigation">
@@ -667,7 +682,7 @@ span.myHiLite {
       <!-- Include The Menu -->
       <div class="myDivDisplayFlexToggle myDivFlexWrap">
         <div class="myDivDisplayFlexToggle">
-	      <sp-widget widget="data.menu"></sp-widget>
+	      <sp-widget widget="::data.menu"></sp-widget>
         </div>
         <div class="myDivDisplayFlexToggle">
           <ul ng-if="::(!user.logged_in && page.id != portal.login_page_dv && !data.hasLogin)" class="nav navbar-nav">
@@ -677,7 +692,7 @@ span.myHiLite {
             <!-- chat, avatar, and logout -->
             <li ng-if="::data.connect_support_queue_id"><a href ng-click="openPopUp()">${Live Chat}</a></li>
             <li class="dropdown hidden-xs">
-              <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="{{data.profileBtnMsg}}" id="profile-dropdown">
+              <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="{{::data.profileBtnMsg}}" id="profile-dropdown">
                 <span class="navbar-avatar"><sn-avatar class="avatar-small-medium" primary="userID" /></span>
                 <span class="visible-lg-inline">{{::user.first_name}}</span>
               </a>

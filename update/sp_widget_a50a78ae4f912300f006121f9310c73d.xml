@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[function ($scope, spUtil) { 
-	console.log($scope.data.infotag+(new Date()).getTime());
+        <client_script><![CDATA[function ($scope, spUtil, u_cutassp) { 
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
   /* widget controller */
   var c = this;
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
+	//	
   if ($scope.options.portal == true || $scope.options.portal == 'true') {
     $scope.contentColClass = "col-xs-12";
 		$scope.options.portal = true;
@@ -124,11 +133,17 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
-	data.widgettitle =  $sp.getDisplayValue("title");
-	data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-	gs.info(data.infotag +(new Date()).getTime());
-	//
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =  $sp.getDisplayValue("title");
+		data.widgetpage =  'utassp01_enterprise_data_services_widget > '+ myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
 	//we get only a max number of elements to avoid to have a big list of it
 	var maxNumberOfItemsInTheList = options.max_number_of_elements_shown_on_the_list;
 	//set 10 if maxnumber is undefined, empty or negative value
@@ -184,7 +199,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_created_on>2018-10-24 20:32:57</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>a50a78ae4f912300f006121f9310c73d</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>22</sys_mod_count>
         <sys_name>UTASSP Enterprise Data Services Widget </sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -192,10 +207,10 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_a50a78ae4f912300f006121f9310c73d</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2018-12-14 17:09:20</sys_updated_on>
-        <template><![CDATA[<div class="panel panel-{{::options.color}} b myShadow">
+        <sys_updated_on>2019-01-15 20:38:24</sys_updated_on>
+        <template><![CDATA[<div class="panel panel-{{::options.color}} b myShadow" dummy="{{::c.myLog()}}">
   <div class="panel-heading">
-    <h2 class="h4 panel-title">{{options.title}}</h2>
+    <h2 class="h4 panel-title">{{::options.title}}</h2>
   </div>
   <div class="panel-body">
     <div ng-if="data.selectionlist.length == 0 && data.pagination.of != 0">
@@ -206,7 +221,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <li class="list-group-item" ng-repeat="selection in data.selectionlist">
           <a ng-href="?id=utassp01_sc_cat_item&sys_id={{selection.sys_id}}">
 	          <div class="myItem"><span>{{selection.name}}</span></div></a>
-          <span ng-if="selection.short_description.length>0" class="tooltiptext">{{selection.short_description}}</span>            
+          <span ng-if="selection.short_description.length>0" class="tooltiptext">{{::selection.short_description}}</span>            
         </li>
       </ul>
     </div>

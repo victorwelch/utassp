@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[function($scope,$rootScope,$timeout) {  
-	console.log($scope.data.infotag+(new Date()).getTime());
+        <client_script><![CDATA[function($scope,$rootScope,$timeout,u_cutassp) {  
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
 	//
 	/* widget controller */  
 	var c = this;
-	// *************************************************************************
-	//*** Fire breadcrumb event
-	//$timeout(function() {
-	//	$rootScope.$broadcast('sp.update.breadcrumbs', $scope.data.breadcrumbs);
-	//});	
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
 	//	
 }]]></client_script>
         <controller_as>c</controller_as>
@@ -139,10 +142,17 @@ a.kbLink &gt; div.kbCard &gt; span.kb-card-details &gt; span.kb-count { &#13;
         <roles>admin</roles>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
-	data.widgettitle =  $sp.getDisplayValue("title");
-	data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-	gs.info(data.infotag +(new Date()).getTime());
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =   'utassp01_kb_link_widget > '+ $sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
 	//
 	var gr = $sp.getInstanceRecord();
 	data.href = $sp.getMenuHREF(gr);
@@ -177,7 +187,7 @@ a.kbLink &gt; div.kbCard &gt; span.kb-card-details &gt; span.kb-count { &#13;
         <sys_created_on>2018-11-07 20:14:04</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>9dfbf4434fa12300f006121f9310c73c</sys_id>
-        <sys_mod_count>10</sys_mod_count>
+        <sys_mod_count>23</sys_mod_count>
         <sys_name>UTASSP KB Link Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -185,8 +195,8 @@ a.kbLink &gt; div.kbCard &gt; span.kb-card-details &gt; span.kb-count { &#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_9dfbf4434fa12300f006121f9310c73c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2018-12-14 17:01:24</sys_updated_on>
-        <template><![CDATA[<div ng-if='data.canRead==true' class='myPanel'>
+        <sys_updated_on>2019-01-15 20:46:30</sys_updated_on>
+        <template><![CDATA[<div ng-if='data.canRead==true' class='myPanel' dummy="{{::c.myLog()}}">
   <a class="kbLink" ng-href="{{::data.href}}" target="{{::data.target}}">
     <div class="kbCard kbCard-border-left-{{::options.color}}">
 			<span class="kb-title kbCardOverflow" title="{{::options.knowledge_base}}">{{::options.knowledge_base}}</span>    

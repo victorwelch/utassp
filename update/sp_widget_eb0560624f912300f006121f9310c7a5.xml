@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>standard</category>
-        <client_script><![CDATA[function ($scope, spUtil, $rootScope, $timeout, spAriaUtil) {
-	console.log($scope.data.infotag+(new Date()).getTime());
+        <client_script><![CDATA[function ($scope, spUtil, $rootScope, $timeout, spAriaUtil, u_cutassp) {
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
 	//
+	var c = this;
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
+	//		
 	$scope.loadingIndicator = $rootScope.loadingIndicator;
 	$scope.cartItemCount = 0;
 	$scope.itemAddedTooltipOpen = false;
@@ -181,12 +191,17 @@
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs){
 	var myU = new u_utassp();
-	data.widgettitle =  $sp.getDisplayValue("title");
-	data.widgettitle = myU.utilIsValueValid(data.widgettitle) ? data.widgettitle : 'header';
-	data.widgetpage = $sp.getParameter('id');
-	data.widgetpage = myU.utilIsValueValid(data.widgetpage) ? data.widgetpage : 'utassp01_index';
-	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-	gs.info(data.infotag + (new Date()).getTime());
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =  'utassp01_header_menu_widget > '+$sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
 	//
 	var isItil = gs.hasRole('itil');
 	// *** Below for testing not 'itil'
@@ -220,7 +235,7 @@
         <sys_created_on>2018-10-24 19:01:20</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>eb0560624f912300f006121f9310c7a5</sys_id>
-        <sys_mod_count>35</sys_mod_count>
+        <sys_mod_count>43</sys_mod_count>
         <sys_name>UTASSP Header Menu Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -228,8 +243,8 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_eb0560624f912300f006121f9310c7a5</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2018-12-13 15:40:31</sys_updated_on>
-        <template><![CDATA[<ul class="nav navbar-nav" aria-label="${Header menu}">
+        <sys_updated_on>2019-01-15 20:11:54</sys_updated_on>
+        <template><![CDATA[<ul class="nav navbar-nav" aria-label="${Header menu}" dummy="{{::c.myLog()}}">
   <div class="header-loader" ng-show="loadingIndicator">
     <div class="hidden-xs sp-loading-indicator la-sm">
       <div></div>

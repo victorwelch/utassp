@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>other</category>
-        <client_script><![CDATA[function ($scope, spUtil, snRecordWatcher, $rootScope) {
-	console.log($scope.data.infotag+(new Date()).getTime());
+        <client_script><![CDATA[function ($scope, spUtil, snRecordWatcher, $rootScope, u_cutassp) {
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
+	//
+	var c = this;
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
 	//
 	$scope.standalone = $scope.options.standalone == 'true' || $scope.options.standalone == true;
   var q = "cmdb_ci.sys_class_name=cmdb_ci_service";
@@ -70,10 +80,17 @@ div.sp-outage-details {
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
-	data.widgettitle =  $sp.getDisplayValue("title");
-	data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-	gs.info(data.infotag +(new Date()).getTime());
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =   'utassp01_item_outage_history_widget > '+ $sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
 	//
 	var myGlobal=new global.u_utaglobalapi();
 	// populate the 'data' object
@@ -124,7 +141,7 @@ div.sp-outage-details {
         <sys_created_on>2018-11-15 22:15:03</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>ab542a294ff12300f006121f9310c702</sys_id>
-        <sys_mod_count>12</sys_mod_count>
+        <sys_mod_count>23</sys_mod_count>
         <sys_name>UTASSP Item Outage History Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -132,8 +149,8 @@ div.sp-outage-details {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_ab542a294ff12300f006121f9310c702</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2018-12-14 17:06:33</sys_updated_on>
-        <template><![CDATA[<div ng-if="data.outages.length > 0" class="panel panel-{{options.color}} b">
+        <sys_updated_on>2019-01-15 20:40:23</sys_updated_on>
+        <template><![CDATA[<div ng-if="data.outages.length > 0" class="panel panel-{{options.color}} b" dummy="{{::c.myLog()}}">
   <div class="panel-heading">
     <h2 class="panel-title">${OUTAGE HISTORY: }<span ng-if="data.serviceDisplay">{{data.serviceDisplay}}</span></h2>
   </div>

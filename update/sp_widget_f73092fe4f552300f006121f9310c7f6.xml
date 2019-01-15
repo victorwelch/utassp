@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[function loginCtrl($scope, $http, $window, $location, glideUserSession, glideSystemProperties, spUtil) {
-	console.log($scope.data.infotag+(new Date()).getTime());
+        <client_script><![CDATA[function loginCtrl($scope, $http, $window, $location, glideUserSession, glideSystemProperties, spUtil, u_cutassp) {
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
 	//
-
-    var c = this;
+	var c = this;	
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
+	//	
     c.remember_me = c.data.forgetMeDefault;
     if (typeof c.options.show_panel == 'undefined') {
         c.options.show_panel = true;
@@ -121,10 +129,17 @@ label[for="password"] {&#13;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs){
 	var myU = new u_utassp();
-	data.widgettitle =  $sp.getDisplayValue("title");
-	data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-	data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-	gs.info(data.infotag +(new Date()).getTime());
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =   'utassp01_login_widget > '+ $sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
 	//
     //We don't want to set a starting page until we've begun the login process.
     data.errorMsg = gs.getMessage("There was an error processing your request");
@@ -157,7 +172,7 @@ label[for="password"] {&#13;
         <sys_created_on>2018-10-25 21:28:09</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>f73092fe4f552300f006121f9310c7f6</sys_id>
-        <sys_mod_count>8</sys_mod_count>
+        <sys_mod_count>16</sys_mod_count>
         <sys_name>UTASSP Login Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -165,8 +180,8 @@ label[for="password"] {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_f73092fe4f552300f006121f9310c7f6</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2018-12-14 17:07:38</sys_updated_on>
-        <template><![CDATA[<div ng-if="!data.is_logged_in">
+        <sys_updated_on>2019-01-15 20:47:21</sys_updated_on>
+        <template><![CDATA[<div ng-if="!data.is_logged_in"  dummy="{{::c.myLog()}}">
   <form ng-if="!c.externalLoginMode" class="form-signin" ng-submit="c.login(c.username, c.password)" method="post">
 		<div ng-class="{'panel panel-default': c.options.show_panel}">
 			<div ng-if="c.options.show_panel" class="panel-heading">	      
