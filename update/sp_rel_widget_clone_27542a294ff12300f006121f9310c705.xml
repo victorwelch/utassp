@@ -3,7 +3,7 @@
         <child display_value="UTASSP Item Outage History Widget">ab542a294ff12300f006121f9310c702</child>
         <cloned>2018-11-15 22:15:03</cloned>
         <last_validated>2018-11-15 22:15:03</last_validated>
-        <parent display_value="Current Status">1e699082d7001200a9addd173e24d4e3</parent>
+        <parent display_value="">1e699082d7001200a9addd173e24d4e3</parent>
         <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;sp_widget&gt;&lt;category&gt;other&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[function ($scope, spUtil, snRecordWatcher, $rootScope) {
 	$scope.standalone = $scope.options.standalone == 'true' || $scope.options.standalone == true;
   var q = "cmdb_ci.sys_class_name=cmdb_ci_service";

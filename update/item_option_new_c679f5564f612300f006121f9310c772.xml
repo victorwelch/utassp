@@ -2,7 +2,7 @@
     <item_option_new action="INSERT_OR_UPDATE">
         <active>true</active>
         <attributes/>
-        <cat_item display_value="INCIDENT: Something Broken">05f526210f32db00c601419ce1050ee3</cat_item>
+        <cat_item display_value="">05f526210f32db00c601419ce1050ee3</cat_item>
         <category/>
         <choice_direction>down</choice_direction>
         <choice_field>impact</choice_field>

@@ -3,7 +3,7 @@
         <child display_value="UTASSP Status Legend Widget">1ad9cd994ff12300f006121f9310c72f</child>
         <cloned>2018-11-14 21:01:05</cloned>
         <last_validated>2018-11-14 21:01:05</last_validated>
-        <parent display_value="Service Status Legend">f9bda712d7330200a9addd173e24d4c8</parent>
+        <parent display_value="">f9bda712d7330200a9addd173e24d4c8</parent>
         <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;sp_widget&gt;&lt;category&gt;other&lt;/category&gt;&lt;client_script/&gt;&lt;controller_as/&gt;&lt;css&gt;.panel-body {
 	margin: 0px -20px 0px -20px;
 }

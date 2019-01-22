@@ -3,7 +3,7 @@
         <child display_value="UTASSP Status History Widget">222841994ff12300f006121f9310c740</child>
         <cloned>2018-11-14 20:53:43</cloned>
         <last_validated>2018-11-14 20:53:43</last_validated>
-        <parent display_value="Business Services Status">d37aaa42d7330200a9addd173e24d460</parent>
+        <parent display_value="">d37aaa42d7330200a9addd173e24d460</parent>
         <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;sp_widget&gt;&lt;category&gt;other&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[function($scope) {
 	for (var x in $scope.data.dates) {
 		var dateStr = moment($scope.data.dates[x]).format('ll').split(',')[0];

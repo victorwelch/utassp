@@ -3,7 +3,7 @@
         <child display_value="UTASSP Service Status History Widget">e9972dd14f752300f006121f9310c7a4</child>
         <cloned>2018-11-14 23:11:00</cloned>
         <last_validated>2018-11-14 23:11:00</last_validated>
-        <parent display_value="Service Status">0d76f656d7330200a9addd173e24d450</parent>
+        <parent display_value="">0d76f656d7330200a9addd173e24d450</parent>
         <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;sp_widget&gt;&lt;category&gt;other&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[function ($rootScope, $timeout) {	
 	var c = this;		
 	var bc = [{label: c.data.systemStatusBreadcrumb, url: '?id=services_status'}];

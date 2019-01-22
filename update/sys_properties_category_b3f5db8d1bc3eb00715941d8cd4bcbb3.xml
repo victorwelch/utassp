@@ -16,6 +16,6 @@
         <sys_updated_by>welchv</sys_updated_by>
         <sys_updated_on>2019-01-15 16:02:59</sys_updated_on>
         <title><![CDATA[<p>Set debug status true/false for application scripting</p>]]></title>
-        <u_link>https://utadev.service-now.com/system_properties_ui.do?sysparm_title=Debug%20Flag&amp;sysparm_category=Debug%20Flag</u_link>
+        <u_link>https://utatest.service-now.com/system_properties_ui.do?sysparm_title=Debug%20Flag&amp;sysparm_category=Debug%20Flag</u_link>
     </sys_properties_category>
 </record_update>
