@@ -77,14 +77,23 @@
 		c.breadcrumbs = c.data.breadcrumbs;
 		c.server.update().then(function(){
 			if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-				console.log($scope.data.infotag+(new Date()).getTime()); 
+				console.log($scope.data.infotag.toString().replace('Server','')+(new Date()).getTime()); 
 			}
  			$rootScope.bc=$scope.data.breadcrumbs;
 			c.breadcrumbs=$scope.data.breadcrumbs;
 		});		
 		//		
-	}	
+	}
+	// *** Inherited code from base breadcrumbs widget
 	//
+	var deregister = $rootScope.$on("sp.update.breadcrumbs", function(e, list) {
+		c.breadcrumbs = list;
+	});
+
+	$scope.$on('$destroy', function(){
+		deregister();
+	});	
+	// ***
 }
 ]]></client_script>
         <controller_as>c</controller_as>
@@ -135,10 +144,12 @@ margin-top: 10px;
 		data.isDebugOn = true;
 		data.infotag = data.widgetpage+' > '+data.widgettitle;
 		if (data.isSecondTime) {
-			data.infotag +=' Server 2nd Time';		
+			gs.info(data.infotag+' Server 2nd Time: '+(new Date()).getTime());	
+			data.infotag = data.infotag+' 2nd Time: ';
+		} else {
+			data.infotag +=': ';
+			gs.info(data.infotag +(new Date()).getTime());					
 		}
-		data.infotag +=': ';
-		gs.info(data.infotag +(new Date()).getTime());		
 	}
 	// *** End: Debug only code *** //	
 	//
@@ -150,7 +161,6 @@ margin-top: 10px;
 	{
 		if (myU.utilIsValueValid(input.breadcrumbs))  //Ignore if no breadcrumbs
 		{		
-			gs.info(data.infotag+'Got Here!');
 			data.breadcrumbs = input.breadcrumbs;
 			var idx = data.breadcrumbs.length-1;
 			if (idx>-1)
@@ -197,7 +207,7 @@ margin-top: 10px;
         <sys_created_on>2019-01-11 21:50:02</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>7841048cdb432b00e3ad22d40596190c</sys_id>
-        <sys_mod_count>33</sys_mod_count>
+        <sys_mod_count>45</sys_mod_count>
         <sys_name>UTASSP Breadcrumbs Std Widget 3 </sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -205,14 +215,14 @@ margin-top: 10px;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_7841048cdb432b00e3ad22d40596190c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:55:56</sys_updated_on>
-        <template><![CDATA[<div class="myDivDisplayFlexToggle myDivFlexWrap"  dummy="{{::c.myLog()}}">
+        <sys_updated_on>2019-01-16 15:52:32</sys_updated_on>
+        <template><![CDATA[<div class="myDivDisplayFlexToggle myDivFlexWrap"  dummy="{{c.myLog()}}">
   <ul class="nav nav-pills nav-sm myBcFontSize myDivDisplayFlexToggle" aria-label="${Navigation breadcrumbs}">
-    <li class="myDivDisplayFlexToggle"><a ng-href="?id={{portal.homepage_dv}}">${Home}</a></li>
+    <li class="myDivDisplayFlexToggle"><a ng-href="?id={{::portal.homepage_dv}}">${Home}</a></li>
     <li aria-hidden="true" class="myDivDisplayFlexToggle"><i class="fa fa-chevron-right"></i></li>
     <li ng-if="!c.breadcrumbs" class="myDivDisplayFlexToggle"><a href>{{::c.myLabel(page.title)}}</a></li>
     <li ng-repeat-start="item in c.breadcrumbs" class="myDivDisplayFlexToggle">
-      <a ng-href="{{item.url}}&level={{item.level}}">{{c.myLabel(item.label)}}</a> 
+      <a ng-href="{{item.url}}&level={{item.level}}">{{::c.myLabel(item.label)}}</a> 
     </li>
     <li aria-hidden="true" ng-if="!$last" ng-repeat-end class="myDivDisplayFlexToggle">
       <i class="fa fa-chevron-right"></i>

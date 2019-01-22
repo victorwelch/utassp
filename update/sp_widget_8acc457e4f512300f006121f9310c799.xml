@@ -60,7 +60,7 @@
         <sys_created_on>2018-10-25 16:33:24</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>8acc457e4f512300f006121f9310c799</sys_id>
-        <sys_mod_count>52</sys_mod_count>
+        <sys_mod_count>53</sys_mod_count>
         <sys_name>UTASSP Homepage Search Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -68,11 +68,11 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_8acc457e4f512300f006121f9310c799</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:39:23</sys_updated_on>
+        <sys_updated_on>2019-01-22 14:43:05</sys_updated_on>
         <template><![CDATA[<div id="homepage-search" class="hidden-xs wrapper-xl" dummy="{{::c.myLog()}}">
   <div class="wrapper-xl">
     <h1 ng-if="::data.welcome == 'Please Login...'" class="text-center text-4x m-b-lg sp-tagline-color myLoginSpan">
-      <span ng-bind="data.welcome" class="myLoginSpan"></span>
+      <span ng-bind="data.welcome" class="myWelcomeSpan"></span>
     </h1>
     <h1 ng-if="data.welcome != 'Please Login...'" class="text-center text-4x m-b-lg sp-tagline-color myWelcomeSpan">Welcome, 
       <span ng-bind="data.welcome"></span>

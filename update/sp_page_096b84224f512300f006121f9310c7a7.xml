@@ -141,7 +141,7 @@ div.myColSpecial {&#13;
         <dynamic_title_structure/>
         <id>utassp01_index</id>
         <internal>false</internal>
-        <public>false</public>
+        <public>true</public>
         <roles/>
         <short_description>UTASSP Service Portal</short_description>
         <sys_class_name>sp_page</sys_class_name>
@@ -149,7 +149,7 @@ div.myColSpecial {&#13;
         <sys_created_on>2018-10-24 17:09:13</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>096b84224f512300f006121f9310c7a7</sys_id>
-        <sys_mod_count>49</sys_mod_count>
+        <sys_mod_count>50</sys_mod_count>
         <sys_name>utassp01_index</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -157,7 +157,7 @@ div.myColSpecial {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_page_096b84224f512300f006121f9310c7a7</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2018-12-13 21:09:25</sys_updated_on>
+        <sys_updated_on>2019-01-22 14:39:52</sys_updated_on>
         <title>UTASSP Service Portal</title>
     </sp_page>
 </record_update>

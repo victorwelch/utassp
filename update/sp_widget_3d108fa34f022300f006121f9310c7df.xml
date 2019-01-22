@@ -8,6 +8,7 @@
 	//
 	/* widget controller */
 	var c = this;
+	c.data.second = true;
 	var paramList = $location.search();
 	var isHomePage = false;
 	if (u_cutassp.utilIsValueValid(paramList.id)) {
@@ -23,8 +24,11 @@
 		//We are at the home page, so reset root breadcrumb stack
 		$rootScope.bc = [];
 	}
-
-				
+	c.server.update().then(function(){
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag+(new Date()).getTime()); 
+		}
+	});					
 }]]></client_script>
         <controller_as>c</controller_as>
         <css/>
@@ -47,10 +51,16 @@
 	data.isDebugOn = false;
 	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
 	{
-		data.isDebugOn = true;
+		data.isDebugOn = true;	
 		data.widgettitle =  'utassp01_bread_data_std_widget > '+$sp.getDisplayValue("title");
 		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		data.isSecondTime = false;
+		if (myU.utilIsValueValid(input)) {
+			data.isSecondTime = true;
+			data.infotag = data.widgetpage+' > '+data.widgettitle+' 2nd Time: ';	
+		} else {
+			data.infotag = data.widgetpage+' > '+data.widgettitle+': ';			
+		}		
 		gs.info(data.infotag +(new Date()).getTime());		
 	}
 	// *** End: Debug only code ***
@@ -61,7 +71,7 @@
         <sys_created_on>2018-12-04 15:39:43</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3d108fa34f022300f006121f9310c7df</sys_id>
-        <sys_mod_count>41</sys_mod_count>
+        <sys_mod_count>44</sys_mod_count>
         <sys_name>UTASSP Bread Data Std Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -69,7 +79,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_3d108fa34f022300f006121f9310c7df</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 19:56:31</sys_updated_on>
+        <sys_updated_on>2019-01-17 17:56:52</sys_updated_on>
         <template><![CDATA[<!-- dummy widget template
 <div>
 </div>
