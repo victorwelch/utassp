@@ -2,7 +2,7 @@
     <sp_instance action="INSERT_OR_UPDATE">
         <active>true</active>
         <class_name/>
-        <color>danger</color>
+        <color>custom</color>
         <css/>
         <glyph/>
         <id/>
@@ -11,22 +11,22 @@
         <short_description/>
         <size>md</size>
         <sp_column display_value="2">8b4bf3f84ff12300f006121f9310c748</sp_column>
-        <sp_widget display_value="UTASSP KB Category Page  Widget">facabc834fa12300f006121f9310c7c6</sp_widget>
+        <sp_widget display_value="UTASSP KB Category Page  Widget 2">b1e114ca1bd72b40715941d8cd4bcba9</sp_widget>
         <sys_class_name>sp_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-11-13 20:39:24</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>074bf3f84ff12300f006121f9310c74a</sys_id>
-        <sys_mod_count>2</sys_mod_count>
-        <sys_name>KB Category</sys_name>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>KB Article List</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_instance_074bf3f84ff12300f006121f9310c74a</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-04 18:16:45</sys_updated_on>
-        <title>KB Category</title>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-01-30 22:49:05</sys_updated_on>
+        <title>KB Article List</title>
         <url/>
         <widget_parameters><![CDATA[{
 	"knowledge_base": {
@@ -36,6 +36,10 @@
 	"maxitems": {
 		"value": 20,
 		"displayValue": "20"
+	},
+	"color": {
+		"value": "custom",
+		"displayValue": "Custom"
 	}
 }]]></widget_parameters>
     </sp_instance>

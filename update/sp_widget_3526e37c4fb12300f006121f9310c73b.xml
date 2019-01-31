@@ -17,7 +17,12 @@
 	//	
 	
 	//*** Save location object
-	//debugger;
+	if (!$rootScope.isKbCatShow)
+	{
+		var myRowDiv=$element.closest('div.sp-row-content');
+		var myRow=myRowDiv.parent();
+		myRow.hide();
+	}
 	
 	//*** Span Mouse Over
 	$scope.mySpanMouseOver = function(e) 
@@ -107,7 +112,7 @@
 		}
 		mySpanEl.removeClass('mySpanTriHov');
 		mySpanEl.removeClass('mySpanTriZHov');		
-	  myRow.removeClass('myRowHover')		
+		myRow.removeClass('myRowHover');		
 
 		// Cleanup All 
 		var myRoot=$(myEl).closest('.myDivTableBody');
@@ -117,7 +122,7 @@
 		//Select catid stuff
 		myRow.addClass('myDivTableRowSelected');  //Select current row
 		if (isSpanZ) {
-				mySpanEl.addClass('mySpanTriZSelected'); //Selected current "Zero" span				
+			mySpanEl.addClass('mySpanTriZSelected'); //Selected current "Zero" span				
 		}		
 		var mySelectionId = myRow.attr('thisid'); //Now we've got our catid
 		var obj = { selectionId: mySelectionId };
@@ -353,15 +358,30 @@ span.label {&#13;
   font-weight:normal;&#13;
 }&#13;
 &#13;
-&#13;
 h2.panel-title {&#13;
 	color: #ffffff;&#13;
-  text-shadow: 3px 3px 5px #000000;&#13;
 }&#13;
 &#13;
 .panel-body {&#13;
   padding:0px 0px 0px 0px;&#13;
 }&#13;
+&#13;
+/* $brand-custom:#78A6CC; */&#13;
+$brand-custom:#c2d7e8;&#13;
+&#13;
+.panel-custom  {&#13;
+	background-color: $brand-custom;&#13;
+  div.panel-heading {&#13;
+    &amp;:hover {&#13;
+      background-color: lighten($brand-custom, 20%);&#13;
+      cursor: pointer;&#13;
+      h2.panel-title {&#13;
+        text-shadow: 2px 2px 5px #000000;&#13;
+      }&#13;
+    }  &#13;
+  }     &#13;
+}&#13;
+&#13;
 &#13;
 div.panel-primary  {&#13;
 	background-color: $brand-primary;&#13;
@@ -384,8 +404,7 @@ div.panel-info {&#13;
       background-color: lighten($brand-info, 20%);&#13;
       cursor: pointer;&#13;
       h2.panel-title {&#13;
-        color: #428bca;   &#13;
-        font-weight: bold;      &#13;
+        text-shadow: 2px 2px 5px #000000;&#13;
       }&#13;
     }  &#13;
   }  &#13;
@@ -398,8 +417,7 @@ div.panel-success {&#13;
       background-color: lighten($brand-success, 20%);&#13;
       cursor: pointer;&#13;
       h2.panel-title {&#13;
-        color: #428bca;   &#13;
-        font-weight: bold;      &#13;
+        text-shadow: 2px 2px 5px #000000;&#13;
       }&#13;
     }  &#13;
   }   &#13;
@@ -412,8 +430,7 @@ div.panel-warning {&#13;
       background-color: lighten($brand-warning, 20%);&#13;
       cursor: pointer;&#13;
       h2.panel-title {&#13;
-        color: #428bca;   &#13;
-        font-weight: bold;      &#13;
+        text-shadow: 2px 2px 5px #000000;&#13;
       }&#13;
     }  &#13;
   }   &#13;
@@ -426,8 +443,7 @@ div.panel-danger {&#13;
       background-color: lighten($brand-danger, 20%);&#13;
       cursor: pointer;&#13;
       h2.panel-title {&#13;
-        color: #428bca;   &#13;
-        font-weight: bold;      &#13;
+        text-shadow: 2px 2px 5px #000000;&#13;
       }&#13;
     }  &#13;
   }  &#13;
@@ -574,8 +590,8 @@ div.myDivTable.myGreyGridTable &gt; div.myDivTableBody &gt; div.myDivTableRow.my
     }  &#13;
 }&#13;
 &#13;
-.myCol1 { width:60%; border-right: 1px solid #999999; }&#13;
-.myCol2 { width:20%; border-right: 1px solid #999999; }&#13;
+.myCol1 { width:55%; border-right: 1px solid #999999; }&#13;
+.myCol2 { width:25%; border-right: 1px solid #999999; }&#13;
 .myCol3 { width:20%; border-right: 0; }&#13;
 &#13;
 /* Foot Style */&#13;
@@ -597,18 +613,85 @@ a.myDivTableRow {&#13;
 -webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
 -moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
 box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
+}&#13;
+/* **************** */&#13;
+.myTtip {&#13;
+  position: relative;&#13;
+  display: inline-block;&#13;
+}&#13;
+.myTtip .myTtiptext {&#13;
+  visibility: hidden;&#13;
+  width: 350px;&#13;
+  background-color: #fff;&#13;
+  color: #999;&#13;
+  text-align: left;&#13;
+  font-size:11px;&#13;
+  text-shadow:none;&#13;
+  border-radius: 6px;&#13;
+  padding: 5px 0;&#13;
+  border: 1px solid #999;&#13;
+  padding:10px 0px 10px 10px;&#13;
+&#13;
+  /* Position the tooltip */&#13;
+  top:-70px;&#13;
+  left:-10px;&#13;
+  position: absolute;&#13;
+  z-index: 1;&#13;
+}	&#13;
+.myTtip:hover .myTtiptext {&#13;
+  visibility: visible;&#13;
+}&#13;
+.myTtipUL {&#13;
+  list-style-type: disc;&#13;
+  margin-bottom: 0px;&#13;
+  padding-inline-start: 20px;&#13;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
         <docs/>
-        <field_list>color</field_list>
+        <field_list/>
         <has_preview>false</has_preview>
         <id>utassp02_kb_base_widget</id>
         <internal>false</internal>
         <link/>
         <name>UTASSP KB Base2 Widget</name>
         <option_schema>[&#13;
+  {&#13;
+    "name": "color",&#13;
+    "label": "Color",&#13;
+    "type": "choice",&#13;
+    "choices": [&#13;
+      {&#13;
+        "label": "Default",&#13;
+        "value": "default"&#13;
+      },&#13;
+      {&#13;
+        "label": "Custom",&#13;
+        "value": "custom"&#13;
+      },&#13;
+      {&#13;
+        "label": "Primary",&#13;
+        "value": "primary"&#13;
+      },&#13;
+      {&#13;
+        "label": "Success",&#13;
+        "value": "success"&#13;
+      },&#13;
+      {&#13;
+        "label": "Info",&#13;
+        "value": "info"&#13;
+      },&#13;
+      {&#13;
+        "label": "Warning",&#13;
+        "value": "warning"&#13;
+      },&#13;
+      {&#13;
+        "label": "Danger",&#13;
+        "value": "danger"&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
   {&#13;
     "name": "knowledge_base",&#13;
     "label": "Knowledge Base",&#13;
@@ -670,7 +753,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_created_on>2018-11-13 19:07:02</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3526e37c4fb12300f006121f9310c73b</sys_id>
-        <sys_mod_count>19</sys_mod_count>
+        <sys_mod_count>40</sys_mod_count>
         <sys_name>UTASSP KB Base2 Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -678,10 +761,16 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_3526e37c4fb12300f006121f9310c73b</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:55:05</sys_updated_on>
+        <sys_updated_on>2019-01-30 14:40:21</sys_updated_on>
         <template><![CDATA[<div class="panel panel-{{::options.color}} b myShadow" dummy="{{::c.myLog()}}">
   <div class="panel-heading" ng-click="myKbSelect($event)" thisid="{{c.data.uKbBaseSysId}}">
-    <h2 class="h4 panel-title">
+    <h2 class="h4 panel-title myTtip">
+      <div  class="myTtiptext">
+        <ul class="myTtipUL">
+          <li style="margin-bottom:5px;">Select from list below to filter articles by category</li>
+          <li>Click here to reset article category/search to all</li>
+        </ul>
+      </div>      
       {{options.knowledge_base}}
     </h2>
   </div>

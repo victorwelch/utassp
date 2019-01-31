@@ -16,7 +16,9 @@
 	//	
 	if (typeof c.data == typeof myUndefined) { c.data = {}; }
 	if (typeof c.data.articles == typeof myUndefined ) { c.data.articles = []; }
-	if (typeof c.data.title == typeof myUndefined ) { c.data.title = 'Articles...'; }
+	if (typeof c.data.title == typeof myUndefined ) { c.data.title = ''; } 
+	c.isSearchInput = true;
+	c.isSearchDisplay = !c.isSearchInput;
 	
 	$rootScope.$on('myCatSelectEvent', function (event, obj) {
 		//$window.location.href = '/ssp';
@@ -25,6 +27,8 @@
 		$scope.data.categoryId = obj.selectionId;
 		$scope.data.action = 'new';
 		$scope.data.pagination.currentPage = 0;
+		c.isSearchInput = true;
+		c.isSearchDisplay = !c.isSearchInput;		
 		get();
 	});
 	
@@ -56,11 +60,24 @@
 		$scope.data.action = 'search';
 		$scope.data.q = myInput.val();	
 		myInput.val('');
+		c.isSearchInput = false;
+		c.isSearchDisplay = !c.isSearchInput;		
 		get();
-		$('#searchInput').addClass('ng-hide');
-		$('#searchText').removeClass('ng-hide');		
-	}
+	};
 	
+	$scope.crCatchArtSearch = function(e) {
+		if ( e.keyCode === 13 ) {
+			var myInput=$(e.currentTarget);
+			$scope.data.action = 'search';
+			$scope.data.q = myInput.val();	
+			myInput.val('');
+			get();
+			c.isSearchInput = false;
+			c.isSearchDisplay = !c.isSearchInput;		
+		} else {
+			return false;
+		}	
+	};
 }]]></client_script>
         <controller_as>c</controller_as>
         <css>mark {&#13;
@@ -70,11 +87,17 @@
 &#13;
 h2.panel-title {&#13;
 	color: #ffffff;&#13;
-  text-shadow: 3px 3px 5px #000000;&#13;
+  	/* text-shadow: 3px 3px 5px #000000; */&#13;
 }&#13;
 &#13;
 .panel-body {&#13;
   padding:0px 0px 0px 0px;&#13;
+}&#13;
+&#13;
+$brand-custom:#78A6CC;&#13;
+&#13;
+.panel-custom  {&#13;
+	background-color: $brand-custom;&#13;
 }&#13;
 &#13;
 .panel-primary  {&#13;
@@ -310,18 +333,100 @@ div.myGreyGridTable {&#13;
   	font-size: 10px;&#13;
   }&#13;
   .myCol4 { width:0% }&#13;
+}&#13;
+&#13;
+.myTtip {&#13;
+  position: relative;&#13;
+  display: inline-block;&#13;
+  width:100%;&#13;
+}&#13;
+.myTtip .myTtiptext {&#13;
+  visibility: hidden;&#13;
+  width: 350px;&#13;
+  background-color: #fff;&#13;
+  color: #999;&#13;
+  text-align: left;&#13;
+  font-size:11px;&#13;
+  text-shadow:none;&#13;
+  border-radius: 6px;&#13;
+  padding: 5px 0;&#13;
+  border: 1px solid #999;&#13;
+  padding:10px 0px 10px 10px;&#13;
+&#13;
+  /* Position the tooltip */&#13;
+  top:-55px;&#13;
+  left:-10px;&#13;
+  position: absolute;&#13;
+  z-index: 1;&#13;
+}	&#13;
+.myTtip:hover .myTtiptext {&#13;
+  visibility: visible;&#13;
+}&#13;
+.myTtipUL {&#13;
+  list-style-type: disc;&#13;
+  margin-bottom: 0px;&#13;
+  padding-inline-start: 20px;&#13;
+}&#13;
+&#13;
+.mySearchDisplayHover {&#13;
+    &amp;:hover {&#13;
+      background-color: lighten($brand-custom, 20%);&#13;
+      cursor: pointer;&#13;
+      h2.panel-title {&#13;
+        text-shadow: 2px 2px 5px #000000;&#13;
+      }&#13;
+    }  &#13;
+}&#13;
+&#13;
+.myMarginBottom10px {&#13;
+   margin-bottom:10px;&#13;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
         <docs/>
-        <field_list>color</field_list>
+        <field_list/>
         <has_preview>false</has_preview>
         <id>utassp01_kb_category_page_widget</id>
         <internal>false</internal>
         <link/>
         <name>UTASSP KB Category Page  Widget</name>
         <option_schema>[&#13;
+  {&#13;
+    "name": "color",&#13;
+    "label": "Color",&#13;
+    "type": "choice",&#13;
+    "choices": [&#13;
+      {&#13;
+        "label": "Default",&#13;
+        "value": "default"&#13;
+      },&#13;
+      {&#13;
+        "label": "Custom",&#13;
+        "value": "custom"&#13;
+      },&#13;
+      {&#13;
+        "label": "Primary",&#13;
+        "value": "primary"&#13;
+      },&#13;
+      {&#13;
+        "label": "Success",&#13;
+        "value": "success"&#13;
+      },&#13;
+      {&#13;
+        "label": "Info",&#13;
+        "value": "info"&#13;
+      },&#13;
+      {&#13;
+        "label": "Warning",&#13;
+        "value": "warning"&#13;
+      },&#13;
+      {&#13;
+        "label": "Danger",&#13;
+        "value": "danger"&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
   {&#13;
     "name": "knowledge_base",&#13;
     "label": "Knowledge Base",&#13;
@@ -376,10 +481,20 @@ div.myGreyGridTable {&#13;
 	// populate the 'data' variable
 	if (typeof data.articles == typeof myUndefined) { data.articles = []; } 
 	if (typeof data.title == typeof myUndefined) { data.title = {}; }
-
-	var myUtassp = new u_utassp();
+	if (typeof data.kbname == typeof myUndefined) {
+		if (typeof input != typeof myUndefined) {
+			if (typeof input.kbname != typeof myUndefined) {
+				data.kbname = input.kbname;	
+			} else {
+				data.kbname='';
+			}
+		} else {
+				data.kbname='';		
+		}		
+	}
+	
 	var myCategoryId = '';
-	var myTitle = 'Articles (all)...';
+	var myTitle = 'Articles: #kbname (all categories)';
 	data.articles = [];
 	var myMaxItems = options.maxitems;
 	myMaxItems = myMaxItems>0 ? myMaxItems : 20; 
@@ -433,8 +548,12 @@ div.myGreyGridTable {&#13;
 	data.isSearch=false;
 	if (isData) {
 		myCategoryId=input.categoryId;
-		var l_title = myUtassp.getKbCategoryTreeTitle(myCategoryId);
+		var l_title = myU.getKbCategoryTreeTitle(myCategoryId);
 		if (l_title != '') { myTitle = l_title; }
+		if (myU.utilIsValueValid(data.kbname))
+		{
+			myTitle = myTitle.replace('#kbname',data.kbname);
+		}
 	} else if (isPage) {
 		myTitle = input.title;
 		myCategoryId=input.categoryId;
@@ -467,7 +586,9 @@ div.myGreyGridTable {&#13;
 		//
 		if (l_KbBase.length > 0)
 		{
-			l_uData = myUtassp.getKbBaseSysId(l_KbBase);
+			data.kbname = l_KbBase;
+			myTitle = myTitle.replace('#kbname',l_KbBase);
+			l_uData = myU.getKbBaseSysId(l_KbBase);
 			if (l_uData.uCanRead) {
 				myCategoryId = l_uData.uKbBaseSysId;		
 			}
@@ -481,7 +602,7 @@ div.myGreyGridTable {&#13;
 		if (isSearch) {
 			data.isSearch=true;
 			var mySearch = input.q;			
-			myData = myUtassp.getKbCategorySearchArticles(data.categoryId,mySearch,myFirstRow,myLastRow);
+			myData = myU.getKbCategorySearchArticles(data.categoryId,mySearch,myFirstRow,myLastRow);
 			var mySearchWordList = mySearch.split(' ');
 			for (var x=0,Lx=mySearchWordList.length;x<Lx;x++) 
 			{
@@ -491,13 +612,13 @@ div.myGreyGridTable {&#13;
 					var myResult = myData.articles[y].short_description.match(myRegEx);
 					if (myResult) {
 						for (var z=0,Lz=myResult.length;z<Lz;z++) {
-							myData.articles[y].short_description=myData.articles[y].short_description.replace(myResult[z],'<mark>'+myResult[z]+'</mark>');
+								myData.articles[y].short_description=myData.articles[y].short_description.replace(myResult[z],'<mark>'+myResult[z]+'</mark>');
 						}
 					}	
 				}				
 			}
 		} else {
-			myData = myUtassp.getKbCategoryArticles(data.categoryId,myFirstRow,myLastRow);						
+			myData = myU.getKbCategoryArticles(data.categoryId,myFirstRow,myLastRow);						
 		}
 		var myArticles = myData.articles;
 		var myRowCount = myData.rowCount;
@@ -515,7 +636,7 @@ div.myGreyGridTable {&#13;
         <sys_created_on>2018-11-07 20:08:59</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>facabc834fa12300f006121f9310c7c6</sys_id>
-        <sys_mod_count>20</sys_mod_count>
+        <sys_mod_count>91</sys_mod_count>
         <sys_name>UTASSP KB Category Page  Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -523,32 +644,43 @@ div.myGreyGridTable {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_facabc834fa12300f006121f9310c7c6</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:42:35</sys_updated_on>
+        <sys_updated_on>2019-01-29 23:46:16</sys_updated_on>
         <template><![CDATA[<div>
   <div class="panel panel-{{::options.color}} b myShadow"  dummy="{{::c.myLog()}}">
-    <div class="panel-heading">
-      <div style="margin-bottom:10px;">
-        <h2 class="panel-title">{{data.title}}</h2>
-      </div>
-      <div id="searchInput" class="input-group input-group-sm mb-3">
-            <input 
-            	class="form-control" 
-              type="text"
-              placeholder="Search selected articles below..." aria-label="Search selected articles" aria-describedby="basic-addon1">       
-            <span class="input-group-btn">
-              <button 
-                 name="search" 
-                 type="submit" class="btn btn-outline-secondary"
-                 title="Search"
-                 aria-label="Search"
-                 ng-click="artSearch($event)">
-	              <i class="fa fa-search"></i>
-              </button>
-            </span>	        
-      </div>
-      <div id="searchText" class="ng-hide">
-       	<h2 class="panel-title">Search: {{data.q}}</h2>
-      </div>
+    <div class="panel-heading" ng-class="{ mySearchDisplayHover:c.isSearchDisplay }">
+      <div id="panelHeadingGroup" class="myTtip" >
+        <div ng-show="c.isSearchDisplay" class="ng-hide myTtiptext">
+          <ul class="myTtipUL">
+            <li>Click here to reset search</li>
+          </ul>
+        </div>              
+        <div ng-class="{ myMarginBottom10px:c.isSearchInput }">
+          <h2 class="h4 panel-title">{{data.title}}</h2>
+        </div>
+        <div id="searchInput" class="input-group input-group-sm mb-3" ng-show="c.isSearchInput">
+              <input 
+                  class="form-control" 
+                  type="text"
+                  placeholder="Search selected articles below..." 
+                  aria-label="Search selected articles" 
+                  aria-describedby="basic-addon1"
+                  ng-keypress="crCatchArtSearch($event)";
+              >       
+              <span class="input-group-btn">
+                <button 
+                   name="search" 
+                   type="submit" class="btn btn-outline-secondary"
+                   title="Search"
+                   aria-label="Search"
+                   ng-click="artSearch($event)">
+                    <i class="fa fa-search"></i>
+                </button>
+              </span>	        
+        </div>
+        <div id="searchText" ng-show="c.isSearchDisplay" class="ng-hide">
+          <h2 class="panel-title">Search: {{data.q}}</h2>
+        </div>
+      </div>      
     </div>
     <div class="panel-body">
       <div ng-if="(data.articles.length > 0)">

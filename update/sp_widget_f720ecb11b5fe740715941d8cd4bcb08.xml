@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function($scope, u_cutassp) { 
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
+	//
+	/* widget controller */  
+	var c = this;
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
+	//	
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>div.iconlink {&#13;
+  display:block;&#13;
+  height:auto;&#13;
+  margin-bottom:20px;&#13;
+}&#13;
+@media (max-width: 991.9px) { &#13;
+  div.iconlink {&#13;
+	height:auto;&#13;
+  }&#13;
+}&#13;
+@media (max-width: 641.9px) { &#13;
+  div.iconlink {&#13;
+   height:auto;&#13;
+  }&#13;
+}&#13;
+@media (max-width: 479.9px) { &#13;
+  div.iconlink {&#13;
+   height:auto;&#13;
+  }&#13;
+}&#13;
+&#13;
+div.iconlink a label {&#13;
+  display: block;&#13;
+  font-size: 2.0 rem;&#13;
+  font-weight: 300;&#13;
+  line-height: 1.1;&#13;
+  padding: 0;&#13;
+  margin: 0 0 10px 0;    &#13;
+}&#13;
+&#13;
+a {&#13;
+  color:#3a3f51;&#13;
+  margin: auto;&#13;
+  padding: 0;&#13;
+  width:100%;&#13;
+  height:100%;&#13;
+  border:1px solid #cccccc;&#13;
+  background:#dedede;&#13;
+  border-radius: 5px;  &#13;
+  &amp;:hover {&#13;
+    color:#428bca;&#13;
+    text-decoration: underline;&#13;
+    background:#efefef;&#13;
+  }&#13;
+}&#13;
+&#13;
+h3 {&#13;
+  margin-top: 0px; &#13;
+  margin-bottom:5px;&#13;
+}&#13;
+&#13;
+.myShadow {&#13;
+-webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
+-moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
+box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
+}&#13;
+&#13;
+/* COLOR BOX ---------- */&#13;
+&#13;
+a.color_box {&#13;
+  display: block;&#13;
+  position: relative;&#13;
+  padding: 10px 10px 10px 70px;&#13;
+  border-radius: 20px;&#13;
+  margin-top: 0px;&#13;
+  margin-bottom: 0px;&#13;
+}&#13;
+&#13;
+a.color_box .image-container {&#13;
+  position:absolute;&#13;
+  left: 5px;&#13;
+  top: 10px;&#13;
+  width:60px;&#13;
+  text-align: center;&#13;
+}&#13;
+&#13;
+.icon-link-background-white {&#13;
+  background-color: #ffffff;&#13;
+  &amp;:hover {&#13;
+    background-color: #eeeeee;&#13;
+  }&#13;
+}&#13;
+&#13;
+.icon-link-background-primary {&#13;
+  background-color: $brand-primary;&#13;
+  &amp;:hover {&#13;
+    color: darken($brand-primary, 20%);&#13;
+  }&#13;
+}&#13;
+&#13;
+.icon-link-background-info {&#13;
+  background-color: $brand-info;&#13;
+}&#13;
+&#13;
+.icon-link-background-success {&#13;
+  background-color: $brand-success;&#13;
+}&#13;
+&#13;
+.icon-link-background-warning {&#13;
+  background-color: $brand-warning;&#13;
+}&#13;
+&#13;
+.icon-link-background-danger {&#13;
+  background-color: $brand-danger;&#13;
+}&#13;
+&#13;
+.icon-link-background-default {&#13;
+  background-color: $brand-default;&#13;
+}&#13;
+&#13;
+.text-primary {&#13;
+  color: $brand-primary;&#13;
+  &#13;
+  &amp;:hover {&#13;
+    color: darken($brand-primary, 20%);&#13;
+  }&#13;
+}&#13;
+&#13;
+.text-info {&#13;
+  color: $brand-info;&#13;
+  &#13;
+  &amp;:hover {&#13;
+    color: darken($brand-info, 20%);&#13;
+  }&#13;
+}&#13;
+&#13;
+.text-success {&#13;
+  color: $brand-success;&#13;
+  &#13;
+  &amp;:hover {&#13;
+    color: darken($brand-success, 20%);&#13;
+  }&#13;
+}&#13;
+&#13;
+.text-warning {&#13;
+  color: $brand-warning;&#13;
+  &#13;
+  &amp;:hover {&#13;
+    color: darken($brand-warning, 20%);&#13;
+  }&#13;
+}&#13;
+&#13;
+.text-danger {&#13;
+  color: $brand-danger;&#13;
+  &#13;
+  &amp;:hover {&#13;
+    color: darken($brand-danger, 20%);&#13;
+  }&#13;
+}&#13;
+&#13;
+.text-default {&#13;
+  color: $text-color;&#13;
+  &#13;
+  &amp;:hover {&#13;
+    color: $brand-primary;&#13;
+    text-decoration: underline;&#13;
+  }&#13;
+}</css>
+        <data_table>sp_instance_link</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list>title,short_description,type,sc_category,url,kb_article,kb_topic,kb_category,sc_cat_item,sp_page,color,u_image</field_list>
+        <has_preview>false</has_preview>
+        <id>utassp01_simple_image_link_widget</id>
+        <internal>false</internal>
+        <link/>
+        <name>UTASSP Simple Image Link Widget</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =  'utassp01_image_link_widget > '+ $sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
+	//
+	var gr = $sp.getInstanceRecord();	
+	data.href = $sp.getMenuHREF(gr);
+	data.imagesrc = gr.getElement('u_image').getRefRecord().getValue('name');
+	data.target = options.target || "";
+})($sp, input, data, options, gs);
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-01-29 20:50:11</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f720ecb11b5fe740715941d8cd4bcb08</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>UTASSP Simple Image Link Widget</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_widget_f720ecb11b5fe740715941d8cd4bcb08</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-01-29 21:14:25</sys_updated_on>
+        <template><![CDATA[<div class="iconlink" dummy="{{::c.myLog()}}">
+  <!--// Color Box -->
+  <a ng-href="{{::data.href}}" class="color_box {{::options.class_name}} icon-link-background-white myShadow" target="{{::data.target}}">
+    <div class="image-container">
+      <img class="media-object" src="{{::data.imagesrc}}" width="60" height="52" alt="${{{::options.title}}}">
+    </div>
+    <h3>{{::options.title}}</h3>
+    <span>{{::options.short_description}}</span>
+  </a>
+</div>]]></template>
+    </sp_widget>
+</record_update>
