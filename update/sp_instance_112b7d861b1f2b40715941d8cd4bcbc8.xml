@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <roles/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">c03a71861b1f2b40715941d8cd4bcbf8</sp_column>
+        <sp_widget display_value="UTASSP KB View Categories Widget 2">06a154ca1bd72b40715941d8cd4bcba0</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-01-30 22:06:05</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>112b7d861b1f2b40715941d8cd4bcbc8</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Enable/Disable Filter Articles By Category</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_instance_112b7d861b1f2b40715941d8cd4bcbc8</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-01-30 22:06:33</sys_updated_on>
+        <title>Enable/Disable Filter Articles By Category</title>
+        <url/>
+        <widget_parameters/>
+    </sp_instance>
+</record_update>

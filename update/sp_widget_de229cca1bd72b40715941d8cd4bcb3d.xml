@@ -1,0 +1,928 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function ($scope, $rootScope, $element, spUtil, $window, $timeout, u_cutassp) {
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
+	//
+	/* widget controller */
+	var c = this;
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
+	//	
+	c.isCatSelected = false;
+	
+	//*** Save location object
+	if (!$rootScope.isKbCatShow)
+	{
+		var myRowDiv=$element.closest('div.sp-row-content');
+		var myRow=myRowDiv.parent();
+		myRow.hide();
+	}
+	
+	//*** Span Mouse Over
+	$scope.mySpanMouseOver = function(e) 
+	{
+		var myEl=e.currentTarget;
+		//
+		var myRow=$(myEl);	
+		var myClasses=myRow.attr('class');
+		var isSelected = (myClasses.indexOf('myDivTableRowSelected')>-1);
+		if (isSelected) { return; }		
+		//		
+	  $(myEl).toggleClass('myRowHover');
+		var mySpanEl = $(myEl).find('span[thistriangle]').first();
+
+		myClasses = mySpanEl.attr('class');
+		if (myClasses.indexOf('z')<0) {
+			mySpanEl.toggleClass('glyphicon-triangle-right');
+			mySpanEl.toggleClass('glyphicon-triangle-bottom');			
+			mySpanEl.toggleClass('mySpanTriHov');			
+		} else {
+			mySpanEl.toggleClass('mySpanTriZHov');						
+		}
+	};
+	
+	//*** Span Mouse Over
+	$scope.mySpanMouseOff = function(e) 
+	{
+		var myEl=e.currentTarget;
+		//
+		var myRow=$(myEl);	
+		var myClasses=myRow.attr('class');
+		var isSelected = (myClasses.indexOf('myDivTableRowSelected')>-1);
+		if (isSelected) { return; }		
+		//
+		var mySpanEl=$(myEl).find('span[thistriangle]').first();
+		myClasses = mySpanEl.attr('class');
+		var myCurrentTriangle = mySpanEl.attr('thistriangle');
+		if (myClasses.indexOf('z')<0) {
+			if (myCurrentTriangle.indexOf('right')>-1) {
+				mySpanEl.removeClass('glyphicon-triangle-bottom').addClass('glyphicon-triangle-right');
+			} else {
+				mySpanEl.removeClass('glyphicon-triangle-right').addClass('glyphicon-triangle-bottom');
+			}
+		}
+		mySpanEl.removeClass('mySpanTriHov');
+		mySpanEl.removeClass('mySpanTriZHov');						
+	  $(myEl).removeClass('myRowHover');
+	};
+	
+			
+	//*** Kb Selected
+	$scope.myKbSelect = function(e)
+	{
+		c.isCatSelected = false;
+		var myEl=e.currentTarget;
+		//
+		var myTopRoot = $(myEl).closest('div.panel');
+		var myRoot = myTopRoot.find('div.myDivTableBody');
+		myRoot.find('div.myDivTableRowSelected').removeClass('myDivTableRowSelected'); //De-select all
+		myRoot.find('[thistriangle*="bottom"]').attr('thistriangle','right');
+		myRoot.find('[class*="glyphicon-triangle-bottom"]').removeClass('glyphicon-triangle-bottom').addClass('glyphicon-triangle-right');		
+		myRoot.find('span.mySpanTriZSelected').removeClass('mySpanTriZSelected');      //De-select all, including "Zero" spans
+		var myRowsToClose=myRoot.find('[class*="myLevel-"]').not('[class*="myLevel-1"]');
+		myRowsToClose.addClass('ng-hide');
+		//
+		var mySelectionId=$(myEl).attr('thisid');
+		var obj = { selectionId: mySelectionId };
+		$rootScope.$broadcast('myCatSelectEvent', obj);
+	};
+	
+	//*** a Selected
+	$scope.myCatSelect = function(e) {
+		c.isCatSelected = true;
+		var myEl=e.currentTarget;
+		var myRow=$(myEl);	
+		var myClasses=myRow.attr('class');
+		var isSelected = (myClasses.indexOf('myDivTableRowSelected')>-1);
+		if (isSelected) { return; }
+		
+		// Mouse off stuff
+		var mySpanEl=$(myEl).find('span[thistriangle]').first();
+		myClasses = mySpanEl.attr('class');
+		var isSpanZ = (myClasses.indexOf('z')>-1);
+		var myCurrentTriangle = mySpanEl.attr('thistriangle');
+		if (myCurrentTriangle.indexOf('right')>-1) {
+			mySpanEl.removeClass('glyphicon-triangle-bottom').addClass('glyphicon-triangle-right');
+		} else {
+			mySpanEl.removeClass('glyphicon-triangle-right').addClass('glyphicon-triangle-bottom');
+		}
+		mySpanEl.removeClass('mySpanTriHov');
+		mySpanEl.removeClass('mySpanTriZHov');		
+		myRow.removeClass('myRowHover');		
+
+		// Cleanup All 
+		var myRoot=$(myEl).closest('.myDivTableBody');
+		myRoot.find('div.myDivTableRowSelected').removeClass('myDivTableRowSelected'); //De-select all
+		myRoot.find('span.mySpanTriZSelected').removeClass('mySpanTriZSelected');      //De-select all, including "Zero" spans
+
+		//Select catid stuff
+		myRow.addClass('myDivTableRowSelected');  //Select current row
+		if (isSpanZ) {
+			mySpanEl.addClass('mySpanTriZSelected'); //Selected current "Zero" span				
+		}		
+		var mySelectionId = myRow.attr('thisid'); //Now we've got our catid
+		var obj = { selectionId: mySelectionId };
+		
+		// Handle triangle open stuff
+		var isToOpen = myCurrentTriangle.indexOf('right')>-1;	//If "right" triangle, then we gotta open
+		var myRowLevel=this.myGetLevel(myRow);
+		var myTree=this.myGetTree(myRow);
+		var thisid=myRow.attr('thisid');
+		var thisparentid=myRow.attr('thisparentid');
+		var myRowsAll={};
+		myRowsAll=myRoot.find('[class*="myLevel-"]');
+		var myRowsToClose={};
+		myRowsToClose=myRoot.find('[class*="myLevel-"]').not('[class*="myLevel-1"]');
+		myRowsToClose.addClass('ng-hide');
+		if (isToOpen) {
+			// First, make everything "right" triangle
+			myRoot.find('[thistriangle*="bottom"]').attr('thistriangle','right');
+			myRoot.find('[class*="glyphicon-triangle-bottom"]').removeClass('glyphicon-triangle-bottom').addClass('glyphicon-triangle-right');
+			// Make selected row "bottom" triangle
+			myRow.attr('thistriangle','bottom');
+			for (var i=0,iL=myTree.length;i<iL;i++) {
+				myRoot.find('[thisid="'+myTree[i]+'"]').find('[class*="glyphicon-triangle-right"]').removeClass('glyphicon-triangle-right').addClass('glyphicon-triangle-bottom');
+				myRoot.find('[thisid="'+myTree[i]+'"]').find('[class*="glyphicon-triangle-bottom"]').attr('thistriangle','bottom');
+				myRoot.find('[thisparentid="'+myTree[i]+'"]').removeClass('ng-hide');
+			}
+		} else {
+			// Make everything "right" triangle
+			myRoot.find('[thistriangle*="right"]').attr('thistriangle','right');
+			myRoot.find('[class*="glyphicon-triangle-bottom"]').removeClass('glyphicon-triangle-bottom').addClass('glyphicon-triangle-right');
+			//myRow.attr('thistriangle','right');
+			for (var j=myTree.length-1;j>0;j--) {
+			  myRoot.find('[thisid="'+myTree[j]+'"]').find('[class*="glyphicon-triangle-right"]').removeClass('glyphicon-triangle-right').addClass('glyphicon-triangle-bottom');
+			  myRoot.find('[thisid="'+myTree[j]+'"]').find('[class*="glyphicon-triangle-right"]').attr('thistriangle','right');
+				myRoot.find('[thisparentid="'+myTree[j]+'"]').removeClass('ng-hide');
+			}
+		}		
+		
+		$rootScope.$broadcast('myCatSelectEvent', obj);
+		return false;
+	};
+
+	$scope.myGetLevel = function(rowEl) {
+		var thisclass=rowEl.attr('class');
+		for (var i=1;i<9;i++)
+		{
+			if (thisclass.indexOf('myLevel-'+i)>-1) {return i;}
+		}
+		return 0;
+	};
+
+	$scope.myGetTree = function(thisRow) {
+		var myRow = thisRow;
+		var myTree = [];
+		var myId;
+		var myParentId;
+		var myLevel;
+		do {
+			myId = myRow.attr('thisid');
+			myTree.push(myId);
+			myLevel = this.myGetLevel(myRow);
+			if (myLevel>1) {
+				myParentId=myRow.attr('thisparentid');
+				myRow=myRow.siblings('[thisid="'+myParentId+'"]');
+			} else {
+				break;
+			}
+		} while(true);
+		return myTree;
+	};
+						
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>a {
+  color:#3a3f51;
+}
+
+li &gt; a {
+  font-size:11px;
+  display: block;
+  width: 100%;
+  height: 100%; 
+  &amp;:hover {
+    //color:#428bca;
+    //text-decoration: underline;
+    //font-weight: bold;
+  }
+}
+
+.list-group {
+  border-style:none;
+}
+
+ul.list-group {
+  margin-bottom: 0px;
+  padding: 0px;
+
+  li.list-group-item {
+    padding: 0px 0px;
+    border-style:none;
+    background-color: transparent;
+    border-style: none;    
+
+    span.glyphicon {
+      float: left;
+      display: inline;
+      font-size:14px;
+      margin-top:2px;
+      padding-right:5px;
+      color:#888888;
+    }    
+    span.mySpanLevel-1 { 
+      padding-left: 0px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-2 { 
+      padding-left: 15px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-3 { 
+      padding-left: 30px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-4 { 
+      padding-left: 45px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-5 { 
+      padding-left: 60px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-6 { 
+      padding-left: 75px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-7 { 
+      padding-left: 90px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-8 { 
+      padding-left: 105px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-9 { 
+      padding-left: 120px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-1z { 
+      color: #ffffff;
+      padding-left: 0px; 
+    }
+    span.mySpanLevel-2z { 
+      color: #ffffff;
+      padding-left: 15px; 
+    }
+    span.mySpanLevel-3z { 
+      color: #ffffff;
+      padding-left: 30px; 
+    }
+    span.mySpanLevel-4z { 
+      color: #ffffff;
+      padding-left: 45px; 
+    }    
+    span.mySpanLevel-5z { 
+      color: #ffffff;
+      padding-left: 60px; 
+    }    
+    span.mySpanLevel-6z { 
+      color:  #ffffff;
+      padding-left: 75px; 
+    }    
+    span.mySpanLevel-7z { 
+      color: #ffffff;
+      padding-left: 90px; 
+    }    
+    span.mySpanLevel-8z { 
+      color: #767676;
+      padding-left: 105px; 
+    }    
+    span.mySpanLevel-9z { 
+      color: #ffffff;
+      padding-left: 120px; 
+    }    
+    
+    a {
+      padding: 0px 5px;
+    }
+  }
+}
+
+.mySpanTriHov {color:#eeeeee !important; text-shadow:2px 2px 3px #000000;}
+.mySpanTriZHov {color:#e6e8ea !important;}
+.myRowHover {cursor: pointer; background: #e6e8ea !important;}
+.mySpanTriZSelected {color:#428bca !important;}
+
+span.label {
+  border-radius: 1em;
+  text-align: center;
+  display: inline;
+  margin-top: 4px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 3px;
+  padding-right: 3px;  
+  font-size:9px;  
+  font-weight:normal;
+}
+
+h2.panel-title {
+	color: #ffffff;
+}
+
+.panel-body {
+  padding:0px 0px 0px 0px;
+}
+
+$brand-custom:#78A6CC;
+/* $brand-custom:#c2d7e8; */
+
+.panel-custom  {
+	background-color: $brand-custom;
+  	/* //div.panel-heading {
+    //&amp;:hover {
+    //  background-color: lighten($brand-custom, 20%);
+    //  cursor: pointer;
+    //  h2.panel-title {
+    //    text-shadow: 2px 2px 5px #000000;
+    //} */
+    }  
+  }     
+}
+
+
+div.panel-primary  {
+  background-color: $brand-primary;
+  /* //div.panel-heading {
+    //&amp;:hover {
+    //  background-color: lighten($brand-custom, 20%);
+    //  cursor: pointer;
+    //  h2.panel-title {
+    //    text-shadow: 2px 2px 5px #000000;
+    //}  
+  //}  */  
+}
+
+div.panel-info {
+  background-color: $brand-info;
+  /* //div.panel-heading {
+    //&amp;:hover {
+    //  background-color: lighten($brand-custom, 20%);
+    //  cursor: pointer;
+    //  h2.panel-title {
+    //    text-shadow: 2px 2px 5px #000000;
+    //}  
+  //}  */
+}
+
+div.panel-success {
+  background-color: $brand-success;
+  /* //div.panel-heading {
+    //&amp;:hover {
+    //  background-color: lighten($brand-custom, 20%);
+    //  cursor: pointer;
+    //  h2.panel-title {
+    //    text-shadow: 2px 2px 5px #000000;
+    //}  
+  //}  */
+}
+
+div.panel-warning {
+  background-color: $brand-warning;
+  /* //div.panel-heading {
+    //&amp;:hover {
+    //  background-color: lighten($brand-custom, 20%);
+    //  cursor: pointer;
+    //  h2.panel-title {
+    //    text-shadow: 2px 2px 5px #000000;
+    //} 
+  //}   */
+}
+
+div.panel-danger {
+  background-color: $brand-danger;
+  /* //div.panel-heading {
+    //&amp;:hover {
+    //  background-color: lighten($brand-custom, 20%);
+    //  cursor: pointer;
+    //  h2.panel-title {
+    //    text-shadow: 2px 2px 5px #000000;
+    //} 
+  //}  */
+}
+
+.text-heading {
+  color: #ffffff;
+  
+  &amp;:hover {
+    color: #cccccc;
+    text-decoration: underline;
+  }
+}
+
+/* ************ */
+/* DivTable  */
+.myDivTable{ 
+  display:table; 
+  width: 100%;
+  table-layout: fixed;
+}
+.myDivTableRow { display:table-row; }
+.myDivTableHeading { display:table-header-group;}
+.myDivTableCell, .myDivTableHead { display:table-cell;}
+.myDivTableFoot { display:table-footer-group;}
+.myDivTableBody { display:table-row-group;}
+
+div.myGreyGridTable {
+  width:100%;
+  text-align:left;
+  border-collapse:collapse;
+}
+
+/* myDivTableHeading */
+.myDivTable.myGreyGridTable .myDivTableHeading {
+  background:#eeeeee;
+}
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+  border-bottom:1px solid #000000;
+}
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+  .myDivTableHead {
+    font-size:10px;
+  	font-weight:bold;
+  	color:#000000;
+  	text-align:center;
+    vertical-align: middle;
+  	padding:1px 1px 1px 4px;
+    word-wrap: break-word;
+  }
+}
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow   {
+  .myDivTableHead.myLeft { text-align:left; }
+}
+
+/* myDivTableBody */
+.myDivTable.myGreyGridTable .myDivTableBody  {
+  .myDivTableRow.myLevel-1 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-2 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-3 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-4 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-5 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-6 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-7 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-8 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-9 { background: #fff; border-bottom:1px solid #aaaaaa; }
+
+}
+
+.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow .{
+  .myDivTableCell  {
+      border-right:1px solid #bbbbbb; 
+      padding:1px 4px;
+  }
+}
+.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+  .myDivTableCell.myCtr { text-align:center; }
+}
+
+div.myDivTable.myGreyGridTable &gt; div.myDivTableBody &gt; div.myDivTableRow.myDivTableRowSelected  {
+    background:#428bca;
+    color:#000000;   
+  	&amp;:hover { cursor: default; }
+}
+
+div.myDivTable.myGreyGridTable &gt; div.myDivTableBody &gt; div.myDivTableRow.myDivTableRowSelected &gt; div.myDivTableCell &gt;ul.list-group &gt; li.list-group-item &gt; a {
+    color:#ffffff;   
+}
+
+div.myDivTable.myGreyGridTable &gt; div.myDivTableBody &gt; div.myDivTableRow.myDivTableRowSelected &gt; div.myDivTableCell &gt;ul.list-group &gt; li.list-group-item {
+    span.mySpanLevel-1 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-2 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-3 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-4 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-5 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-6 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-7 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-8 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-9 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-1z { 
+      color: #ffffff;
+    }
+    span.mySpanLevel-2z { 
+      color: #ffffff;
+    }
+    span.mySpanLevel-3z { 
+      color: #ffffff;
+    }
+    span.mySpanLevel-4z { 
+      color: #ffffff;
+    }    
+    span.mySpanLevel-5z { 
+      color: #ffffff;
+    }    
+    span.mySpanLevel-6z { 
+      color:  #ffffff;
+    }    
+    span.mySpanLevel-7z { 
+      color: #ffffff;
+    }    
+    span.mySpanLevel-8z { 
+      color: #ffffff;
+    }    
+    span.mySpanLevel-9z { 
+      color: #ffffff;
+    }  
+}
+
+.myCol1 { width:80%; border-right: 1px solid #999999; }
+.myCol2 { width:20%; border-right: 0; }
+
+/* Foot Style */
+.myGreyGridTable .myTableFootStyle {
+  font-weight:bold;
+  color:#333333;
+  border-top:1px solid #333333;
+}
+
+/* Link text */
+a.myDivTableRow {
+  color:#3a3f51;
+  &amp;:hover {
+    color:#428bca;
+    text-decoration: underline;
+  }
+}
+.myShadow {
+-webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+-moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+}
+/* **************** */
+ .h4.myCatSelectHdr {
+    font-size:14px;
+    font-weight:bold;    
+  }
+/**/
+.myPanelHdPad {
+   padding-left:10px;
+   padding-right:5px;
+ }
+/**/ 
+@media (max-width: 1160px) { 
+  .h4.myCatSelectHdr {
+    font-weight:normal;
+  }  
+}
+// 
+@media (max-width: 1155px) { 
+  .h4.myCatSelectHdr {
+    font-size:12px;
+    font-weight:bold;
+  }  
+}
+/**/ 
+@media (max-width: 1110px) { 
+  .h4.myCatSelectHdr {
+    font-size:12px;
+    font-weight:normal;
+  }  
+}
+/**/ 
+@media (max-width: 1060px) { 
+  .h4.myCatSelectHdr {
+    font-size:11px;
+    font-weight:normal;
+  }  
+}
+/**/
+@media (max-width: 991px) { 
+  .h4.myCatSelectHdr {
+    font-size:16px;
+    font-weight:bold;
+  }  
+.myPanelHdPad {
+   padding-left:15px;
+   padding-right:15px;
+ }  
+}
+/**/
+@media (max-width: 834) {
+  .h4.myCatSelectHdr {
+    font-size:15px;
+  }
+}
+
+/* // Medium devices (tablets, 768px and less) */
+@media (max-width: 768px) { 
+  .h4.myCatSelectHdr {
+    font-size:14px;
+    font-weight:normal;
+  }  
+}
+
+/* // Small devices (landscape phones, 576px and less) */
+@media (max-width: 576px) { 
+  .h4.myCatSelectHdr {
+    font-size:12px;
+    font-weight:normal;
+  }    
+}
+
+.myRefreshButton {
+	align-items: flex-start;
+    background-color: #dddddd;
+    background-image: none;
+    border-bottom-color: transparent;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-collapse: separate;
+    border-image-outset: 0px;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-left-color: transparent;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: transparent;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-top-color: transparent;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    box-sizing: border-box;
+    color: #717171;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Open Sans", sans-serif;
+    font-size: 10px;
+    font-stretch: 100%;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-east-asian: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: 400;
+    height: 16px;
+    letter-spacing: normal;
+    line-height: 15px;
+    margin-bottom: 0px;
+    margin-left: -1px;
+    margin-right: -1px;
+    margin-top: 0px;
+    marker-end: none;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-bottom: 0px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 0px;
+    position: relative;
+    text-align: center;
+    text-indent: 0px;
+    text-rendering: auto;
+    text-shadow: none;
+    text-size-adjust: 100%;
+    text-transform: none;
+  	top:-1px;
+    touch-action: manipulation;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-spacing: 0px;
+    writing-mode: horizontal-tb;
+    z-index: 2;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-border-image: none;
+}
+  
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>utassp03_kb_base_widget</id>
+        <internal>false</internal>
+        <link/>
+        <name>UTASSP KB Base Widget 3</name>
+        <option_schema>[
+  {
+    "name": "color",
+    "label": "Color",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Default",
+        "value": "default"
+      },
+      {
+        "label": "Custom",
+        "value": "custom"
+      },
+      {
+        "label": "Primary",
+        "value": "primary"
+      },
+      {
+        "label": "Success",
+        "value": "success"
+      },
+      {
+        "label": "Info",
+        "value": "info"
+      },
+      {
+        "label": "Warning",
+        "value": "warning"
+      },
+      {
+        "label": "Danger",
+        "value": "danger"
+      }
+    ]
+  },
+  {
+    "name": "knowledge_base",
+    "label": "Knowledge Base",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Business Affairs Internal",
+        "value": "Business Affairs Internal"
+      },
+      {
+        "label": "Business Affairs Knowledge Base",
+        "value": "Business Affairs Knowledge Base"
+      },
+      {
+        "label": "OIT Internal",
+        "value": "OIT Internal"
+      },
+      {
+        "label": "OIT Knowledge Base",
+        "value": "OIT Knowledge Base"
+      }
+    ]
+  }
+]</option_schema>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =  'utassp02_kb_base_widget > '+$sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
+	//
+
+	data.knowledge_base = options.knowledge_base || "";	
+	var myCatId = $sp.getParameter('catid') || "";
+	data.catid = myCatId;
+	
+	var myUtassp = new u_utassp();
+	var myUdata = myUtassp.getKbCategoriesBase(data.knowledge_base);
+
+	data.uCanRead = myUdata.uCanRead;
+	data.uKbBaseSysId = myUdata.uKbBaseSysId;
+	data.uCategoryList = myUdata.uCategoryList;
+	data.uDepth = myUdata.uDepth;
+	data.uFlatCategoryList=myUdata.uFlatCategoryList;
+
+})($sp, input, data, options, gs);]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-01-30 14:27:24</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>de229cca1bd72b40715941d8cd4bcb3d</sys_id>
+        <sys_mod_count>36</sys_mod_count>
+        <sys_name>UTASSP KB Base Widget 3</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_widget_de229cca1bd72b40715941d8cd4bcb3d</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-01-30 21:28:43</sys_updated_on>
+        <template><![CDATA[<div class="panel panel-{{::options.color}} b myShadow" dummy="{{::c.myLog()}}">
+  <div class="panel-heading" ng-class="{ myPanelHdPad:c.isCatSelected }">
+    <h2 class="h4 panel-title myCatSelectHdr">
+      Filter articles by selected category
+      <span id="resetBtn" ng-show="c.isCatSelected" class="ng-hide mb-3" style="margin-left:3px;">
+        <button 
+                name="refresh" 
+                type="submit"              
+                class="btn btn-outline-secondary myRefreshButton"
+                title="Reset to 'all'"
+                aria-label="Reset to 'all'"
+                ng-click="myKbSelect($event)"
+                thisid="{{c.data.uKbBaseSysId}}">
+          <i class="fa fa-refresh"></i>
+        </button>              
+      </span>	     
+    </h2>
+  </div>
+  <div class="panel-body">
+    <div ng-if="(c.data.uCategoryList.length > 0)">
+      <div class="myDivTable myGreyGridTable">
+        <div class="myDivTableHeading">
+          <div class="myDivTableRow">
+            <div class="myDivTableHead myCtr myCol1" style="">Category</div>
+            <div class="myDivTableHead myCtr myCol2">No. of Articles</div>
+          </div>
+        </div>      
+        <div class="myDivTableBody">
+          <div class="myDivTableRow myLevel-{{category.level}}" ng-mouseenter="mySpanMouseOver($event)" ng-mouseleave="mySpanMouseOff($event)" ng-click="myCatSelect($event)" ng-repeat="category in c.data.uFlatCategoryList" ng-hide="category.level>1" thisid="{{category.value}}" thisparentid={{category.parentid}}>
+            <div class="myDivTableCell left myCol1" >
+              <ul class="list-group">
+                <li class="list-group-item" >
+                  <span ng-if="(category.subcount > 0)" class="glyphicon glyphicon-triangle-right mySpanLevel-{{category.level}}" thistriangle="right"></span>
+                  <span ng-if="(category.subcount < 1)" class="glyphicon glyphicon-triangle-right mySpanLevel-{{category.level}}z" thistriangle="right"></span>
+                  <a tabindex="0" >
+                    {{category.label}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="myDivTableCell myCtr myCol2">
+              <span ng-if="(category.artcount > 0)" class="label label-as-badge label-primary" tabindex="-1">{{category.artcount}}</span> 
+            </div>
+          </div>          
+        </div>
+      </div> 
+    </div>
+  </div>
+  <div class="panel-{{::options.color}} panel-footer clearfix">
+  </div>
+</div>
+
+]]></template>
+    </sp_widget>
+</record_update>

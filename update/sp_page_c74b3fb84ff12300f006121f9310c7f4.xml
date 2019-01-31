@@ -1,109 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
     <sp_page action="INSERT_OR_UPDATE">
         <category>kb</category>
-        <css>@media  (min-width: 768px) {&#13;
-	.container {&#13;
-		width: 762px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 800px) {&#13;
-	.container {&#13;
-		width: 794px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 810px) {&#13;
-	.container {&#13;
-		width: 804px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 880px) {&#13;
-	.container {&#13;
-		width: 874px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 890px) {&#13;
-	.container {&#13;
-		width: 884px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 900px) {&#13;
-	.container {&#13;
-		width: 894px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 910px) {&#13;
-	.container {&#13;
-		width: 904px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 920px) {&#13;
-	.container {&#13;
-		width: 914px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 930px) {&#13;
-	.container {&#13;
-		width: 924px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 940px) {&#13;
-	.container {&#13;
-		width: 934px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 950px) {&#13;
-	.container {&#13;
-		width: 944px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 960px) {&#13;
-	.container {&#13;
-		width: 950px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 970px) {&#13;
-	.container {&#13;
-		width: 960px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 990px) {&#13;
-	.container {&#13;
-		width: 980px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 1002px) {&#13;
-	.container {&#13;
-		width: 992px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 1010px) {&#13;
-	.container {&#13;
-		width: 1000px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 1060px) {&#13;
-	.container {&#13;
-		width: 1050px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 1110px) {&#13;
-	.container {&#13;
-		width: 1100px;&#13;
-	}&#13;
-}&#13;
-@media (min-width: 1150px) {&#13;
-	.container {&#13;
-		width: 1140px;&#13;
-	}&#13;
-}&#13;
-@media  (min-width: 1200px) {&#13;
-	.container {&#13;
-		width: 1170px;&#13;
-	}&#13;
-}&#13;
-/*&#13;
-&#13;
-*/</css>
+        <css>@media  (min-width: 768px) {
+	.container {
+		width: 762px;
+	}
+}
+@media  (min-width: 800px) {
+	.container {
+		width: 794px;
+	}
+}
+@media  (min-width: 810px) {
+	.container {
+		width: 804px;
+	}
+}
+@media  (min-width: 880px) {
+	.container {
+		width: 874px;
+	}
+}
+@media  (min-width: 890px) {
+	.container {
+		width: 884px;
+	}
+}
+@media  (min-width: 900px) {
+	.container {
+		width: 894px;
+	}
+}
+@media  (min-width: 910px) {
+	.container {
+		width: 904px;
+	}
+}
+@media  (min-width: 920px) {
+	.container {
+		width: 914px;
+	}
+}
+@media  (min-width: 930px) {
+	.container {
+		width: 924px;
+	}
+}
+@media  (min-width: 940px) {
+	.container {
+		width: 934px;
+	}
+}
+@media  (min-width: 950px) {
+	.container {
+		width: 944px;
+	}
+}
+@media  (min-width: 960px) {
+	.container {
+		width: 950px;
+	}
+}
+@media  (min-width: 970px) {
+	.container {
+		width: 960px;
+	}
+}
+@media  (min-width: 990px) {
+	.container {
+		width: 980px;
+	}
+}
+@media  (min-width: 1002px) {
+	.container {
+		width: 992px;
+	}
+}
+@media  (min-width: 1010px) {
+	.container {
+		width: 1000px;
+	}
+}
+@media  (min-width: 1060px) {
+	.container {
+		width: 1050px;
+	}
+}
+@media  (min-width: 1110px) {
+	.container {
+		width: 1100px;
+	}
+}
+@media (min-width: 1150px) {
+	.container {
+		width: 1140px;
+	}
+}
+@media  (min-width: 1200px) {
+	.container {
+		width: 1170px;
+	}
+}
+/*
+
+*/
+@media (max-width: 834) {
+  h2.h4 {
+    font-size:15px;
+  }
+}
+
+// Medium devices (tablets, 768px and less)
+@media (max-width: 768px) { 
+  h2.h4 {
+    font-size:14px;
+    font-weight:normal;
+  }  
+}
+
+// Small devices (landscape phones, 576px and less)
+@media (max-width: 576px) { 
+  h2.h4 {
+    font-size:12px;
+    font-weight:normal;
+  }    
+}</css>
         <draft>false</draft>
         <dynamic_title_structure/>
         <id>utassp01_kb_oit_knowledge</id>
@@ -116,7 +137,7 @@
         <sys_created_on>2018-11-13 20:39:24</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>c74b3fb84ff12300f006121f9310c7f4</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>utassp01_kb_oit_knowledge</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -124,7 +145,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_page_c74b3fb84ff12300f006121f9310c7f4</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2018-12-12 15:32:54</sys_updated_on>
+        <sys_updated_on>2019-01-30 22:38:56</sys_updated_on>
         <title>UTASSP OIT Knowledge Base</title>
     </sp_page>
 </record_update>

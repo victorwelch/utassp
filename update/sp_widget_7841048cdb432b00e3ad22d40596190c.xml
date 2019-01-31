@@ -48,6 +48,7 @@
 				if ($rootScope.bc[idx].label == bcitem.label) {
 					isSamePage=true;
 				} else if (idx>0) {
+					// *** Catpures case of browser 'go back' click
 					if ($rootScope.bc[idx-1].label == bcitem.label) { 
 						isBackNav=true;
 					}
@@ -207,6 +208,18 @@ margin-top: 10px;
 						break;						
 				}
 			}
+			// /* Check for back-nav 
+			// /* if 2-back equals top of stack -- then we are back navigating.
+			// /* -- so eliminate the two on top of stack 
+			idx = data.breadcrumbs.length-1;
+			if (idx>1) 
+			{
+				if (data.breadcrumbs[idx-2].label==data.breadcrumbs[idx].label)
+				{
+					data.breadcrumbs.pop();
+					data.breadcrumbs.pop();
+				}
+			}
 		}
 	}			
 })($sp, input, data, options, gs);]]></script>
@@ -216,7 +229,7 @@ margin-top: 10px;
         <sys_created_on>2019-01-11 21:50:02</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>7841048cdb432b00e3ad22d40596190c</sys_id>
-        <sys_mod_count>50</sys_mod_count>
+        <sys_mod_count>54</sys_mod_count>
         <sys_name>UTASSP Breadcrumbs Std Widget 3 </sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -224,7 +237,7 @@ margin-top: 10px;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_7841048cdb432b00e3ad22d40596190c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-25 23:07:51</sys_updated_on>
+        <sys_updated_on>2019-01-30 19:27:50</sys_updated_on>
         <template><![CDATA[<div class="myDivDisplayFlexToggle myDivFlexWrap"  dummy="{{c.myLog()}}">
   <ul class="nav nav-pills nav-sm myBcFontSize myDivDisplayFlexToggle" aria-label="${Navigation breadcrumbs}">
     <li class="myDivDisplayFlexToggle"><a ng-href="?id={{::portal.homepage_dv}}">${Home}</a></li>

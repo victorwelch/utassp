@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function($scope, u_cutassp) { 
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
+	//
+	/* widget controller */  
+	var c = this;
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
+	//	
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>div.iconlink {
+  display:block;
+  height:auto;
+  margin-bottom:20px;
+}
+@media (max-width: 991.9px) { 
+  div.iconlink {
+	height:auto;
+  }
+}
+@media (max-width: 641.9px) { 
+  div.iconlink {
+   height:auto;
+  }
+}
+@media (max-width: 479.9px) { 
+  div.iconlink {
+   height:auto;
+  }
+}
+
+div.iconlink a label {
+  display: block;
+  font-size: 2.0 rem;
+  font-weight: 300;
+  line-height: 1.1;
+  padding: 0;
+  margin: 0 0 10px 0;    
+}
+
+a {
+  color:#3a3f51;
+  margin: auto;
+  padding: 0;
+  width:100%;
+  height:100%;
+  border:1px solid #cccccc;
+  background:#dedede;
+  border-radius: 5px;  
+  &amp;:hover {
+    color:#428bca;
+    text-decoration: underline;
+    background:#efefef;
+  }
+}
+
+h3 {
+  margin-top: 0px; 
+  margin-bottom:5px;
+}
+
+.myShadow {
+-webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+-moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+}
+
+/* COLOR BOX ---------- */
+
+a.color_box {
+  display: block;
+  position: relative;
+  padding: 10px 10px 10px 70px;
+  border-radius: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+a.color_box .image-container {
+  position:absolute;
+  left: 5px;
+  top: 10px;
+  width:60px;
+  text-align: center;
+}
+
+.icon-link-background-white {
+  background-color: #ffffff;
+  &amp;:hover {
+    background-color: #eeeeee;
+  }
+}
+
+.icon-link-background-primary {
+  background-color: $brand-primary;
+  &amp;:hover {
+    color: darken($brand-primary, 20%);
+  }
+}
+
+.icon-link-background-info {
+  background-color: $brand-info;
+}
+
+.icon-link-background-success {
+  background-color: $brand-success;
+}
+
+.icon-link-background-warning {
+  background-color: $brand-warning;
+}
+
+.icon-link-background-danger {
+  background-color: $brand-danger;
+}
+
+.icon-link-background-default {
+  background-color: $brand-default;
+}
+
+.text-primary {
+  color: $brand-primary;
+  
+  &amp;:hover {
+    color: darken($brand-primary, 20%);
+  }
+}
+
+.text-info {
+  color: $brand-info;
+  
+  &amp;:hover {
+    color: darken($brand-info, 20%);
+  }
+}
+
+.text-success {
+  color: $brand-success;
+  
+  &amp;:hover {
+    color: darken($brand-success, 20%);
+  }
+}
+
+.text-warning {
+  color: $brand-warning;
+  
+  &amp;:hover {
+    color: darken($brand-warning, 20%);
+  }
+}
+
+.text-danger {
+  color: $brand-danger;
+  
+  &amp;:hover {
+    color: darken($brand-danger, 20%);
+  }
+}
+
+.text-default {
+  color: $text-color;
+  
+  &amp;:hover {
+    color: $brand-primary;
+    text-decoration: underline;
+  }
+}</css>
+        <data_table>sp_instance_link</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list>title,short_description,type,sc_category,url,kb_article,kb_topic,kb_category,sc_cat_item,sp_page,color,u_image</field_list>
+        <has_preview>false</has_preview>
+        <id>utassp01_simple_image_link_widget</id>
+        <internal>false</internal>
+        <link/>
+        <name>UTASSP Simple Image Link Widget</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =  'utassp01_image_link_widget > '+ $sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
+	//
+	var gr = $sp.getInstanceRecord();	
+	data.href = $sp.getMenuHREF(gr);
+	data.imagesrc = gr.getElement('u_image').getRefRecord().getValue('name');
+	data.target = options.target || "";
+})($sp, input, data, options, gs);
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-01-29 20:50:11</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f720ecb11b5fe740715941d8cd4bcb08</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>UTASSP Simple Image Link Widget</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_widget_f720ecb11b5fe740715941d8cd4bcb08</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-01-29 21:14:25</sys_updated_on>
+        <template><![CDATA[<div class="iconlink" dummy="{{::c.myLog()}}">
+  <!--// Color Box -->
+  <a ng-href="{{::data.href}}" class="color_box {{::options.class_name}} icon-link-background-white myShadow" target="{{::data.target}}">
+    <div class="image-container">
+      <img class="media-object" src="{{::data.imagesrc}}" width="60" height="52" alt="${{{::options.title}}}">
+    </div>
+    <h3>{{::options.title}}</h3>
+    <span>{{::options.short_description}}</span>
+  </a>
+</div>]]></template>
+    </sp_widget>
+</record_update>
