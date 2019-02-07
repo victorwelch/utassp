@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function($scope,$rootScope,$timeout, u_cutassp) {
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn))
+	{
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
+	//
+	/* widget controller */
+	var c = this;
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
+	//
+	c.data.isLoggedIn = (typeof $scope.user.first_name == typeof myUndefined) ? false : true;
+	c.data.welcome = c.data.isLoggedIn ? $scope.user.first_name : 'Welcome, Guest!' ;
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>$myPublicLinkColor: #0f8c73;&#13;
+.myWelcomeSpan {&#13;
+  color:#ffffff;&#13;
+  font-weight:bold;&#13;
+  text-shadow: 11px 4px 7px #000000;&#13;
+}&#13;
+.myPublicBox {&#13;
+  box-sizing:border-box;&#13;
+  display:inline-block;&#13;
+  line-height:18.5714px;&#13;
+  position:relative;&#13;
+  width:400px;&#13;
+  }&#13;
+}&#13;
+a.myPublicLoginLink {&#13;
+	display: block;&#13;
+    padding: 10px 20px;&#13;
+    color: #fff;&#13;
+    font-size: 22px;&#13;
+    text-align: center;&#13;
+    width: 100%;&#13;
+    height: 50px;&#13;
+    line-height: 30px;&#13;
+    cursor: pointer;&#13;
+    border-radius: 5px;&#13;
+    background-color:$myPublicLinkColor;  &#13;
+    &amp;:hover {&#13;
+      background-color:darken($myPublicLinkColor,10)&#13;
+    }&#13;
+}&#13;
+a.myPublicPwdHelp {&#13;
+  background-attachment:scroll;&#13;
+  background-color:rgba(0, 0, 0, 0.4);	&#13;
+  border-bottom-left-radius:15px;&#13;
+  border-bottom-right-radius:15px;	&#13;
+  border-top-left-radius:15px;&#13;
+  border-top-right-radius:15px;&#13;
+  box-sizing:border-box;&#13;
+  color: #fff;&#13;
+  cursor:pointer;&#13;
+  display:block;&#13;
+  font-size:13px;&#13;
+  margin-bottom:5px;&#13;
+  margin-left:115px;&#13;
+  margin-right:115px;&#13;
+  margin-top:5px;&#13;
+  padding-bottom:4px;&#13;
+  padding-left:10px;&#13;
+  padding-right:10px;&#13;
+  padding-top:4px;&#13;
+  text-align:center;&#13;
+  width:170px;  &#13;
+  &amp;:hover {&#13;
+    background-color:rgba(0,0,0,0.8);	&#13;
+  }&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list>title,short_description</field_list>
+        <has_preview>false</has_preview>
+        <id>utassp02_homepage_search_widget</id>
+        <internal>false</internal>
+        <link/>
+        <name>UTASSP Homepage Search Widget 2</name>
+        <option_schema>[{"name":"typeahead_search","default_value":"{title: 'Search?', size: 'lg', color: 'default'}","label":"Typeahead Search","type":"string"}]</option_schema>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =   'utassp01_homepage_search_widget > '+ $sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
+	//
+	data.isLoggedIn = gs.isLoggedIn();
+	data.typeAheadSearch = $sp.getWidget('utassp03_typeahead_search_widget', options.typeahead_search);
+})($sp, input, data, options, gs);	]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-05 21:45:32</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>baffecc4dbe72f40e3ad22d4059619dc</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_name>UTASSP Homepage Search Widget 2</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_widget_baffecc4dbe72f40e3ad22d4059619dc</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-06 19:14:09</sys_updated_on>
+        <template><![CDATA[<div id="homepage-search" class="hidden-xs wrapper-xl" dummy="{{::c.myLog()}}">
+  <div class="wrapper-xl text-center">
+    <h1 ng-if="::!data.isLoggedIn" class="text-center text-4x m-b-lg sp-tagline-color myLoginSpan">
+      <span ng-bind="data.welcome" class="myWelcomeSpan"></span>
+    </h1>
+    <h1 ng-if="data.isLoggedIn" class="text-center text-4x m-b-lg sp-tagline-color myWelcomeSpan">Welcome, 
+      <span ng-bind="data.welcome"></span>
+    </h1>
+  	<div ng-if="::!data.isLoggedIn" class="text-center myPublicBox">
+      <a href="/utassp?id=utassp01_dummy" class="myPublicLoginLink">Login to continue »</a>
+      <a href="https://netidss.uta.edu" class="myPublicPwdHelp">Password Reset Help</a>
+    </div>
+  	<sp-widget ng-if="data.isLoggedIn" widget="data.typeAheadSearch" />
+  </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>

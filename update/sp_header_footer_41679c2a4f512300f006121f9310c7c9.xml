@@ -73,7 +73,7 @@ footer a {&#13;
         <sys_created_on>2018-10-24 18:01:38</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>41679c2a4f512300f006121f9310c7c9</sys_id>
-        <sys_mod_count>24</sys_mod_count>
+        <sys_mod_count>25</sys_mod_count>
         <sys_name>UTASSP Footer Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -81,13 +81,13 @@ footer a {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_header_footer_41679c2a4f512300f006121f9310c7c9</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:11:33</sys_updated_on>
+        <sys_updated_on>2019-02-06 16:18:25</sys_updated_on>
         <template><![CDATA[<footer dummy="{{::c.myLog()}}">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <span>University of Texas at Arlington / Office of Information Technology&nbsp;&middot;&nbsp;Box 19318, Arlington, Texas 76019-0318&nbsp;·&nbsp;</span>
-        <a href="tel:1-817-272-2208">817-272-2208</a>&nbsp;&middot;&nbsp;<a href="mailto:helpdesk@uta.edu">helpdesk@uta.edu</a>
+        <a href="tel:1-817-272-2208">817-272-2208
       </div>
     </div>
   </div>

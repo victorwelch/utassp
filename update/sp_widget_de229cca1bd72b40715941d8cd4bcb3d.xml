@@ -15,6 +15,8 @@
 		return '';
 	};
 	//	
+	c.isExpandOn = true;
+	c.plusMinusSymbol = 'fa fa-minus-square m-r-sm';
 	c.isCatSelected = false;
 	
 	//*** Save location object
@@ -24,6 +26,13 @@
 		var myRow=myRowDiv.parent();
 		myRow.hide();
 	}
+	
+	$scope.myExpandOnOff = function(e)
+	{
+		alert('hw');
+		c.isExpandOn = !c.isExpandOn;
+		c.plusMinusSymbol = c.isExpandOn ? 'fa fa-minus-square m-r-sm' : 'fa fa-plus-square m-r-sm';
+	};
 	
 	//*** Span Mouse Over
 	$scope.mySpanMouseOver = function(e) 
@@ -620,6 +629,18 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
    padding-left:10px;&#13;
    padding-right:5px;&#13;
  }&#13;
+/**/&#13;
+span.myExpOnOff {&#13;
+  &amp;:hover {&#13;
+    color:#ccc;&#13;
+    font-weight:bold;&#13;
+    cursor:pointer;&#13;
+  }&#13;
+}&#13;
+/**/ &#13;
+.myMarginLeft {&#13;
+  margin-left:10px;&#13;
+}&#13;
 /**/ &#13;
 @media (max-width: 1160px) { &#13;
   .h4.myCatSelectHdr {&#13;
@@ -862,7 +883,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_created_on>2019-01-30 14:27:24</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>de229cca1bd72b40715941d8cd4bcb3d</sys_id>
-        <sys_mod_count>36</sys_mod_count>
+        <sys_mod_count>40</sys_mod_count>
         <sys_name>UTASSP KB Base Widget 3</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -870,12 +891,13 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_de229cca1bd72b40715941d8cd4bcb3d</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-30 21:28:43</sys_updated_on>
+        <sys_updated_on>2019-01-31 15:52:14</sys_updated_on>
         <template><![CDATA[<div class="panel panel-{{::options.color}} b myShadow" dummy="{{::c.myLog()}}">
   <div class="panel-heading" ng-class="{ myPanelHdPad:c.isCatSelected }">
     <h2 class="h4 panel-title myCatSelectHdr">
-      Filter articles by selected category
-      <span id="resetBtn" ng-show="c.isCatSelected" class="ng-hide mb-3" style="margin-left:3px;">
+      <span ng-click="myExpandOnOff($event)" class="myExpOnOff"><i ng-class="c.plusMinusSymbol" aria-hidden="true"></i>
+        Filter articles by selected category</span>
+      <span id="resetBtn" ng-show="c.isCatSelected" class="ng-hide mb-3 myMarginLeft">
         <button 
                 name="refresh" 
                 type="submit"              
@@ -889,7 +911,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
       </span>	     
     </h2>
   </div>
-  <div class="panel-body">
+  <div ng-show="c.isExpandOn" class="ng-hide panel-body">
     <div ng-if="(c.data.uCategoryList.length > 0)">
       <div class="myDivTable myGreyGridTable">
         <div class="myDivTableHeading">

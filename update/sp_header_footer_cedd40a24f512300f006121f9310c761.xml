@@ -136,16 +136,16 @@ margin: 0px;&#13;
 // *** std stuff I modified for our portal *** vcw //&#13;
 li.header-menu-item {&#13;
   &amp;:hover { &#13;
-    text-decoration:underline;&#13;
-    font-weight:bold;&#13;
+    /* text-decoration:underline;&#13;
+       color:#000000; */&#13;
     background-color: #f58025;&#13;
   }&#13;
 }&#13;
 &#13;
 .myLoginMenuItem  &gt; li {&#13;
   &amp;:hover { &#13;
-    text-decoration:underline;&#13;
-    font-weight:bold;&#13;
+    /* text-decoration:underline;&#13;
+       color:#000000; */&#13;
     background-color: #f58025;&#13;
   }&#13;
 }&#13;
@@ -173,7 +173,6 @@ div.myLinkContainer {&#13;
 li.myHeaderFont {&#13;
     &amp;:hover { &#13;
       text-decoration:underline;&#13;
-      font-weight:bold;&#13;
       background-color: #f58025;&#13;
     }    &#13;
 }&#13;
@@ -181,7 +180,6 @@ li.myHeaderFont &gt; a {&#13;
     color:#ffffff;&#13;
     &amp;:hover { &#13;
       text-decoration:underline;&#13;
-      font-weight:bold;&#13;
       background-color: #f58025;&#13;
     }    &#13;
 }&#13;
@@ -662,7 +660,7 @@ span.myHiLite {&#13;
         <sys_created_on>2018-10-24 17:19:56</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>cedd40a24f512300f006121f9310c761</sys_id>
-        <sys_mod_count>180</sys_mod_count>
+        <sys_mod_count>193</sys_mod_count>
         <sys_name>UTASSP Header Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -670,7 +668,7 @@ span.myHiLite {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_header_footer_cedd40a24f512300f006121f9310c761</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-25 19:00:33</sys_updated_on>
+        <sys_updated_on>2019-02-06 17:48:51</sys_updated_on>
         <template><![CDATA[<header dummy="{{::c.myLog()}}">
 <div class=container>
   <nav class="navbar-inverse" ng-class="::{'navbar':!isViewNative, 'is-native': isViewNative}"
@@ -679,7 +677,7 @@ span.myHiLite {&#13;
       <div class="myLinkContainer">
 	      <a class="navbar-brand navbar-brand-logo" href="http://www.uta.edu" aria-label="${Go to homepage}"></a>
       </div>
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sp-nav-bar">
+      <button ng-if="::user.logged_in" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sp-nav-bar">
         <span class="sr-only">${Toggle navigation}</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -694,11 +692,14 @@ span.myHiLite {&#13;
 	      <sp-widget widget="::data.menu"></sp-widget>
         </div>
         <div class="myDivDisplayFlexToggle">
+          <!--
           <ul ng-if="::(!user.logged_in && page.id != portal.login_page_dv && !data.hasLogin)" class="nav navbar-nav myLoginMenuItem">
-            <li><a href ng-click="openLogin()">${Login}</a></li>
+            <li class="myHeaderFont"><a href ng-click="openLogin()">${Login}</a></li>
           </ul>
-          <ul ng-if="::user.logged_in" class="nav navbar-nav" aria-haspopup="true" data-toggle="dropdown">
+		  -->
+          <ul ng-if="::user.logged_in" class="nav navbar-nav myLoginMenuItem">
             <!-- chat, avatar, and logout -->
+            <!-- 
             <li ng-if="::data.connect_support_queue_id"><a href ng-click="openPopUp()">${Live Chat}</a></li>
             <li class="dropdown hidden-xs">
               <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="{{::data.profileBtnMsg}}" id="profile-dropdown">
@@ -706,12 +707,12 @@ span.myHiLite {&#13;
                 <span class="visible-lg-inline">{{::user.first_name}}</span>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li class='myHeaderFont'><a ng-href="?id=user_profile&sys_id={{::user.sys_id}}" role="menuitem">${Profile}</a></li>
-                <li class='myHeaderFont' ng-if="::!isViewNative"><a href="{{::portal.logoutUrl}}" role="menuitem">${Logout}</a></li>
+                <li class='myHeaderFont'><a ng-href="?id=user_profile&sys_id={{::user.sys_id}}" role="menuitem">${Profile}</a></li> -->
+                <li class="myHeaderFont" ng-if="::!isViewNative"><a href="{{::portal.logoutUrl}}">${Logout}</a></li><!--
               </ul>
             </li>
             <li class="visible-xs-block myHeaderFont"><a ng-href="?id=user_profile&sys_id={{::user.sys_id}}"><span class="navbar-avatar"><sn-avatar class="avatar-small-medium" primary="userID" /></span>${Profile}</a></li>
-            <li ng-if="::!isViewNative" class="visible-xs-block myHeaderFont"><a href="{{::portal.logoutUrl}}">${Logout}</a></li>
+            <li ng-if="::!isViewNative" class="visible-xs-block myHeaderFont"><a href="{{::portal.logoutUrl}}">${Logout}</a></li> -->
           </ul>
         </div>
       </div>

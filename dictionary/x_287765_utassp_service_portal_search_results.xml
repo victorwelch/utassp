@@ -4,6 +4,7 @@
         <element label="Score" max_length="40" name="score" type="integer"/>
         <element label="SC Reference" max_length="32" name="sc_reference" reference="sc_cat_item" type="reference"/>
         <element label="Search ID" max_length="32" name="search_id" type="string"/>
+        <element label="Utility" max_length="1000" name="utility" type="string"/>
         <index name="index">
             <element name="sc_reference"/>
         </index>

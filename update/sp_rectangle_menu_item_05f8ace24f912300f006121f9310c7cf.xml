@@ -12,7 +12,7 @@
         <kb_article/>
         <kb_category/>
         <kb_topic/>
-        <label>Portal Home</label>
+        <label>Home</label>
         <order>200</order>
         <record_script/>
         <sc_cat_item/>
@@ -26,15 +26,15 @@
         <sys_created_on>2018-10-24 19:19:33</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>05f8ace24f912300f006121f9310c7cf</sys_id>
-        <sys_mod_count>4</sys_mod_count>
-        <sys_name>Portal Home</sys_name>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Home</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_rectangle_menu_item_05f8ace24f912300f006121f9310c7cf</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-07 16:12:49</sys_updated_on>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-06 16:58:13</sys_updated_on>
         <table/>
         <type>page</type>
         <url/>
