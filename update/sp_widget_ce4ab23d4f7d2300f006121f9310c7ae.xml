@@ -114,41 +114,98 @@
 	}
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>div.input-group {&#13;
-	margin-top:10px;  &#13;
-}&#13;
-&#13;
-div.myShadow {&#13;
-  -webkit-box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.78);&#13;
-  -moz-box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.78);&#13;
-  box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.78);  &#13;
-}&#13;
-&#13;
-ul.dropdown-menu {&#13;
-    min-width: 100%;&#13;
-    border-radius: 0px 0px 4px 4px;&#13;
-    margin:0px;&#13;
-}&#13;
-&#13;
-ul.dropdown-menu a.ta-item {&#13;
-	line-height: 20px;&#13;
-}&#13;
-&#13;
-ul.dropdown-menu i.ta-icon, i.ta-img {&#13;
-    width: 20px;&#13;
-    height: 20px;&#13;
-    background-size: contain;&#13;
-    display: inline-block;&#13;
-    background-repeat: no-repeat;&#13;
-    background-position: center center;&#13;
-    text-align: center;&#13;
-    line-height: 20px;&#13;
-    float:left;&#13;
-    margin-right: 8px;&#13;
-}&#13;
-&#13;
-input[name="q"] {&#13;
-color: black;&#13;
+        <css>div.input-group {
+	margin-top:10px;  
+}
+
+div.myShadow {
+  -webkit-box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.78);
+  -moz-box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.78);
+  box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.78);  
+}
+
+ul.dropdown-menu {
+    min-width: 100%;
+    border-radius: 0px 0px 4px 4px;
+    margin:0px;
+}
+
+ul.dropdown-menu a.ta-item {
+	line-height: 20px;
+}
+
+ul.dropdown-menu i.ta-icon, i.ta-img {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center center;
+    text-align: center;
+    line-height: 20px;
+    float:left;
+    margin-right: 8px;
+}
+
+input[name="q"] {
+color: black;
+}
+
+$myPublicLinkColor: #0f8c73;
+.myWelcomeSpan {
+  color:#ffffff;
+  font-weight:bold;
+  text-shadow: 11px 4px 7px #000000;
+}
+.myPublicBox {
+  box-sizing:border-box;
+  display:inline-block;
+  line-height:18.5714px;
+  position:relative;
+  width:400px;
+  }
+}
+a.myPublicLoginLink {
+	display: block;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 22px;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    line-height: 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color:$myPublicLinkColor;  
+    &amp;:hover {
+      background-color:lighten($myPublicLinkColor,10)
+    }
+}
+a.myPublicPwdHelp {
+  background-attachment:scroll;
+  background-color:rgba(0, 0, 0, 0.4);	
+  border-bottom-left-radius:15px;
+  border-bottom-right-radius:15px;	
+  border-top-left-radius:15px;
+  border-top-right-radius:15px;
+  box-sizing:border-box;
+  color: #fff;
+  cursor:pointer;
+  display:block;
+  font-size:13px;
+  margin-bottom:5px;
+  margin-left:115px;
+  margin-right:115px;
+  margin-top:5px;
+  padding-bottom:4px;
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:4px;
+  text-align:center;
+  width:170px;  
+  &amp;:hover {
+    background-color:rgba(0,0,0,0.8);	
+  }
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -163,53 +220,53 @@ color: black;&#13;
 	lazyLoader.putTemplates(scope.data.typeaheadTemplates);
 }]]></link>
         <name>UTASSP Typeahead Search Widget 2</name>
-        <option_schema>[&#13;
-   {&#13;
-      "name":"title",&#13;
-      "section":"Presentation",&#13;
-      "label":"Title",&#13;
-      "type":"string"&#13;
-   },&#13;
-   {&#13;
-      "name":"color",&#13;
-      "section":"Presentation",&#13;
-      "label":"Color",&#13;
-      "type":"string"&#13;
-   },&#13;
-   {&#13;
-      "name":"glyph",&#13;
-      "section":"Presentation",&#13;
-      "label":"glyph",&#13;
-      "type":"string"&#13;
-   },&#13;
-   {&#13;
-      "name":"size",&#13;
-      "section":"Presentation",&#13;
-      "label":"Size",&#13;
-      "type":"string"&#13;
-   },&#13;
-   {&#13;
-      "hint":"Number of typeahead search results returned (default 15)",&#13;
-      "name":"limit",&#13;
-      "section":"Behavior",&#13;
-      "label":"Limit",&#13;
-      "type":"integer"&#13;
-   },&#13;
-   {&#13;
-      "displayValue":"Search Source",&#13;
-      "hint":"If provided, limit the scope of the typeahead search to the given search sources",&#13;
-      "name":"contextual_search_sources",&#13;
-      "display_value_list":[&#13;
-&#13;
-      ],&#13;
-      "section":"Behavior",&#13;
-      "label":"Contextual Search Sources",&#13;
-      "type":"glide_list",&#13;
-      "value":"sp_search_source",&#13;
-      "ed":{&#13;
-         "reference":"sp_search_source"&#13;
-      }&#13;
-   }&#13;
+        <option_schema>[
+   {
+      "name":"title",
+      "section":"Presentation",
+      "label":"Title",
+      "type":"string"
+   },
+   {
+      "name":"color",
+      "section":"Presentation",
+      "label":"Color",
+      "type":"string"
+   },
+   {
+      "name":"glyph",
+      "section":"Presentation",
+      "label":"glyph",
+      "type":"string"
+   },
+   {
+      "name":"size",
+      "section":"Presentation",
+      "label":"Size",
+      "type":"string"
+   },
+   {
+      "hint":"Number of typeahead search results returned (default 15)",
+      "name":"limit",
+      "section":"Behavior",
+      "label":"Limit",
+      "type":"integer"
+   },
+   {
+      "displayValue":"Search Source",
+      "hint":"If provided, limit the scope of the typeahead search to the given search sources",
+      "name":"contextual_search_sources",
+      "display_value_list":[
+
+      ],
+      "section":"Behavior",
+      "label":"Contextual Search Sources",
+      "type":"glide_list",
+      "value":"sp_search_source",
+      "ed":{
+         "reference":"sp_search_source"
+      }
+   }
 ]</option_schema>
         <public>true</public>
         <roles/>
@@ -279,7 +336,7 @@ color: black;&#13;
         <sys_created_on>2018-11-16 18:29:17</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>ce4ab23d4f7d2300f006121f9310c7ae</sys_id>
-        <sys_mod_count>44</sys_mod_count>
+        <sys_mod_count>45</sys_mod_count>
         <sys_name>UTASSP Typeahead Search Widget 2</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -287,7 +344,7 @@ color: black;&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_ce4ab23d4f7d2300f006121f9310c7ae</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:55:39</sys_updated_on>
+        <sys_updated_on>2019-02-05 23:11:34</sys_updated_on>
         <template><![CDATA[<form ng-submit="c.submitSearch()">
   <input type="hidden" name="id" value="search"/>
   <input type="hidden" name="t" value="{{c.searchType}}"/>

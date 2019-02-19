@@ -164,9 +164,9 @@
 		$scope.data.sc_cat_item.description = $sce.trustAsHtml($scope.data.sc_cat_item.description);
 		if (angular.equals($scope.data.sc_cat_item._fields, {}))
 			$scope.data.no_fields = true;
-		if ($scope.data.sc_cat_item.sys_class_name !== "sc_cat_item_producer" && $scope.data.sc_cat_item.sys_class_name !== "std_change_record_producer")
-			$scope.submitButtonMsg = $scope.m.orderNowMsg;
-		else
+		//if ($scope.data.sc_cat_item.sys_class_name !== "sc_cat_item_producer" && $scope.data.sc_cat_item.sys_class_name !== "std_change_record_producer")
+			//$scope.submitButtonMsg = $scope.m.orderNowMsg;
+		//else
 			$scope.submitButtonMsg = $scope.m.submitMsg;
 
 	   /* *** Removed following as not applicable, vcw 11/09/18 *** */
@@ -615,54 +615,54 @@
 }
 	]]></link>
         <name>UTASSP Catalog Item Widget 3</name>
-        <option_schema>[{&#13;
-	"name": "show_add_cart_button",&#13;
-  	"default_value": "false",&#13;
-	"section": "other",&#13;
-	"label": "Show Add Cart Button",&#13;
-	"type": "boolean"&#13;
-}, {&#13;
-	"hint": "If you turn on this, you will be able to see field validation messages on right side",&#13;
-	"name": "show_field_validation_messages",&#13;
-	"default_value": "true",&#13;
-	"section": "other",&#13;
-	"label": "Show field validation messages",&#13;
-	"type": "boolean"&#13;
-}, {&#13;
-	"hint": "Show Add/Update Wish List buttons",&#13;
-	"name": "show_add_to_wishlist_button",&#13;
-	"default_value": "false",&#13;
-	"section": "other",&#13;
-	"label": "Show Add/Update Wish List buttons",&#13;
-	"type": "boolean"&#13;
-}, {&#13;
-	"hint": "Order item section on top. If you uncheck this, order section will be displayed at bottom of screen",&#13;
-	"name": "display_cart_on_right",&#13;
-	"default_value": "true",&#13;
-	"section": "other",&#13;
-	"label": "Order Item Section On Top",&#13;
-	"type": "boolean"&#13;
-}, {&#13;
-	"hint": "Show item description in few words with an option to read more",&#13;
-	"name": "show_less_description",&#13;
-	"default_value": "true",&#13;
-	"section": "other",&#13;
-	"label": "Enable Show More/Less for Item description on Mobile",&#13;
-	"type": "boolean"&#13;
-}, {&#13;
-	"hint": "Hide the Delivery Time in the widget",&#13;
-	"name": "hide_delivery_time",&#13;
-	"section": "other",&#13;
-	"default_value": "false",&#13;
-	"label": "Hide Delivery Time",&#13;
-	"type": "boolean"&#13;
-}, {&#13;
-	"hint": "Simplified redirect",&#13;
-	"name": "url",&#13;
-	"section": "other",&#13;
-	"default_value": "id=utassp01_view_tickets&amp;pageid={pageid}",&#13;
-	"label": "Url",&#13;
-	"type": "string"&#13;
+        <option_schema>[{
+	"name": "show_add_cart_button",
+  	"default_value": "false",
+	"section": "other",
+	"label": "Show Add Cart Button",
+	"type": "boolean"
+}, {
+	"hint": "If you turn on this, you will be able to see field validation messages on right side",
+	"name": "show_field_validation_messages",
+	"default_value": "true",
+	"section": "other",
+	"label": "Show field validation messages",
+	"type": "boolean"
+}, {
+	"hint": "Show Add/Update Wish List buttons",
+	"name": "show_add_to_wishlist_button",
+	"default_value": "false",
+	"section": "other",
+	"label": "Show Add/Update Wish List buttons",
+	"type": "boolean"
+}, {
+	"hint": "Order item section on top. If you uncheck this, order section will be displayed at bottom of screen",
+	"name": "display_cart_on_right",
+	"default_value": "true",
+	"section": "other",
+	"label": "Order Item Section On Top",
+	"type": "boolean"
+}, {
+	"hint": "Show item description in few words with an option to read more",
+	"name": "show_less_description",
+	"default_value": "true",
+	"section": "other",
+	"label": "Enable Show More/Less for Item description on Mobile",
+	"type": "boolean"
+}, {
+	"hint": "Hide the Delivery Time in the widget",
+	"name": "hide_delivery_time",
+	"section": "other",
+	"default_value": "false",
+	"label": "Hide Delivery Time",
+	"type": "boolean"
+}, {
+	"hint": "Simplified redirect",
+	"name": "url",
+	"section": "other",
+	"default_value": "id=utassp01_view_tickets&amp;pageid={pageid}",
+	"label": "Url",
+	"type": "string"
 }]</option_schema>
         <public>false</public>
         <roles>snc_external,snc_internal</roles>
@@ -944,7 +944,7 @@
         <sys_created_on>2018-11-09 15:13:59</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>997a86674f212300f006121f9310c7c8</sys_id>
-        <sys_mod_count>59</sys_mod_count>
+        <sys_mod_count>60</sys_mod_count>
         <sys_name>UTASSP Catalog Item Widget 3</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -952,7 +952,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_997a86674f212300f006121f9310c7c8</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:56:47</sys_updated_on>
+        <sys_updated_on>2019-02-14 18:40:39</sys_updated_on>
         <template><![CDATA[<div id="sc_cat_item" ng-if="::data.recordFound" dummy="{{::c.myLog()}}">
   <sp-widget widget="c.orderItemModal" ng-if="c.orderItemModal"></sp-widget>
   <div class="row" ng-if="::data.sc_cat_item" >

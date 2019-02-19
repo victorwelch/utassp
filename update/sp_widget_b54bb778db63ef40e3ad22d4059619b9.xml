@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function($scope, spUtil, u_cutassp) {	
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
+	//
+	var c = this;		
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
+	//
+	c.isOpenTicketsSelected=true;
+	c.isClosedTicketsSelected=!c.isOpenTicketsSelected;
+
+
+	$scope.myMenuClick = function(e)
+	{
+		var myEl=$(e.currentTarget);	
+		var myLiSiblings = myEl.parent().siblings();
+		var myAlinkActive = myLiSiblings.children('a.active');
+		if (myAlinkActive.length>0) {
+			myAlinkActive.toggleClass('active');
+		}
+		myEl.toggleClass('active');
+		c.isClosedTicketsSelected=c.isOpenTicketsSelected;		
+		c.isOpenTicketsSelected=!c.isOpenTicketsSelected;
+	};
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>a {
+    color: #428bca;
+    text-decoration: none;
+} 
+.nav-tabs {
+    border-bottom: 2px solid #ddd;
+}
+.nav-tabs &gt; li {
+    float: left;
+    margin-bottom: -2px;
+}
+.nav-tabs .nav-link {
+    border: 2px solid transparent;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-color:#ddd #ddd #ddd;
+    background-color:#f5f5f5;
+    &amp;:hover {
+      cursor:pointer;
+      background-color: #ddd;
+      color:#428bca;
+    }
+}
+
+.nav-tabs .nav-link.active {
+    background-color:#fff;    
+    border-bottom:2px solid #fff;
+  	&amp;:hover {
+    	cursor:normal;
+        background-color:#fff;
+    }
+}
+div.myTabMenu {
+    margin-top:20px;
+    width:100%;
+    display:inline-block;
+    border:2px solid #ddd;
+}
+ul.nav-tabs {
+    border-top:2px solid #fff;
+    border-right:2px solid #fff;
+    border-left:2px solid #fff;
+    margin-top:-2px;
+    margin-right:-2px;
+    margin-left:-2px;
+    margin-bottom:10px;
+}
+span.myNavItemEmpty {
+    color:#fff;
+    border:none;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data>{
+	"data": {
+		"sometext": "world"
+	}
+}</demo_data>
+        <description/>
+        <docs display_value="Widgets">948bab53d721120023c84f80de61034e</docs>
+        <field_list>title</field_list>
+        <has_preview>true</has_preview>
+        <id>utassp01_my_tickets_widget</id>
+        <internal>false</internal>
+        <link/>
+        <name>UTASSP My Tickets Widget</name>
+        <option_schema>[
+  {
+    "name": "color",
+    "label": "Color",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Default",
+        "value": "default"
+      },
+      {
+        "label": "Custom",
+        "value": "custom"
+      },
+      {
+        "label": "Primary",
+        "value": "primary"
+      },
+      {
+        "label": "Success",
+        "value": "success"
+      },
+      {
+        "label": "Info",
+        "value": "info"
+      },
+      {
+        "label": "Warning",
+        "value": "warning"
+      },
+      {
+        "label": "Danger",
+        "value": "danger"
+      }
+    ]
+  },
+  {
+    "name": "knowledge_base",
+    "label": "Knowledge Base",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Business Affairs Internal",
+        "value": "Business Affairs Internal"
+      },
+      {
+        "label": "Business Affairs Knowledge Base",
+        "value": "Business Affairs Knowledge Base"
+      },
+      {
+        "label": "OIT Internal",
+        "value": "OIT Internal"
+      },
+      {
+        "label": "OIT Knowledge Base",
+        "value": "OIT Knowledge Base"
+      }
+    ]
+  },
+  {
+    "hint": "Maximum number of elements that are shown",
+    "name": "maxitems",
+    "default_value": "20",
+    "label": "Max number of elements shown in the list (only positive numbers &gt; 0, 20 otherwise)",
+    "type": "integer"
+  }
+]</option_schema>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function($sp, input, data, options, gs){
+	var myU = new u_utassp();
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =  'utassp01_my_tickets_widget > '+$sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
+	//
+	///* populate the 'data' object */  /* e.g., data.table = $sp.getValue('table'); */
+	
+})($sp, input, data, options, gs);]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-08 20:29:12</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>b54bb778db63ef40e3ad22d4059619b9</sys_id>
+        <sys_mod_count>36</sys_mod_count>
+        <sys_name>UTASSP My Tickets Widget</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_widget_b54bb778db63ef40e3ad22d4059619b9</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-14 17:46:13</sys_updated_on>
+        <template><![CDATA[<div class="panel text-center">
+    <div id="tabMenu" class="myTabMenu">
+        <ul class="nav nav-tabs" >
+            <li class="nav-item myNavItemEmpty">
+                <span style="color:#fff">abc</span>
+              </li>            
+            <li class="nav-item">
+              <a class="nav-link active" href="javascript:void(0);" ng-click="myMenuClick($event)">Open Tickets</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:void(0);" ng-click="myMenuClick($event)">Closed Tickets</a>
+            </li>
+          </ul>
+		  <div ng-show="c.isOpenTicketsSelected" class="ng-hide">
+            <widget 
+                id="utassp01_my_open_tickets_widget" 
+                options='{
+                    "title": "My Open Tickets",
+                    "max_number_of_elements_shown_on_the_list": "25",
+                    "pageid":"utassp01_my_tickets"}'></widget>
+      	  </div>
+          <div ng-show="c.isClosedTicketsSelected" class="ng-hide">
+            <widget 
+                id="utassp01_my_closed_tickets_widget" 
+                options='{
+                    "title": "My Closed Tickets",
+                    "max_number_of_elements_shown_on_the_list": "25",
+                    "pageid":"utassp01_my_tickets"}'></widget>
+          <div>   
+  </div>    
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

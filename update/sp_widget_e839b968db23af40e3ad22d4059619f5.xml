@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function ($scope, $rootScope, $element, spUtil, $window, $timeout, $sce, u_cutassp) {
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
+	//
+	/* widget controller */
+	var c = this;
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
+	//
+	$scope.data.trustedHtml = $sce.trustAsHtml(c.data.html);	
+	c.isDisplay = true;
+	c.isNotDisplay = !c.isDisplay;
+	c.isHeadingActive = false;
+	
+	//*** Mouse Over
+	_myDivMouseOver = function(e)
+	{
+		var myDivEl=$(e.currentTarget);
+		var myIconEl= myDivEl.children('i').first();	
+		if (myIconEl.hasClass('fa-circle')) {
+			utilMouseOverEndNode(myIconEl);
+		} else {
+			utilMouseOverTreeNode(myIconEl);			
+		}
+	};
+	_myLinkMouseOver = function(e) {
+		var myLinkEl = $(e.currentTarget);
+		utilMouseOverLink(myLinkEl);
+	};
+	_myPanelHeadingMouseOver = function(e) {
+		if (!c.isHeadingActive) return;
+		var myDivEl = $(e.currentTarget);
+		utilMouseOverPanelHeading(myDivEl);
+	};
+	
+	//*** Mouseout
+	_myDivMouseOut = function(e)
+	{
+		var myDivEl=$(e.currentTarget);
+		var myIconEl= myDivEl.children('i').first();
+		if (myIconEl.hasClass('fa-circle')) {
+			utilMouseOutEndNode(myIconEl);
+		} else {
+			utilMouseOutTreeNode(myIconEl);			
+		}
+	};	
+	_myLinkMouseOut = function(e) {
+		var myLinkEl = $(e.currentTarget);
+		utilMouseOutLink(myLinkEl);
+	};	
+	_myPanelHeadingMouseOut = function(e) {
+		if (!c.isHeadingActive) return;
+		var myDivEl = $(e.currentTarget);		
+		utilMouseOutPanelHeading(myDivEl);
+	};	
+	
+	//*** Click 
+	_myDivClick = function(e)
+	{
+		var myDivEl=$(e.currentTarget);
+		var myIconEl = myDivEl.children('i').first();
+		if (myIconEl.hasClass('fa-circle')) {
+			var myLinkEl = myDivEl.children('a').first();
+			utilClickLink(myLinkEl);
+		} else {
+			utilMouseClickTreeNode(myIconEl);
+		}
+	};
+	_myLinkClick = function(e) {
+		var myLinkEl = $(e.currentTarget);
+		utilClickLink(myLinkEl);		
+	};
+	_myPanelHeadingClick = function(e) {
+		var myDivEl = $(e.currentTarget);
+		utilClickPanelHeading(myDivEl);
+	};
+	
+	// util functions
+	utilMouseOverTreeNode = function(_pIconEl)
+	{
+		_pIconEl.removeClass('fa-plus-square');
+		_pIconEl.removeClass('fa-minus-square');
+		var myDiv = _pIconEl.parent();
+		myDiv.addClass('myLeafLiDivHover');
+		var myLi = myDiv.parent();
+		var myUl = myLi.children('ul').first();
+		if (myUl.is(':visible')) {
+			_pIconEl.addClass('fa-plus-square');
+		} else {
+			_pIconEl.addClass('fa-minus-square');			
+		}
+		_pIconEl.addClass('myTreeIconHover');			
+	};
+	utilMouseOutTreeNode = function(_pIconEl)
+	{
+		_pIconEl.removeClass('fa-circle');
+		_pIconEl.removeClass('fa-plus-square');
+		_pIconEl.removeClass('fa-minus-square');
+		_pIconEl.removeClass('myTreeIconHover');
+		var myDiv = _pIconEl.parent();
+		myDiv.removeClass('myLeafLiDivHover');
+		var myLi = myDiv.parent();
+		var myUl = myLi.children('ul').first();		
+		if (myUl.is(':visible')) {
+			_pIconEl.addClass('fa-minus-square');			
+		} else {
+			_pIconEl.addClass('fa-plus-square');
+		}			
+	};
+	utilMouseClickTreeNode = function(_pIconEl)
+	{
+		_pIconEl.toggleClass('fa-plus-square');
+		_pIconEl.toggleClass('fa-minus-square');
+		var myLiParent=_pIconEl.parents('li').first();
+		var myUl = myLiParent.find('ul').first();
+		myUl.toggleClass('ng-hide');
+		// *** Q: Is our "ul" now visible?
+		if (myUl.is(":visible"))
+		{
+			// *** A: Yes.  So now, hide and close any descendant "ul's"
+			var myLiSiblingList =  myLiParent.siblings();
+			var myOpenIconSiblingList = myLiSiblingList.children('div.myLeafLiDiv').children('i.fa-minus-square');
+			myOpenIconSiblingList.toggleClass('fa-minus-square');
+			myOpenIconSiblingList.toggleClass('fa-plus-square');
+			var myUlVisibleSiblingDescendantList = myLiSiblingList.find('ul:visible');
+			// *** *** Q: Do we have any descendant "ul's"?
+			if (myUlVisibleSiblingDescendantList.length>0) {
+				// *** *** A: Yes.  So, toggle hide class for the "ul"...
+				// *** *** *** ...then, change icon of the parent "li" to "plus"
+				myUlVisibleSiblingDescendantList.toggleClass('ng-hide');	
+				var myLiDescendantList=myUlVisibleSiblingDescendantList.find('li');
+				var myOpenIconDescendantList=myLiDescendantList.children('div.myLeafLiDiv').children('i.fa-minus-square');
+				myOpenIconDescendantList.toggleClass('fa-minus-square');
+				myOpenIconDescendantList.toggleClass('fa-plus-square');
+			}
+		}
+	};
+	utilMouseOverEndNode = function(_pIconEl)
+	{
+		//_pIconEl.removeClass('fa-circle');
+		//_pIconEl.addClass('fa-dot-circle-o');
+		var myLink = _pIconEl.parent().children('a');		
+		myLink.toggleClass('myLinkHover');
+	};
+	//
+	utilMouseOutEndNode = function(_pIconEl)
+	{
+		//_pIconEl.removeClass('fa-dot-circle-o');		
+		//_pIconEl.addClass('fa-circle');
+		var myLink = _pIconEl.parent().children('a');
+		myLink.toggleClass('myLinkHover');		
+	};
+	utilMouseOverLink = function(_pLink)
+	{
+		_pLink.addClass('myLinkHover');	
+		var myDivEl=_pLink.parent();
+		myDivEl.addClass('myDivLinkHover');
+		var myIconEl=myDivEl.children('i').first();
+		if (!myIconEl.hasClass('fa-circle')) {
+			myIconEl.removeClass('fa-plus-square');
+			myIconEl.removeClass('fa-minus-square');
+			myIconEl.addClass('fa-dot-circle-o');
+			myIconEl.addClass('myEndIcon');
+		}
+	};
+	utilMouseOutLink = function(_pLink) 
+	{
+		_pLink.removeClass('myLinkHover');	
+		var myDivEl=_pLink.parent();
+		myDivEl.removeClass('myDivLinkHover');
+		var myIconEl=myDivEl.children('i').first();
+		myIconEl.removeClass('fa-dot-circle-o');
+		myIconEl.removeClass('myEndIcon');
+		myIconEl.removeClass('fa-plus-square');
+		myIconEl.removeClass('fa-minus-square');
+		var myLi = myDivEl.parent();
+		var myUl = myLi.children('ul').first();		
+		//var classList = myDivEl.attr('class');
+		if (myUl.is(':visible')) {
+			myIconEl.addClass('fa-plus-square');
+		} else {
+			myIconEl.addClass('fa-minus-square');			
+		}		
+	};
+	utilClickLink = function(_pLink)
+	{
+		var mySvcsysid=_pLink.attr('sysid');
+		$window.location = "/utassp?id=utassp01_report_incident&svcsysid="+mySvcsysid;
+		
+	};
+	utilMouseOverPanelHeading = function(_pDiv) {
+		_pDiv.addClass('myHeadingHover');
+		var h2El = _pDiv.children('h2.h4');
+		h2El.addClass('myTitleHover');
+		var iEl = h2El.children('i.fa');
+		iEl.toggleClass('fa-plus');
+		iEl.toggleClass('fa-minus');
+	};
+	utilMouseOutPanelHeading = function(_pDiv) {
+		_pDiv.removeClass('myHeadingHover');	
+		var h2El = _pDiv.children('h2.h4');
+		h2El.removeClass('myTitleHover');		
+		var iEl = h2El.children('i.fa');
+		iEl.toggleClass('fa-minus');
+		iEl.toggleClass('fa-plus');
+	};
+	utilClickPanelHeading = function(_pDiv) {
+		if (c.isDisplay) {
+			c.isDisplay=false;
+			c.isNotDisplay=!c.isDisplay;
+			var myCol5Div=_pDiv.closest('div.col-md-5');
+			var myCol7Div=myCol5Div.siblings('div.col-md-7');
+			myCol5Div.toggleClass('col-md-5');
+			myCol5Div.toggleClass('col-md-3');
+			myCol7Div.toggleClass('col-md-7');
+			myCol7Div.toggleClass('col-md-9');				
+		} else {
+			c.isDisplay=true;
+			c.isNotDisplay=!c.isDisplay;
+			var myCol3Div=_pDiv.closest('div.col-md-3');
+			var myCol9Div=myCol3Div.siblings('div.col-md-9');
+			myCol3Div.toggleClass('col-md-3');
+			myCol3Div.toggleClass('col-md-5');
+			myCol9Div.toggleClass('col-md-9');			
+			myCol9Div.toggleClass('col-md-7');
+		}
+		var h2El = _pDiv.children('h2.h4');
+		var iEl = h2El.children('i.fa');
+		iEl.toggleClass('fa-minus');
+		iEl.toggleClass('fa-plus');		
+	};
+	$scope.$on('$viewContentLoaded', function() {
+      alert('hw');
+	});	
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>a {
+  color:#3a3f51;
+}
+
+li &gt; div &gt; a {
+  font-size:14px;
+  display: inline;
+}
+
+h2.panel-title {
+	color: #ffffff;
+}
+
+.panel-body {
+  padding:5px 0px 0px 0px;
+  background-color:#fff;
+}
+
+$brand-custom:#78A6CC;
+/* $brand-custom:#c2d7e8; */
+
+.panel-custom  {
+	background-color: $brand-custom;
+    }  
+  }     
+}
+
+
+div.panel-primary  {
+  background-color: $brand-primary;
+}
+
+div.panel-info {
+  background-color: $brand-info;
+}
+
+div.panel-success {
+  background-color: $brand-success;
+}
+
+div.panel-warning {
+  background-color: $brand-warning;
+}
+
+div.panel-danger {
+  background-color: $brand-danger;
+}
+
+.text-heading {
+  color: #ffffff; 
+  &amp;:hover {
+    color: #cccccc;
+    text-decoration: underline;
+  }
+}
+
+.myShadow {
+-webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+-moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+}
+
+.myPanelContainer {
+  padding-top:5px;
+  margin-top:15px;
+}
+div.treeContainer{
+  display:inline-block;
+  margin:10px 0 10px 0;
+  width:90%;
+  text-align:left;
+}
+#baseUl {
+  padding-left:0px;
+}
+div.myBaseLiDiv {
+  padding-left:5px;
+  background-color:#f5f5f5;
+  border:1px solid #ccc;
+  font-size:14px;
+  font-weight:bold;
+}
+li.myLeafLi {
+  margin-top:-1px;
+}
+li&gt;div.myLeafLiDiv {
+  background-color:#fff;
+  border:1px solid #ccc;
+}
+li&gt;div.myEndNodeLiDiv {
+  background-color:#fff;
+  border:1px solid #ccc;
+  &amp;:hover {
+    background-color:#0064b1;
+    color:#fff;
+    cursor:pointer;
+  }
+}
+.myLeafLiDivHover {
+    background-color:#eaf0f9 !important;
+    cursor:pointer !important;
+}
+.myTreeIconHover {
+   color:#ccc !important;
+}
+.myLinkHover {
+   color:#fff !important;
+}
+.myDivLinkHover {
+  background-color:#0064b1 !important;
+}
+ul.myUl {
+  list-style-type:none;
+  padding-left:20px;
+}
+div.panel-heading.myHeadingHover {
+    background-color:#93b7d6;
+    color:#ddd !important;
+    cursor:pointer;
+};
+div &gt; h2.h4.panel-title.myTitleHover {
+    color:#ddd !important;
+}
+
+i.myTreeIcon {
+    color:#888;
+    font-size:10px;
+    padding-left: 5px;
+    margin-right: 5px;
+    position:relative;
+    top:-1px;
+    &amp;:hover {
+      color:#ccc;
+      cursor:pointer;
+    }  
+}
+i.myHeaderIcon {
+  margin-right: 5px;
+}
+i.myEndIcon {
+    font-size:8px;
+    padding-left: 5px;
+    margin-right: 5px;
+    position:relative;
+    top:-1px;
+    color:#ccc;
+}
+
+i.myHeaderCircleIcon {
+  font-size:8px;
+  margin-right: 5px;
+  position:relative;
+  top:-2px;
+  color:#78A6CC;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>utassp01_business_service_tree</id>
+        <internal>false</internal>
+        <link/>
+        <name>UTASSP Business Service Tree</name>
+        <option_schema>[
+  {
+    "name": "color",
+    "label": "Color",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Default",
+        "value": "default"
+      },
+      {
+        "label": "Custom",
+        "value": "custom"
+      },
+      {
+        "label": "Primary",
+        "value": "primary"
+      },
+      {
+        "label": "Success",
+        "value": "success"
+      },
+      {
+        "label": "Info",
+        "value": "info"
+      },
+      {
+        "label": "Warning",
+        "value": "warning"
+      },
+      {
+        "label": "Danger",
+        "value": "danger"
+      }
+    ]
+  },
+  {
+    "name": "knowledge_base",
+    "label": "Knowledge Base",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Business Affairs Internal",
+        "value": "Business Affairs Internal"
+      },
+      {
+        "label": "Business Affairs Knowledge Base",
+        "value": "Business Affairs Knowledge Base"
+      },
+      {
+        "label": "OIT Internal",
+        "value": "OIT Internal"
+      },
+      {
+        "label": "OIT Knowledge Base",
+        "value": "OIT Knowledge Base"
+      }
+    ]
+  }
+]</option_schema>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =  'utassp01_business_service_widget > '+$sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
+	//
+	// *** Constants ***
+	var cr = String.fromCharCode(13);
+	var liAlphaTemplate = '';
+	liAlphaTemplate += '<li class="myLeafLi">';
+	liAlphaTemplate += cr+'    <div class="myLeafLiDiv" #divevent>';
+	liAlphaTemplate += cr+'        <i class="fa fa-plus-square myTreeIcon" aria-hidden="true"></i>'; 
+	liAlphaTemplate += cr+'        <span>#name</span>';
+	liAlphaTemplate += cr+'    </div>';
+	liAlphaTemplate += cr+'    #ul';	
+	liAlphaTemplate += cr+'</li>'+cr;		
+	var ulTemplate = '<ul class="#hide myUl">'+cr+'#li'+cr+'</ul>'+cr;		
+	var liTemplate = '';
+	liTemplate += '<li class="myLeafLi">';
+	liTemplate += cr+'    <div class="#divclass" #divevent>';
+	liTemplate += cr+'        <i class="fa #faicon" aria-hidden="true"></i>';
+	liTemplate += cr+'        <a href="javascript:void(0);" sysid="#sysid" '+
+					          '#linkevent'+
+					          'onclick="_myLinkClick(event);return false;">#name</a>';
+	liTemplate += cr+'    </div>';
+	liTemplate += cr+'    #ul';
+	liTemplate += cr+'</li>'+cr;	
+	var liTemplateDivEvent='';
+	liTemplateDivEvent += cr+'    onmouseenter="_myDivMouseOver(event);"';
+	liTemplateDivEvent += cr+'    onmouseleave="_myDivMouseOut(event);"';
+	liTemplateDivEvent += cr+'    onclick="_myDivClick(event)"';
+	var liTemplateLinkEvent='';
+	liTemplateLinkEvent += 'onmouseenter="_myLinkMouseOver(event);" ';
+	liTemplateLinkEvent += 'onmouseleave="_myLinkMouseOut(event);" ';
+
+	
+	//
+	var myUtassp = new u_utassp();
+	var myUdata = myUtassp.getBusinessServiceTree('empty');
+	//gs.info('myUdata.length: '+myUdata.length);
+	var myObjP = {
+		array: myUdata,
+		isfirst: true
+	};
+	data.html = myRenderHtml(myObjP);
+	
+	
+	function myRenderHtml(_p) {
+		var l_ulTemplate = '';
+		var list=[];
+		var isfirst=false;
+		if (myUtassp.utilIsValueValid(_p.isfirst))
+		{
+			isfirst = true;
+			l_ulTemplate = ulTemplate.replace('#hide','');
+			list = _p.array;
+		} else {
+			l_ulTemplate = ulTemplate.replace('#hide','ng-hide');
+			list = _p;
+		}
+		var myUl='';
+		var myLi='';
+
+		for (var i=0,iL=list.length;i<iL;i++)
+		{
+			var myName=list[i].name;
+			var mySysId=list[i].sysid;
+			if (parseInt(mySysId)<0) {
+				myLi += liAlphaTemplate.replace('#name',myName);	
+			} else {
+				myLi += (liTemplate.replace('#name',myName)).replace('#sysid',mySysId);				
+			}
+			if (list[i].servicelist.length>0){
+				myLi = myLi.replace('#divclass','myLeafLiDiv');
+				myLi = myLi.replace('#divevent',liTemplateDivEvent);
+				myLi = myLi.replace('#faicon','fa-plus-square myTreeIcon');
+				myLi = myLi.replace('#linkevent',liTemplateLinkEvent);
+				myLi = myLi.replace('#ul',myRenderHtml(list[i].servicelist));
+			} else {
+				myLi = myLi.replace('#divclass','myEndNodeLiDiv');
+				myLi = myLi.replace('#divevent',liTemplateDivEvent);
+				myLi = myLi.replace('#faicon','fa-circle myEndIcon');
+				myLi = myLi.replace('#linkevent','');
+				myLi = myLi.replace('#ul','');
+			}				
+		}
+		myUl = l_ulTemplate.replace('#li',myLi);
+		return myUl;
+	}
+
+})($sp, input, data, options, gs);]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-07 16:22:22</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>e839b968db23af40e3ad22d4059619f5</sys_id>
+        <sys_mod_count>290</sys_mod_count>
+        <sys_name>UTASSP Business Service Tree</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_widget_e839b968db23af40e3ad22d4059619f5</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-14 11:13:25</sys_updated_on>
+        <template><![CDATA[<div class="myPanelContainer"  dummy="{{::c.myLog()}}">
+  <div class="panel panel-custom b myShadow">
+    <div id="myPanelHeading" class="panel-heading" 
+         onmouseover="_myPanelHeadingMouseOver(event);"
+         onmouseout="_myPanelHeadingMouseOut(event);"
+         onclick="_myPanelHeadingClick(event);"
+         >
+      <h2 class="h4 panel-title"><i ng-show="c.isHeadingActive" class="ng-hide fa fa-plus myHeaderIcon"></i>Select Affected Service</h2>
+    </div>
+    <div ng-show="c.isDisplay" class="ng-hide panel-body">
+      <div class="text-center">
+        <div class="treeContainer text-left">
+          <ul id="baseUl" class="myUl">      
+            <li><div class="myBaseLiDiv"><i class="fa fa-circle myHeaderCircleIcon"></i>Services</div>
+                 <!-- Tree Nodes -->
+                 <div ng-bind-html="::data.trustedHtml"></div>     
+                 <!-- ---------- -->
+            </li>
+          </ul>
+         </div>    
+      </div>
+    </div>
+    <div ng-show="c.isDisplay" class="ng-hide panel-custom panel-footer clearfix">
+    </div>
+  </div>
+<div>
+]]></template>
+    </sp_widget>
+</record_update>

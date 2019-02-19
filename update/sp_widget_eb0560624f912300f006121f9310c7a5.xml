@@ -81,81 +81,95 @@
 	}
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>.header-loader {&#13;
-	float: left;&#13;
-  	width: 24px;&#13;
-  	position: relative;&#13;
-  	top: 24px;&#13;
-}&#13;
-&#13;
-.cart-dropdown {&#13;
-  width: 350px;&#13;
-  padding: 0;&#13;
-  border-top-left-radius: 4px !important;&#13;
-  border-top-right-radius: 4px !important;&#13;
-&#13;
-  ul {&#13;
-    max-height: 300px;&#13;
-    overflow: auto;&#13;
-  }&#13;
-  .subtotal {&#13;
-    display: block;&#13;
-  }&#13;
-&#13;
-  .item-image {&#13;
-    padding: 0;&#13;
-    margin: 0;&#13;
-    text-align: center;&#13;
-    max-width:100%;&#13;
-    height:auto;&#13;
-  }&#13;
-  label, p {&#13;
-    padding: 0;&#13;
-    margin: 0;&#13;
-  }&#13;
-  .media {&#13;
-    padding: 0;&#13;
-    margin: 0;&#13;
-  }&#13;
-  .media-left &gt; a {&#13;
-    display: block;&#13;
-    width: 48px;&#13;
-    max-width: 48px;&#13;
-  }&#13;
-  .media-body {&#13;
-    label {&#13;
-      font-weight: bold;&#13;
-    }&#13;
-  }&#13;
-  li.media {&#13;
-    border-top: 1px solid #cccccc;&#13;
-    padding: 1rem;&#13;
-  }&#13;
-  .panel {&#13;
-    margin: 0;&#13;
-  }&#13;
-  .panel .panel-body {&#13;
-    padding: 0;&#13;
-  }&#13;
-  .btn-clear {&#13;
-		color: #333;&#13;
-    background-color: #fff;&#13;
-  }&#13;
-  p.quantity-price {&#13;
-    padding-top: 0.5rem;&#13;
-    span {&#13;
-      color: $text-muted;&#13;
-      padding-right: 0.5rem;&#13;
-    }&#13;
-  }&#13;
-  .align-right {&#13;
-  	text-align: right;&#13;
-  }&#13;
-}&#13;
-&#13;
-.item-added-tooltip {&#13;
-  width: 184px;&#13;
-  font-size: 14px;&#13;
+        <css>.header-loader {
+	float: left;
+  	width: 24px;
+  	position: relative;
+  	top: 24px;
+}
+
+.cart-dropdown {
+  width: 350px;
+  padding: 0;
+  border-top-left-radius: 4px !important;
+  border-top-right-radius: 4px !important;
+
+  ul {
+    max-height: 300px;
+    overflow: auto;
+  }
+  .subtotal {
+    display: block;
+  }
+
+  .item-image {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    max-width:100%;
+    height:auto;
+  }
+  label, p {
+    padding: 0;
+    margin: 0;
+  }
+  .media {
+    padding: 0;
+    margin: 0;
+  }
+  .media-left &gt; a {
+    display: block;
+    width: 48px;
+    max-width: 48px;
+  }
+  .media-body {
+    label {
+      font-weight: bold;
+    }
+  }
+  li.media {
+    border-top: 1px solid #cccccc;
+    padding: 1rem;
+  }
+  .panel {
+    margin: 0;
+  }
+  .panel .panel-body {
+    padding: 0;
+  }
+  .btn-clear {
+		color: #333;
+    background-color: #fff;
+  }
+  p.quantity-price {
+    padding-top: 0.5rem;
+    span {
+      color: $text-muted;
+      padding-right: 0.5rem;
+    }
+  }
+  .align-right {
+  	text-align: right;
+  }
+}
+
+.item-added-tooltip {
+  width: 184px;
+  font-size: 14px;
+}
+/* *** */
+li.header-menu-item {
+    &amp;:hover { 
+      text-decoration:underline;
+      background-color: #f58025;
+    }    
+}
+li.header-menu-item  &gt; a {
+    color:#ffffff;
+    &amp;:hover { 
+      text-decoration:underline;
+      background-color: #f58025;
+    }    
 }</css>
         <data_table>sp_instance_menu</data_table>
         <demo_data/>
@@ -203,31 +217,38 @@
 	}
 	// *** End: Debug only code *** //
 	//
+	var mySession = gs.getSession();
+	var isLoggedIn = mySession.isLoggedIn();
 	var isItil = gs.hasRole('itil');
 	// *** Below for testing not 'itil'
 	//isItil = false;
 	// *** 
 	// ----------
 	// build menus
-	var menu_id = $sp.getValue('sys_id'); // instance sys_id
-	var gr = new GlideRecord('sp_instance_menu');
-	if (gr.get(menu_id)) 
-	{
-		data.menu = {};
-		data.menu.name = gr.title.getDisplayValue();
-		data.menu.items = $sp.getMenuItems(menu_id);
-		if (!isItil)
+	data.menu = {};
+	data.menu.name = '';
+	data.menu.items = [];
+	if (isLoggedIn) {
+		var menu_id = $sp.getValue('sys_id'); // instance sys_id
+		var gr = new GlideRecord('sp_instance_menu');
+		if (gr.get(menu_id)) 
 		{
-			data.menu.items.shift();
-			var myItem = data.menu.items[0];
-			myItem.label = myItem.label.replace('Portal ','');
-			data.menu.items[0] = myItem;
-		}
-	} 
+			data.menu.name = gr.title.getDisplayValue();
+			data.menu.items = $sp.getMenuItems(menu_id);
+			if (!isItil)
+			{
+				data.menu.items.shift();
+				//var myItem = data.menu.items[0];
+				//myItem.label = myItem.label.replace('Portal ','');
+				//data.menu.items[0] = myItem;
+			}
+		} 		
+	}
 
-	data.isLoggedIn = GlideSession.get().isLoggedIn();
-	if (data.isLoggedIn)
-		data.cartWidget = $sp.getWidget("sc-shopping-cart", {cartTemplate: "small_shopping_cart.html", auto_update_cart:options.auto_update_cart});
+	data.isLoggedIn = isLoggedIn;
+// 	data.isLoggedIn = GlideSession.get().isLoggedIn();
+// 	if (data.isLoggedIn)
+// 		data.cartWidget = $sp.getWidget("sc-shopping-cart", {cartTemplate: "small_shopping_cart.html", auto_update_cart:options.auto_update_cart});
 })($sp, input, data, options, gs);]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
@@ -235,7 +256,7 @@
         <sys_created_on>2018-10-24 19:01:20</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>eb0560624f912300f006121f9310c7a5</sys_id>
-        <sys_mod_count>43</sys_mod_count>
+        <sys_mod_count>57</sys_mod_count>
         <sys_name>UTASSP Header Menu Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -243,7 +264,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_eb0560624f912300f006121f9310c7a5</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:11:54</sys_updated_on>
+        <sys_updated_on>2019-02-06 17:24:28</sys_updated_on>
         <template><![CDATA[<ul class="nav navbar-nav" aria-label="${Header menu}" dummy="{{::c.myLog()}}">
   <div class="header-loader" ng-show="loadingIndicator">
     <div class="hidden-xs sp-loading-indicator la-sm">

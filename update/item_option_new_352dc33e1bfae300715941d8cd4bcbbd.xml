@@ -2,7 +2,7 @@
     <item_option_new action="INSERT_OR_UPDATE">
         <active>true</active>
         <attributes>tree_picker=true</attributes>
-        <cat_item display_value="UTASSP INCIDENT: Something Broken">64f0215b4f2d2300f006121f9310c71e</cat_item>
+        <cat_item display_value="INCIDENT REPORT: Something Broken">64f0215b4f2d2300f006121f9310c71e</cat_item>
         <category/>
         <choice_direction>down</choice_direction>
         <choice_field/>

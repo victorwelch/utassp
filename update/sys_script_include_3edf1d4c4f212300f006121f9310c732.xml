@@ -31,7 +31,8 @@ u_utassp.prototype = {
 		var uData = [];
 		var myGr = new GlideRecord('kb_category');
 		var thisQuery = 'active=true^parent_id='+_pid;
-		myGr.addEncodedQuery(thisQuery);
+        myGr.addEncodedQuery(thisQuery);
+        gs.info('getKbCategorySiblings.query: '+thisQuery);
 		myGr.query();
 		while (myGr.next())
 		{
@@ -70,13 +71,19 @@ u_utassp.prototype = {
     },  
     getKbSubCategories: function(_pParentId) {
 		var uCategoryList = [];
-        var myGrCat = new GlideRecord('kb_category');
-        var thisQuery = 'active=true'; 
-        thisQuery += '^parent_id='+_pParentId;
-		
-		myGrCat.addEncodedQuery(thisQuery);
-        myGrCat.orderBy('label');
-        myGrCat.query();
+		var myGrCat = {};
+		var myEmptyCatIdObj = {};
+		if (this.utilIsKbBase(_pParentId)) {
+			var myRtnObj = this.utilKbBaseCategoriesQuery(_pParentId);
+			myGrCat=myRtnObj.gr;			
+			myEmptyCatIdObj=myRtnObj.emptyCatIdObj;
+			if (myEmptyCatIdObj.artcount>0) {
+				uCategoryList.push(myEmptyCatIdObj);
+			}
+		} else {
+			myGrCat=this.utilKbCategoriesQuery(_pParentId);
+		}
+		//
         while (myGrCat.next()) {
 			var l_parentid = _pParentId;
             var l_id = {};
@@ -91,31 +98,36 @@ u_utassp.prototype = {
             var l_thisQuery2 = 'active=true';
             l_thisQuery2 += '^parent_id='+l_id; 
             l_myGaCat.addEncodedQuery(l_thisQuery2);
+            gs.info('getKbSubCategories.query: '+l_thisQuery2);
             l_myGaCat.addAggregate('COUNT');
             l_myGaCat.query();
             if (l_myGaCat.next()) {
                 l_count=l_myGaCat.getAggregate('COUNT');
             }
 			l_artcount = this.getKbCategoryArticleCount(l_id);
-			l_uCategoryList=this.getKbSubCategories(l_id);
-            uCategoryList.push({ 
-				label: l_label, 
-				value: l_id, 
-				subcount:l_count, 
-				artcount:l_artcount,
-				level: l_level, 
-				parentid: l_parentid,
-				uCategoryList: l_uCategoryList
-			});
+			if (l_artcount>0) {
+				l_uCategoryList=this.getKbSubCategories(l_id);
+				uCategoryList.push({ 
+					label: l_label, 
+					value: l_id, 
+					subcount:l_count, 
+					artcount:l_artcount,
+					level: l_level, 
+					parentid: l_parentid,
+					uCategoryList: l_uCategoryList
+				});				
+			}
         }  		
         return uCategoryList;
     },
 	getIdSubList: function(uCategoryList) {
+        var myId={};
 		var uIdSubList=[];
 		if (uCategoryList.length>0) {
-			for (var i=0,iL=uCategoryList;i<iL;i++)
+			for (var i=0,iL=uCategoryList.length;i<iL;i++)
 			{
-				uIdSubList.push(uCategoryList[i].value);
+                myId = uCategoryList[i];
+                uIdSubList.push(myId.value);
 				if (uCategoryList[i].idsublist.length>0) {
 					uIdSubList.push(uCategoryList[i].idsublist);
 				}
@@ -135,7 +147,7 @@ u_utassp.prototype = {
 	},	
 	getFlatKbCategoryList: function(uCategoryList){
 		var uFlatCategoryList=[];
-		var tmpFlatCategoryList=[];
+        var tmpFlatCategoryList=[];        
 		if (uCategoryList.length>0) {
 			for (var i=0,iL=uCategoryList.length;i<iL;i++) {
 				var myCategoryItem = {};
@@ -165,27 +177,36 @@ u_utassp.prototype = {
 	getKbCategoryTreeStr: function(_pCatId) {
 		var thisCatStr = ''; 
 		var thisParentId = '';
-		var thisParentTable = '';
-		var isFound = false;
-
-		var myGrCat = new GlideRecord('kb_category');
-		var thisQuery = 'active=true';
-		thisQuery += '^sys_id='+_pCatId;
-		myGrCat.addEncodedQuery(thisQuery);
-		myGrCat.query();
-		if (myGrCat.next()) {
-			thisCatStr = myGrCat.getValue('label');
-			thisParentId = myGrCat.getValue('parent_id');
-			thisParentTable = myGrCat.getValue('parent_table');
-			isFound = true;			
+        var thisParentTable = '';
+        var isCatEmpty = (_pCatId.toString().indexOf('empty')>-1);
+        var isKbBase = this.utilIsKbBase(_pCatId);
+        var isFound = false;     
+   
+		if (!isKbBase) {
+            if (!isCatEmpty) {
+				isFound = false;
+				var myGrCat = new GlideRecord('kb_category');
+				var thisQuery = 'active=true';
+				thisQuery += '^sys_id='+_pCatId;
+				myGrCat.addEncodedQuery(thisQuery);
+				myGrCat.query();
+                if (myGrCat.next()) {
+                    thisCatStr = myGrCat.getValue('label');
+                    thisParentId = myGrCat.getValue('parent_id');
+                    thisParentTable = myGrCat.getValue('parent_table');
+                    isFound = true;			
+                }
+                //If ParentTable found, and is valid, check to see if a category or a knowledge_base
+                if (isFound && this.utilIsValueValid(thisParentTable) && this.utilIsValueValid(thisParentId)) {
+                    // If not a kb_knowledge_base record, then a valid category...  keep going
+                    if (thisParentTable.indexOf('kb_knowledge_base') < 0) {
+                        return this.getKbCategoryTreeStr(thisParentId) + ' > ' + thisCatStr;	
+                    }				
+                }     
+            } else {
+                thisCatStr = '(empty)';
+            }
 		}
-		//If ParentTable found, and is valid, check to see if a category or a knowledge_base
-		if (isFound && this.utilIsValueValid(thisParentTable) && this.utilIsValueValid(thisParentId)) {
-			// If not a kb_knowledge_base record, then a valid category...  keep going
-			if (thisParentTable.indexOf('kb_knowledge_base') < 0) {
-				return this.getKbCategoryTreeStr(thisParentId) + ' > ' + thisCatStr;	
-			}				
-		} 
 		return thisCatStr;	
 	},
 	getKbCategoryListForArticle: function(_pArtSysId) {
@@ -194,21 +215,30 @@ u_utassp.prototype = {
 		if (myGr.get(_pArtSysId))
 		{
 			var l_title = myGr.getValue('short_description');
-			var l_catSysId = myGr.getValue('kb_category');
+            var l_catSysId = myGr.getValue('kb_category');
+            if (!this.utilIsValueValid(l_catSysId)) {
+                l_catSysId = '(empty)';
+            }
 			myCatListStr = this.getKbCategoryTreeStr(l_catSysId);
 			//myCatListStr = myCatListStr.replace(/ > /g,'>');
 			myCatListStr = myCatListStr.trim();
-			myCatListStr = (myCatListStr.length>0)?myCatListStr+' > "'+l_title+'"':'"'+l_title+'"';
+            myCatListStr = (myCatListStr.length>0)?myCatListStr+' > "'+l_title+'"':'"'+l_title+'"';
 		}
 		return myCatListStr;
 	},	
 	getKbCategoryDescendants: function(_pParentId) {
 		var idList = [];
-		var myGrCat = new GlideRecord('kb_category');
-		var thisQuery = 'active=true';
-		thisQuery += '^parent_id='+_pParentId;
-		myGrCat.addEncodedQuery(thisQuery);		
-		myGrCat.query();
+		var myGrCat = {};
+		if (this.utilIsKbBase(_pParentId)) {
+			var myRtnObj = this.utilKbBaseCategoriesQuery(_pParentId);
+			myGrCat=myRtnObj.gr;			
+			myEmptyCatIdObj=myRtnObj.emptyCatIdObj;
+			if (myEmptyCatIdObj.artcount>0) {
+				idList.push('(empty)');
+			}
+		} else {
+			myGrCat=this.utilKbCategoriesQuery(_pParentId);
+		}
 		while (myGrCat.next())
 		{
 			var l_id = {};
@@ -225,54 +255,112 @@ u_utassp.prototype = {
 	getKbCategoryArticleCount: function(_pParentId) {
 		var myIdList = [];
 		myIdList.push(_pParentId);
-		myIdList = myIdList.concat(this.getKbCategoryDescendants(_pParentId));
+        myIdList = myIdList.concat(this.getKbCategoryDescendants(_pParentId));
+        //var myIdEmptyExistsCheck = 
 		var myArticleCount = 0;
-
+        /* ******************** */
 		var myGaArt = new GlideAggregate('kb_knowledge');
-		var thisQuery = 'active=true';			
-		thisQuery += '^workflow_state=published';
-		thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';
-		thisQuery += '^kb_category='+myIdList[0];			
-		if (myIdList.length > 1)
-		{
-			for (var i=1,iL=myIdList.length;i<iL;i++) {
-				thisQuery += '^ORkb_category='+myIdList[i];					
+		var thisQuery = '';
+        /* ******************** */
+        /* ******************** */
+        var myKbBaseSysIdForEmpty='';
+        var myEmptyCheck = this.utilEmptyIdExistsCheck(myIdList);
+        var myIncludeEmptyQuery = myEmptyCheck.emptyIdExists;
+        if (myIncludeEmptyQuery) {
+            myIdList=myEmptyCheck.idListWithoutEmpty;
+            myKbBaseSysIdForEmpty=myEmptyCheck.emptyId;
+        }
+		if (myIdList.length > 1) {
+            var myIdListStr = myIdList.join();          
+			thisQuery += 'kb_categoryIN'+myIdListStr;					
+			if (myIncludeEmptyQuery) {
+                thisQuery += '^ORkb_categoryISEMPTY';  
+                thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty;             
 			}
-		}
-		myGaArt.addEncodedQuery(thisQuery);
+		} else {
+            if (myIdList.length > 0)
+            {
+                thisQuery += 'kb_category='+myIdList[0];
+                if (myIncludeEmptyQuery) {
+                    thisQuery += '^ORkb_categoryISEMPTY';
+                    thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty; 
+                }	
+            } else if (myIncludeEmptyQuery) {
+                thisQuery += 'kb_categoryISEMPTY'; 
+                thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty;            
+            }
+        }
+        /* ******************** */
+		thisQuery += '^active=true';			
+		thisQuery += '^workflow_state=published';
+        thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';        
+        myGaArt.addEncodedQuery(thisQuery);
+		gs.info('getKbCategoryArticleCount.query: '+thisQuery);        
 		myGaArt.addAggregate('COUNT');
 		myGaArt.query();
 		if (myGaArt.next()) {
 			myArticleCount=myGaArt.getAggregate('COUNT');
 		}			
-
 		return myArticleCount;		
 	},
     getKbCategoryArticles: function(_pCatSysId,_pFirstRow,_LastRow) {
+		gs.info('getKbCategoryArticles: 1');
 		var myUdata = {};
 		var myArticleList = [];
 		var myRowCount = 0;
 		var myIdList = [];
-		myIdList.push(_pCatSysId);
-		myIdList = myIdList.concat(this.getKbCategoryDescendants(_pCatSysId));
-		
+        /* ******************** */
 		var myGrArt = new GlideRecord('kb_knowledge');
 		myGrArt.chooseWindow(_pFirstRow,_LastRow);		
-		var thisQuery = 'active=true';			
+		var thisQuery = '';
+        /* ******************** */
+        /* ******************** */
+        var myIsKbBase = this.utilIsKbBase(_pCatSysId);
+        if (myIsKbBase) {
+            thisQuery += 'kb_knowledge_base='+_pCatSysId;      
+        } else {
+            myIdList.push(_pCatSysId);
+            myIdList = myIdList.concat(this.getKbCategoryDescendants(_pCatSysId));
+            /* ************* */
+            var myKbBaseSysIdForEmpty='';
+            var myEmptyCheck = this.utilEmptyIdExistsCheck(myIdList);
+            var myIncludeEmptyQuery = myEmptyCheck.emptyIdExists;		
+            if (myIncludeEmptyQuery) {
+                myIdList=myEmptyCheck.idListWithoutEmpty;
+                myKbBaseSysIdForEmpty=myEmptyCheck.emptyId;
+            }
+            /* ************* */
+            if (myIdList.length > 1) {
+                var myIdListStr = myIdList.join();          
+                thisQuery += 'kb_categoryIN'+myIdListStr;	
+                if (myIncludeEmptyQuery) {
+                    thisQuery += '^ORkb_categoryISEMPTY';  
+                    thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty;             
+                }                				
+            } else {
+                if (myIdList.length > 0)
+                {
+                    thisQuery += 'kb_category='+myIdList[0];
+                    if (myIncludeEmptyQuery) {
+                        thisQuery += '^ORkb_categoryISEMPTY';
+                        thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty; 
+                    }	
+                } else if (myIncludeEmptyQuery) {
+                    thisQuery += 'kb_categoryISEMPTY'; 
+                    thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty;            
+                }
+            }
+        }
+        /* ******************** */
+		thisQuery += '^active=true';			
 		thisQuery += '^workflow_state=published';
-		thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';
-		thisQuery += '^kb_category='+myIdList[0];			
-		if (myIdList.length > 1)
-		{
-			for (var i=1,iL=myIdList.length;i<iL;i++) {
-				thisQuery += '^ORkb_category='+myIdList[i];					
-			}
-		}
-		myGrArt.orderByDesc('rating');
-		myGrArt.orderByDesc('published');		
-		myGrArt.addEncodedQuery(thisQuery);
-		
-		myGrArt.query();
+        thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';        
+
+        myGrArt.orderByDesc('rating');
+        myGrArt.orderByDesc('published');		
+        myGrArt.addEncodedQuery(thisQuery);
+        gs.info('getKbCategoryArticles.query: '+thisQuery);            
+        myGrArt.query();
 		myRowCount = myGrArt.getRowCount();
 		while (myGrArt.next()) {
 			var l_item = {
@@ -289,30 +377,65 @@ u_utassp.prototype = {
         return myUdata;
     },
     getKbCategorySearchArticles: function(_pCatSysId,_pSearch,_pFirstRow,_LastRow) {
+		gs.info('getKbCategorySearchArticles: 1');
 		var myUdata = {};
 		var myArticleList = [];
 		var myRowCount = 0;
-		var myIdList = [];
-		myIdList.push(_pCatSysId);
-		myIdList = myIdList.concat(this.getKbCategoryDescendants(_pCatSysId));
-		
+        var myIdList = [];
+        /* ******************** */		
 		var myGrArt = new GlideRecord('kb_knowledge');
 		myGrArt.chooseWindow(_pFirstRow,_LastRow);		
-		var thisQuery = 'active=true';			
+		var thisQuery = '';			
+        /* ******************** */		
+		/* ******************** */		
+		var myIsKbBase = this.utilIsKbBase(_pCatSysId);
+        if (myIsKbBase) {
+            thisQuery += 'kb_knowledge_base='+_pCatSysId;      
+        } else {
+            myIdList.push(_pCatSysId);
+            myIdList = myIdList.concat(this.getKbCategoryDescendants(_pCatSysId));
+            /* ************* */
+            var myEmptyCheck = this.utilEmptyIdExistsCheck(myIdList);
+            var myIncludeEmptyQuery = myEmptyCheck.emptyIdExists;
+            if (myIncludeEmptyQuery) {
+                myIdList=myEmptyCheck.idListWithoutEmpty;
+                myKbBaseSysIdForEmpty=myEmptyCheck.emptyId;
+            }
+            /* ************* */
+            if (myIdList.length > 1) {
+                var myIdListStr = myIdList.join();          
+                thisQuery += 'kb_categoryIN'+myIdListStr;	
+                if (myIncludeEmptyQuery) {
+                    thisQuery += '^ORkb_categoryISEMPTY';  
+                    thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty;             
+                }                				
+            } else {
+                if (myIdList.length > 0) {
+                    thisQuery += 'kb_category='+myIdList[0];
+                    if (myIncludeEmptyQuery) {
+                        thisQuery += '^ORkb_categoryISEMPTY';            
+                    }                    			
+                } else {
+                    if (myIncludeEmptyQuery) {
+                        thisQuery += 'kb_categoryISEMPTY';            
+                    }
+                }
+            }
+            /* ************* */            
+        }        
+        /* ******************** */	
+		thisQuery += '^active=true';			
 		thisQuery += '^workflow_state=published';
-		thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';
-		thisQuery += '^IR_AND_OR_QUERY='+_pSearch;
-		thisQuery += '^kb_category='+myIdList[0];	
-		if (myIdList.length > 1)
-		{
-			for (var i=1,iL=myIdList.length;i<iL;i++) {
-				thisQuery += '^ORkb_category='+myIdList[i];					
-			}
-		}
-		myGrArt.orderByDesc('ir_query_score');
+        thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';        
+        var isSearch = this.utilIsValueValid(_pSearch.trim());
+        if (isSearch) {
+            thisQuery += '^IR_AND_OR_QUERY='+_pSearch;
+            myGrArt.orderByDesc('ir_query_score');
+        }
 		myGrArt.orderByDesc('rating');
 		myGrArt.orderByDesc('published');		
-		myGrArt.addEncodedQuery(thisQuery);
+        myGrArt.addEncodedQuery(thisQuery);
+		gs.info('getKbCategorySearchArticles.query: '+thisQuery);        
 		
 		myGrArt.query();
 		myRowCount = myGrArt.getRowCount();
@@ -329,12 +452,204 @@ u_utassp.prototype = {
 		myUdata.articles = myArticleList;
 		myUdata.rowCount = myRowCount;
         return myUdata;
+
+    },
+	getBusinessServiceTree: function(_pParentId) {
+		var servicelist = [];
+		var thisQ = 'operational_status!=2^ORoperational_status=NULL';
+		if (!this.utilIsValueValid(_pParentId)) {
+			thisQ += '^parentISEMPTY';
+		} else if (_pParentId.toString().indexOf('empty')>-1) {
+			thisQ += '^parentISEMPTY';	
+		} else {
+			thisQ += '^parent='+_pParentId;
+		}
+
+		var myGr = new GlideRecord('cmdb_ci_service');
+		myGr.addEncodedQuery(thisQ);
+		myGr.orderBy('name');
+		myGr.query();
+		while (myGr.next()) {
+			var l_name = myGr.getValue('name');
+			var l_sysid = myGr.getValue('sys_id');
+			var l_servicelist = [];
+			if (l_name.indexOf('Applications & Systems')<0) {
+				l_servicelist = this.utilEmptyListLast(this.getBusinessServiceTree(l_sysid));				
+			} else {
+				l_servicelist =  this.utilEmptyListFirst(this.utilGetBusinessServiceTreeAlpha(l_sysid));
+			}
+			servicelist.push({
+				name: l_name,
+				sysid: l_sysid,
+                servicelist: l_servicelist,
+                nodetype: l_servicelist.length>0? 'tree' : 'leaf',
+                idnumber: 0,
+                id: ''
+			});
+        }
+        servicelist = this.utilEmptyListLast(servicelist);
+		return servicelist;
+    },
+    utilEmptyListLast: function(_pList) {
+		var rtnList = [];
+		var tmpMTList = [];
+		var tmpOList = [];
+		var tmpItem = {};
+		if (_pList.length>0) {
+			for (var i=0,iL=_pList.length;i<iL;i++) {
+				tmpItem=_pList[i]; 
+				if (this.utilIsValueValid(tmpItem.servicelist) && tmpItem.servicelist.length>0){
+					tmpOList.push(tmpItem);
+				} else {
+					tmpMTList.push(tmpItem);					
+				}				
+			}
+			rtnList = tmpOList.concat(tmpMTList);
+		}
+		return rtnList;        
+    },
+    utilEmptyListFirst: function(_pList) {
+		var rtnList = [];
+		var tmpMTList = [];
+		var tmpOList = [];
+		var tmpItem = {};
+		if (_pList.length>0) {
+			for (var i=0,iL=_pList.length;i<iL;i++) {
+				tmpItem=_pList[i]; 
+				if (this.utilIsValueValid(tmpItem.servicelist) && tmpItem.servicelist.length>0){
+					tmpOList.push(tmpItem);
+				} else {
+					tmpMTList.push(tmpItem);					
+				}				
+			}
+			rtnList = tmpMTList.concat(tmpOList);
+		}
+		return rtnList;        
     },	
+	utilGetBusinessServiceTreeAlpha: function(_pParentId) {
+		// ***  This whole routine breaks up the list of 'Applications & Systems' into alphabetical groups
+		// ***  *** but first, we will grab the items that start with non-alpha's
+		var myAlphaList = [];  //Initialize the array we will return
+		var myQ = '^parent='+_pParentId;  //Initialize the encoded Query
+		var myGr = new GlideRecord('cmdb_ci_service');  //Initialize the GlideRecord
+		myGr.addEncodedQuery(myQ);  //Add encoded query
+		myGr.addQuery('name','<','a'); //Add our "less than 'a'" condition
+		myGr.query();
+		while (myGr.next()) {
+			//Push what we find into our array
+			var l_name = myGr.getValue('name');
+			var l_sysid = myGr.getValue('sys_id');
+            var l_servicelist =this.getBusinessServiceTree(l_sysid);	
+            l_servicelist=this.utilEmptyListLast(l_servicelist);
+			myAlphaList.push({
+				name: l_name,
+				sysid: l_sysid,
+				servicelist: l_servicelist,
+                nodetype: l_servicelist.length>0? 'tree' : 'leaf',
+                idnumber: 0,
+                id: ''
+			});			
+		} 
+		var myChar = ''; //Initialize our single character string
+		var thisQ = '';  //Initialize our new encoded query
+		var idx=0;       //Initialize an index for our array
+		var found=false; //Initialize a boolean for indicating if our query returned anything
+		for (var i=65,iL=91;i<iL;i++) {       //Cycle through the alphabet
+			myChar = String.fromCharCode(i);  //...creating an entry for each char
+			myAlphaList.push({
+				name: myChar+'...',
+				sysid: -1,
+				servicelist: [],
+                nodetype: 'tree',
+                idnumber: 0,
+                id: ''
+			});
+			idx = myAlphaList.length-1;
+			thisQ = myQ+'^nameSTARTSWITH'+myChar;  //Query for our character
+			myGr.initialize();
+			myGr.addEncodedQuery(thisQ);
+			myGr.orderBy('name');
+			myGr.query();
+			found=myGr.getRowCount()>0?true:false;
+			while (myGr.next()) {
+				//Store what we find
+				var ll_name = myGr.getValue('name');
+				var ll_sysid = myGr.getValue('sys_id');
+				var ll_servicelist = this.getBusinessServiceTree(ll_sysid);
+                ll_servicelist=this.utilEmptyListLast(ll_servicelist);
+				myAlphaList[idx].servicelist.push({
+					name: ll_name,
+					sysid: ll_sysid,
+					servicelist: ll_servicelist,
+                    nodetype: ll_servicelist.length>0? 'tree' : 'leaf',
+                    idnumber: 0,
+                    id: ''
+                });
+			}
+			if (!found) {
+				//If we didn't find anything, remove that alpha item from the array
+				myAlphaList.splice(idx,1);
+			}
+		}
+		return myAlphaList;
+    },
+	getFlatBusinessServiceTree: function(_pList) {
+		var myObj = {
+			list: _pList,
+			ix: 0
+		};
+		var rtnList = [];
+		rtnList = this.utilGetFlatBusinessServiceTree(myObj);
+		return rtnList;
+	},
+	utilGetFlatBusinessServiceTree: function(_pObj){
+		var ixtmp=_pObj.ix;
+		var uFlatList=[];
+        var tmpFlatList=[];        
+		if (_pObj.list.length>0) {
+			for (var i=0,iL=_pObj.list.length;i<iL;i++) {
+				var myFlatItem = {};
+				myFlatItem.name = _pObj.list[i].name;
+                myFlatItem.sysid = _pObj.list[i].sysid;
+                myFlatItem.nodetype =  _pObj.list[i].nodetype;
+                myFlatItem.idnumber = ixtmp;
+                myFlatItem.id = 'li'+ixtmp;
+                myFlatItem.ulstate = 'collapsed';
+                _pObj.list[i].idnumber = myFlatItem.idnumber;
+                _pObj.list[i].id = myFlatItem.id;				
+				uFlatList.push(myFlatItem);
+				ixtmp++;
+				var myObj = {
+					list: _pObj.list[i].servicelist,
+					ix: ixtmp
+				};
+				tmpFlatList = this.utilGetFlatBusinessServiceTree(myObj);				
+                uFlatList=uFlatList.concat(tmpFlatList);
+				ixtmp = myObj.ix;
+			}					
+		}
+		_pObj.ix=ixtmp;
+		return uFlatList;
+	},   
 	isIncident: function(_p) {
-		var myGr = new GlideRecord('sc_cat_item');
-		myGr.get(_p);
-		var myName = (myGr.name.toString()).toLowerCase();
+        var myName = '';
+        var myGr = new GlideRecord('sc_cat_item');
+		if (myGr.get(_p)) {
+            myName = (myGr.name.toString()).toLowerCase();
+        }
 		return (myName.indexOf('incident')!=-1);
+	},
+	utilIsEmptyObj: function(_p) {
+		var myEmptyObj = {};
+		var myRtn=false;
+		if (typeof _p == typeof myEmptyObj) {
+			myRtn=true;
+			for (var k in _p) {
+				myRtn=false;
+				break;
+			}
+		} 
+		return myRtn;	
 	},
 	utilIsValueValid: function(_p) {
 		if ((typeof _p == typeof myUnknown) || (_p == null) || !(_p)) {
@@ -345,7 +660,7 @@ u_utassp.prototype = {
 			}					
 		} else if (_p.toString().length<1) {
 			return false;				
-		} else if (_p === {}) {
+		} else if (this.utilIsEmptyObj(_p)) {
 			return false;
 		}
 		return true;
@@ -370,7 +685,25 @@ u_utassp.prototype = {
 			}
 		}
 		return false;
-	},		
+    },   
+    utilEmptyIdExistsCheck: function(_p) {
+        var myRtn = {};
+        myRtn.emptyIdExists = false;
+        myRtn.idListWithoutEmpty = _p;
+        myRtn.emptyId = '';
+        if (Array.isArray(_p)) {
+            for (var i=0,iL=_p.length;i<iL;i++) {
+                if (_p[i].toString().indexOf('empty')>-1) {
+                    myRtn.emptyIdExists = true;
+                    myRtn.emptyId=_p.splice(i,1)[0].toString();
+                    myRtn.emptyId=myRtn.emptyId.replace('empty:','');
+					myRtn.idListWithoutEmpty = _p;
+                    break;
+                }
+            }
+        }
+        return myRtn;
+    },		
 	utilGetIsPageIdList: function(_p) {
 		var _pId = _p.split('&')[0];
 		var myRtnObj = {};
@@ -414,15 +747,114 @@ u_utassp.prototype = {
 		}
 		return myRtnSysId;
 	},
+	utilIsKbBase: function(_pCatId)
+	{
+		var myRtn=
+			this.utilIsValueValid(
+				this.utilGetSysId('kb_knowledge_base','sys_id',_pCatId)
+			);
+		return myRtn;
+	},
+	utilKbCategoriesQuery: function(_p)
+	{
+		var myGrCat = new GlideRecord('kb_category');		
+		myGrCat.addEncodedQuery('active=true^parent_id='+_p);
+        myGrCat.orderBy('label');
+		myGrCat.query();		
+		return myGrCat;
+	},
+	utilKbBaseCategoriesQuery: function(_p)
+	{
+		// ****************************************
+		//1. Any articles with empty category_id?
+		var myEmptyCatIdObj =  {
+			label: '(empty)', 
+			value: 'empty:'+_p, 
+			subcount: 0, 
+			artcount: 0,
+			level: 0, 
+			parentid: '',
+			uCategoryList: []
+		};
+		var myEmptyCount = 0;
+		var myKbGra = new GlideAggregate('kb_knowledge');	
+		var myKbGraQuery = 'kb_knowledge_base='+_p;
+		myKbGraQuery += '^active=true';			
+		myKbGraQuery += '^workflow_state=published';
+		myKbGraQuery += '^valid_to>=javascript:gs.beginningOfToday()';
+		myKbGraQuery += '^kb_categoryISEMPTY';
+		myKbGra.addEncodedQuery(myKbGraQuery);
+		myKbGra.addAggregate('COUNT');
+		myKbGra.query();
+		if (myKbGra.next()) {
+			myEmptyCount = myKbGra.getAggregate('COUNT');
+			if (myEmptyCount>0){
+                myEmptyCatIdObj.artcount = myEmptyCount;
+			}
+		}
+		// ****************************************
+		//2. Any articles with category_id that doesn't have a parent?
+		var myCatIdWithNoParentList = [];
+		var myIsCatIdWithNoParent=false;
+		myEmptyCount = 0;
+		var myCatIdWithNoParent='';
+		var myKbGraQueryTemplate = 'kb_knowledge_base='+_p+'^kb_category=#catsysid';
+		myKbGraQueryTemplate += '^active=true';			
+		myKbGraQueryTemplate += '^workflow_state=published';
+		myKbGraQueryTemplate += '^valid_to>=javascript:gs.beginningOfToday()';
+		//
+		var myCatGr=new GlideRecord('kb_category');
+		myCatGr.addEncodedQuery('active=true^parent_idISEMPTY');
+		myCatGr.query();
+		while (myCatGr.next()) {
+			myCatIdWithNoParent=myCatGr.getValue('sys_id');
+			myKbGraQuery=myKbGraQueryTemplate.replace('#catsysid',myCatIdWithNoParent);
+			myKbGra.initialize();
+			myKbGra.addEncodedQuery(myKbGraQuery);
+			gs.info('utilKbBaseCategoriesQuery1.query: '+myKbGraQuery);			
+			myKbGra.addAggregate('COUNT');
+			myKbGra.query();
+			myEmptyCount = 0;
+			if (myKbGra.next()) {
+				myEmptyCount = myKbGra.getAggregate('COUNT');
+				if (myEmptyCount>0) {
+					myCatIdWithNoParentList.push(myCatIdWithNoParent);
+                    myIsCatIdWithNoParent=true;					
+				}
+			}  
+		}
+		// ****************************************
+		//3. Query for Category Id's
+		var myCatdId = '';
+        var myQ = 'active=true^parent_id='+_p;
+        myCatGr.initialize();
+        if (myIsCatIdWithNoParent) {
+            var myCatIdWithNoParentStr = myCatIdWithNoParentList.join();
+            myQ += '^ORsys_idIN'+myCatIdWithNoParentStr;
+        }
+		myCatGr.orderBy('label');
+        myCatGr.addEncodedQuery(myQ);
+        gs.info('utilKbBaseCategoriesQuery2.query: '+myQ);
+		myCatGr.query();
+		// ****************************************
+		//4. Return a GlideRecord with all the category_id's!
+		//	
+		myRtnObj = {};
+		myRtnObj.emptyCatIdObj=myEmptyCatIdObj;
+		myRtnObj.gr=myCatGr;
+		//
+		return myRtnObj;
+	},
     type: 'u_utassp'
 };
+
 ]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-29 15:10:11</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3edf1d4c4f212300f006121f9310c732</sys_id>
-        <sys_mod_count>39</sys_mod_count>
+        <sys_mod_count>106</sys_mod_count>
         <sys_name>u_utassp</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy>read</sys_policy>
@@ -430,6 +862,6 @@ u_utassp.prototype = {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sys_script_include_3edf1d4c4f212300f006121f9310c732</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-29 17:11:46</sys_updated_on>
+        <sys_updated_on>2019-02-18 23:20:54</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function($scope,$rootScope,$timeout,$location,u_cutassp) {
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
+	//
+	/* widget controller */
+	var c = this;
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>*:focus {
+    outline: none !important;
+}
+
+/** Fixes Safari **/ 
+.row:before, .row:after {
+    display: flex !important;
+} 
+
+
+ h1,  h2,  h3,  h4,  h5,  h6,  p,  li {
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+ p,  span,  li {
+    color: #363636;
+    font-size: 14px;
+}
+
+ a {
+    cursor: pointer !important;
+}
+
+ h1 {
+    margin-top:0;
+    font-size: 25px;
+    color: #232323;
+}
+
+ #defaultOpen {
+    display: none;
+}
+#defaultSection {
+  padding:10px 10px 0 10px;;
+  margin-left:25px;
+  margin-right:25px;
+  background-color:#f0f0f0;
+  border:1px solid #ddd;
+}
+
+@media only screen and (min-width: 992px) {
+    div#myContainer {
+      display:none;
+    }
+}
+
+
+@media only screen and (max-width: 991.1px) {
+    div#myContainer {
+      margin-top:20px;
+      display:inherit;
+    }
+}
+
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>utassp01_mobile_affected_svc_info_widget</id>
+        <internal>false</internal>
+        <link/>
+        <name>UTASSP Mobile Affected Svc Info Widget</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();	
+	// *** Start: Debug only code ***
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =  'utassp01_mobile_affected_svc_info_widget > '+$sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code ***
+})($sp, input, data, options, gs);]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-12 15:44:10</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>ad606346db63a380e3ad22d4059619ab</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>UTASSP Mobile Affected Svc Info Widget</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_widget_ad606346db63a380e3ad22d4059619ab</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-12 16:02:50</sys_updated_on>
+        <template><![CDATA[<div id="myContainer">
+  <div id="defaultSection" tabindex="0" style="display: block;">
+      <h1>Things not working?</h1>
+      <p>Thank you for initiating this incident report to the service desk. 
+         Please select the affected service from below.
+      </p>
+      <p>
+         After selection, you will be presented with a form to complete your incident report.
+      </p>
+  </div>  
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

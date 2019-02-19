@@ -19,6 +19,11 @@
 	if (typeof c.data.title == typeof myUndefined ) { c.data.title = ''; } 
 	c.isSearchInput = true;
 	c.isSearchDisplay = !c.isSearchInput;
+	c.pgTotalsMsg = "Items #first to #last of #total";	
+	
+	//if (u_cutassp.utilIsValueValid(c.data.pagination.countmsg)) {
+	//	$scope.data.pagination.countmsg=c.data.pagination.countmsg;
+	//}
 	
 	$rootScope.$on('myCatSelectEvent', function (event, obj) {
 		//$window.location.href = '/ssp';
@@ -349,6 +354,15 @@ div.myGreyGridTable {
 }
 .myRefreshButton {
   border-left:1px solid #fff;
+}
+.myPgTotals {
+    color: #fff;
+    font-size: 12px;
+    position: relative;
+    top: 4px;  
+}
+.myTextAlignCenter {
+  	text-align:center;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -514,7 +528,6 @@ div.myGreyGridTable {
 		}
 	}
 	
-	data.isSearch=false;
 	if (isData) {
 		myCategoryId=input.categoryId;
 		var l_title = myU.getKbCategoryTreeTitle(myCategoryId);
@@ -565,6 +578,7 @@ div.myGreyGridTable {
 	}
 	
 	data.title = myTitle;
+	data.isSearch=false;
 	if (myCategoryId.length>0) {
 		data.categoryId = myCategoryId;
 		var myData = {};
@@ -595,7 +609,16 @@ div.myGreyGridTable {
 		data.pagination.hasNext = (myArticles.length == (parseInt(myLastRow) - parseInt(myFirstRow)) && parseInt(myLastRow) < parseInt(myRowCount));
 		data.pagination.hasPrevious = parseInt(myFirstRow) > 0;
 		data.pagination.showPagination = data.pagination.hasPrevious || data.pagination.hasNext;
-		data.pagination.currentPage = myCurrentPage;	
+		data.pagination.currentPage = myCurrentPage;
+		data.pagination.rowcount = myRowCount;
+		data.pagination.firstrow = myFirstRow;
+		data.pagination.lastrow = myLastRow;
+		data.pagination.countmsg = "Items #first to #last of #total";	
+		if (data.pagination.showPagination) {
+			data.pagination.countmsg = data.pagination.countmsg.replace('#first',data.pagination.firstrow+1);
+			data.pagination.countmsg = data.pagination.countmsg.replace('#last',data.pagination.lastrow);
+			data.pagination.countmsg = data.pagination.countmsg.replace('#total',data.pagination.rowcount);
+		}
 	}
 
 })($sp, input, data, options, gs);]]></script>
@@ -605,7 +628,7 @@ div.myGreyGridTable {
         <sys_created_on>2019-01-30 14:26:17</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>b1e114ca1bd72b40715941d8cd4bcba9</sys_id>
-        <sys_mod_count>7</sys_mod_count>
+        <sys_mod_count>26</sys_mod_count>
         <sys_name>UTASSP KB Category Page  Widget 2</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -613,7 +636,7 @@ div.myGreyGridTable {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_b1e114ca1bd72b40715941d8cd4bcba9</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-30 21:53:33</sys_updated_on>
+        <sys_updated_on>2019-02-05 18:30:17</sys_updated_on>
         <template><![CDATA[<div>
   <div class="panel panel-{{::options.color}} b myShadow"  dummy="{{::c.myLog()}}">
     <div class="panel-heading">
@@ -696,9 +719,10 @@ div.myGreyGridTable {
         </div>
       </div>      
     </div> 
-    <div class="panel-{{::options.color}} panel-footer clearfix" ng-if="data.pagination.showPagination">
+    <div class="panel-{{::options.color}} panel-footer clearfix myTextAlignCenter" ng-if="data.pagination.showPagination">
       <a id="previous-btn" href="javascript:void(0)" ng-click="previousPage()" ng-show="data.pagination.hasPrevious" class="pull-left btn btn-sm btn-default mybtn" aria-label="${Pagination button Previous}">
         <i class="fa fa-arrow-left m-r-sm" aria-hidden="true"></i>${&nbsp;Previous}</a>
+      <span class="myPgTotals" ng-bind="c.data.pagination.countmsg"></span>
       <a id="next_btn" href="javascript:void(0)" ng-click="nextPage()" ng-show="data.pagination.hasNext" class="pull-right btn btn-sm btn-default mybtn" aria-label="${Pagination button Next}">
         ${Next&nbsp;}<i class="fa fa-arrow-right m-r-sm col-md-offset-3" aria-hidden="true"></i></a>
     </div>

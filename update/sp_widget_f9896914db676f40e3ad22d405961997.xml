@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>standard</category>
+        <client_script><![CDATA[function ($http, $filter, $location,spAriaUtil, $window, $scope, spAriaFocusManager, u_cutassp) {
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
+	//
+	var c = this;
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
+	//
+	c.options.glyph = c.options.glyph || 'search';
+	c.options.title = c.options.title || c.data.searchMsg;
+	c.options.color = c.options.color || "default";
+	c.searchTerm = c.data.q;
+
+	c.onSelect = function($item, $model, $label) {
+		c.searchTerm = ""; // prevents unexpected result if user quickly clicks search button after selecting
+		if ($item.target)
+			window.open($item.url, $item.target);
+		else {
+			var newUrl = $location.url($item.url);
+			spAriaFocusManager.navigateToLink(newUrl.url());
+		}
+	};
+
+	c.getResults = function(query) {
+		var payload = {
+			"query": query,
+			"portal": c.data.portalID,
+			"source": c.data.searchSources,
+			"include_facets": false,
+			"isTypeahead": true
+		};
+		if (c.options.limit || c.options.limit == 0)
+			payload.count = c.options.limit;
+
+		return $http.post("/api/now/sp/search", payload).then(function(response) {
+			var result = response.data.result;
+			spAriaUtil.sendLiveMessage(result.results.length + " " +
+																 c.data.resultMsg + " " +
+																 c.data.navigationMsg +
+																 getNavigationKeys());
+			return result.results.map(function(item) {
+				var config = c.data.searchSourceConfiguration[item.__search_source_id__];
+				if (config.type == "ADVANCED") {
+					item.templateID = config.template;
+				} else {
+					item.glyph = config.glyph;
+					if (!item.url && config.linkToPage) {
+						item.url = "?id=" + config.linkToPage;
+						if (item.sys_id)
+							item.url += "&sys_id=" + item.sys_id;
+						if (item.table)
+							item.url += "&table=" + item.table;
+					}
+				}
+				return item;
+			});
+		});
+	};
+
+	c.searchType = c.data.searchType;
+	$scope.$on('$locationChangeSuccess', onLocationChangeSuccess);
+
+	function onLocationChangeSuccess(event, newUrl, oldUrl) {
+		if(searchSourceChanged(newUrl, oldUrl)) {
+			var newUrlParams = newUrl.match(/t=.+/);
+			if(!newUrlParams) {
+				c.searchType = null;
+			} else {
+				c.searchType = newUrlParams[0].split("&")[0].substring(2);
+			}
+		}
+  }
+
+	function searchSourceChanged(newUrl, oldUrl) {
+		var newUrlParams = newUrl.match(/t=.+/),
+		oldUrlParams = oldUrl.match(/t=.+/);
+
+		if(!newUrlParams && !oldUrlParams) {
+			return false;
+		}
+
+		if((!newUrlParams && oldUrlParams) || (newUrlParams && !oldUrlParams)) {
+			return true;
+		}
+
+		return newUrlParams[0].split("&")[0] !== oldUrlParams[0].split("&")[0];
+	}
+
+	c.submitSearch = function() {
+		if (c.searchTerm) {
+			var newUrl = $location.search({
+				id: 'utassp01_kb_search_results',
+				spa: '1',
+				t: c.searchType,
+				q: c.searchTerm
+			});
+
+			spAriaFocusManager.navigateToLink(newUrl.url());
+		}
+	};
+
+	function getNavigationKeys() {
+		if($window.navigator.userAgent.indexOf("Mac OS X") > -1)
+			return '⌘';
+		return 'Control';
+	}
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>div.input-group {
+	margin-top:10px;  
+}
+
+div.myShadow {
+  -webkit-box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.78);
+  -moz-box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.78);
+  box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.78);  
+}
+
+ul.dropdown-menu {
+    min-width: 100%;
+    border-radius: 0px 0px 4px 4px;
+    margin:0px;
+}
+
+ul.dropdown-menu a.ta-item {
+	line-height: 20px;
+}
+
+ul.dropdown-menu i.ta-icon, i.ta-img {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center center;
+    text-align: center;
+    line-height: 20px;
+    float:left;
+    margin-right: 8px;
+}
+
+input[name="q"] {
+color: black;
+}
+
+$myPublicLinkColor: #0f8c73;
+.myWelcomeSpan {
+  color:#ffffff;
+  font-weight:bold;
+  text-shadow: 11px 4px 7px #000000;
+}
+.myPublicBox {
+  box-sizing:border-box;
+  display:inline-block;
+  line-height:18.5714px;
+  position:relative;
+  width:400px;
+  }
+}
+a.myPublicLoginLink {
+	display: block;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 22px;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    line-height: 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color:$myPublicLinkColor;  
+    &amp;:hover {
+      background-color:darken($myPublicLinkColor,10)
+    }
+}
+a.myPublicPwdHelp {
+  background-attachment:scroll;
+  background-color:rgba(0, 0, 0, 0.4);	
+  border-bottom-left-radius:15px;
+  border-bottom-right-radius:15px;	
+  border-top-left-radius:15px;
+  border-top-right-radius:15px;
+  box-sizing:border-box;
+  color: #fff;
+  cursor:pointer;
+  display:block;
+  font-size:13px;
+  margin-bottom:5px;
+  margin-left:115px;
+  margin-right:115px;
+  margin-top:5px;
+  padding-bottom:4px;
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:4px;
+  text-align:center;
+  width:170px;  
+  &amp;:hover {
+    background-color:rgba(0,0,0,0.8);	
+  }
+}
+div.myMarginTop { margin-top:10px; }
+div.myCenterInline {}
+div.myDivWidth {}
+@media screen and (min-width: 768px)
+{
+  div.myCenterInline {
+    text-align:center;
+    display:inline-block
+  }
+  div.myDivWidth {
+    width:400px;
+  }
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>utassp01_kb_search_widget</id>
+        <internal>false</internal>
+        <link><![CDATA[function(scope) {
+	var lazyLoader = $injector.get("lazyLoader");
+	lazyLoader.putTemplates(scope.data.typeaheadTemplates);
+}]]></link>
+        <name>UTASSP KB Search Widget</name>
+        <option_schema>[
+   {
+      "name":"title",
+      "section":"Presentation",
+      "label":"Title",
+      "type":"string"
+   },
+   {
+      "name":"color",
+      "section":"Presentation",
+      "label":"Color",
+      "type":"string"
+   },
+   {
+      "name":"glyph",
+      "section":"Presentation",
+      "label":"glyph",
+      "type":"string"
+   },
+   {
+      "name":"size",
+      "section":"Presentation",
+      "label":"Size",
+      "type":"string"
+   },
+   {
+      "hint":"Number of typeahead search results returned (default 15)",
+      "name":"limit",
+      "section":"Behavior",
+      "label":"Limit",
+      "type":"integer"
+   },
+   {
+      "displayValue":"Search Source",
+      "hint":"If provided, limit the scope of the typeahead search to the given search sources",
+      "name":"contextual_search_sources",
+      "display_value_list":[
+
+      ],
+      "section":"Behavior",
+      "label":"Contextual Search Sources",
+      "type":"glide_list",
+      "value":"sp_search_source",
+      "ed":{
+         "reference":"sp_search_source"
+      }
+   }
+]</option_schema>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle = 'utassp01_kb_search_widget > '+$sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //	
+	//
+	data.isLoggedIn = gs.isLoggedIn();
+	var myGlobal = new global.u_utaglobalapi();
+	if (options.title) {
+		options.title = gs.getMessage(options.title);
+	}
+	data.resultMsg = gs.getMessage("Search results");
+	data.navigationMsg = gs.getMessage("To navigate, use up and down arrow keys while holding ");
+	data.portalID = $sp.getPortalRecord().getUniqueValue();
+	data.searchMsg = gs.getMessage("Search");
+	data.q = $sp.getParameter('q');
+
+	var searchSources;
+	data.searchType = null;
+	data.searchSources = [];
+	if ($sp.getParameter("id") == "search" && $sp.getParameter("t")) {
+		data.searchType = $sp.getParameter("t");
+		searchSources = myGlobal.u_$sp.getSearchSources(data.portalID);
+	} else {
+		var contextualSearchSourceIDs = options.contextual_search_sources || null;
+		gs.info('KB Search widget -- data.portalID, contextualSearchSourceIDs:'+data.portalID+', '+contextualSearchSourceIDs);
+		searchSources = myGlobal.u_$sp.getSearchSources(data.portalID, contextualSearchSourceIDs);
+		gs.info('KB Search widget -- searchSources:'+searchSources.length+', '+searchSources[0]);		
+		//if (searchSources.length == 1) {
+		//	data.searchType = searchSources[0].id;
+		//}
+	}
+
+	data.typeaheadTemplates = {};
+	data.searchSourceConfiguration = {};
+	searchSources.forEach(function(source) {
+		if (source.isTypeaheadEnabled) {
+			data.searchSources.push(source.id);
+		}
+		var sourceTemplateConfiguration = {};
+		if (source.isAdvancedTypeaheadConfig) {
+			sourceTemplateConfiguration.type = "ADVANCED";
+			sourceTemplateConfiguration.template = "sp-typeahead-" + source.id + ".html";
+			data.typeaheadTemplates["sp-typeahead-" + source.id + ".html"] = myGlobal.u_$sp.translateTemplate(source.typeaheadTemplate);
+		} else {
+			sourceTemplateConfiguration.type = "SIMPLE";
+			sourceTemplateConfiguration.glyph = source.typeaheadGlyph;
+			sourceTemplateConfiguration.linkToPage = source.typeaheadPage;
+			if (!sourceTemplateConfiguration.linkToPage)
+				console.log("Warning: No typeahead page or URL provided for search source " + source.name);
+		}
+		data.searchSourceConfiguration[source.id] = sourceTemplateConfiguration;
+	});
+})($sp, input, data, options, gs);]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-06 20:35:26</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f9896914db676f40e3ad22d405961997</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>UTASSP KB Search Widget</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_widget_f9896914db676f40e3ad22d405961997</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-12 20:20:13</sys_updated_on>
+        <template><![CDATA[<div ng-if="::!data.isLoggedIn" class="text-center myMarginTop">
+  <div class="text-center myPublicBox">
+    <a href="/utassp?id=utassp01_dummy" class="myPublicLoginLink">Login to continue »</a>
+    <a href="https://netidss.uta.edu" class="myPublicPwdHelp">Password Reset Help</a>
+  </div>
+</div>
+<div ng-if="::data.isLoggedIn" class="myCenterInline">
+  <form ng-submit="c.submitSearch()">
+    <input type="hidden" name="id" value="search"/>
+    <input type="hidden" name="t" value="{{c.searchType}}"/>
+    <div class="input-group input-group-{{::c.options.size}}"  dummy="{{::c.myLog()}}" >
+      <!-- uses ui.bootstrap.typeahead -->
+      <input name="q" type="text" placeholder="{{::c.options.title}}" ng-model="c.searchTerm"
+             autocomplete="off"
+             uib-typeahead="item as item.primary for item in c.getResults($viewValue)"
+             typeahead-wait-ms="250"
+             typeahead-focus-first="false"
+             typeahead-on-select="c.onSelect($item, $model, $label)"
+             typeahead-template-url="utassp01_kb_typeahead.html"
+             typeahead-popup-template-url="utassp01_kb_typeahead_popup.html"
+             class="form-control input-typeahead"
+             role="textbox"
+             aria-label="{{::c.options.title}}" tabindex="0" aria-haspopup="true">
+      <span class="input-group-btn">
+        <button name="search" type="submit" class="btn btn-{{::c.options.color}}"
+                title="{{::c.data.searchMsg}}" aria-label="{{::c.data.searchMsg}}">
+          <i ng-if="::c.options.glyph" class="fa fa-{{::c.options.glyph}}"></i>
+        </button>
+      </span>
+    </div>
+  </form>  
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[function ($scope, $rootScope, $element, spUtil, $timeout, u_cutassp) {
+        <client_script><![CDATA[function ($scope, $rootScope, $element, spUtil, $window, u_cutassp) {
 	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
 		console.log($scope.data.infotag+(new Date()).getTime());		
 	}
@@ -14,263 +14,619 @@
 		}
 		return '';
 	};
-	//	
+	//
 	if (typeof c.data == typeof myUndefined) { c.data = {}; }
-	if (typeof c.data.tickets == typeof myUndefined ) { c.data.tickets = []; }	
-	
-	//*** Init
-	$scope.hideOnInit = function(rowArg) {
-		rowArg.hide();
+	if (typeof c.data.tickets == typeof myUndefined ) { c.data.tickets = []; }		
+	//	
+	$scope.isCurrentSearch_2 = false;
+	$scope.data.action_2 = '';
+	$scope.data.isSortOn_2 = {
+		number:false,
+		description:false,
+		service:false,
+		state:false,
+		created:false
 	};
+	$scope.data.searchq_2 = {
+		number:'',
+		description:'',
+		service:'',
+		state:'',
+		created:''		
+	};
+	$scope.selStateSearchData_2='';
+	$scope.inpCreatedSearchData_2='';
+
+	$scope.get_2 = function() {
+		_get_2();
+	};
+	function _get_2() {
+		spUtil.update($scope);
+	}
 	
-	//*** pagination 
-  function get() {
-    spUtil.update($scope);
-  }
-	
-	$scope.previousPage = function() {
-		$scope.data.ishidden = false;		
+	$scope.previousPage_2 = function(e) {
+		debugger;
 		$scope.data.action='prev';
-		if ($scope.data.pagination.currentPage > 1)
-			$scope.data.pagination.currentPage = $scope.data.pagination.currentPage - 1;
+		if ($scope.data.pagination_2.currentPage > 1)
+			$scope.data.pagination_2.currentPage = $scope.data.pagination_2.currentPage - 1;
 		else 
-			$scope.data.pagination.currentPage = 0;
-		get();
+			$scope.data.pagination_2.currentPage = 0;
+		$scope.get();
+		return true;
 	};
 
-	$scope.nextPage = function() {
-		$scope.data.ishidden = false;		
-		$scope.data.action='next';
-		$scope.data.pagination.currentPage = $scope.data.pagination.currentPage+1;
-		get();
+	$scope.nextPage_2 = function(e) {
+		debugger;
+		$scope.data.action_2 ='next';
+		$scope.data.pagination_2.currentPage = $scope.data.pagination_2.currentPage+1;
+		$scope.get_2();
+		return true;
 	};	
 
-	//*** Now, hide on init	
-	if ($scope.data.ishidden && $scope.data.ishidden != 'false') {
-		var myRowDiv=$element.closest('div.sp-row-content');
-		var myRow=myRowDiv.parent();	
-		$scope.hideOnInit(myRow);		
-	}
+	$scope.clickSearch_2 = function(e) {
+		debugger;
+		if ($scope.utilIsSearch_2()) {
+			$scope.utilResetSort_2();
+			$scope.data.action_2 = "search";
+			$scope.get_2();
+		}
+	};
+	$scope.crCatchSearch_2 = function(e) {
+		debugger;		
+		if ( e.keyCode === 13 ) {
+			if ($scope.utilIsSearch_2()) {
+				$scope.utilResetSort_2();
+				$scope.data.action_2 = "search";
+				$scope.get_2();
+			}
+		} else {
+			return false;
+		}	
+	};	
+	$scope.onSelectChange_2 = function() {
+		debugger;	
+		var mySelect = $('#selStateSearchId_2');
+		var mySelectValue = $('#selStateSearchId_2').val();
+		if (this.$parent.utilIsSearch_2()) {
+			this.$parent.utilResetSort_2();
+			this.$parent.get_2();
+		}
+	};	
+	$scope.onDateChange_2 = function() {
+		debugger;	
+		var mySelect = $('#inpCreatedSearchId_2');
+		var mySelectValue = $('#inpCreatedSearchId_2').val();
+		if (this.$parent.utilIsSearch_2()) {
+			this.$parent.utilResetSort_2();
+			this.$parent.get_2();
+		}
+	};	
+	$scope.clickReset_2 = function(e) {
+		debugger;	
+		$scope.utilResetSearch_2();
+		$scope.utilResetSort_2();
+		$scope.data.action_2 = "reset";
+		$scope.get_2();
+	};	
+	$scope.cycleCondition_2 = function(e) {
+		debugger;			
+		var myIcon = $(e.currentTarget).children('i').first();
+		//
+		switch (true) {
+			case myIcon.hasClass('fa-greater-than-equal'):
+				myIcon.toggleClass('fa-greater-than-equal');
+				myIcon.toggleClass('fa-less-than-equal');
+				break;
+			case myIcon.hasClass('fa-less-than-equal'):
+				myIcon.toggleClass('fa-less-than-equal');
+				myIcon.toggleClass('fa-greater-than');
+				break;
+			case myIcon.hasClass('fa-greater-than'):
+				myIcon.toggleClass('fa-greater-than');
+				myIcon.toggleClass('fa-less-than');
+				break;
+			case myIcon.hasClass('fa-less-than'):
+				myIcon.toggleClass('fa-less-than');
+				myIcon.toggleClass('fa-equals');
+				break;
+			case myIcon.hasClass('fa-equals'):
+				myIcon.toggleClass('fa-equals');
+				myIcon.toggleClass('fa-greater-than-equal');
+				break;
+		}	
+		//
+	};
+	//
+	var myNewTitle_2= {
+		first: "Click to sort...",
+		ascend: "Click to sort descending...",
+		descend: "Click to sort ascending..."
+	};
+	var myClassRemove_2= {
+		ascend: "fa-caret-down",
+		descend: "fa-caret-up"
+	};
+	var myClassAdd_2= {
+		ascend: "fa-caret-up",
+		descend: "fa-caret-down"
+	};
+	var myNewSortAction_2 = {
+		ascend: "sortasc",
+		descend: "sortdesc"
+	};
+	$scope.colSort_2 = function(e) {
+		debugger;
+		var myHdrDiv = $(e.currentTarget);
+		//
+		var myId=myHdrDiv.attr('id');
+		var myTitle=myHdrDiv.attr('title');
+		var mySortState='';
+		if (myTitle.indexOf("sort...")>-1) {
+			mySortState= "ascend";
+		} else if (myTitle.indexOf("descending...")>-1) {
+			mySortState = "descend";
+		} else if (myTitle.indexOf("ascending...")>-1) {
+			mySortState= "ascend";
+		}
+		//
+		var myParent = myHdrDiv.closest('div.myDivTableRow');
+		var myDivSiblings = myParent.find('div');
+		myDivSiblings.attr('title',myNewTitle_2.first);
+		$scope.data.isSortOn_2 = {
+			number:false,
+			description:false,
+			service:false,
+			state:false,
+			created:false
+		};
+		//
+		myHdrDiv.attr('title',myNewTitle_2[mySortState]);
+		var myIcon = myHdrDiv.children('i').first();
+		myIcon.removeClass(myClassRemove_2[mySortState]);
+		myIcon.addClass(myClassAdd_2[mySortState]);
+		//
+		var mySortAction = '';
+		switch(true) {
+			case (myId.indexOf('Number')>-1):
+				$scope.data.isSortOn_2.number = true;
+				mySortAction = myNewSortAction_2[mySortState];
+				break;
+			case (myId.indexOf('Description')>-1):
+				$scope.data.isSortOn_2.description = true;
+				mySortAction = myNewSortAction_2[mySortState];
+				break;
+			case (myId.indexOf('Service')>-1):
+				$scope.data.isSortOn_2.service = true;
+				mySortAction = myNewSortAction_2[mySortState];
+				break;
+			case (myId.indexOf('State')>-1):
+				$scope.data.isSortOn_2.state = true;
+				mySortAction = myNewSortAction_2[mySortState];
+				break;
+			case (myId.indexOf('Created')>-1):			
+				$scope.data.isSortOn_2.created = true;
+				mySortAction = myNewSortAction_2[mySortState];
+				break;
+		}
+		//
+		if (mySortAction.length>0){
+			if ($scope.utilIsSearch_2()) {
+				//  We are sorting a search query
+				mySortAction += 'search';
+			}
+			$scope.data.action_2 = mySortAction;
+			$scope.get_2();
+		}
+	};
+	//
+	$scope.utilIsSearch_2 = function()
+	{
+		return _utilIsSearch_2();
+	};
+	_utilIsSearch_2 = function() {
+		debugger;		
+		var mySearchQ = '';
+		var myCharCount = 0;
+		//
+		mySearchQ = $('#inpNumberSearchId_2').val().trim();
+		myCharCount += mySearchQ.length;
+		$scope.data.searchq_2.number=mySearchQ;
+		//
+		mySearchQ = $('#inpDescriptionSearchId_2').val().trim();
+		myCharCount += mySearchQ.length;
+		$scope.data.searchq_2.description=mySearchQ;
+		//
+		mySearchQ = $('#inpServiceSearchId_2').val().trim();
+		myCharCount += mySearchQ.length;
+		$scope.data.searchq_2.service=mySearchQ;
+		//
+		mySearchQ = $('#selStateSearchId_2').val().trim();
+		myCharCount += mySearchQ.length;		
+		$scope.data.searchq_2.state=mySearchQ;
+		//
+		mySearchQ = $('#inpCreatedSearchId_2').val().trim();
+		myCharCount += mySearchQ.length;	
+		if (mySearchQ.length>0) {
+			var myIcon = $('#inpCreatedSearchId_2').closest('div.myDivTableHead').find('i').first();
+			switch(true) {
+				case myIcon.hasClass('fa-greater-than-equal'):
+					mySearchQ += '.GTE';
+					break;
+				case myIcon.hasClass('fa-less-than-equal'):
+					mySearchQ += '.LTE';
+					break;
+				case myIcon.hasClass('fa-greater-than'):
+					mySearchQ += '.GT';
+					break;
+				case myIcon.hasClass('fa-less-than'):
+					mySearchQ += '.LT';
+					break;
+				case myIcon.hasClass('fa-equals'):
+					mySearchQ += '.E';
+					break;					
+			}
+		}
+		$scope.data.searchq_2.created=mySearchQ;	
+		//
+		if (myCharCount>0) {
+			$scope.data.action_2='search';
+			$scope.isCurrentSearch_2=true;
+		} else {
+			$scope.isCurrentSearch_2=false;			
+		}
+		return ($scope.isCurrentSearch_2);
+	};
+	//
+	$scope.utilResetSearch_2 = function() {
+		_utilResetSearch_2();
+	};
+	_utilResetSearch_2 = function() {
+		$('#inpNumberSearchId_2').val('');
+		$('#inpDescriptionSearchId_2').val('');
+		$('#inpServiceSearchId_2').val('');
+		$('#selStateSearchId_2').val('');
+		$('#inpCreatedSearchId_2').val('');
+		$scope.isCurrentSearch_2=false;	
+	};
+	//
+	$scope.utilResetSort_2 = function() {
+		_utilResetSort_2();
+	};	
+	_utilResetSort_2 = function() {
+		$scope.data.isSortOn_2 = {
+			number:false,
+			description:false,
+			service:false,
+			state:false,
+			created:false
+		};		
+		$('#divHdrNumberId_2').attr('title',myNewTitle_2.first);
+		$('#divHdrDescriptionId_2').attr('title',myNewTitle_2.first);
+		$('#divHdrServiceId_2').attr('title',myNewTitle_2.first);
+		$('#divHdrStateId_2').attr('title',myNewTitle_2.first);
+		$('#divHdrCreatedId_2').attr('title',myNewTitle_2.first);
+	};
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>.panel-heading&#13;
-{&#13;
-	background-image: url(utassp_ticket_img.png);&#13;
-	background-repeat: no-repeat;&#13;
-	background-size: contain;  	&#13;
-	padding-left: 50px;&#13;
-}&#13;
-.panel-body {&#13;
-  /* background-color:#fff6e5; */&#13;
-}&#13;
-.panel-primary &gt; .panel-footer {&#13;
-	background-color: #428bca;&#13;
-	border-color: #428bca;	&#13;
-}&#13;
-&#13;
-/* ********** */&#13;
-/* Pagination */&#13;
-a.mybtn {&#13;
-    padding: 5px 10px;&#13;
-    font-size: 12px;&#13;
-    line-height: 1.5;&#13;
-    border-radius: 3px;&#13;
-}&#13;
-&#13;
-/* ************ */&#13;
-/* DivTable  */&#13;
-.myDivTable{ &#13;
-  display:table; &#13;
-  width: 100%;&#13;
-  table-layout: fixed;&#13;
-}&#13;
-.myDivTableRow { display:table-row; }&#13;
-.myDivTableHeading { display:table-header-group;}&#13;
-.myDivTableCell, .myDivTableHead { display:table-cell;}&#13;
-.myDivTableHeading { display:table-header-group;}&#13;
-.myDivTableFoot { display:table-footer-group;}&#13;
-.myDivTableBody { display:table-row-group;}&#13;
-&#13;
-div.myGreyGridTable {&#13;
-  width:100%;&#13;
-  text-align:left;&#13;
-  border-collapse:collapse;&#13;
-}&#13;
-&#13;
-/* myDivTableHeading */&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading {&#13;
-  background:#FFFFFF;&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-  border-bottom:1px solid #000000;&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-  .myDivTableHead {&#13;
-  	font-weight:bold;&#13;
-  	color:#000000;&#13;
-  	text-align:center;&#13;
-  	padding:1px 1px 1px 4px;&#13;
-    border-right:1px solid #bbbbbb;     &#13;
-  }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow   {&#13;
-  .myDivTableHead.myLeft { text-align:left; }&#13;
-}&#13;
-&#13;
-/* myDivTableBody */&#13;
-.myDivTable.myGreyGridTable .myDivTableBody {&#13;
-	a.myDivTableRow {&#13;
-  	width:100%;&#13;
-  	height:100%; &#13;
-    font-size: 11px; &#13;
-    border-bottom:1px solid white;&#13;
-	}&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableBody {&#13;
-  a.myDivTableRow:hover { &#13;
-	  text-decoration:underline;&#13;
-    background-color:#dddddd; &#13;
-  }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableBody {&#13;
-	.myDivTableRow:nth-child(odd) { background: #EEEEEE; }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableBody&#13;
-{&#13;
-	.myDivTableRow:last-child { border-bottom-style:none;  }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-  .myDivTableCell  {&#13;
-      border-right:1px solid #bbbbbb; &#13;
-      padding:1px 4px;&#13;
-  }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-  .myDivTableCell.myCtr { text-align:center; }&#13;
-}&#13;
-&#13;
-/* Foot Style */&#13;
-.myGreyGridTable .myTableFootStyle {&#13;
-  font-weight:bold;&#13;
-  color:#333333;&#13;
-  border-top:1px solid #333333;&#13;
-}&#13;
-&#13;
-/* Link text */&#13;
-a.myDivTableRow {&#13;
-  color:#3a3f51;&#13;
-  &amp;:hover {&#13;
-    color:#428bca;&#13;
-    text-decoration: underline;&#13;
-  }&#13;
-}&#13;
-&#13;
-/* ********** */&#13;
-// Above Medium devices (tablets, 768px and up)&#13;
-@media (min-width: 768.01px) &#13;
-{&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefLgOnlyShow { display:table-cell; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefMedUpShow { display:table-cell; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMedOnlyShow { display:none; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead:nth-last-child(1) { border-right-style:none; }&#13;
-  } &#13;
-  &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefLgOnlyShow { display:table-cell; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMeUpShow { display:table-cell; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMedOnlyShow { display:none; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell:nth-last-child(2) { border-right-style:none; }&#13;
-  } &#13;
-  &#13;
-  .myCol1 { width:10% }&#13;
-  .myCol2 { width:43% }&#13;
-  .myCol3 { width:20% }&#13;
-  .myCol4 { width:12% }&#13;
-  .myCol5 { width:18% } &#13;
-}&#13;
-&#13;
-// Medium devices (tablets, 768px and less)&#13;
-@media (max-width: 768px) { &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefLgOnlyShow { display:none; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefMedUpShow { display:table-cell; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead.myDefMedOnlyShow { display:table-cell; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead:nth-last-child(1) { border-right-style:none; }&#13;
-  }    &#13;
-  &#13;
- .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell.myDefLgOnlyShow { display:none; }&#13;
-  }   &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMedUpShow { display:table-cell; }&#13;
-  }    &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell.myDefMedOnlyShow { display:table-cell; }&#13;
-  }   &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell:nth-last-child(1) { border-right-style:none; }&#13;
-  }   &#13;
-  &#13;
-  .myCol1 { width:15% }&#13;
-  .myCol2 { width:34% }&#13;
-  .myCol3 { width:25% }&#13;
-  .myCol4 { width:12% }&#13;
-  .myCol5 { width:14% }   &#13;
-}&#13;
-&#13;
-// Small devices (landscape phones, 576px and less)&#13;
-@media (max-width: 576px) { &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefLgOnlyShow { display:none; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefMedUpShow { display:none; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead.myDefMedOnlyShow { display:none; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead:nth-last-child(4) { border-right-style:none; }&#13;
-  }   &#13;
-  &#13;
- .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell.myDefLgOnlyShow { display:none; }&#13;
-  }   &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMedUpShow { display:none; }&#13;
-  }    &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell.myDefMedOnlyShow {display:none; }&#13;
-  }   &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell:nth-last-child(5) { border-right-style:none; }&#13;
-  }  &#13;
-  .myCol1 { width:35% }&#13;
-  .myCol2 { width:65% }&#13;
-  .myCol3 { width:0% }&#13;
-  .myCol4 { width:0% }&#13;
-  .myCol5 { width:0% }  &#13;
-}&#13;
-&#13;
+        <css>.panel-heading
+{
+	background-image: url(utassp_ticket_img.png);
+	background-repeat: no-repeat;
+	background-size: contain;  	
+	padding-left: 50px;
+}
+.panel-body {
+  /* background-color:#fff6e5; */
+  padding:0 5px 15px 5px;
+}
+.panel-primary &gt; .panel-footer {
+	background-color: #428bca;
+	border-color: #428bca;	
+}
+
+.myLeftAlign {
+  text-align:left;
+}
+
+/* ******** */
+/* Searches */
+input.form-control {
+	height:auto;
+	padding:2px 5px;
+	font-size:11px;	
+    margin-bottom:2px;
+}
+input.form-control.myAlignCenter {
+	text-align:center;
+}
+input.form-control.myAlignLeft {
+	text-align:left;
+}
+
+div.myDivDateInput {
+  padding-bottom:4px;
+}
+
+input.form-control.myDateInput {
+  height:20px;
+  font-size:8px;
+}
+
+div.myConditionCaseBtn {
+  display:inline-block;
+  background-color:#ddd;
+  font-size:10px;
+  color:#717171;
+  text-align:center;
+  padding:2px 5px;
+  margin-right:2px;
+  border-radius:3px;
+  &amp;:hover{
+    cursor:pointer;
+    background-color:#ccc;
+  }
+}
+
+div.mySearchBtn {
+  float:left;
+  display:inline-block;
+  background-color:#ddd;
+  font-size:10px;
+  color:#717171;
+  text-align:center;
+  padding:2px 5px;
+  margin-right:0;
+  border-radius:3px;
+  &amp;:hover{
+    cursor:pointer;
+    background-color:#ccc;
+  }
+}
+
+div.myGrid {
+  display: grid;
+  grid-template-columns: auto 45px; 
+}
+
+i.mySortIcon {
+  font-size:12px;
+}
+
+#divHdrNumberId_2,
+#divHdrDescriptionId_2,
+#divHdrServiceId_2,
+#divHdrStateId_2,
+#divHdrCreatedId_2 {
+  &amp;:hover {
+    cursor:pointer;
+  }
+}
+
+/* ********** */
+/* Pagination */
+a.mybtn {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+  	color: #428bca;
+	background-color: #fff;
+    border-color: #ccc;  
+    &amp;:hover {
+      color: #333;
+      background-color: #e6e6e6;
+      border-color: #adadad;      
+    }
+}
+
+/* ************ */
+/* DivTable  */
+.myDivTable{ 
+  display:table; 
+  width: 100%;
+  table-layout: fixed;  
+}
+.myDivTableRow { display:table-row; }
+.myDivTableHeading { display:table-header-group;}
+.myDivTableCell, .myDivTableHead { display:table-cell;}
+.myDivTableHeading { display:table-header-group;}
+.myDivTableFoot { display:table-footer-group;}
+.myDivTableBody { display:table-row-group;}
+
+div.myGreyGridTable {
+  width:100%;
+  text-align:left;
+  border-collapse:collapse;
+}
+
+/* myDivTableHeading */
+.myDivTable.myGreyGridTable .myDivTableHeading {
+  background:#FFFFFF;
+}
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+  border-bottom:1px solid #000000;
+}
+.myDivTable.myGreyGridTable .myDivTableHeading div.myDivTableRow.myTopRow{
+  border-bottom:none;
+}
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+  .myDivTableHead {
+  	font-weight:bold;
+  	color:#000000;
+  	text-align:center;
+  	padding:1px 4px;
+    border-right:1px solid #bbbbbb;     
+  }
+}
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow   {
+  .myDivTableHead.myLeft { text-align:left; }
+}
+
+/* myDivTableBody */
+.myDivTable.myGreyGridTable .myDivTableBody {
+	a.myDivTableRow {
+  	width:100%;
+  	height:100%; 
+    border-bottom:1px solid white;
+    font-size:11px;
+	}
+}
+.myDivTable.myGreyGridTable .myDivTableBody {
+  a.myDivTableRow:hover { 
+	  text-decoration:underline;
+    background-color:#dddddd; 
+  }
+}
+.myDivTable.myGreyGridTable .myDivTableBody {
+	.myDivTableRow:nth-child(odd) { background: #EEEEEE; }
+}
+.myDivTable.myGreyGridTable .myDivTableBody
+{
+	.myDivTableRow:last-child { border-bottom-style:none;  }
+}
+.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+  .myDivTableCell  {
+      border-right:1px solid #bbbbbb; 
+      padding:1px 4px;
+  }
+}
+.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+  .myDivTableCell.myCtr { text-align:center; }
+}
+
+/* Foot Style */
+.myGreyGridTable .myTableFootStyle {
+  font-weight:bold;
+  color:#333333;
+  border-top:1px solid #333333;
+}
+
+/* Link text */
+a.myDivTableRow {
+  color:#3a3f51;
+  &amp;:hover {
+    color:#428bca;
+    text-decoration: underline;
+  }
+}
+
+/* ********** */
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768.01px) 
+{
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefLgOnlyShow { display:table-cell; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefMedUpShow { display:table-cell; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableCell.myDefMedOnlyShow { display:none; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead:nth-last-child(1) { border-right-style:none; }
+  } 
+  
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefLgOnlyShow { display:table-cell; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefMeUpShow { display:table-cell; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefMedOnlyShow { display:none; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell:nth-last-child(2) { border-right-style:none; }
+  }  
+  
+  .myCol1 { width:10% }
+  .myCol2 { width:43% }
+  .myCol3 { width:20% }
+  .myCol4 { width:12% }
+  .myCol5 { width:18% }  
+}
+
+@media (max-width: 880px) { 
+  .myCol1 { width:10% }
+  .myCol2 { width:41% }
+  .myCol3 { width:20% }
+  .myCol4 { width:12% }
+  .myCol5 { width:20% } 
+}
+
+// Medium devices (tablets, 768px and less)
+@media (max-width: 768px) { 
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefLgOnlyShow { display:none; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefMedUpShow { display:table-cell; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead.myDefMedOnlyShow { display:table-cell; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead:nth-last-child(1) { border-right-style:none; }
+  }    
+  
+ .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell.myDefLgOnlyShow { display:none; }
+  }   
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefMedUpShow { display:table-cell; }
+  }    
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell.myDefMedOnlyShow { display:table-cell; }
+  }   
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell:nth-last-child(1) { border-right-style:none; }
+  }   
+  
+  .myCol1 { width:15% }
+  .myCol2 { width:28% }
+  .myCol3 { width:18% }
+  .myCol4 { width:12% }
+  .myCol5 { width:27% }     
+}
+
+// Small devices (landscape phones, 576px and less)
+@media (max-width: 575.98px) { 
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefLgOnlyShow { display:none; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefMedUpShow { display:none; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead.myDefMedOnlyShow { display:none; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead:nth-last-child(4) { border-right-style:none; }
+  }   
+  
+ .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell.myDefLgOnlyShow { display:none; }
+  }   
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefMedUpShow { display:none; }
+  }    
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell.myDefMedOnlyShow {display:none; }
+  }   
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell:nth-last-child(5) { border-right-style:none; }
+  }  
+
+  .myCol1 { width:35% }
+  .myCol2 { width:65% }
+  .myCol3 { width:0% }
+  .myCol4 { width:0% }
+  .myCol5 { width:0% }    
+  
+  
+}
+
 </css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -282,42 +638,42 @@ a.myDivTableRow {&#13;
         <internal>false</internal>
         <link/>
         <name>UTASSP My Closed Tickets Widget</name>
-        <option_schema>[&#13;
-   {&#13;
-      "hint": "If false, buttons are stacked on the right; if true, they are side-by-side",&#13;
-      "name": "portal",&#13;
-      "label": "Buttons stacked side by side",&#13;
-      "type": "boolean"&#13;
-   },&#13;
-   {&#13;
-      "hint": "Maximum number of elements that are shown in the list of approvals",&#13;
-      "name": "maxitems",&#13;
-      "default_value": "10",&#13;
-      "label": "Max number of elements shown in the list (only positive numbers &gt; 0, 10 otherwise)",&#13;
-      "type": "integer"&#13;
-   },&#13;
-   {&#13;
-      "hint": "Is Hidden on Init?",&#13;
-      "name": "ishidden",&#13;
-      "default_value": "true",&#13;
-      "label": "Is Hidden on Init",&#13;
-      "type": "boolean"&#13;
-   },&#13;
-   {&#13;
-      "name": "pageid",&#13;
-      "label": "pageid",&#13;
-      "type": "choice",&#13;
-      "choices": [&#13;
-         {&#13;
-            "label": "index",&#13;
-            "value": "utassp01_index"&#13;
-         },&#13;
-         {&#13;
-            "label": "tickets",&#13;
-            "value": "utassp01_view_tickets"&#13;
-         }&#13;
-      ]&#13;
-   }&#13;
+        <option_schema>[
+   {
+      "hint": "If false, buttons are stacked on the right; if true, they are side-by-side",
+      "name": "portal",
+      "label": "Buttons stacked side by side",
+      "type": "boolean"
+   },
+   {
+      "hint": "Maximum number of elements that are shown in the list of approvals",
+      "name": "maxitems",
+      "default_value": "25",
+      "label": "Max number of elements shown in the list (only positive numbers &gt; 0, 25 otherwise)",
+      "type": "integer"
+   },
+   {
+      "hint": "Is Hidden on Init?",
+      "name": "ishidden",
+      "default_value": "true",
+      "label": "Is Hidden on Init",
+      "type": "boolean"
+   },
+   {
+      "name": "pageid",
+      "label": "pageid",
+      "type": "choice",
+      "choices": [
+         {
+            "label": "index",
+            "value": "utassp01_index"
+         },
+         {
+            "label": "tickets",
+            "value": "utassp01_view_tickets"
+         }
+      ]
+   }
 ]</option_schema>
         <public>false</public>
         <roles/>
@@ -327,7 +683,7 @@ a.myDivTableRow {&#13;
 	data.isDebugOn = false;
 	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
 	{
-		data.widgettitle =   'utassp01_my_closed_tickets_widget > '+ $sp.getDisplayValue("title");
+		data.widgettitle =  'utassp01_my_closed_tickets_widget > '+ $sp.getDisplayValue("title");
 		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
 		data.isDebugOn = true;
 		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
@@ -335,50 +691,238 @@ a.myDivTableRow {&#13;
 	}
 	// *** End: Debug only code *** //
 	//
+
 	data.pageid=options.pageid || '';
-	if (typeof data.tickets == typeof myUndefined) { data.tickets = []; }
+	if (typeof data.tickets == typeof myUndefined) { data.tickets = []; } 	
 	//we get only a max number of elements to avoid to have a big list of it
 	var myMaxItems = options.maxitems || 0;
-	//set 10 if maxnumber is undefined, empty or negative value
-  myMaxItems = myMaxItems>0 ? myMaxItems : 10; 
+	//set 25 if maxnumber is undefined, empty or negative value
+    myMaxItems = myMaxItems>0 ? myMaxItems : 25; 
 	var myFirstRow = 0;
 	var myLastRow =  parseInt(myMaxItems);
 	var myCurrentPage = 0;    
     
-	//
-	if (typeof data.pagination == typeof myUndefined) 
+	if (typeof data.pagination_2 == typeof myUndefined) 
 	{
-		data.pagination = {};
-		data.pagination.currentPage = myCurrentPage;
-		data.pagination.hasNext = false;
-		data.pagination.hasPrevious = false;
-		data.showPagination = false;
+		data.pagination_2 = {};
+		data.pagination_2.currentPage = myCurrentPage;
+		data.pagination_2.hasNext = false;
+		data.pagination_2.hasPrevious = false;
+		data.pagination_2.showPagination = false;
 	}    
 
-	if (typeof data.ishidden == typeof myUndefined)
-	{
-		data.ishidden = options.ishidden;
-	}
-	
-	if (typeof input != typeof myUndefined) {
-		myCurrentPage = parseInt(input.pagination.currentPage);
-		myFirstRow = (myCurrentPage * parseInt(myMaxItems));
-		myLastRow =  parseInt(myFirstRow) +  parseInt(myMaxItems);	
+	var myQuerySelect = 'both';
+	var mySearchQueryList = [];
+	var mySortField = '';
+	var myIsSortAsc = false;
+	var myIsSortDesc = false;
+	var myIsSearch = false;
+	var myIsReset = false;
+	var myIsPage = false;
+	var myIsStart = (typeof input == typeof myUndefined);
+	if (!myIsStart) {
+		//
+		if (myU.utilIsValueValid(input.action_2)) {
+			//Q: A page button?
+			if (input.action_2.indexOf('prev')>-1 || input.action_2.indexOf('next')>-1) 
+			{ 
+				//A: Yes. 
+				myIsPage = true;
+				myCurrentPage = parseInt(input.pagination_2.currentPage);
+				myFirstRow = (myCurrentPage * parseInt(myMaxItems));
+				myLastRow =  parseInt(myFirstRow) +  parseInt(myMaxItems);					
+			} else {
+				//Q: Reset search btton?
+				if (input.action_2.indexOf('reset')>-1) {
+					//A: Yes
+					myIsReset = true;
+				} else {
+					//Q: Sort button?
+					if (input.action_2.indexOf('sort')>-1) {
+						//A: Yes
+						myIsSortAsc = (input.action_2.indexOf('asc')>-1);
+						myIsSortDesc = !myIsSortAsc;
+						if (myU.utilIsValueValid(input.isSortOn_2)) {
+							switch(true) {
+								case input.isSortOn_2.number:
+									mySortField = 'number';
+									break;
+								case input.isSortOn_2.description:
+									mySortField = 'short_description';
+									break;
+								case input.isSortOn_2.service:
+									mySortField = 'u_business_service';
+									break;
+								case input.isSortOn_2.state:
+									mySortField = 'state';
+									break;
+								case input.isSortOn_2.created:
+									mySortField = 'sys_created_on';
+									break;
+								default:
+									myIsSortAsc = false;
+									myIsSortDesc = false;
+							}
+						}
+					} 
+					//Q: A search underway?
+					if (input.action_2.indexOf('search')>-1) {
+						//A: Yes
+						myIsSearch=true;
+						if (input.searchq_2.number.length>0) {
+							mySearchQueryList.push({
+								field: 'number',
+								condition: 'CONTAINS',
+								value: input.searchq_2.number
+							});
+						}
+						if (input.searchq_2.description.length>0) {
+							mySearchQueryList.push({
+								field: 'short_description',
+								condition: 'CONTAINS',
+								value: input.searchq_2.description
+							});
+						}
+						if (input.searchq_2.service.length>0) {
+							var cisSysIdList = [];
+							var cisGr = new GlideRecord('cmdb_ci_service');
+							var cisQ = 'operational_status!=2^ORoperational_status=NULL';
+							cisGr.addEncodedQuery(cisQ);
+							cisGr.addQuery('name','CONTAINS',input.searchq_2.service);
+							cisGr.query();
+							while (cisGr.next()) {
+								cisSysIdList.push(cisGr.getValue('sys_id'));
+							}
+							if (cisSysIdList.length <1) {
+								cisSysIdList.push('0');
+							}
+							
+							mySearchQueryList.push({
+								field: 'u_business_service',
+								condition: 'IN',
+								value: cisSysIdList.join()
+							});
+						}
+						if (input.searchq_2.state.length>0) {
+							if (input.searchq_2.state.indexOf('incident')>-1) {
+								myQuerySelect='incident';
+								var myIncidentState = input.searchq_2.state.split('.')[0];
+								mySearchQueryList.push({
+									field: 'state',
+									condition: '=',
+									value: myIncidentState
+								});								
+							} else if (input.searchq_2.state.indexOf('request')>-1) {
+								myQuerySelect='sc_request';
+								var myRequestState = input.searchq_2.state.split('.')[0];
+								mySearchQueryList.push({
+									field: 'state',
+									condition: '=',
+									value: myRequestState
+								});																
+							} else {
+								mySearchQueryList.push({
+									field: 'state',
+									condition: '=',
+									value: input.searchq_2.state
+								});																								
+							}													
+						}	
+						if (input.searchq_2.created.length>0) {
+							var mySearchPair = input.searchq_2.created.split('.');
+							switch(mySearchPair[1]) {
+								case 'GTE':
+									mySearchQueryList.push({
+										field: 'sys_created_on',
+										condition: '>=',
+										value: mySearchPair[0]+' 00:00:00'
+									});									
+									break;
+								case 'LTE':
+									mySearchQueryList.push({
+										field: 'sys_created_on',
+										condition: '<=',
+										value: mySearchPair[0]+' 23:59:59'
+									});									
+									break;
+								case 'GT':
+									mySearchQueryList.push({
+										field: 'sys_created_on',
+										condition: '>',
+										value: mySearchPair[0]+' 23:59:59'
+									});									
+									break;
+								case 'LT':
+									mySearchQueryList.push({
+										field: 'sys_created_on',
+										condition: '<',
+										value: mySearchPair[0]+' 00:00:00'
+									});									
+									break;
+								case 'E':
+									mySearchQueryList.push({
+										field: 'sys_created_on',
+										condition: '>=',
+										value: mySearchPair[0]+' 00:00:00'
+									});									
+									mySearchQueryList.push({
+										field: 'sys_created_on',
+										condition: '<=',
+										value: mySearchPair[0]+' 23:59:59'
+									});																		
+									break;
+							}
+						}
+						for (var x=0,xL=mySearchQueryList.length;x<xL;x++) {
+							var y=mySearchQueryList[x]; 
+							gs.info('...'+y.field+', '+y.condition+', '+y.value);
+						}
+					}
+				}				
+			}
+		}		
 	} 
 
-    var myTicketsList = [];
+  var myTicketsList = [];
 	var thisUser = gs.getUserID(); 
-    var isItil = gs.getUser().hasRole('itil');
+  var isItil = gs.getUser().hasRole('itil');
 	var myGr = new GlideRecord('task');     
-	var thisQuery = 'sys_class_name=incident'; 
-	thisQuery = thisQuery + '^active=false'; 
-	thisQuery = thisQuery + '^ref_incident.caller_id='+thisUser; 
-	thisQuery = thisQuery + '^NQsys_class_name=sc_request'; 
-	thisQuery = thisQuery + '^ref_sc_request.requested_for='+thisUser; 
-	thisQuery = thisQuery + '^active=false';	
-	myGr.chooseWindow(myFirstRow, myLastRow);
+	var incidentQ = 'sys_class_name=incident'; 
+	incidentQ += '^active=false';
+	incidentQ += '^ref_incident.caller_id='+thisUser; 
+	var sc_requestQ = 'sys_class_name=sc_request'; 
+	sc_requestQ += '^active=false';
+	sc_requestQ += '^ref_sc_request.requested_for='+thisUser; 
+	var thisQuery = '';
+	switch (myQuerySelect) {
+		case 'incident':
+			thisQuery = incidentQ;
+			break;
+		case 'sc_request':
+			thisQuery = sc_requestQ;
+			break;
+		default:
+			thisQuery = incidentQ + '^NQ' + sc_requestQ;
+	}
 	myGr.addEncodedQuery(thisQuery);
-	myGr.orderByDesc('sys_created_on');
+	if (!myIsStart && !myIsReset && !myIsPage) {
+		if (myIsSortAsc || myIsSortDesc) {
+			if (myIsSortAsc) {
+				myGr.orderBy(mySortField);	
+			} else if (myIsSortDesc) {
+				myGr.orderByDesc(mySortField);	
+			}
+		}
+		if (myIsSearch) {
+			for (var i=0,iL=mySearchQueryList.length;i<iL;i++) {
+				var q=mySearchQueryList[i];
+				myGr.addQuery(q.field,q.condition,q.value);
+			}
+		}
+	} else {
+		myGr.orderByDesc('sys_created_on');		
+	}
+	myGr.chooseWindow(myFirstRow, myLastRow);
 	myGr.query();
 	var rowCount = myGr.getRowCount();
 	while (myGr.next()) {
@@ -389,7 +933,9 @@ a.myDivTableRow {&#13;
             state: myGr.getDisplayValue('state'),
             view: ((isItil) ? 'portal' : 'ess'),
             created: myGr.getDisplayValue('sys_created_on'),
-            createddo:  myGr.getDisplayValue('sys_created_on').split(' ')[0]        
+            createddo: myGr.getDisplayValue('sys_created_on').split(' ')[0],        
+            updated: myGr.getDisplayValue('sys_updated_on'),
+            updateddo: myGr.getDisplayValue('sys_updated_on').split(' ')[0]       
         };
 		var l_ticket = {
             sys_id: myGr.getUniqueValue(),
@@ -401,10 +947,10 @@ a.myDivTableRow {&#13;
 	data.tickets = myTicketsList;
 
 	// for pagination
-	data.pagination.hasNext = (myTicketsList.length == (parseInt(myLastRow) - parseInt(myFirstRow)) && parseInt(myLastRow) < parseInt(rowCount));
-	data.pagination.hasPrevious = parseInt(myFirstRow) > 0;
-	data.pagination.showPagination = data.pagination.hasPrevious || data.pagination.hasNext;
-	data.pagination.currentPage = myCurrentPage;
+	data.pagination_2.hasNext = (myTicketsList.length == (parseInt(myLastRow) - parseInt(myFirstRow)) && parseInt(myLastRow) < parseInt(rowCount));
+	data.pagination_2.hasPrevious = parseInt(myFirstRow) > 0;
+	data.pagination_2.showPagination = data.pagination_2.hasPrevious || data.pagination_2.hasNext;
+	data.pagination_2.currentPage = myCurrentPage;
 })($sp, input, data, options, gs);]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
@@ -412,7 +958,7 @@ a.myDivTableRow {&#13;
         <sys_created_on>2018-10-24 20:51:19</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>763e3cae4f912300f006121f9310c761</sys_id>
-        <sys_mod_count>38</sys_mod_count>
+        <sys_mod_count>77</sys_mod_count>
         <sys_name>UTASSP My Closed Tickets Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -420,48 +966,134 @@ a.myDivTableRow {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_763e3cae4f912300f006121f9310c761</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:49:05</sys_updated_on>
+        <sys_updated_on>2019-02-14 20:49:26</sys_updated_on>
         <template><![CDATA[<div>
     <div class="panel panel-{{::options.color}} b" dummy="{{::c.myLog()}}">
-        <div class="panel-heading">
-            <h2 class="h4 panel-title">{{::options.title}}</h2>
+        <div class="panel-heading myLeftAlign">
+            <h2 class="h4 panel-title ">{{::options.title}}</h2>
         </div>
         <div class="panel-body">
-            <div ng-if="(data.tickets.length > 0)">
-                <div class="myDivTable myGreyGridTable">
-                    <div class="myDivTableHeading">
-                        <div class="myDivTableRow">
-                            <div class="myDivTableHead myCol1">Number</div>
-                            <div class="myDivTableHead myLeft myCol2">Description</div>
-                            <div class="myDivTableHead myDefMedUpShow myCol3">Service</div>
-                            <div class="myDivTableHead myDefMedUpShow myCol4">State</div>
-                            <div class="myDivTableHead myDefMedUpShow myCol5">Created</div>
-                        </div>
+            <div class="myGrid">
+                <div id="divGridCol1Id_2">
+                    <div ng-if="(data.tickets.length > 0)">
+                        <div class="myDivTable myGreyGridTable">
+                            <div class="myDivTableHeading">
+                                <div class="myDivTableRow myTopRow">
+                                    <div id="divHdrNumberId_2" class="myDivTableHead myCol1" title="Click to sort..." ng-click="colSort_2($event)">Number
+                                        <i id="iconNumberSortId_2" ng-show="data.isSortOn_2.number" class="ng-hide fa fa-caret-up mySortIcon"></i>
+                                    </div>
+                                    <div id="divHdrDescriptionId_2" class="myDivTableHead myLeft myCol2" title="Click to sort..." ng-click="colSort_2($event)">Description
+                                        <i id="iconDescriptionSortId_2" ng-show="data.isSortOn_2.description" class="ng-hide fa fa-caret-up mySortIcon"></i>
+                                    </div>
+                                    <div id="divHdrServiceId_2" class="myDivTableHead myDefMedUpShow myCol3" title="Click to sort..." ng-click="colSort_2($event)">Service
+                                        <i id="iconServiceSortId_2" ng-show="data.isSortOn_2.service" class="ng-hide fa fa-caret-up mySortIcon"></i>
+                                    </div>
+                                    <div id="divHdrStateId_2" class="myDivTableHead myDefMedUpShow myCol4" title="Click to sort..." ng-click="colSort_2($event)">State
+                                        <i id="iconStateSortId_2" ng-show="data.isSortOn_2.state" class="ng-hide fa fa-caret-up mySortIcon"></i>
+                                    </div>
+                                    <div id="divHdrCreatedId_2" class="myDivTableHead myDefMedUpShow myCol5" title="Click to sort..." ng-click="colSort_2($event)">Created
+                                        <i id="iconCreatedSortId_2" ng-show="data.isSortOn_2.created" class="ng-hide fa fa-caret-up mySortIcon"></i>
+                                    </div>
+                                </div>
+                                <div class="myDivTableRow">
+                                    <div class="myDivTableHead myCol1">
+                                        <input id="inpNumberSearchId_2"
+                                            class="form-control myAlignCenter" 
+                                            type="text"
+                                            placeholder="" 
+                                            aria-label="Search number" 
+                                            aria-describedby="basic-addon1"
+                                            ng-keypress="crCatchSearch_2($event);">                                
+                                    </div>
+                                    <div class="myDivTableHead myLeft myCol2">
+                                        <input id="inpDescriptionSearchId_2"
+                                            class="form-control myAlignLeft" 
+                                            type="text"
+                                            placeholder="" 
+                                            aria-label="Search description" 
+                                            aria-describedby="basic-addon1"
+                                            ng-keypress="crCatchSearch_2($event);">                              
+                                    </div>
+                                    <div class="myDivTableHead myDefMedUpShow myCol3">
+                                        <input id="inpServiceSearchId_2"
+                                            class="form-control myAlignLeft" 
+                                            type="text"
+                                            placeholder="" 
+                                            aria-label="Search service" 
+                                            aria-describedby="basic-addon1"
+                                            ng-keypress="crCatchSearch_2($event);">                                                            
+                                    </div>
+                                    <div class="myDivTableHead myDefMedUpShow myCol4">
+                                        <select id="selStateSearchId_2"
+                                                name="selStateSearchName" 
+                                                ng-model="selStateSearchData_2"
+                                                class="form-control" 
+                                                style="font-size:9px;height:20px;padding:1px;position:relative;top:-2px;"
+                                                ng-change="onSelectChange_2()">
+                                        <option value="">Select...</option>
+                                        <option value="1">New</option>
+                                        <option value="15">Unassigned</option>
+                                        <option value="16">Assigned</option>
+                                        <option value="20">Scheduled work</option>
+                                        <option value="18">Waiting for Approval</option>
+                                        <option value="21">Waiting for Other Tasks</option>
+                                        <option value="17">Waiting for User</option>
+                                        <option value="19">Waiting for Vendor</option>
+                                        <option value="3.sc_request">Complete (Request)</option>
+                                        <option value="6.incident">Resolved (Incident)</option>
+                                        <option value="7">Closed</option>
+                                        <option value="12.sc_request">Cancelled (Request)</option>
+                                        </select>                                  
+                                    </div>
+                                    <div class="myDivTableHead myDefMedUpShow myCol5">
+                                        <div style="display:inline-block;">
+                                            <div class="myConditionCaseBtn" title="Select condition case..." style="position:relative;top:-1px;text-align:right;" ng-click="cycleCondition_2($event);">
+                                                <i id="dateSearchConditionCase" class="fa fa-greater-than-equal"></i>
+                                            </div>
+                                            <div style="position:relative;top:-2px;display:inline-block;text-align:left;">
+                                                <input id="inpCreatedSearchId_2"
+                                                    class="form-control myAlignCenter myDateInput" 
+                                                    type="date"
+                                                    placeholder="" 
+                                                    aria-label="Search date" 
+                                                    aria-describedby="basic-addon1"
+                                                    style="display:inline-block;width:100px;"
+                                                    ng-model="inpCreatedSearchData_2"
+                                                    ng-change="onDateChange_2()">                                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myDivTableBody">
+                                <a  ng-repeat="ticket in data.tickets" ng-href="?id=utassp02_form&table={{ticket.table}}&sys_id={{ticket.sys_id}}&view={{ticket.view}}&pageid={{data.pageid}}" class="myDivTableRow">
+                                    <div class="myDivTableCell myCtr myCol1">{{ticket.task.number}}</div>
+                                    <div class="myDivTableCell myCol2">{{ticket.task.short_description}}</div>
+                                    <div class="myDivTableCell myDefMedUpShow myCol3">{{ticket.task.business_service}}</div>
+                                    <div class="myDivTableCell myCtr myDefMedUpShow myCol4">{{ticket.task.state}}</div>
+                                    <div class="myDivTableCell myCtr myDefLgOnlyShow myCol5">{{ticket.task.created}}</div>
+                                    <div class="myDivTableCell myCtr myDefMedOnlyShow myCol5">{{ticket.task.createddo}}</div>
+                                </a>
+                            </div>
+                        </div>						  
                     </div>
-                    <div class="myDivTableBody">
-                        <a ng-repeat="ticket in data.tickets" ng-href="?id=utassp02_form&table={{ticket.table}}&sys_id={{ticket.sys_id}}&view={{ticket.view}}&pageid={{data.pageid}}"
-                            class="myDivTableRow">
-                            <div class="myDivTableCell myCtr myCol1">{{ticket.task.number}}</div>
-                            <div class="myDivTableCell myCol2">{{ticket.task.short_description}}</div>
-                            <div class="myDivTableCell myDefMedUpShow myCol3">{{ticket.task.business_service}}</div>
-                            <div class="myDivTableCell myCtr myDefMedUpShow myCol4">{{ticket.task.state}}</div>
-                            <div class="myDivTableCell myCtr myDefLgOnlyShow myCol5">{{ticket.task.created}}</div>
-                            <div class="myDivTableCell myCtr myDefMedOnlyShow myCol5">{{ticket.task.createddo}}</div>
-                        </a>
+                    <div ng-if="!(data.tickets.length > 0)">
+                        ${No tickets}
                     </div>
                 </div>
+                <div id="divGridCol2Id_2" class="mySearchIcons">	
+                    <div style="position:relative;top:22px;">
+                        <div class="mySearchBtn" style="margin-right:2px" title="Click to search..." ng-click="clickSearch_2($event)"><i class="fa fa-search"></i></div>
+                        <div ng-show="isCurrentSearch_2" class="ng-hide mySearchBtn" title="Click to reset search..." ng-click="clickReset_2($event)"><i class="fa fa-refresh"></i></div>                        
+                    </div>
+                </div> 					 
             </div>
-        </div>
-        <div ng-if="!(data.tickets.length > 0)">
-            ${You have no closed tickets}
-        </div>
-        <div class="panel-{{::options.color}} panel-footer clearfix" ng-if="data.pagination.showPagination">
-            <a id="previous-btn" href="javascript:void(0)" ng-click="previousPage()" ng-show="data.pagination.hasPrevious"
-                class="pull-left btn btn-sm btn-default mybtn" aria-label="${Pagination button Previous}">
-                <i class="fa fa-arrow-left m-r-sm" aria-hidden="true"></i>${&nbsp;Previous}</a>
-            <a id="next_btn" href="javascript:void(0)" ng-click="nextPage()" ng-show="data.pagination.hasNext" class="pull-right btn btn-sm btn-default mybtn"
-                aria-label="${Pagination button Next}">
-                ${Next&nbsp;}<i class="fa fa-arrow-right m-r-sm col-md-offset-3" aria-hidden="true"></i></a>
+            <div class="panel-{{::options.color}} panel-footer clearfix">
+                <a id="previous-btn" href="javascript:void(0)" ng-click="previousPage_2($event)" ng-show="data.pagination_2.hasPrevious" class="pull-left btn btn-sm btn-default mybtn" aria-label="${Pagination button Previous}">
+                    <i class="fa fa-arrow-left m-r-sm" aria-hidden="true"></i>${&nbsp;Previous}</a>
+                <a id="next_btn" href="javascript:void(0)" ng-click="nextPage_2($event)" ng-show="data.pagination_2.hasNext" class="pull-right btn btn-sm btn-default mybtn" aria-label="${Pagination button Next}">
+                        ${Next&nbsp;}<i class="fa fa-arrow-right m-r-sm col-md-offset-3" aria-hidden="true"></i></a>
+            </div>
         </div>
     </div>
 </div>]]></template>
