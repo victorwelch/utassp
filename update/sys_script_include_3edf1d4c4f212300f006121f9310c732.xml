@@ -472,15 +472,165 @@ u_utassp.prototype = {
 		while (myGr.next()) {
 			var l_name = myGr.getValue('name');
 			var l_sysid = myGr.getValue('sys_id');
-			var l_servicelist = this.getBusinessServiceTree(l_sysid);
+			var l_servicelist = [];
+			if (l_name.indexOf('Applications & Systems')<0) {
+				l_servicelist = this.utilEmptyListLast(this.getBusinessServiceTree(l_sysid));				
+			} else {
+				l_servicelist =  this.utilEmptyListFirst(this.utilGetBusinessServiceTreeAlpha(l_sysid));
+			}
 			servicelist.push({
 				name: l_name,
 				sysid: l_sysid,
-				servicelist: l_servicelist
+                servicelist: l_servicelist,
+                nodetype: l_servicelist.length>0? 'tree' : 'leaf',
+                idnumber: 0,
+                id: ''
 			});
-		}
+        }
+        servicelist = this.utilEmptyListLast(servicelist);
 		return servicelist;
+    },
+    utilEmptyListLast: function(_pList) {
+		var rtnList = [];
+		var tmpMTList = [];
+		var tmpOList = [];
+		var tmpItem = {};
+		if (_pList.length>0) {
+			for (var i=0,iL=_pList.length;i<iL;i++) {
+				tmpItem=_pList[i]; 
+				if (this.utilIsValueValid(tmpItem.servicelist) && tmpItem.servicelist.length>0){
+					tmpOList.push(tmpItem);
+				} else {
+					tmpMTList.push(tmpItem);					
+				}				
+			}
+			rtnList = tmpOList.concat(tmpMTList);
+		}
+		return rtnList;        
+    },
+    utilEmptyListFirst: function(_pList) {
+		var rtnList = [];
+		var tmpMTList = [];
+		var tmpOList = [];
+		var tmpItem = {};
+		if (_pList.length>0) {
+			for (var i=0,iL=_pList.length;i<iL;i++) {
+				tmpItem=_pList[i]; 
+				if (this.utilIsValueValid(tmpItem.servicelist) && tmpItem.servicelist.length>0){
+					tmpOList.push(tmpItem);
+				} else {
+					tmpMTList.push(tmpItem);					
+				}				
+			}
+			rtnList = tmpMTList.concat(tmpOList);
+		}
+		return rtnList;        
+    },	
+	utilGetBusinessServiceTreeAlpha: function(_pParentId) {
+		// ***  This whole routine breaks up the list of 'Applications & Systems' into alphabetical groups
+		// ***  *** but first, we will grab the items that start with non-alpha's
+		var myAlphaList = [];  //Initialize the array we will return
+		var myQ = '^parent='+_pParentId;  //Initialize the encoded Query
+		var myGr = new GlideRecord('cmdb_ci_service');  //Initialize the GlideRecord
+		myGr.addEncodedQuery(myQ);  //Add encoded query
+		myGr.addQuery('name','<','a'); //Add our "less than 'a'" condition
+		myGr.query();
+		while (myGr.next()) {
+			//Push what we find into our array
+			var l_name = myGr.getValue('name');
+			var l_sysid = myGr.getValue('sys_id');
+            var l_servicelist =this.getBusinessServiceTree(l_sysid);	
+            l_servicelist=this.utilEmptyListLast(l_servicelist);
+			myAlphaList.push({
+				name: l_name,
+				sysid: l_sysid,
+				servicelist: l_servicelist,
+                nodetype: l_servicelist.length>0? 'tree' : 'leaf',
+                idnumber: 0,
+                id: ''
+			});			
+		} 
+		var myChar = ''; //Initialize our single character string
+		var thisQ = '';  //Initialize our new encoded query
+		var idx=0;       //Initialize an index for our array
+		var found=false; //Initialize a boolean for indicating if our query returned anything
+		for (var i=65,iL=91;i<iL;i++) {       //Cycle through the alphabet
+			myChar = String.fromCharCode(i);  //...creating an entry for each char
+			myAlphaList.push({
+				name: myChar+'...',
+				sysid: -1,
+				servicelist: [],
+                nodetype: 'tree',
+                idnumber: 0,
+                id: ''
+			});
+			idx = myAlphaList.length-1;
+			thisQ = myQ+'^nameSTARTSWITH'+myChar;  //Query for our character
+			myGr.initialize();
+			myGr.addEncodedQuery(thisQ);
+			myGr.orderBy('name');
+			myGr.query();
+			found=myGr.getRowCount()>0?true:false;
+			while (myGr.next()) {
+				//Store what we find
+				var ll_name = myGr.getValue('name');
+				var ll_sysid = myGr.getValue('sys_id');
+				var ll_servicelist = this.getBusinessServiceTree(ll_sysid);
+                ll_servicelist=this.utilEmptyListLast(ll_servicelist);
+				myAlphaList[idx].servicelist.push({
+					name: ll_name,
+					sysid: ll_sysid,
+					servicelist: ll_servicelist,
+                    nodetype: ll_servicelist.length>0? 'tree' : 'leaf',
+                    idnumber: 0,
+                    id: ''
+                });
+			}
+			if (!found) {
+				//If we didn't find anything, remove that alpha item from the array
+				myAlphaList.splice(idx,1);
+			}
+		}
+		return myAlphaList;
+    },
+	getFlatBusinessServiceTree: function(_pList) {
+		var myObj = {
+			list: _pList,
+			ix: 0
+		};
+		var rtnList = [];
+		rtnList = this.utilGetFlatBusinessServiceTree(myObj);
+		return rtnList;
 	},
+	utilGetFlatBusinessServiceTree: function(_pObj){
+		var ixtmp=_pObj.ix;
+		var uFlatList=[];
+        var tmpFlatList=[];        
+		if (_pObj.list.length>0) {
+			for (var i=0,iL=_pObj.list.length;i<iL;i++) {
+				var myFlatItem = {};
+				myFlatItem.name = _pObj.list[i].name;
+                myFlatItem.sysid = _pObj.list[i].sysid;
+                myFlatItem.nodetype =  _pObj.list[i].nodetype;
+                myFlatItem.idnumber = ixtmp;
+                myFlatItem.id = 'li'+ixtmp;
+                myFlatItem.ulstate = 'collapsed';
+                _pObj.list[i].idnumber = myFlatItem.idnumber;
+                _pObj.list[i].id = myFlatItem.id;				
+				uFlatList.push(myFlatItem);
+				ixtmp++;
+				var myObj = {
+					list: _pObj.list[i].servicelist,
+					ix: ixtmp
+				};
+				tmpFlatList = this.utilGetFlatBusinessServiceTree(myObj);				
+                uFlatList=uFlatList.concat(tmpFlatList);
+				ixtmp = myObj.ix;
+			}					
+		}
+		_pObj.ix=ixtmp;
+		return uFlatList;
+	},   
 	isIncident: function(_p) {
         var myName = '';
         var myGr = new GlideRecord('sc_cat_item');
@@ -704,7 +854,7 @@ u_utassp.prototype = {
         <sys_created_on>2018-10-29 15:10:11</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3edf1d4c4f212300f006121f9310c732</sys_id>
-        <sys_mod_count>78</sys_mod_count>
+        <sys_mod_count>106</sys_mod_count>
         <sys_name>u_utassp</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy>read</sys_policy>
@@ -712,6 +862,6 @@ u_utassp.prototype = {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sys_script_include_3edf1d4c4f212300f006121f9310c732</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-07 00:27:42</sys_updated_on>
+        <sys_updated_on>2019-02-18 23:20:54</sys_updated_on>
     </sys_script_include>
 </record_update>

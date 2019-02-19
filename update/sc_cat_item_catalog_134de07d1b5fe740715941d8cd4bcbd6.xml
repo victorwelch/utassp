@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog">
     <sc_cat_item_catalog action="INSERT_OR_UPDATE">
-        <sc_cat_item display_value="UTASSP INCIDENT: Something Broken">64f0215b4f2d2300f006121f9310c71e</sc_cat_item>
+        <sc_cat_item display_value="INCIDENT REPORT: Something Broken">64f0215b4f2d2300f006121f9310c71e</sc_cat_item>
         <sc_catalog display_value="OIT Services">6ba2b82d6f542e0028232d65ad3ee4b6</sc_catalog>
         <sys_class_name>sc_cat_item_catalog</sys_class_name>
         <sys_created_by>welchv</sys_created_by>

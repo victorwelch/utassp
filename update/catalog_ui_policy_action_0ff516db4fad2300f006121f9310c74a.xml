@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="catalog_ui_policy_action">
     <catalog_ui_policy_action action="INSERT_OR_UPDATE">
-        <catalog_item display_value="UTASSP INCIDENT: Something Broken">64f0215b4f2d2300f006121f9310c71e</catalog_item>
+        <catalog_item display_value="INCIDENT REPORT: Something Broken">64f0215b4f2d2300f006121f9310c71e</catalog_item>
         <catalog_variable>IO:c11be9134f6d2300f006121f9310c7c4</catalog_variable>
         <cleared>false</cleared>
         <disabled>ignore</disabled>

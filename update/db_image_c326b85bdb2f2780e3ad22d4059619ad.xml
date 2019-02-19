@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="db_image">
+    <db_image action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>cms</category>
+        <format>gif</format>
+        <height>1</height>
+        <image>87463cd7db2f2780e3ad22d4059619ed</image>
+        <name>spacer.gif</name>
+        <size_bytes>42</size_bytes>
+        <sys_class_name>db_image</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-16 00:33:10</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>c326b85bdb2f2780e3ad22d4059619ad</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>spacer.gif</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>db_image_c326b85bdb2f2780e3ad22d4059619ad</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-16 00:33:23</sys_updated_on>
+        <thumbnail/>
+        <width>1</width>
+    </db_image>
+    <sys_attachment action="INSERT_OR_UPDATE">
+        <average_image_color>#0</average_image_color>
+        <chunk_size_bytes>734003</chunk_size_bytes>
+        <compressed>true</compressed>
+        <content_type>image/gif</content_type>
+        <file_name>image</file_name>
+        <image_height>1</image_height>
+        <image_width>1</image_width>
+        <size_bytes>42</size_bytes>
+        <size_compressed>53</size_compressed>
+        <state/>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-16 00:33:23</sys_created_on>
+        <sys_id>87463cd7db2f2780e3ad22d4059619ed</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-16 00:33:23</sys_updated_on>
+        <table_name>ZZ_YYdb_image</table_name>
+        <table_sys_id>c326b85bdb2f2780e3ad22d4059619ad</table_sys_id>
+    </sys_attachment>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>H4sIAAAAAAAAAA==</data>
+        <length>16</length>
+        <position>0</position>
+        <sys_attachment display_value="image" sys_id="87463cd7db2f2780e3ad22d4059619ed">87463cd7db2f2780e3ad22d4059619ed</sys_attachment>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-16 00:33:23</sys_created_on>
+        <sys_id>c7463cd7db2f2780e3ad22d4059619ed</sys_id>
+    </sys_attachment_doc>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>c/d0s7BMZGRgZGhgAIH///8r/mRhBDF1QARIxoGJ0YXBGgAUGc0oKgAAAA==</data>
+        <length>60</length>
+        <position>1</position>
+        <sys_attachment display_value="image" sys_id="87463cd7db2f2780e3ad22d4059619ed">87463cd7db2f2780e3ad22d4059619ed</sys_attachment>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-16 00:33:23</sys_created_on>
+        <sys_id>4b463cd7db2f2780e3ad22d4059619ed</sys_id>
+    </sys_attachment_doc>
+</record_update>

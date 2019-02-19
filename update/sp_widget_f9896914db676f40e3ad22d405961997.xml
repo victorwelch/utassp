@@ -351,7 +351,7 @@ div.myDivWidth {}&#13;
         <sys_created_on>2019-02-06 20:35:26</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>f9896914db676f40e3ad22d405961997</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>UTASSP KB Search Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -359,7 +359,7 @@ div.myDivWidth {}&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_f9896914db676f40e3ad22d405961997</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-06 22:04:15</sys_updated_on>
+        <sys_updated_on>2019-02-12 20:20:13</sys_updated_on>
         <template><![CDATA[<div ng-if="::!data.isLoggedIn" class="text-center myMarginTop">
   <div class="text-center myPublicBox">
     <a href="/utassp?id=utassp01_dummy" class="myPublicLoginLink">Login to continue »</a>
@@ -378,8 +378,8 @@ div.myDivWidth {}&#13;
              typeahead-wait-ms="250"
              typeahead-focus-first="false"
              typeahead-on-select="c.onSelect($item, $model, $label)"
-             typeahead-template-url="utassp01_sp_typeahead.html"
-             typeahead-popup-template-url="utassp01_sp_typeahead_popup.html"
+             typeahead-template-url="utassp01_kb_typeahead.html"
+             typeahead-popup-template-url="utassp01_kb_typeahead_popup.html"
              class="form-control input-typeahead"
              role="textbox"
              aria-label="{{::c.options.title}}" tabindex="0" aria-haspopup="true">

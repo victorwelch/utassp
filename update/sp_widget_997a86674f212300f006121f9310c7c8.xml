@@ -164,9 +164,9 @@
 		$scope.data.sc_cat_item.description = $sce.trustAsHtml($scope.data.sc_cat_item.description);
 		if (angular.equals($scope.data.sc_cat_item._fields, {}))
 			$scope.data.no_fields = true;
-		if ($scope.data.sc_cat_item.sys_class_name !== "sc_cat_item_producer" && $scope.data.sc_cat_item.sys_class_name !== "std_change_record_producer")
-			$scope.submitButtonMsg = $scope.m.orderNowMsg;
-		else
+		//if ($scope.data.sc_cat_item.sys_class_name !== "sc_cat_item_producer" && $scope.data.sc_cat_item.sys_class_name !== "std_change_record_producer")
+			//$scope.submitButtonMsg = $scope.m.orderNowMsg;
+		//else
 			$scope.submitButtonMsg = $scope.m.submitMsg;
 
 	   /* *** Removed following as not applicable, vcw 11/09/18 *** */
@@ -944,7 +944,7 @@
         <sys_created_on>2018-11-09 15:13:59</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>997a86674f212300f006121f9310c7c8</sys_id>
-        <sys_mod_count>59</sys_mod_count>
+        <sys_mod_count>60</sys_mod_count>
         <sys_name>UTASSP Catalog Item Widget 3</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -952,7 +952,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_997a86674f212300f006121f9310c7c8</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:56:47</sys_updated_on>
+        <sys_updated_on>2019-02-14 18:40:39</sys_updated_on>
         <template><![CDATA[<div id="sc_cat_item" ng-if="::data.recordFound" dummy="{{::c.myLog()}}">
   <sp-widget widget="c.orderItemModal" ng-if="c.orderItemModal"></sp-widget>
   <div class="row" ng-if="::data.sc_cat_item" >

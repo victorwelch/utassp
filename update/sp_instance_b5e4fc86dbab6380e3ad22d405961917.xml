@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <roles/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="2">f0945882db6b6380e3ad22d40596196e</sp_column>
+        <sp_widget display_value="UTASSP Affected Service Info Widget">47d6578edb23a380e3ad22d4059619cc</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-12 03:14:53</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>b5e4fc86dbab6380e3ad22d405961917</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Selection information</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_instance_b5e4fc86dbab6380e3ad22d405961917</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-12 15:13:39</sys_updated_on>
+        <title>Selection information</title>
+        <url/>
+        <widget_parameters><![CDATA[{
+	"show_add_cart_button": {
+		"value": "false",
+		"displayValue": "false"
+	},
+	"show_field_validation_messages": {
+		"value": "true",
+		"displayValue": "true"
+	},
+	"show_add_to_wishlist_button": {
+		"value": "false",
+		"displayValue": "false"
+	},
+	"display_cart_on_right": {
+		"value": "true",
+		"displayValue": "true"
+	},
+	"show_less_description": {
+		"value": "true",
+		"displayValue": "true"
+	},
+	"hide_delivery_time": {
+		"value": "false",
+		"displayValue": "false"
+	},
+	"url": {
+		"value": "",
+		"displayValue": ""
+	}
+}]]></widget_parameters>
+    </sp_instance>
+</record_update>

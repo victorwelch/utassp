@@ -17,16 +17,16 @@
         <sys_created_on>2019-02-06 20:43:35</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>496ba194db676f40e3ad22d40596195a</sys_id>
-        <sys_mod_count>6</sys_mod_count>
-        <sys_name>Search?</sys_name>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>Search Knowledge Bases</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_instance_496ba194db676f40e3ad22d40596195a</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-06 20:53:14</sys_updated_on>
-        <title>Search?</title>
+        <sys_updated_on>2019-02-12 20:21:21</sys_updated_on>
+        <title>Search Knowledge Bases</title>
         <url/>
         <widget_parameters><![CDATA[{
 	"title": {

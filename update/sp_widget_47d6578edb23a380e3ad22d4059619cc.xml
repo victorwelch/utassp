@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function($scope,$rootScope,$timeout,$location,u_cutassp) {
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
+	//
+	/* widget controller */
+	var c = this;
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>*:focus {&#13;
+    outline: none !important;&#13;
+}&#13;
+&#13;
+/** Fixes Safari **/ &#13;
+.row:before, .row:after {&#13;
+    display: flex !important;&#13;
+} &#13;
+&#13;
+&#13;
+ h1,  h2,  h3,  h4,  h5,  h6,  p,  li {&#13;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;&#13;
+}&#13;
+&#13;
+ p,  span,  li {&#13;
+    color: #363636;&#13;
+    font-size: 16px;&#13;
+}&#13;
+&#13;
+ a {&#13;
+    cursor: pointer !important;&#13;
+}&#13;
+&#13;
+ h1 {&#13;
+    font-size: 38px;&#13;
+    color: #232323;&#13;
+}&#13;
+&#13;
+ #defaultOpen {&#13;
+    display: none;&#13;
+}&#13;
+&#13;
+#defaultSection {&#13;
+    min-height: 500px;&#13;
+}&#13;
+&#13;
+#defaultSection h1 {&#13;
+    line-height: 120%;&#13;
+}&#13;
+@media only screen and (min-width: 992px) {&#13;
+    div#myContainer {&#13;
+      display:inherit;&#13;
+    }&#13;
+}&#13;
+&#13;
+&#13;
+@media only screen and (max-width: 991.1px) {&#13;
+    div#myContainer {&#13;
+      display:none;&#13;
+    }&#13;
+}&#13;
+&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>utassp01_affected_service_info_widget</id>
+        <internal>false</internal>
+        <link/>
+        <name>UTASSP Affected Service Info Widget</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();	
+	// *** Start: Debug only code ***
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =  'utassp01_affected_service_info_widget > '+$sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code ***
+})($sp, input, data, options, gs);]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-12 15:02:29</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>47d6578edb23a380e3ad22d4059619cc</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>UTASSP Affected Service Info Widget</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_widget_47d6578edb23a380e3ad22d4059619cc</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-12 15:39:36</sys_updated_on>
+        <template><![CDATA[<div id="myContainer">
+  <div id="defaultSection" tabindex="0" style="display: block;">
+      <h1>Things not working? <br>Report the incident now.</h1>
+      <p>Thank you for initiating this incident report to the service desk. 
+         Please select the affected service from the left.
+      </p>
+      <p>
+         After selection, you will be presented with a form to complete your incident report.
+         <br/><br/>
+         <i class="fa fa-arrow-left" aria-hidden="true" style="font-size:50px"></i>
+      </p>
+  </div>  
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

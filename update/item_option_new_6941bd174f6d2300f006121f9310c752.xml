@@ -2,7 +2,7 @@
     <item_option_new action="INSERT_OR_UPDATE">
         <active>true</active>
         <attributes/>
-        <cat_item display_value="UTASSP INCIDENT: Something Broken">64f0215b4f2d2300f006121f9310c71e</cat_item>
+        <cat_item display_value="INCIDENT REPORT: Something Broken">64f0215b4f2d2300f006121f9310c71e</cat_item>
         <category/>
         <choice_direction>down</choice_direction>
         <choice_field/>
@@ -24,7 +24,7 @@
         <help_text/>
         <include_none>false</include_none>
         <instructions/>
-        <layout>2across</layout>
+        <layout>normal</layout>
         <list_table/>
         <lookup_label/>
         <lookup_price/>
@@ -60,7 +60,7 @@
         <sys_created_on>2018-11-08 18:46:35</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>6941bd174f6d2300f006121f9310c752</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>Request for</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -68,7 +68,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>item_option_new_6941bd174f6d2300f006121f9310c752</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-08 14:53:08</sys_updated_on>
+        <sys_updated_on>2019-02-12 03:23:44</sys_updated_on>
         <table/>
         <tooltip/>
         <type>19</type>

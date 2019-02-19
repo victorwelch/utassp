@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function ($scope, $rootScope, $element, spUtil, $window, $timeout, $sce, u_cutassp) {
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+		console.log($scope.data.infotag+(new Date()).getTime());		
+	}
+	//
+	/* widget controller */
+	var c = this;
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		}
+		return '';
+	};
+	//
+	//$scope.data.trustedHtml = $sce.trustAsHtml(c.data.html);	
+	c.isDisplay = true;
+	c.isNotDisplay = !c.isDisplay;
+	c.isHeadingActive = false;
+	c.flatListLength = 0;
+	if (u_cutassp.utilIsValueValid(c.data.flatlist)) {
+		if (u_cutassp.utilIsValueValid(c.data.flatlist.length)) {
+			c.flatListLength = c.data.flatlist.length;	
+		}		
+	}
+
+	$scope.panelHeadingClick = function(e) {
+		if (c.isHeadingActive) {
+			var myDiv=$(e.currentTarget);
+			var myCol={};
+			var myIcon=myDiv.find('i').first();
+			if (myIcon.hasClass('fa-plus')) {
+				c.isDisplay = true;
+				myIcon.removeClass('fa-plus');
+				myIcon.addClass('fa-minus');
+				myCol=myDiv.parents('div.col-md-3');
+				if (myCol.length>0) {
+					myCol.removeClass('col-md-3');
+					myCol.addClass('col-md-4');				
+				}
+			} else {
+				c.isDisplay = false;
+				myIcon.removeClass('fa-minus');
+				myIcon.addClass('fa-plus');
+				myCol=myDiv.parents('div.col-md-4');
+				if (myCol.length>0) {
+					myCol.removeClass('col-md-4');
+					myCol.addClass('col-md-3');				
+				}				
+			}
+		}
+	}
+	
+	$scope.divClick = function(e){
+		var myDiv = $(e.currentTarget);
+		var myLi= myDiv.parent();
+		// Close all
+		for (var i=0;i<c.flatListLength;i++) {
+			c.data.flatlist[i].ulstate = 'collapsed';
+		}
+		//Q: is this a tree node?
+		if (myLi.attr('nodetype')=='tree') {
+			//A: Yes.
+			var myIdx = parseInt(myLi.attr('idnumber'));
+			var myUlState = c.data.flatlist[myIdx].ulstate;
+			// Open all ancestors
+			var myAncestorLiList = myLi.parents('li');
+			if (myAncestorLiList.length>0) {
+				for (var j=0,jL=myAncestorLiList.length;j<jL;j++) {
+					var aIdx = parseInt($(myAncestorLiList[j]).attr('idnumber'));
+					c.data.flatlist[aIdx].ulstate='expanded';
+				}
+			}
+			// Toggle current (close/open)
+			if (myUlState == 'collapsed') {
+				c.data.flatlist[myIdx].ulstate='expanded';
+			} else {
+				c.data.flatlist[myIdx].ulstate='collapsed';				
+			}	
+		} else  {
+			//A: No.  This is a leaf node...
+			var mySysId = myLi.attr('sysid');
+			var mySvcName = myLi.attr('name');
+			var myObj = {
+				sysid: mySysId,
+				name: mySvcName
+			};
+			c.isDisplay = false;
+			c.isHeadingActive = true;
+			var myCol=myLi.parents('div.col-md-4');
+			if (myCol.length>0) {
+				myCol.removeClass('col-md-4');
+				myCol.addClass('col-md-3');				
+			}
+			var myPanelHeadingDiv = $('#myPanelHeadingId');
+			myPanelHeadingDiv.addClass('myPanelHeadingIsActive');
+			var myIcon = myPanelHeadingDiv.find('i').first();
+			if (myIcon.hasClass('fa-minus')) {
+				myIcon.toggleClass('fa-minus');
+				myIcon.toggleClass('fa-plus');				
+			} 
+			$rootScope.$broadcast('onServiceSelected', myObj);		
+		}
+	}
+	
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>h2.panel-title {
+	color: #ffffff;
+}
+
+ h1,  h2,  h3,  h4,  h5,  h6,  p,  li {
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.panel-body {
+  padding:5px 0px 0px 0px;
+  background-color:#fff;
+}
+
+$brand-custom:#78A6CC;
+/* $brand-custom:#c2d7e8; */
+
+.panel-custom  {
+	background-color: $brand-custom;
+    }  
+  }     
+}
+
+div.panel-primary  {
+  background-color: $brand-primary;
+}
+
+div.panel-info {
+  background-color: $brand-info;
+}
+
+div.panel-success {
+  background-color: $brand-success;
+}
+
+div.panel-warning {
+  background-color: $brand-warning;
+}
+
+div.panel-danger {
+  background-color: $brand-danger;
+}
+
+.text-heading {
+  color: #ffffff; 
+  &amp;:hover {
+    color: #cccccc;
+    text-decoration: underline;
+  }
+}
+
+div.myGrid {
+  color: #000;
+	clear:both;
+	display: grid;
+	grid-template-columns: auto 45px; 
+}
+div.myGrid &gt; div &gt; p {
+  margin:0;
+}
+div.myNoGrid {
+  color: #000;
+}
+div.myNoGrid &gt; div &gt; p {
+  margin:0;
+}
+
+
+.myShadow {
+-webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+-moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+}
+
+.myPanelContainer {
+  padding-top:5px;
+  margin-top:5px;
+}
+div.treeContainer{
+  display:inline-block;
+  margin:10px 0 10px 0;
+  width:90%;
+  text-align:left;
+}
+
+#baseUl {
+  padding-left:0px;
+}
+ul {
+  list-style-type:none;
+  padding-left:24px;  
+}
+li {
+  text-align:left;
+  background-color:transparent;
+}
+
+li&gt;div.myTreeLiDiv {
+  margin-top:-1px;  
+  background-color:#f0f0f0;
+  border-top:4px solid #fff;
+  border-left:2px solid #fff;
+  border-right:2px solid #fff;
+  border-bottom:0px;
+  padding: 3px 0 3px 5px;
+  font-size: 16px;
+  color: #00467b;
+  font-weight: normal;
+  font-family: 'Roboto', sans-serif;
+  width: 100%;  
+  &amp;:hover {
+    color:#777;
+    background-color:#fff;
+    cursor:pointer;
+		-webkit-box-shadow:0px 0px 10px 3px #eee inset;
+		-moz-box-shadow:0px 0px 10px 3px #eee inset;
+		box-shadow:0px 0px 10px 3px #eee inset;  
+  }  
+}
+
+li&gt;div.myLeafLiDiv {
+  margin-top:-1px;
+  background: $brand-custom;
+  border-radius:6px;
+  padding: 3px 0 3px 5px;  
+	border-top: 4px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #fff;
+  border-bottom: 0px;  
+  font-size:14px;
+  color: #fff;  
+	font-weight: bold;
+  width:100%
+  &amp;:hover {
+    background: #93b7d6;
+	  cursor: pointer;
+  }
+}
+
+
+#myPanelHeadingId.myPanelHeadingIsActive {
+  &amp;:hover {
+    background: #93b7d6;    
+    color:#ddd;
+	  cursor: pointer;
+  }
+};
+
+#myPanelHeadingId.myPanelHeadingIsActive:hover h2.panel-title {
+    color:#ddd;
+ }
+
+@media (max-width:991px) {
+  #myInfoDivId {
+  	display:none;
+  }
+}
+@media (min-width:992px) {
+  #myMobileInfoDivId {
+  	display:none;
+  }
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>utassp02_business_service_tree_widget</id>
+        <internal>false</internal>
+        <link/>
+        <name>UTASSP Business Service Tree 2 Widget</name>
+        <option_schema>[&#13;
+  {&#13;
+    "name": "color",&#13;
+    "label": "Color",&#13;
+    "type": "choice",&#13;
+    "choices": [&#13;
+      {&#13;
+        "label": "Default",&#13;
+        "value": "default"&#13;
+      },&#13;
+      {&#13;
+        "label": "Custom",&#13;
+        "value": "custom"&#13;
+      },&#13;
+      {&#13;
+        "label": "Primary",&#13;
+        "value": "primary"&#13;
+      },&#13;
+      {&#13;
+        "label": "Success",&#13;
+        "value": "success"&#13;
+      },&#13;
+      {&#13;
+        "label": "Info",&#13;
+        "value": "info"&#13;
+      },&#13;
+      {&#13;
+        "label": "Warning",&#13;
+        "value": "warning"&#13;
+      },&#13;
+      {&#13;
+        "label": "Danger",&#13;
+        "value": "danger"&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "name": "knowledge_base",&#13;
+    "label": "Knowledge Base",&#13;
+    "type": "choice",&#13;
+    "choices": [&#13;
+      {&#13;
+        "label": "Business Affairs Internal",&#13;
+        "value": "Business Affairs Internal"&#13;
+      },&#13;
+      {&#13;
+        "label": "Business Affairs Knowledge Base",&#13;
+        "value": "Business Affairs Knowledge Base"&#13;
+      },&#13;
+      {&#13;
+        "label": "OIT Internal",&#13;
+        "value": "OIT Internal"&#13;
+      },&#13;
+      {&#13;
+        "label": "OIT Knowledge Base",&#13;
+        "value": "OIT Knowledge Base"&#13;
+      }&#13;
+    ]&#13;
+  }&#13;
+]</option_schema>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myU = new u_utassp();
+	// *** Start: Debug only code *** //
+	data.isDebugOn = false;
+	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	{
+		data.widgettitle =  'utassp01_business_service_widget > '+$sp.getDisplayValue("title");
+		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
+		data.isDebugOn = true;
+		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
+		gs.info(data.infotag +(new Date()).getTime());		
+	}
+	// *** End: Debug only code *** //
+	//
+	var myTreeData = myU.getBusinessServiceTree('empty');
+	var myFlatData = myU.getFlatBusinessServiceTree(myTreeData);
+
+	data.treelist = myTreeData;
+	data.flatlist = myFlatData;
+
+})($sp, input, data, options, gs);]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-15 20:29:38</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>688eb70bdbab2780e3ad22d405961998</sys_id>
+        <sys_mod_count>163</sys_mod_count>
+        <sys_name>UTASSP Business Service Tree 2 Widget</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_widget_688eb70bdbab2780e3ad22d405961998</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-19 02:01:17</sys_updated_on>
+        <template><![CDATA[<div id="myMobileInfoDivId" ng-if="c.isHeadingActive==false" class="myNoGrid">
+  <h3>Something wrong?<br>Incident report form.</h3>
+  <p>Using the "tree picker" below, select the service you are having a problem with.</p>					    
+</div>
+<!-- -------------- -->
+<div id="myInfoDivId" ng-if="c.isHeadingActive==false" class="myGrid">
+  <div id="divGridCol1Id">
+    <h3>Something wrong?<br>Incident report form.</h3>
+    <p>Using the "tree picker" below, select the service you are having a problem with (or proceed directly to the form and use it's search functionality).</p>					    
+  </div>
+  <div id="divGridCol2Id" style="text-alig:right;">
+	<br/><br/>
+	<i class="fa fa-arrow-right" aria-hidden="true" style="font-size:40px"></i>		    
+  </div>
+</div>
+<!-- ------------ -->
+<div class="myPanelContainer"  dummy="{{::c.myLog()}}">
+  <div class="panel panel-custom b myShadow">
+    <div id="myPanelHeadingId" class="panel-heading" ng-click="panelHeadingClick($event)">
+      <h2 class="h4 panel-title"><i ng-show="c.isHeadingActive" class="ng-hide fa fa-plus myHeaderIcon" ></i>        
+        Select Affected Service</h2>
+    </div>
+    <div ng-show="c.isDisplay" class="ng-hide panel-body">
+      <div class="text-center" style="padding:10px;">
+        <!-- Tree Nodes -->
+        <ul id="baseUl">
+          <li ng-repeat="i1 in data.treelist" 
+              id="{{i1.id}}" 
+              idnumber="{{i1.idnumber}}" 
+              sysid="{{i1.sysid}}" 
+              nodetype="{{i1.nodetype}}">
+            	<div ng-class="i1.nodetype=='leaf' ? 'myLeafLiDiv' : 'myTreeLiDiv'" ng-click="divClick($event)">
+                <i class="fa" ng-class="{'fa-bullseye': i1.nodetype=='leaf', 'fa-folder-plus': i1.nodetype=='tree' && data.flatlist[i1.idnumber].ulstate=='collapsed', 'fa-folder-minus': i1.nodetype=='tree' && data.flatlist[i1.idnumber].ulstate!='collapsed'}"></i>
+                {{i1.name}}
+              </div>
+              <!-- nested repeat i2 -->
+   						<ul ng-if="i1.nodetype=='tree'" ng-show="data.flatlist[i1.idnumber].ulstate=='expanded'" class="ng-hide">
+								<li ng-repeat="i2 in i1.servicelist" 
+	              		id="{{i2.id}}" 
+  	            		idnumber="{{i2.idnumber}}" 
+	              		sysid="{{i2.sysid}}" 
+  	            		nodetype="{{i2.nodetype}}">
+                  	<div ng-class="i2.nodetype=='leaf' ? 'myLeafLiDiv' : 'myTreeLiDiv'"
+                         ng-click="divClick($event)">
+                			<i class="fa" ng-class="{'fa-bullseye': i2.nodetype=='leaf', 'fa-folder-plus': i2.nodetype=='tree' && data.flatlist[i2.idnumber].ulstate=='collapsed', 'fa-folder-minus': i2.nodetype=='tree' && data.flatlist[i2.idnumber].ulstate!='collapsed'}"></i>                      
+                      {{i2.name}}
+                  	</div>                
+                    <!-- nested repeat i3 -->
+                    <ul ng-if="i2.nodetype=='tree'" ng-show="data.flatlist[i2.idnumber].ulstate=='expanded'" class="ng-hide">
+                      <li ng-repeat="i3 in i2.servicelist" 
+                          id="{{i3.id}}" 
+                          idnumber="{{i3.idnumber}}" 
+                          sysid="{{i3.sysid}}" 
+                          nodetype="{{i3.nodetype}}">
+                          <div ng-class="i3.nodetype=='leaf' ? 'myLeafLiDiv' : 'myTreeLiDiv'"
+                               ng-click="divClick($event)">
+						                <i class="fa" ng-class="{'fa-bullseye': i3.nodetype=='leaf', 'fa-folder-plus': i3.nodetype=='tree' && data.flatlist[i3.idnumber].ulstate=='collapsed', 'fa-folder-minus': i3.nodetype=='tree' && data.flatlist[i3.idnumber].ulstate!='collapsed'}"></i>				                            
+                            {{i3.name}}
+                          </div>                
+                          <!-- nested repeat i4 -->
+                          <ul ng-if="i3.nodetype=='tree'" ng-show="data.flatlist[i3.idnumber].ulstate=='expanded'" class="ng-hide">
+                            <li ng-repeat="i4 in i3.servicelist" 
+                                ng-class="i4.nodetype=='leaf' ? 'myLeafLi' : 'myTreeLi'"
+                                id="{{i4.id}}" 
+                                idnumber="{{i4.idnumber}}" 
+                                sysid="{{i4.sysid}}" 
+                                nodetype="{{i4.nodetype}}">
+                                <div ng-class="i4.nodetype=='leaf' ? 'myLeafLiDiv' : 'myTreeLiDiv'"
+                                     ng-click="divClick($event)">
+                									<i class="fa" ng-class="{'fa-bullseye': i4.nodetype=='leaf', 'fa-folder-plus': i4.nodetype=='tree' && data.flatlist[i4.idnumber].ulstate=='collapsed', 'fa-folder-minus': i4.nodetype=='tree' && data.flatlist[i4.idnumber].ulstate!='collapsed'}"></i>
+                                  {{i4.name}}
+                                </div>                
+                                <!-- nested repeat i5 -->
+                                <ul ng-if="i4.nodetype=='tree'" ng-show="data.flatlist[i2.idnumber].ulstate=='expanded'" class="ng-hide">
+                                  <li ng-repeat="i5 in i4.servicelist" 
+                                      ng-class="i5.nodetype=='leaf' ? 'myLeafLi' : 'myTreeLi'"
+                                      id="{{i5.id}}" 
+                                      idnumber="{{i5.idnumber}}" 
+                                      sysid="{{i5.sysid}}" 
+                                      nodetype="{{i5.nodetype}}">
+                                      <div ng-class="i5.nodetype=='leaf' ? 'myLeafLiDiv' : 'myTreeLiDiv'"
+                                           ng-click="divClick($event)">
+                												<i class="fa" ng-class="{'fa-bullseye': i5.nodetype=='leaf', 'fa-folder-plus': i5.nodetype=='tree' && data.flatlist[i5.idnumber].ulstate=='collapsed', 'fa-folder-minus': i5.nodetype=='tree' && data.flatlist[i5.idnumber].ulstate!='collapsed'}"></i>								                                        
+                                        {{i5.name}}
+                                      </div>                
+                                  </li>
+                                </ul>
+                                <!-- end nested repeat i5 -->                                                            
+                            </li>
+                          </ul>
+                          <!-- end nested repeat i4 -->                              
+                        
+                      </li>
+                    </ul>
+                    <!-- end nested repeat i3 -->                              
+	  	    	    </li>
+      	 	    </ul>
+              <!-- end nested repeat i2 -->            
+          </li>   
+        </ul>
+        <!-- ---------- -->
+      </div>
+    </div>
+    <div ng-show="c.isDisplay" class="ng-hide panel-custom panel-footer clearfix">
+    </div>
+  </div>
+<div>
+]]></template>
+    </sp_widget>
+</record_update>
