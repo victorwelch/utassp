@@ -56,15 +56,15 @@
 	$scope.divClick = function(e){
 		var myDiv = $(e.currentTarget);
 		var myLi= myDiv.parent();
+		var myIdx = parseInt(myLi.attr('idnumber'));
+		var myUlState = c.data.flatlist[myIdx].ulstate;
 		// Close all
 		for (var i=0;i<c.flatListLength;i++) {
 			c.data.flatlist[i].ulstate = 'collapsed';
 		}
 		//Q: is this a tree node?
 		if (myLi.attr('nodetype')=='tree') {
-			//A: Yes.
-			var myIdx = parseInt(myLi.attr('idnumber'));
-			var myUlState = c.data.flatlist[myIdx].ulstate;
+			//A: Yes.	
 			// Open all ancestors
 			var myAncestorLiList = myLi.parents('li');
 			if (myAncestorLiList.length>0) {
@@ -367,7 +367,7 @@ li&gt;div.myLeafLiDiv {
         <sys_created_on>2019-02-15 20:29:38</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>688eb70bdbab2780e3ad22d405961998</sys_id>
-        <sys_mod_count>163</sys_mod_count>
+        <sys_mod_count>165</sys_mod_count>
         <sys_name>UTASSP Business Service Tree 2 Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -375,7 +375,7 @@ li&gt;div.myLeafLiDiv {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_688eb70bdbab2780e3ad22d405961998</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-19 02:01:17</sys_updated_on>
+        <sys_updated_on>2019-02-19 23:43:45</sys_updated_on>
         <template><![CDATA[<div id="myMobileInfoDivId" ng-if="c.isHeadingActive==false" class="myNoGrid">
   <h3>Something wrong?<br>Incident report form.</h3>
   <p>Using the "tree picker" below, select the service you are having a problem with.</p>					    

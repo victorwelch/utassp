@@ -456,7 +456,7 @@ u_utassp.prototype = {
     },
 	getBusinessServiceTree: function(_pParentId) {
 		var servicelist = [];
-		var thisQ = 'operational_status!=2^ORoperational_status=NULL';
+		var thisQ = 'operational_status!=2';
 		if (!this.utilIsValueValid(_pParentId)) {
 			thisQ += '^parentISEMPTY';
 		} else if (_pParentId.toString().indexOf('empty')>-1) {
@@ -530,7 +530,7 @@ u_utassp.prototype = {
 		// ***  This whole routine breaks up the list of 'Applications & Systems' into alphabetical groups
 		// ***  *** but first, we will grab the items that start with non-alpha's
 		var myAlphaList = [];  //Initialize the array we will return
-		var myQ = '^parent='+_pParentId;  //Initialize the encoded Query
+		var myQ = 'operational_status!=2^parent='+_pParentId;  //Initialize the encoded Query
 		var myGr = new GlideRecord('cmdb_ci_service');  //Initialize the GlideRecord
 		myGr.addEncodedQuery(myQ);  //Add encoded query
 		myGr.addQuery('name','<','a'); //Add our "less than 'a'" condition
@@ -854,7 +854,7 @@ u_utassp.prototype = {
         <sys_created_on>2018-10-29 15:10:11</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3edf1d4c4f212300f006121f9310c732</sys_id>
-        <sys_mod_count>106</sys_mod_count>
+        <sys_mod_count>107</sys_mod_count>
         <sys_name>u_utassp</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy>read</sys_policy>
@@ -862,6 +862,6 @@ u_utassp.prototype = {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sys_script_include_3edf1d4c4f212300f006121f9310c732</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-18 23:20:54</sys_updated_on>
+        <sys_updated_on>2019-02-22 17:57:58</sys_updated_on>
     </sys_script_include>
 </record_update>
