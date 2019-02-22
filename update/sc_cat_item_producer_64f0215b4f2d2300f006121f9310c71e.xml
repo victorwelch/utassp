@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_producer">
     <sc_cat_item_producer action="INSERT_OR_UPDATE">
         <active>true</active>
-        <availability>on_desktop</availability>
+        <availability>on_both</availability>
         <billable>false</billable>
         <can_cancel>true</can_cancel>
         <category/>
@@ -61,7 +61,7 @@ current.assignment_group = producer.u_business_service.support_group;
         <sys_created_on>2018-11-08 17:34:53</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>64f0215b4f2d2300f006121f9310c71e</sys_id>
-        <sys_mod_count>9</sys_mod_count>
+        <sys_mod_count>10</sys_mod_count>
         <sys_name>INCIDENT REPORT: Something Broken</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -69,7 +69,7 @@ current.assignment_group = producer.u_business_service.support_group;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sc_cat_item_producer_64f0215b4f2d2300f006121f9310c71e</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-12 16:59:35</sys_updated_on>
+        <sys_updated_on>2019-02-21 18:06:45</sys_updated_on>
         <table_name>incident</table_name>
         <template display_value="ESS Incident">300acd666f7ca2407a07fee09d3ee485</template>
         <type>item</type>

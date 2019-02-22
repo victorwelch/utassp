@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_producer">
     <sc_cat_item_producer action="INSERT_OR_UPDATE">
         <active>true</active>
-        <availability>on_desktop</availability>
+        <availability>on_both</availability>
         <billable>false</billable>
         <can_cancel>true</can_cancel>
         <category/>
@@ -60,7 +60,7 @@ current.assignment_group = producer.u_business_service.support_group;
         <sys_created_on>2019-02-15 17:36:33</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>49e61bcfdb2b2780e3ad22d4059619d1</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>Incident Report</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -68,7 +68,7 @@ current.assignment_group = producer.u_business_service.support_group;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sc_cat_item_producer_49e61bcfdb2b2780e3ad22d4059619d1</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-19 15:57:46</sys_updated_on>
+        <sys_updated_on>2019-02-21 18:05:30</sys_updated_on>
         <table_name>incident</table_name>
         <template display_value="">dde6d703db6b2780e3ad22d4059619d4</template>
         <type>item</type>

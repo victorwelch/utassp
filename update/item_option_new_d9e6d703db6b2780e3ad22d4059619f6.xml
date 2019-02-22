@@ -18,7 +18,7 @@
         <dynamic_default_value/>
         <dynamic_ref_qual/>
         <example_text/>
-        <field>comments</field>
+        <field>description</field>
         <global>false</global>
         <help_tag>More information</help_tag>
         <help_text>The more information you can provide here, the easier time the support organization will have in diagnosing and resolving your incident.</help_text>
@@ -36,7 +36,7 @@
         <map_to_field>true</map_to_field>
         <mask_use_confirmation>false</mask_use_confirmation>
         <mask_use_encryption>false</mask_use_encryption>
-        <name>comments</name>
+        <name>description</name>
         <order>1700</order>
         <price_if_checked>0</price_if_checked>
         <pricing_implications>false</pricing_implications>
@@ -60,15 +60,15 @@
         <sys_created_on>2019-02-15 17:36:34</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>d9e6d703db6b2780e3ad22d4059619f6</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name>Please provide the details of your issue below</sys_name>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>description</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>item_option_new_d9e6d703db6b2780e3ad22d4059619f6</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-15 17:36:34</sys_updated_on>
+        <sys_updated_on>2019-02-21 01:22:23</sys_updated_on>
         <table/>
         <tooltip/>
         <type>2</type>

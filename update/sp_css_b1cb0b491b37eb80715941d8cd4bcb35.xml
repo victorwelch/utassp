@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_css">
+    <sp_css action="INSERT_OR_UPDATE">
+        <css>/** 
+
+KB Stylesheet
+V.2
+
+**/
+
+img {
+    max-width: 100%;
+}
+
+/** Prevent tables from breaking **/
+table { 
+    page-break-inside: auto; 
+}
+tr { 
+    page-break-inside: avoid; 
+    page-break-after: auto; 
+}
+thead { 
+    display: table-header-group; 
+}
+tfoot { 
+    display: table-footer-group; 
+}
+
+/** Establish a custom div for KB only **/
+#uta-kb-lib {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+
+/** Stylizing Text **/
+#uta-kb-lib .kb-text-underline {
+    text-decoration: underline;
+}
+#uta-kb-lib .kb-text-italic {
+    font-style: italic;
+}
+#uta-kb-lib .kb-text-uppercase {
+    text-transform: uppercase;
+}
+#uta-kb-lib .kb-text-lowercase {
+    text-transform: lowercase;
+}
+#uta-kb-lib blockquote {
+    font-size: 100%;
+    border-left: 5px solid #e6e8ea;
+    margin-bottom: 18px;
+    padding: 9px 18px;
+}
+
+
+/** Space **/
+#uta-kb-lib .kb-clear {
+    width: 100%;
+    height: 1px;
+    clear: both;
+}
+#uta-kb-lib .kb-divider {
+    width: 100%;
+    height: 1px;
+    clear: both;
+    background: #ddd;
+    display: block;
+    margin: 0 auto;
+}
+#uta-kb-lib .kb-space10 {
+    width: 100%;
+    height: 10px;
+    clear: both;
+}
+#uta-kb-lib .kb-space20 {
+    width: 100%;
+    height: 20px;
+    clear: both;
+}
+#uta-kb-lib .kb-space40 {
+    width: 100%;
+    height: 40px;
+    clear: both;
+}
+#uta-kb-lib .kb-space60 {
+    width: 100%;
+    height: 60px;
+    clear: both;
+}
+#uta-kb-lib .kb-space80 {
+    width: 100%;
+    height: 80px;
+    clear: both;
+}
+
+/** Headings **/
+h1,h2,h3,h4,h5,h6 { color: #485562; }
+#uta-kb-lib h1.kb-heading, #uta-kb-lib h2.kb-heading, #uta-kb-lib h3.kb-heading, #uta-kb-lib h4.kb-heading, #uta-kb-lib h5.kb-heading, #uta-kb-lib h6.kb-heading {
+    font-weight: normal;
+    display: block;
+}
+#uta-kb-lib h1.kb-heading {
+    font-size: 24pt;
+}
+#uta-kb-lib h2.kb-heading {
+    font-size: 21pt;
+}
+#uta-kb-lib h3.kb-heading {
+    font-size: 18pt;
+}
+#uta-kb-lib h4.kb-heading {
+    font-size: 17pt;
+}
+#uta-kb-lib h5.kb-heading {
+    font-size: 15pt;
+}
+#uta-kb-lib h6.kb-heading {
+    font-size: 13pt;
+}
+#uta-kb-lib a, .uta-kb-lib span {
+    color: #278EFA;
+}
+#uta-kb-lib p, #uta-kb-lib li {
+    font-size: 10pt;
+}
+
+/** Margins &amp; Paddings **/
+#uta-kb-lib .kb-padding10 {
+    padding: 10px;
+}
+#uta-kb-lib .kb-padding15 {
+    padding: 15px;
+}
+#uta-kb-lib .kb-margin10 {
+    margin: 10px;
+}
+#uta-kb-lib .kb-margin15 {
+    margin: 15px;
+}
+#uta-kb-lib .kb-margin0 {
+    margin: 0;
+}
+#uta-kb-lib .kb-padding0 {
+    padding: 0;
+}
+
+/** Containers **/
+#uta-kb-lib .kb-box-blue-border {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19);
+    border: 1px solid #0064b1;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+#uta-kb-lib .kb-box-black-border { 
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+#uta-kb-lib .kb-box-left {
+    display: block;
+    float: left;
+    margin-bottom: 20px;
+}
+#uta-kb-lib .kb-box-right {
+    display: block;
+    float: right;
+    margin-bottom: 20px;
+}
+
+/** Text Align **/
+#uta-kb-lib .kb-text-align-left {
+    text-align: left;
+    display: block;
+}
+#uta-kb-lib .kb-text-align-center {
+    text-align: center;
+    display: block;
+}
+#uta-kb-lib .kb-text-align-right {
+    text-align: right;
+    display: block;
+}
+
+/** Image Align **/
+#uta-kb-lib .kb-image-left {
+    float: left;
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+#uta-kb-lib .kb-image-right {
+    float: right;
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+#uta-kb-lib .kb-image-center {
+    margin: 0 auto;
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+#uta-kb-lib .kb-image-full {
+    width: 100%;
+    max-width: 968px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+/** Order listing **/
+#uta-kb-lib ol.alpha {
+    list-style-type: lower-alpha;
+}
+#uta-kb-lib ol.number {
+    list-style-type: decimal;
+}
+
+/** Video Embed **/
+#uta-kb-lib .kb-video-embed {
+    position:relative;
+	padding-bottom:56.25%;
+	padding-top:30px;
+	height:0;
+	overflow:hidden;
+}
+
+#uta-kb-lib .kb-video-embed iframe, #uta-kb-lib .kb-video-embed object, #uta-kb-lib .kb-video-embed embed {
+    position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+
+/** Background Color **/
+#uta-kb-lib .kb-black-bg {
+    background: #000;
+}
+#uta-kb-lib .kb-dark-blue-bg {
+    background: #00447c;
+}
+#uta-kb-lib .kb-light-blue-bg {
+    background: #0064b1;
+}
+#uta-kb-lib .kb-orange-bg {
+    background: #f58025;
+}
+#uta-kb-lib .kb-dark-grey-bg {
+    background: #485563;
+}
+
+/** Text or Icon Color **/
+#uta-kb-lib .kb-text-white {
+    color: #fff;
+}
+#uta-kb-lib .kb-text-dark-blue {
+    color: #00447c;
+}
+#uta-kb-lib .kb-text-light-blue {
+    color: #0064b1;
+}
+#uta-kb-lib .kb-text-orange {
+    color: #f58025;
+}
+#uta-kb-lib .kb-text-red {
+    color: #FF3030;
+}
+#uta-kb-lib .kb-text-green {
+    color: #A8EE68;
+}
+#uta-kb-lib .kb-text-dark-grey {
+    color: #485563;
+}
+
+/** For Icons **/
+#uta-kb-lib .kb-icon {
+    font-size: 65px;
+    max-width: 100%;
+}
+#uta-kb-lib .kb-icon-small {
+    font-size: 35px;
+    max-width: 100%;
+}
+
+/** Force Floating **/
+#uta-kb-lib .kb-float-left {
+    float: left;
+}
+#uta-kb-lib .kb-float-right {
+    float: right;
+}
+
+#uta-kb-lib .col-sm-12 {
+    margin-bottom: 20px;
+}
+
+/** For Print **/
+@media print {
+    #uta-kb-lib {
+        transform: scale(1);
+    }
+    /** Hide urls been added after ahref **/
+    a[href]:after {
+        content: none !important;
+    }
+    #uta-kb-lib .kb-icon {
+        font-size: 36px;
+        max-width: 100%;
+    }
+
+    /** Prevent broken div **/ 
+    div.col-md-12, div.col-sm-12, div.row {
+        page-break-inside: avoid;
+    }
+    div.row {
+        padding-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+    .col-md-1, .col-sm-1 {
+        -ms-flex: 0 0 8.333333%;
+        flex: 0 0 8.333333%;
+        max-width: 8.333333%;
+    }
+    .col-md-2, .col-sm-2 {
+        -ms-flex: 0 0 16.666666%;
+        flex: 0 0 16.666666%;
+        max-width: 16.666666%;
+    }
+    .col-md-3, .col-sm-3 {
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+    .col-md-4, .col-sm-4 {
+        -ms-flex: 0 0 33.333333%;
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+    .col-md-6, .col-sm-6 {
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .col-md-8, .col-sm-8 {
+        -ms-flex: 0 0 66.666667%;
+        flex: 0 0 66.666667%;
+        max-width: 66.666667%;
+    }
+    .col-md-9, .col-sm-9 {
+        -ms-flex: 0 0 75%;
+        flex: 0 0 75%;
+        max-width: 75%;
+    }
+    .col-md-10, .col-sm-10 {
+        -ms-flex: 0 0 83%;
+        flex: 0 0 83%;
+        max-width: 83%;
+    }
+    .col-md-11, .col-sm-11 {
+        -ms-flex: 0 0 91.666667%;
+        flex: 0 0 91.666667%;
+        max-width: 91.666667%;
+    }
+   
+}</css>
+        <name>kb_style_sheet.css</name>
+        <sys_class_name>sp_css</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-21 21:56:06</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>b1cb0b491b37eb80715941d8cd4bcb35</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>kb_style_sheet.css</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_css_b1cb0b491b37eb80715941d8cd4bcb35</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-21 21:56:06</sys_updated_on>
+    </sp_css>
+</record_update>

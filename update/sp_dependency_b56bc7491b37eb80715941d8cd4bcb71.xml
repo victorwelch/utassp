@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_dependency">
+    <sp_dependency action="INSERT_OR_UPDATE">
+        <module/>
+        <name>kb_style_sheet_css_dependency</name>
+        <page_load>true</page_load>
+        <sp_portals>b3990cae4f112300f006121f9310c705</sp_portals>
+        <sys_class_name>sp_dependency</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-21 21:54:34</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>b56bc7491b37eb80715941d8cd4bcb71</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>kb_style_sheet_css_dependency</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_dependency_b56bc7491b37eb80715941d8cd4bcb71</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-21 23:09:18</sys_updated_on>
+    </sp_dependency>
+</record_update>
