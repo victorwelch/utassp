@@ -123,7 +123,8 @@
 	
 	c.showAttachments = function() {
 		return !$scope.submitted &&
-			c.data.sc_cat_item.sys_class_name !== "std_change_record_producer";
+			c.data.sc_cat_item.sys_class_name !== "std_change_record_producer" &&
+			c.data.sc_cat_item.content_type != 'external';
 	};
 	
 	$scope.$on('dialog.upload_too_large.show', function(e){
@@ -944,7 +945,7 @@
         <sys_created_on>2018-11-09 15:13:59</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>997a86674f212300f006121f9310c7c8</sys_id>
-        <sys_mod_count>60</sys_mod_count>
+        <sys_mod_count>63</sys_mod_count>
         <sys_name>UTASSP Catalog Item Widget 3</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -952,7 +953,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_997a86674f212300f006121f9310c7c8</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-14 18:40:39</sys_updated_on>
+        <sys_updated_on>2019-02-25 20:34:27</sys_updated_on>
         <template><![CDATA[<div id="sc_cat_item" ng-if="::data.recordFound" dummy="{{::c.myLog()}}">
   <sp-widget widget="c.orderItemModal" ng-if="c.orderItemModal"></sp-widget>
   <div class="row" ng-if="::data.sc_cat_item" >
@@ -994,11 +995,17 @@
           </div>
         </div>
         <div class="" ng-class="{'b-b wrapper-md': !data.no_fields}">
-          <sp-cat-item item="::data.sc_cat_item" ></sp-cat-item>
-          <form>
-            <!-- display view and model -->
-            <sp-model form-model="::data.sc_cat_item" mandatory="c.mandatory"></sp-model>
-          </form>
+          <div ng-if="::data.sc_cat_item.content_type != 'external'">
+            <sp-cat-item item="::data.sc_cat_item" ></sp-cat-item>
+            <form>
+              <!-- display view and model -->
+              <sp-model form-model="::data.sc_cat_item" mandatory="c.mandatory"></sp-model>
+            </form>            
+          </div>
+	    	  <div ng-if="::data.sc_cat_item.content_type == 'external'" class="wrapper-md">
+            <div><h3 style="margin-top:0">Select Link Below:</h3></div>
+  	    	  <a ng-href="{{::data.sc_cat_item.url}}" target={{::data.sc_cat_item.target}} style="font-size:150%;">{{::data.sc_cat_item.url}} ➚</a>
+    	  	</div>          
         </div>
         <!-- Bottom cart -->
         <div class="inline-cart" ng-if="::options.display_cart_on_right !== 'true'">
@@ -1058,9 +1065,7 @@
           
         </div>
       </div>
-      <div ng-if="::data.sc_cat_item.content_type == 'external'" class="wrapper-md">
-        <a ng-href="{{::data.sc_cat_item.url}}" target={{::data.sc_cat_item.target}}>{{::data.sc_cat_item.url}} ➚</a>
-      </div>
+
 			<div ng-if="::data.sc_cat_item.content_type == 'kb'" class="wrapper-md">
         <a  ng-href="?id=kb_article&sys_id={{::data.sc_cat_item.kb_article}}">${Go to KB Article:} {{::data.sc_cat_item.kb_article_description}}</a>
       </div>
