@@ -2,21 +2,26 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[function ($scope, $rootScope, $element, spUtil, $window, u_cutassp) {
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
+	/* widget controller */
 	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
-	//	
+	//
 	if (typeof c.data == typeof myUndefined) { c.data = {}; }
 	if (typeof c.data.articles == typeof myUndefined ) { c.data.articles = []; }
-	if (typeof c.data.title == typeof myUndefined ) { c.data.title = 'Articles...'; }
+	if (typeof c.data.title == typeof myUndefined ) { c.data.title = ''; } 
+	c.isSearchInput = true;
+	c.isSearchDisplay = !c.isSearchInput;
 	
 	$rootScope.$on('myCatSelectEvent', function (event, obj) {
 		//$window.location.href = '/ssp';
@@ -25,6 +30,8 @@
 		$scope.data.categoryId = obj.selectionId;
 		$scope.data.action = 'new';
 		$scope.data.pagination.currentPage = 0;
+		c.isSearchInput = true;
+		c.isSearchDisplay = !c.isSearchInput;		
 		get();
 	});
 	
@@ -56,316 +63,413 @@
 		$scope.data.action = 'search';
 		$scope.data.q = myInput.val();	
 		myInput.val('');
+		c.isSearchInput = false;
+		c.isSearchDisplay = !c.isSearchInput;		
 		get();
-		$('#searchInput').addClass('ng-hide');
-		$('#searchText').removeClass('ng-hide');		
-	}
+	};
 	
+	$scope.crCatchArtSearch = function(e) {
+		if ( e.keyCode === 13 ) {
+			var myInput=$(e.currentTarget);
+			$scope.data.action = 'search';
+			$scope.data.q = myInput.val();	
+			myInput.val('');
+			get();
+			c.isSearchInput = false;
+			c.isSearchDisplay = !c.isSearchInput;		
+		} else {
+			return false;
+		}	
+	};
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>mark {&#13;
-  background:#ff0;&#13;
-  padding:.2em;&#13;
-}&#13;
-&#13;
-h2.panel-title {&#13;
-	color: #ffffff;&#13;
-  text-shadow: 3px 3px 5px #000000;&#13;
-}&#13;
-&#13;
-.panel-body {&#13;
-  padding:0px 0px 0px 0px;&#13;
-}&#13;
-&#13;
-.panel-primary  {&#13;
-	background-color: $brand-primary;&#13;
-}&#13;
-&#13;
-.panel-info {&#13;
-  background-color: $brand-info;&#13;
-}&#13;
-&#13;
-.panel-success {&#13;
-  background-color: $brand-success;&#13;
-}&#13;
-&#13;
-.panel-warning {&#13;
-  background-color: $brand-warning;&#13;
-}&#13;
-&#13;
-.panel-danger {&#13;
-  background-color: $brand-danger;&#13;
-}&#13;
-&#13;
-.myShadow {&#13;
--webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
--moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
-}&#13;
-&#13;
-/* ********** */&#13;
-/* Pagination */&#13;
-a.mybtn {&#13;
-    padding: 5px 10px;&#13;
-    font-size: 12px;&#13;
-    line-height: 1.5;&#13;
-    border-radius: 3px;&#13;
-}&#13;
-&#13;
-/* ************ */&#13;
-/* DivTable  */&#13;
-.myDivTable{ &#13;
-  display:table; &#13;
-  width: 100%;&#13;
-  table-layout: fixed;&#13;
-  font-size: 12px;&#13;
-}&#13;
-.myDivTableRow { display:table-row; }&#13;
-.myDivTableHeading { display:table-header-group;}&#13;
-.myDivTableCell, .myDivTableHead { display:table-cell;}&#13;
-.myDivTableHeading { display:table-header-group;}&#13;
-.myDivTableFoot { display:table-footer-group;}&#13;
-.myDivTableBody { display:table-row-group;}&#13;
-&#13;
-div.myGreyGridTable {&#13;
-  width:100%;&#13;
-  text-align:left;&#13;
-  border-collapse:collapse;&#13;
-}&#13;
-&#13;
-/* myDivTableHeading */&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading {&#13;
-  background:#eeeeee;&#13;
-}&#13;
-&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-  .myDivTableHead {&#13;
-    font-size:10px;&#13;
-  	font-weight:bold;&#13;
-  	color:#000000;&#13;
-  	text-align:center;&#13;
-    vertical-align: middle;&#13;
-  	padding:1px 1px 1px 4px;&#13;
-    border-right:1px solid #bbbbbb;&#13;
-  	border-bottom:1px solid #000000;    &#13;
-    word-wrap: break-word;    &#13;
-  }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow   {&#13;
-  .myDivTableHead.myLeft { text-align:left; }&#13;
-}&#13;
-&#13;
-/* myDivTableBody */&#13;
-.myDivTable.myGreyGridTable .myDivTableBody {&#13;
-	a.myDivTableRow {&#13;
-    color:#000000;&#13;
-  	width:100%;&#13;
-  	height:100%; &#13;
-    border-bottom:1px solid #aaaaaa;&#13;
-	}&#13;
-}&#13;
-&#13;
-.myDivTable.myGreyGridTable .myDivTableBody {&#13;
-  a.myDivTableRow:hover { &#13;
-    color: #1565C0;&#13;
-	  text-decoration:underline;&#13;
-    font-weight: bold;&#13;
-    background-color:#e6e8ea; &#13;
-  }&#13;
-}&#13;
-&#13;
-.myDivTable.myGreyGridTable .myDivTableBody {&#13;
-	.myDivTableRow:nth-child(odd) { background: #ffffff; }&#13;
-	.myDivTableRow:nth-child(even) { background: #f5f5f5; }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableBody&#13;
-{&#13;
-	.myDivTableRow:last-child { border-bottom-style:none;  }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-  .myDivTableCell  {&#13;
-      border-right:1px solid #bbbbbb; &#13;
-      padding:1px 4px;&#13;
-  }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-  .myDivTableCell.myCtr { text-align:center; }&#13;
-}&#13;
-&#13;
-.myColSpanAll { &#13;
-  display:table;&#13;
-  width:100%;&#13;
-	background: #EEEEEE;&#13;
-  color: #444444;&#13;
-}&#13;
-&#13;
-/* Foot Style */&#13;
-.myGreyGridTable .myTableFootStyle {&#13;
-  font-weight:bold;&#13;
-  color:#333333;&#13;
-  border-top:1px solid #333333;&#13;
-}&#13;
-&#13;
-// Above Medium devices (tablets, 768px and up)&#13;
-@media (min-width: 768.01px) &#13;
-{&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefLgOnlyShow { display:table-cell; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefMedUpShow { display:table-cell; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMedOnlyShow { display:none; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead:nth-last-child(1) { border-right-style:none; }&#13;
-  } &#13;
-  &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefLgOnlyShow { display:table-cell; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMeUpShow { display:table-cell; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMedOnlyShow { display:none; }&#13;
-  }&#13;
-  &#13;
-  .myCol1 { width:46% }&#13;
-  .myCol2 { width:10% }&#13;
-  .myCol3 { width:14% }&#13;
-  .myCol4 { &#13;
-    width:18%;&#13;
-  	font-size: 10px;&#13;
-  } &#13;
-  &#13;
-}&#13;
-&#13;
-// Medium devices (tablets, 768px and less)&#13;
-@media (max-width: 768px) { &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefLgOnlyShow { display:none; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefMedUpShow { display:table-cell; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead.myDefMedOnlyShow { display:table-cell; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead:nth-last-child(1) { border-right-style:none; }&#13;
-  }    &#13;
-  &#13;
- .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell.myDefLgOnlyShow { display:none; }&#13;
-  }   &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMedUpShow { display:table-cell; }&#13;
-  }    &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell.myDefMedOnlyShow { display:table-cell; }&#13;
-  }     &#13;
-  &#13;
-  .myCol1 { width:48% }&#13;
-  .myCol2 { width:10% }&#13;
-  .myCol3 { width:12% }&#13;
-  .myCol4 { &#13;
-    width:14%;&#13;
-  	font-size: 10px;&#13;
-  } &#13;
-}&#13;
-&#13;
-// Small devices (landscape phones, 576px and less)&#13;
-@media (max-width: 576px) { &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefLgOnlyShow { display:none; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefMedUpShow { display:none; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead.myDefMedOnlyShow { display:none; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead:nth-last-child(2) { border-right-style:none; }&#13;
-  }   &#13;
-  &#13;
- .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell.myDefLgOnlyShow { display:none; }&#13;
-  }   &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMedUpShow { display:none; }&#13;
-  }    &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell.myDefMedOnlyShow {display:none; }&#13;
-  }   &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell:nth-last-child(2) { border-right-style:none; }&#13;
-  }  &#13;
-  .myCol1 { width:66% }&#13;
-  .myCol2 { width:22% }&#13;
-  .myCol3 { &#13;
-    width:22%; &#13;
-  	font-size: 10px;&#13;
-  }&#13;
-  .myCol4 { width:0% }&#13;
+        <css>mark {
+  background:#ff0;
+  padding:.2em;
+}
+
+h2.panel-title {
+	color: #ffffff;
+  	/* text-shadow: 3px 3px 5px #000000; */
+}
+
+.panel-body {
+  padding:0px 0px 0px 0px;
+}
+
+$brand-custom:#78A6CC;
+
+.panel-custom  {
+	background-color: $brand-custom;
+}
+
+.panel-primary  {
+	background-color: $brand-primary;
+}
+
+.panel-info {
+  background-color: $brand-info;
+}
+
+.panel-success {
+  background-color: $brand-success;
+}
+
+.panel-warning {
+  background-color: $brand-warning;
+}
+
+.panel-danger {
+  background-color: $brand-danger;
+}
+
+.myShadow {
+-webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+-moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+}
+
+/* ********** */
+/* Pagination */
+a.mybtn {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+/* ************ */
+/* DivTable  */
+.myDivTable{ 
+  display:table; 
+  width: 100%;
+  table-layout: fixed;
+  font-size: 12px;
+}
+.myDivTableRow { display:table-row; }
+.myDivTableHeading { display:table-header-group;}
+.myDivTableCell, .myDivTableHead { display:table-cell;}
+.myDivTableHeading { display:table-header-group;}
+.myDivTableFoot { display:table-footer-group;}
+.myDivTableBody { display:table-row-group;}
+
+div.myGreyGridTable {
+  width:100%;
+  text-align:left;
+  border-collapse:collapse;
+}
+
+/* myDivTableHeading */
+.myDivTable.myGreyGridTable .myDivTableHeading {
+  background:#eeeeee;
+}
+
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+  .myDivTableHead {
+    font-size:10px;
+  	font-weight:bold;
+  	color:#000000;
+  	text-align:center;
+    vertical-align: middle;
+  	padding:1px 1px 1px 4px;
+    border-right:1px solid #bbbbbb;
+  	border-bottom:1px solid #000000;    
+    word-wrap: break-word;    
+  }
+}
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow   {
+  .myDivTableHead.myLeft { text-align:left; }
+}
+
+/* myDivTableBody */
+.myDivTable.myGreyGridTable .myDivTableBody {
+	a.myDivTableRow {
+    color:#000000;
+  	width:100%;
+  	height:100%; 
+    border-bottom:1px solid #aaaaaa;
+	}
+}
+
+.myDivTable.myGreyGridTable .myDivTableBody {
+  a.myDivTableRow:hover { 
+    color: #1565C0;
+	  text-decoration:underline;
+    font-weight: bold;
+    background-color:#e6e8ea; 
+  }
+}
+
+.myDivTable.myGreyGridTable .myDivTableBody {
+	.myDivTableRow:nth-child(odd) { background: #ffffff; }
+	.myDivTableRow:nth-child(even) { background: #f5f5f5; }
+}
+.myDivTable.myGreyGridTable .myDivTableBody
+{
+	.myDivTableRow:last-child { border-bottom-style:none;  }
+}
+.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+  .myDivTableCell  {
+      border-right:1px solid #bbbbbb; 
+      padding:1px 4px;
+  }
+}
+.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+  .myDivTableCell.myCtr { text-align:center; }
+}
+
+.myColSpanAll { 
+  display:table;
+  width:100%;
+	background: #EEEEEE;
+  color: #444444;
+}
+
+/* Foot Style */
+.myGreyGridTable .myTableFootStyle {
+  font-weight:bold;
+  color:#333333;
+  border-top:1px solid #333333;
+}
+
+// Above Medium devices (tablets, 768px and up)
+@media (min-width: 768.01px) 
+{
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefLgOnlyShow { display:table-cell; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefMedUpShow { display:table-cell; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableCell.myDefMedOnlyShow { display:none; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead:nth-last-child(1) { border-right-style:none; }
+  } 
+  
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefLgOnlyShow { display:table-cell; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefMeUpShow { display:table-cell; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefMedOnlyShow { display:none; }
+  }
+  
+  .myCol1 { width:46% }
+  .myCol2 { width:10% }
+  .myCol3 { width:14% }
+  .myCol4 { 
+    width:18%;
+  	font-size: 10px;
+  } 
+  
+}
+
+// Medium devices (tablets, 768px and less)
+@media (max-width: 768px) { 
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefLgOnlyShow { display:none; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefMedUpShow { display:table-cell; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead.myDefMedOnlyShow { display:table-cell; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead:nth-last-child(1) { border-right-style:none; }
+  }    
+  
+ .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell.myDefLgOnlyShow { display:none; }
+  }   
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefMedUpShow { display:table-cell; }
+  }    
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell.myDefMedOnlyShow { display:table-cell; }
+  }     
+  
+  .myCol1 { width:48% }
+  .myCol2 { width:10% }
+  .myCol3 { width:12% }
+  .myCol4 { 
+    width:14%;
+  	font-size: 10px;
+  } 
+}
+
+// Small devices (landscape phones, 576px and less)
+@media (max-width: 576px) { 
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefLgOnlyShow { display:none; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefMedUpShow { display:none; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead.myDefMedOnlyShow { display:none; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead:nth-last-child(2) { border-right-style:none; }
+  }   
+  
+ .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell.myDefLgOnlyShow { display:none; }
+  }   
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefMedUpShow { display:none; }
+  }    
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell.myDefMedOnlyShow {display:none; }
+  }   
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell:nth-last-child(2) { border-right-style:none; }
+  }  
+  .myCol1 { width:66% }
+  .myCol2 { width:22% }
+  .myCol3 { 
+    width:22%; 
+  	font-size: 10px;
+  }
+  .myCol4 { width:0% }
+}
+
+.myTtip {
+  position: relative;
+  display: inline-block;
+  width:100%;
+}
+.myTtip .myTtiptext {
+  visibility: hidden;
+  width: 350px;
+  background-color: #fff;
+  color: #999;
+  text-align: left;
+  font-size:11px;
+  text-shadow:none;
+  border-radius: 6px;
+  padding: 5px 0;
+  border: 1px solid #999;
+  padding:10px 0px 10px 10px;
+
+  /* Position the tooltip */
+  top:-55px;
+  left:-10px;
+  position: absolute;
+  z-index: 1;
+}	
+.myTtip:hover .myTtiptext {
+  visibility: visible;
+}
+.myTtipUL {
+  list-style-type: disc;
+  margin-bottom: 0px;
+  padding-inline-start: 20px;
+}
+
+.mySearchDisplayHover {
+    &amp;:hover {
+      background-color: lighten($brand-custom, 20%);
+      cursor: pointer;
+      h2.panel-title {
+        text-shadow: 2px 2px 5px #000000;
+      }
+    }  
+}
+
+.myMarginBottom10px {
+   margin-bottom:10px;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
         <docs/>
-        <field_list>color</field_list>
+        <field_list/>
         <has_preview>false</has_preview>
         <id>utassp01_kb_category_page_widget</id>
         <internal>false</internal>
         <link/>
         <name>UTASSP KB Category Page  Widget</name>
-        <option_schema>[&#13;
-  {&#13;
-    "name": "knowledge_base",&#13;
-    "label": "Knowledge Base",&#13;
-    "type": "choice",&#13;
-    "choices": [&#13;
-      {&#13;
-        "label": "Business Affairs Internal",&#13;
-        "value": "Business Affairs Internal"&#13;
-      },&#13;
-      {&#13;
-        "label": "Business Affairs Knowledge Base",&#13;
-        "value": "Business Affairs Knowledge Base"&#13;
-      },&#13;
-      {&#13;
-        "label": "OIT Internal",&#13;
-        "value": "OIT Internal"&#13;
-      },&#13;
-      {&#13;
-        "label": "OIT Knowledge Base",&#13;
-        "value": "OIT Knowledge Base"&#13;
-      }&#13;
-    ]&#13;
-  },&#13;
-  {&#13;
-    "hint": "Maximum number of elements that are shown",&#13;
-    "name": "maxitems",&#13;
-    "default_value": "20",&#13;
-    "label": "Max number of elements shown in the list (only positive numbers &gt; 0, 20 otherwise)",&#13;
-    "type": "integer"&#13;
-  }&#13;
+        <option_schema>[
+  {
+    "name": "color",
+    "label": "Color",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Default",
+        "value": "default"
+      },
+      {
+        "label": "Custom",
+        "value": "custom"
+      },
+      {
+        "label": "Primary",
+        "value": "primary"
+      },
+      {
+        "label": "Success",
+        "value": "success"
+      },
+      {
+        "label": "Info",
+        "value": "info"
+      },
+      {
+        "label": "Warning",
+        "value": "warning"
+      },
+      {
+        "label": "Danger",
+        "value": "danger"
+      }
+    ]
+  },
+  {
+    "name": "knowledge_base",
+    "label": "Knowledge Base",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Business Affairs Internal",
+        "value": "Business Affairs Internal"
+      },
+      {
+        "label": "Business Affairs Knowledge Base",
+        "value": "Business Affairs Knowledge Base"
+      },
+      {
+        "label": "OIT Internal",
+        "value": "OIT Internal"
+      },
+      {
+        "label": "OIT Knowledge Base",
+        "value": "OIT Knowledge Base"
+      }
+    ]
+  },
+  {
+    "hint": "Maximum number of elements that are shown",
+    "name": "maxitems",
+    "default_value": "20",
+    "label": "Max number of elements shown in the list (only positive numbers &gt; 0, 20 otherwise)",
+    "type": "integer"
+  }
 ]</option_schema>
         <public>false</public>
         <roles/>
         <script><![CDATA[(function ($sp, input, data, options, gs) {
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =  'utassp01_kb_category_page_widget > '+ $sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
 	}
 	// *** End: Debug only code *** //
 	//
@@ -376,10 +480,20 @@ div.myGreyGridTable {&#13;
 	// populate the 'data' variable
 	if (typeof data.articles == typeof myUndefined) { data.articles = []; } 
 	if (typeof data.title == typeof myUndefined) { data.title = {}; }
-
-	var myUtassp = new u_utassp();
+	if (typeof data.kbname == typeof myUndefined) {
+		if (typeof input != typeof myUndefined) {
+			if (typeof input.kbname != typeof myUndefined) {
+				data.kbname = input.kbname;	
+			} else {
+				data.kbname='';
+			}
+		} else {
+				data.kbname='';		
+		}		
+	}
+	
 	var myCategoryId = '';
-	var myTitle = 'Articles (all)...';
+	var myTitle = 'Articles: #kbname (all categories)';
 	data.articles = [];
 	var myMaxItems = options.maxitems;
 	myMaxItems = myMaxItems>0 ? myMaxItems : 20; 
@@ -433,8 +547,12 @@ div.myGreyGridTable {&#13;
 	data.isSearch=false;
 	if (isData) {
 		myCategoryId=input.categoryId;
-		var l_title = myUtassp.getKbCategoryTreeTitle(myCategoryId);
+		var l_title = myU.getKbCategoryTreeTitle(myCategoryId);
 		if (l_title != '') { myTitle = l_title; }
+		if (myU.utilIsValueValid(data.kbname))
+		{
+			myTitle = myTitle.replace('#kbname',data.kbname);
+		}
 	} else if (isPage) {
 		myTitle = input.title;
 		myCategoryId=input.categoryId;
@@ -467,7 +585,9 @@ div.myGreyGridTable {&#13;
 		//
 		if (l_KbBase.length > 0)
 		{
-			l_uData = myUtassp.getKbBaseSysId(l_KbBase);
+			data.kbname = l_KbBase;
+			myTitle = myTitle.replace('#kbname',l_KbBase);
+			l_uData = myU.getKbBaseSysId(l_KbBase);
 			if (l_uData.uCanRead) {
 				myCategoryId = l_uData.uKbBaseSysId;		
 			}
@@ -481,7 +601,7 @@ div.myGreyGridTable {&#13;
 		if (isSearch) {
 			data.isSearch=true;
 			var mySearch = input.q;			
-			myData = myUtassp.getKbCategorySearchArticles(data.categoryId,mySearch,myFirstRow,myLastRow);
+			myData = myU.getKbCategorySearchArticles(data.categoryId,mySearch,myFirstRow,myLastRow);
 			var mySearchWordList = mySearch.split(' ');
 			for (var x=0,Lx=mySearchWordList.length;x<Lx;x++) 
 			{
@@ -491,13 +611,13 @@ div.myGreyGridTable {&#13;
 					var myResult = myData.articles[y].short_description.match(myRegEx);
 					if (myResult) {
 						for (var z=0,Lz=myResult.length;z<Lz;z++) {
-							myData.articles[y].short_description=myData.articles[y].short_description.replace(myResult[z],'<mark>'+myResult[z]+'</mark>');
+								myData.articles[y].short_description=myData.articles[y].short_description.replace(myResult[z],'<mark>'+myResult[z]+'</mark>');
 						}
 					}	
 				}				
 			}
 		} else {
-			myData = myUtassp.getKbCategoryArticles(data.categoryId,myFirstRow,myLastRow);						
+			myData = myU.getKbCategoryArticles(data.categoryId,myFirstRow,myLastRow);						
 		}
 		var myArticles = myData.articles;
 		var myRowCount = myData.rowCount;
@@ -515,7 +635,7 @@ div.myGreyGridTable {&#13;
         <sys_created_on>2018-11-07 20:08:59</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>facabc834fa12300f006121f9310c7c6</sys_id>
-        <sys_mod_count>20</sys_mod_count>
+        <sys_mod_count>92</sys_mod_count>
         <sys_name>UTASSP KB Category Page  Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -523,32 +643,43 @@ div.myGreyGridTable {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_facabc834fa12300f006121f9310c7c6</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:42:35</sys_updated_on>
+        <sys_updated_on>2019-03-03 17:12:22</sys_updated_on>
         <template><![CDATA[<div>
   <div class="panel panel-{{::options.color}} b myShadow"  dummy="{{::c.myLog()}}">
-    <div class="panel-heading">
-      <div style="margin-bottom:10px;">
-        <h2 class="panel-title">{{data.title}}</h2>
-      </div>
-      <div id="searchInput" class="input-group input-group-sm mb-3">
-            <input 
-            	class="form-control" 
-              type="text"
-              placeholder="Search selected articles below..." aria-label="Search selected articles" aria-describedby="basic-addon1">       
-            <span class="input-group-btn">
-              <button 
-                 name="search" 
-                 type="submit" class="btn btn-outline-secondary"
-                 title="Search"
-                 aria-label="Search"
-                 ng-click="artSearch($event)">
-	              <i class="fa fa-search"></i>
-              </button>
-            </span>	        
-      </div>
-      <div id="searchText" class="ng-hide">
-       	<h2 class="panel-title">Search: {{data.q}}</h2>
-      </div>
+    <div class="panel-heading" ng-class="{ mySearchDisplayHover:c.isSearchDisplay }">
+      <div id="panelHeadingGroup" class="myTtip" >
+        <div ng-show="c.isSearchDisplay" class="ng-hide myTtiptext">
+          <ul class="myTtipUL">
+            <li>Click here to reset search</li>
+          </ul>
+        </div>              
+        <div ng-class="{ myMarginBottom10px:c.isSearchInput }">
+          <h2 class="h4 panel-title">{{data.title}}</h2>
+        </div>
+        <div id="searchInput" class="input-group input-group-sm mb-3" ng-show="c.isSearchInput">
+              <input 
+                  class="form-control" 
+                  type="text"
+                  placeholder="Search selected articles below..." 
+                  aria-label="Search selected articles" 
+                  aria-describedby="basic-addon1"
+                  ng-keypress="crCatchArtSearch($event)";
+              >       
+              <span class="input-group-btn">
+                <button 
+                   name="search" 
+                   type="submit" class="btn btn-outline-secondary"
+                   title="Search"
+                   aria-label="Search"
+                   ng-click="artSearch($event)">
+                    <i class="fa fa-search"></i>
+                </button>
+              </span>	        
+        </div>
+        <div id="searchText" ng-show="c.isSearchDisplay" class="ng-hide">
+          <h2 class="panel-title">Search: {{data.q}}</h2>
+        </div>
+      </div>      
     </div>
     <div class="panel-body">
       <div ng-if="(data.articles.length > 0)">

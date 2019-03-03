@@ -3,14 +3,17 @@
         <category>custom</category>
         <client_script><![CDATA[function ($scope, spUtil, $sce, $rootScope, $timeout, u_cutassp) 
 {
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
-	var c=this;
+	/* widget controller */
+	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
@@ -69,78 +72,78 @@
 		
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>span.text-muted.ng-binding {&#13;
-  padding-left: 10px;&#13;
-}&#13;
-&#13;
-span.text-muted {&#13;
-  color: #000000;&#13;
-  font-size: 13px;&#13;
-}&#13;
-&#13;
-&#13;
-p {&#13;
-    margin: 0 0 5px 10px;&#13;
-    color: #000000;&#13;
-    font-size: 12px;&#13;
-}&#13;
-&#13;
-div.myContainer {&#13;
-	div.panel-body:nth-child(odd)  { background: #fff; }  &#13;
-	div.panel-body:nth-child(even) { background: #eee; }    &#13;
-}&#13;
-&#13;
-div.panel-body {&#13;
-	padding:1px 1px 1px 10px;&#13;
-}&#13;
-&#13;
-a:hover {&#13;
-   font-weight:bold;&#13;
-   color:#ffffff;&#13;
-   background:#428bca;;&#13;
-}&#13;
-&#13;
-a.m-b-sm {&#13;
-  margin:2px 0px 2px 0px !important;&#13;
-  border-bottom:1px solid #428bca;&#13;
-}&#13;
-&#13;
-i.fa {&#13;
-  color:#428bca;&#13;
-  font-size: 14px;&#13;
-}&#13;
-&#13;
-a.h4 {&#13;
- font-weight:bold;  &#13;
- color:#428bca;&#13;
- font-size: 14px;&#13;
- &amp;:hover {&#13;
-   font-weight:bold;&#13;
-   color:#ffffff;&#13;
-   background:#428bca;&#13;
-   i.fa {&#13;
-      color:#ffffff;&#13;
-      font-size: 14px;&#13;
-  	} &#13;
- }&#13;
-} &#13;
-&#13;
-a.question-tag {&#13;
-    color: #39739d;&#13;
-    background-color: #e1ecf4;&#13;
-    border: 1px solid #e1ecf4;&#13;
-    display: inline-block;&#13;
-    margin: 4px 4px 4px 0;&#13;
-    border-radius: 0;&#13;
-    text-align: center;&#13;
-    line-height: 1;&#13;
-    padding: .4em .5em;&#13;
-}&#13;
-&#13;
-.panel-primary &gt; .panel-footer {&#13;
-    color: #fff;&#13;
-    background-color: #428bca;&#13;
-    border-color: #428bca;&#13;
+        <css>span.text-muted.ng-binding {
+  padding-left: 10px;
+}
+
+span.text-muted {
+  color: #000000;
+  font-size: 13px;
+}
+
+
+p {
+    margin: 0 0 5px 10px;
+    color: #000000;
+    font-size: 12px;
+}
+
+div.myContainer {
+	div.panel-body:nth-child(odd)  { background: #fff; }  
+	div.panel-body:nth-child(even) { background: #eee; }    
+}
+
+div.panel-body {
+	padding:1px 1px 1px 10px;
+}
+
+a:hover {
+   font-weight:bold;
+   color:#ffffff;
+   background:#428bca;;
+}
+
+a.m-b-sm {
+  margin:2px 0px 2px 0px !important;
+  border-bottom:1px solid #428bca;
+}
+
+i.fa {
+  color:#428bca;
+  font-size: 14px;
+}
+
+a.h4 {
+ font-weight:bold;  
+ color:#428bca;
+ font-size: 14px;
+ &amp;:hover {
+   font-weight:bold;
+   color:#ffffff;
+   background:#428bca;
+   i.fa {
+      color:#ffffff;
+      font-size: 14px;
+  	} 
+ }
+} 
+
+a.question-tag {
+    color: #39739d;
+    background-color: #e1ecf4;
+    border: 1px solid #e1ecf4;
+    display: inline-block;
+    margin: 4px 4px 4px 0;
+    border-radius: 0;
+    text-align: center;
+    line-height: 1;
+    padding: .4em .5em;
+}
+
+.panel-primary &gt; .panel-footer {
+    color: #fff;
+    background-color: #428bca;
+    border-color: #428bca;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -160,15 +163,11 @@ a.question-tag {&#13;
         <roles/>
         <script><![CDATA[(function ($sp, input, data, options, gs) {
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =  'utassp07_search_page_widget > '+$sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
 	}
 	// *** End: Debug only code *** //
 	//
@@ -472,7 +471,7 @@ a.question-tag {&#13;
         <sys_created_on>2018-11-29 18:30:55</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>b457310a4f822300f006121f9310c771</sys_id>
-        <sys_mod_count>32</sys_mod_count>
+        <sys_mod_count>33</sys_mod_count>
         <sys_name>UTASSP Search Page Widget 7</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -480,7 +479,7 @@ a.question-tag {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_b457310a4f822300f006121f9310c771</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:57:01</sys_updated_on>
+        <sys_updated_on>2019-03-03 17:14:16</sys_updated_on>
         <template><![CDATA[<div>
   <div class="panel panel-primary" dummy="{{::c.myLog()}}">
     

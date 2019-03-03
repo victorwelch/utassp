@@ -3,18 +3,22 @@
         <category>custom</category>
         <client_script><![CDATA[function ($scope, spUtil, $sce, $rootScope, $timeout, u_cutassp) 
 {
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
-	var c=this;
+	/* widget controller */
+	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
 	//
+
 	spUtil.setSearchPage($scope.data.t);
 	$scope.showScore = $scope.options.show_score == 'true' || $scope.options.show_score == true;
 	
@@ -468,7 +472,7 @@ a.question-tag {
         <sys_created_on>2019-02-06 21:51:26</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>03eaf154dba76f40e3ad22d405961921</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>UTASSP KB Search Page Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -476,7 +480,7 @@ a.question-tag {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_03eaf154dba76f40e3ad22d405961921</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-06 21:58:59</sys_updated_on>
+        <sys_updated_on>2019-03-03 16:40:32</sys_updated_on>
         <template><![CDATA[<div>
   <div class="panel panel-primary" dummy="{{::c.myLog()}}">
     

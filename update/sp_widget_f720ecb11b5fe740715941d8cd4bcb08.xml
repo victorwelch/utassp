@@ -2,19 +2,21 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[function($scope, u_cutassp) { 
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
-	/* widget controller */  
+	/* widget controller */
 	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
-	//	
+	//
 }]]></client_script>
         <controller_as>c</controller_as>
         <css>div.iconlink {
@@ -190,15 +192,11 @@ a.color_box .image-container {
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =  'utassp01_image_link_widget > '+ $sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
 	}
 	// *** End: Debug only code *** //
 	//
@@ -214,7 +212,7 @@ a.color_box .image-container {
         <sys_created_on>2019-01-29 20:50:11</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>f720ecb11b5fe740715941d8cd4bcb08</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>UTASSP Simple Image Link Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -222,7 +220,7 @@ a.color_box .image-container {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_f720ecb11b5fe740715941d8cd4bcb08</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-29 21:14:25</sys_updated_on>
+        <sys_updated_on>2019-03-03 17:11:49</sys_updated_on>
         <template><![CDATA[<div class="iconlink" dummy="{{::c.myLog()}}">
   <!--// Color Box -->
   <a ng-href="{{::data.href}}" class="color_box {{::options.class_name}} icon-link-background-white myShadow" target="{{::data.target}}">

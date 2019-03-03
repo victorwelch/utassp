@@ -10,7 +10,7 @@
         <delivery_plan display_value="DEFAULT">523da512c611228900811a37c97c2014</delivery_plan>
         <delivery_plan_script/>
         <delivery_time>1970-01-03 00:00:00</delivery_time>
-        <description><![CDATA[<div>Thank you for contacting the service desk. Please describe the nature of your problem in the fields below. Upon receipt, the service desk will categorize and prioritize your problem at which time you will receive an automated email with the details of that update.</div>
+        <description><![CDATA[<div>Thank you for contacting the service desk. Please describe the nature of your&nbsp;request&nbsp;in the fields below. Upon receipt, the service desk will categorize and prioritize your&nbsp;request&nbsp;at which time you will receive an automated email with the details of that update.</div>
 <p>&nbsp;</p>]]></description>
         <entitlement_script/>
         <group/>
@@ -64,7 +64,7 @@ if(getRecordProducerData.get('bd6b64f91b5fe740715941d8cd4bcb9b')) //itself
         <sys_created_on>2019-01-29 21:39:13</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>bd6b64f91b5fe740715941d8cd4bcb9b</sys_id>
-        <sys_mod_count>10</sys_mod_count>
+        <sys_mod_count>11</sys_mod_count>
         <sys_name>UTASSP: Request Something</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -72,7 +72,7 @@ if(getRecordProducerData.get('bd6b64f91b5fe740715941d8cd4bcb9b')) //itself
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sc_cat_item_producer_bd6b64f91b5fe740715941d8cd4bcb9b</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-21 18:10:20</sys_updated_on>
+        <sys_updated_on>2019-02-25 20:11:07</sys_updated_on>
         <table_name>sc_request</table_name>
         <template display_value="">fd6b68f91b5fe740715941d8cd4bcb70</template>
         <type>item</type>

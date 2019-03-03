@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[function($scope,$rootScope,$timeout,$location,$window,spUtil,u_cutassp) {
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+        <client_script><![CDATA[function($scope,$rootScope,$timeout,$location,$window,$document,$sce,spUtil,u_cutassp) {
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
 	/* widget controller */
@@ -11,28 +11,28 @@
 
 	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
 	//
 	var paramList = $location.search();
-	var isHomePage = false;
+	c.isHomePage = false;
 	if (u_cutassp.utilIsValueValid(paramList.id)) {
 		if (paramList.id.toString().indexOf('index')>-1) {
-			isHomePage = true;
+			c.isHomePage = true;
 		}		
 	}
 	else {
-		isHomePage = true;
+		c.isHomePage = true;
 	}
 	var isHeaderMenu = u_cutassp.utilIsValueValid(paramList.ishdrmenu);
 	var isRootScopeBc = u_cutassp.utilIsValueValid($rootScope.bc);
 	var iLen=0;	
 	var bcitem = {label: $scope.page.title, url: window.location.search, level: 1};
 	//
-	if (isHomePage)
+	if (c.isHomePage)
 	{
 		//We are at the home page, so just reset root breadcrumb stack
 		$rootScope.bc = [];
@@ -90,13 +90,42 @@
 			if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
 				console.log($scope.data.infotag+(new Date()).getTime()); 
 			}
- 			$rootScope.bc=$scope.data.breadcrumbs;
+			$rootScope.bc=$scope.data.breadcrumbs;
 			c.breadcrumbs=$scope.data.breadcrumbs;
 		});		
 		//		
 	}
+	//
+	// Insert Google Analytics script source url tag
+	var trustedSrc = $sce.trustAsResourceUrl(c.data.uSettings.gaUaSrcUrl);
+	var scriptElement = document.createElement('script');
+	scriptElement.setAttribute("src", trustedSrc);	
+	var headElement = $document.find('head').first();
+	headElement.append(scriptElement);	
+	//
+	// Watch for content loaded, then info to google Analytics
+	c.viewContentLoadedEventCtr = -1;
+	$scope.$watch('$viewContentLoaded', function(newValue, oldValue, scope)
+    {
+		if (u_cutassp.utilIsValueValidAndTrue(scope.c.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+' : '+'$viewContentLoaded count: '+scope.c.viewContentLoadedEventCtr);
+		}		
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		if (scope.c.viewContentLoadedEventCtr<0) {
+			if (u_cutassp.utilIsValueValidAndTrue(scope.c.data.uSettings.isDebugOn)) {
+				console.log((new Date()).getTime()+' : '+'$viewContentLoaded UA Tag: '+scope.c.data.uSettings.gaUaTag);
+			}		
+			gtag('js', new Date());
+			gtag('config', scope.c.data.uSettings.gaUaTag);		
+		}
+		scope.c.viewContentLoadedEventCtr++;
+    });		
+	
 	// *** Inherited code from base breadcrumbs widget
 	//
+	
+	
 	var deregister = $rootScope.$on("sp.update.breadcrumbs", function(e, list) {
 		c.breadcrumbs = list;
 	});
@@ -136,7 +165,7 @@ margin-top: 10px;
         <id>utassp03_breadcrumbs_std_widget</id>
         <internal>false</internal>
         <link/>
-        <name>UTASSP Breadcrumbs Std Widget 3 </name>
+        <name>UASSP Breadcrumbs Std Widget 3</name>
         <option_schema/>
         <public>true</public>
         <roles/>
@@ -145,21 +174,17 @@ margin-top: 10px;
 	data.isSecondTime = false;
 	if (myU.utilIsValueValid(input)) {
 		data.isSecondTime = true;
+		gs.info('2nd Time!!!');
 	} 
+	data.uSettings=myU.utilGetInstanceSettings();	
+	data.infotag = '';
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn))
 	{
-		data.widgettitle = 'utassp03_breadcrumbs_std_widget > '+$sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle;
 		if (data.isSecondTime) {
-			gs.info(data.infotag+' Server 2nd Time: '+(new Date()).getTime());	
-			data.infotag = data.infotag+' 2nd Time: ';
+			data.infotag = myU.utilLog($sp,'','2nd Time');
 		} else {
-			data.infotag +=': ';
-			gs.info(data.infotag +(new Date()).getTime());					
+			data.infotag = myU.utilLog($sp);
 		}
 	}
 	// *** End: Debug only code *** //	
@@ -207,16 +232,6 @@ margin-top: 10px;
 							data.breadcrumbs[idx].label = myScLabel;
 						}						
 						break;		
-// 					case myIsPageIdList.report_incident:
-// 						// Lost $rootScope, so insert prior breadcrumb
-// 						var myBcItem = {
-// 								label: "Select Affected Service", 
-// 								url: "?id=utassp01_select_affected_service&ishdrmenu=1&level=1", 
-// 								level: 1
-// 							};		
-// 						data.breadcrumbs[0].level=2;
-// 						data.breadcrumbs.splice(0,0,myBcItem);
-// 						break;
 				}
 			}
 			// /* Check for back-nav 
@@ -240,20 +255,19 @@ margin-top: 10px;
         <sys_created_on>2019-01-11 21:50:02</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>7841048cdb432b00e3ad22d40596190c</sys_id>
-        <sys_mod_count>62</sys_mod_count>
-        <sys_name>UTASSP Breadcrumbs Std Widget 3 </sys_name>
+        <sys_mod_count>129</sys_mod_count>
+        <sys_name>UASSP Breadcrumbs Std Widget 3</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_7841048cdb432b00e3ad22d40596190c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-19 14:37:24</sys_updated_on>
-        <template><![CDATA[<div class="myDivDisplayFlexToggle myDivFlexWrap"  dummy="{{c.myLog()}}">
+        <sys_updated_on>2019-03-03 19:04:55</sys_updated_on>
+        <template><![CDATA[<div ng-hide="c.isHomePage" class="ng-show myDivDisplayFlexToggle myDivFlexWrap"  dummy="{{::c.myLog()}}">
   <ul class="nav nav-pills nav-sm myBcFontSize myDivDisplayFlexToggle" aria-label="${Navigation breadcrumbs}">
     <li class="myDivDisplayFlexToggle"><a ng-href="?id={{::portal.homepage_dv}}">${Home}</a></li>
     <li aria-hidden="true" class="myDivDisplayFlexToggle"><i class="fa fa-chevron-right"></i></li>
-    <li ng-if="!c.breadcrumbs" class="myDivDisplayFlexToggle"><a href>{{::c.myLabel(page.title)}}</a></li>
     <li ng-repeat-start="item in c.breadcrumbs" class="myDivDisplayFlexToggle">
       <a ng-href="{{item.url}}&level={{item.level}}">{{::c.myLabel(item.label)}}</a> 
     </li>

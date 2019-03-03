@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description/>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_287765_utassp.utassp_instance_settings</name>
+        <read_roles/>
+        <suffix>utassp_instance_settings</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-03-01 18:42:41</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>d20c2367dbfbef80e3ad22d405961954</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>x_287765_utassp.utassp_instance_settings</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sys_properties_d20c2367dbfbef80e3ad22d405961954</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-03-01 22:09:13</sys_updated_on>
+        <type>string</type>
+        <value>{
+	"utadev":  {
+		"isDebugOn": true,
+		"gaUaSrcUrl": "https://www.googletagmanager.com/gtag/js?id=UA-135382660-1",
+		"gaUaTag": "UA-135382660-1"
+	},
+	"utatest": {
+		"isDebugOn": false,
+		"gaUaSrcUrl": "https://www.googletagmanager.com/gtag/js?id=UA-135382660-2",
+		"gaUaTag": "UA-135382660-2"
+	},
+	"uta": {
+		"isDebugOn": false,
+		"gaUaSrcUrl": "https://www.googletagmanager.com/gtag/js?id=UA-135382660-3",
+		"gaUaTag": "UA-135382660-3"
+	}
+}
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=d20c2367dbfbef80e3ad22d405961954"/>
+</record_update>

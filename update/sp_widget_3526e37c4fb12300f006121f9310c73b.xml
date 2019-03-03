@@ -2,22 +2,29 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[function ($scope, $rootScope, $element, spUtil, $window, $timeout, u_cutassp) {
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
 	/* widget controller */
 	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
 	//	
 	
 	//*** Save location object
-	//debugger;
+	if (!$rootScope.isKbCatShow)
+	{
+		var myRowDiv=$element.closest('div.sp-row-content');
+		var myRow=myRowDiv.parent();
+		myRow.hide();
+	}
 	
 	//*** Span Mouse Over
 	$scope.mySpanMouseOver = function(e) 
@@ -107,7 +114,7 @@
 		}
 		mySpanEl.removeClass('mySpanTriHov');
 		mySpanEl.removeClass('mySpanTriZHov');		
-	  myRow.removeClass('myRowHover')		
+		myRow.removeClass('myRowHover');		
 
 		// Cleanup All 
 		var myRoot=$(myEl).closest('.myDivTableBody');
@@ -117,7 +124,7 @@
 		//Select catid stuff
 		myRow.addClass('myDivTableRowSelected');  //Select current row
 		if (isSpanZ) {
-				mySpanEl.addClass('mySpanTriZSelected'); //Selected current "Zero" span				
+			mySpanEl.addClass('mySpanTriZSelected'); //Selected current "Zero" span				
 		}		
 		var mySelectionId = myRow.attr('thisid'); //Now we've got our catid
 		var obj = { selectionId: mySelectionId };
@@ -191,461 +198,535 @@
 						
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>a {&#13;
-  color:#3a3f51;&#13;
-}&#13;
-&#13;
-li &gt; a {&#13;
-  font-size:11px;&#13;
-  display: block;&#13;
-  width: 100%;&#13;
-  height: 100%; &#13;
-  &amp;:hover {&#13;
-    //color:#428bca;&#13;
-    //text-decoration: underline;&#13;
-    //font-weight: bold;&#13;
-  }&#13;
-}&#13;
-&#13;
-.list-group {&#13;
-  border-style:none;&#13;
-}&#13;
-&#13;
-ul.list-group {&#13;
-  margin-bottom: 0px;&#13;
-  padding: 0px;&#13;
-&#13;
-  li.list-group-item {&#13;
-    padding: 0px 0px;&#13;
-    border-style:none;&#13;
-    background-color: transparent;&#13;
-    border-style: none;    &#13;
-&#13;
-    span.glyphicon {&#13;
-      float: left;&#13;
-      display: inline;&#13;
-      font-size:14px;&#13;
-      margin-top:2px;&#13;
-      padding-right:5px;&#13;
-      color:#888888;&#13;
-    }    &#13;
-    span.mySpanLevel-1 { &#13;
-      padding-left: 0px; &#13;
-      &amp;:hover {&#13;
-        color:#eeeeee;&#13;
-        text-shadow: 2px 2px 3px #000000;&#13;
-      }&#13;
-    }&#13;
-    span.mySpanLevel-2 { &#13;
-      padding-left: 15px; &#13;
-      &amp;:hover {&#13;
-        color:#eeeeee;&#13;
-        text-shadow: 2px 2px 3px #000000;&#13;
-      }&#13;
-    }&#13;
-    span.mySpanLevel-3 { &#13;
-      padding-left: 30px; &#13;
-      &amp;:hover {&#13;
-        color:#eeeeee;&#13;
-        text-shadow: 2px 2px 3px #000000;&#13;
-      }&#13;
-    }&#13;
-    span.mySpanLevel-4 { &#13;
-      padding-left: 45px; &#13;
-      &amp;:hover {&#13;
-        color:#eeeeee;&#13;
-        text-shadow: 2px 2px 3px #000000;&#13;
-      }&#13;
-    }&#13;
-    span.mySpanLevel-5 { &#13;
-      padding-left: 60px; &#13;
-      &amp;:hover {&#13;
-        color:#eeeeee;&#13;
-        text-shadow: 2px 2px 3px #000000;&#13;
-      }&#13;
-    }&#13;
-    span.mySpanLevel-6 { &#13;
-      padding-left: 75px; &#13;
-      &amp;:hover {&#13;
-        color:#eeeeee;&#13;
-        text-shadow: 2px 2px 3px #000000;&#13;
-      }&#13;
-    }&#13;
-    span.mySpanLevel-7 { &#13;
-      padding-left: 90px; &#13;
-      &amp;:hover {&#13;
-        color:#eeeeee;&#13;
-        text-shadow: 2px 2px 3px #000000;&#13;
-      }&#13;
-    }&#13;
-    span.mySpanLevel-8 { &#13;
-      padding-left: 105px; &#13;
-      &amp;:hover {&#13;
-        color:#eeeeee;&#13;
-        text-shadow: 2px 2px 3px #000000;&#13;
-      }&#13;
-    }&#13;
-    span.mySpanLevel-9 { &#13;
-      padding-left: 120px; &#13;
-      &amp;:hover {&#13;
-        color:#eeeeee;&#13;
-        text-shadow: 2px 2px 3px #000000;&#13;
-      }&#13;
-    }&#13;
-    span.mySpanLevel-1z { &#13;
-      color: #ffffff;&#13;
-      padding-left: 0px; &#13;
-    }&#13;
-    span.mySpanLevel-2z { &#13;
-      color: #ffffff;&#13;
-      padding-left: 15px; &#13;
-    }&#13;
-    span.mySpanLevel-3z { &#13;
-      color: #ffffff;&#13;
-      padding-left: 30px; &#13;
-    }&#13;
-    span.mySpanLevel-4z { &#13;
-      color: #ffffff;&#13;
-      padding-left: 45px; &#13;
-    }    &#13;
-    span.mySpanLevel-5z { &#13;
-      color: #ffffff;&#13;
-      padding-left: 60px; &#13;
-    }    &#13;
-    span.mySpanLevel-6z { &#13;
-      color:  #ffffff;&#13;
-      padding-left: 75px; &#13;
-    }    &#13;
-    span.mySpanLevel-7z { &#13;
-      color: #ffffff;&#13;
-      padding-left: 90px; &#13;
-    }    &#13;
-    span.mySpanLevel-8z { &#13;
-      color: #767676;&#13;
-      padding-left: 105px; &#13;
-    }    &#13;
-    span.mySpanLevel-9z { &#13;
-      color: #ffffff;&#13;
-      padding-left: 120px; &#13;
-    }    &#13;
-    &#13;
-    a {&#13;
-      padding: 0px 5px;&#13;
-    }&#13;
-  }&#13;
-}&#13;
-&#13;
-.mySpanTriHov {color:#eeeeee !important; text-shadow:2px 2px 3px #000000;}&#13;
-.mySpanTriZHov {color:#e6e8ea !important;}&#13;
-.myRowHover {cursor: pointer; background: #e6e8ea !important;}&#13;
-.mySpanTriZSelected {color:#428bca !important;}&#13;
-&#13;
-span.label {&#13;
-  border-radius: 1em;&#13;
-  text-align: center;&#13;
-  display: inline;&#13;
-  margin-top: 4px;&#13;
-  padding-top: 1px;&#13;
-  padding-bottom: 1px;&#13;
-  padding-left: 3px;&#13;
-  padding-right: 3px;  &#13;
-  font-size:9px;  &#13;
-  font-weight:normal;&#13;
-}&#13;
-&#13;
-&#13;
-h2.panel-title {&#13;
-	color: #ffffff;&#13;
-  text-shadow: 3px 3px 5px #000000;&#13;
-}&#13;
-&#13;
-.panel-body {&#13;
-  padding:0px 0px 0px 0px;&#13;
-}&#13;
-&#13;
-div.panel-primary  {&#13;
-	background-color: $brand-primary;&#13;
-  div.panel-heading {&#13;
-    &amp;:hover {&#13;
-      background-color: lighten($brand-primary, 20%);&#13;
-      cursor: pointer;&#13;
-      h2.panel-title {&#13;
-        color: #428bca;   &#13;
-        font-weight: bold;      &#13;
-      }&#13;
-    }  &#13;
-  }    &#13;
-}&#13;
-&#13;
-div.panel-info {&#13;
-  background-color: $brand-info;&#13;
-  div.panel-heading {&#13;
-    &amp;:hover {&#13;
-      background-color: lighten($brand-info, 20%);&#13;
-      cursor: pointer;&#13;
-      h2.panel-title {&#13;
-        color: #428bca;   &#13;
-        font-weight: bold;      &#13;
-      }&#13;
-    }  &#13;
-  }  &#13;
-}&#13;
-&#13;
-div.panel-success {&#13;
-  background-color: $brand-success;&#13;
-  div.panel-heading {&#13;
-    &amp;:hover {&#13;
-      background-color: lighten($brand-success, 20%);&#13;
-      cursor: pointer;&#13;
-      h2.panel-title {&#13;
-        color: #428bca;   &#13;
-        font-weight: bold;      &#13;
-      }&#13;
-    }  &#13;
-  }   &#13;
-}&#13;
-&#13;
-div.panel-warning {&#13;
-  background-color: $brand-warning;&#13;
-  div.panel-heading {&#13;
-    &amp;:hover {&#13;
-      background-color: lighten($brand-warning, 20%);&#13;
-      cursor: pointer;&#13;
-      h2.panel-title {&#13;
-        color: #428bca;   &#13;
-        font-weight: bold;      &#13;
-      }&#13;
-    }  &#13;
-  }   &#13;
-}&#13;
-&#13;
-div.panel-danger {&#13;
-  background-color: $brand-danger;&#13;
-  div.panel-heading {&#13;
-    &amp;:hover {&#13;
-      background-color: lighten($brand-danger, 20%);&#13;
-      cursor: pointer;&#13;
-      h2.panel-title {&#13;
-        color: #428bca;   &#13;
-        font-weight: bold;      &#13;
-      }&#13;
-    }  &#13;
-  }  &#13;
-}&#13;
-&#13;
-.text-heading {&#13;
-  color: #ffffff;&#13;
-  &#13;
-  &amp;:hover {&#13;
-    color: #cccccc;&#13;
-    text-decoration: underline;&#13;
-  }&#13;
-}&#13;
-&#13;
-/* ************ */&#13;
-/* DivTable  */&#13;
-.myDivTable{ &#13;
-  display:table; &#13;
-  width: 100%;&#13;
-  table-layout: fixed;&#13;
-}&#13;
-.myDivTableRow { display:table-row; }&#13;
-.myDivTableHeading { display:table-header-group;}&#13;
-.myDivTableCell, .myDivTableHead { display:table-cell;}&#13;
-.myDivTableFoot { display:table-footer-group;}&#13;
-.myDivTableBody { display:table-row-group;}&#13;
-&#13;
-div.myGreyGridTable {&#13;
-  width:100%;&#13;
-  text-align:left;&#13;
-  border-collapse:collapse;&#13;
-}&#13;
-&#13;
-/* myDivTableHeading */&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading {&#13;
-  background:#eeeeee;&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-  border-bottom:1px solid #000000;&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-  .myDivTableHead {&#13;
-    font-size:10px;&#13;
-  	font-weight:bold;&#13;
-  	color:#000000;&#13;
-  	text-align:center;&#13;
-    vertical-align: middle;&#13;
-  	padding:1px 1px 1px 4px;&#13;
-    word-wrap: break-word;&#13;
-  }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow   {&#13;
-  .myDivTableHead.myLeft { text-align:left; }&#13;
-}&#13;
-&#13;
-/* myDivTableBody */&#13;
-.myDivTable.myGreyGridTable .myDivTableBody  {&#13;
-  .myDivTableRow.myLevel-1 { background: #fff; border-bottom:1px solid #aaaaaa; }&#13;
-  .myDivTableRow.myLevel-2 { background: #fff; border-bottom:1px solid #aaaaaa; }&#13;
-  .myDivTableRow.myLevel-3 { background: #fff; border-bottom:1px solid #aaaaaa; }&#13;
-  .myDivTableRow.myLevel-4 { background: #fff; border-bottom:1px solid #aaaaaa; }&#13;
-  .myDivTableRow.myLevel-5 { background: #fff; border-bottom:1px solid #aaaaaa; }&#13;
-  .myDivTableRow.myLevel-6 { background: #fff; border-bottom:1px solid #aaaaaa; }&#13;
-  .myDivTableRow.myLevel-7 { background: #fff; border-bottom:1px solid #aaaaaa; }&#13;
-  .myDivTableRow.myLevel-8 { background: #fff; border-bottom:1px solid #aaaaaa; }&#13;
-  .myDivTableRow.myLevel-9 { background: #fff; border-bottom:1px solid #aaaaaa; }&#13;
-&#13;
-}&#13;
-&#13;
-.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow .{&#13;
-  .myDivTableCell  {&#13;
-      border-right:1px solid #bbbbbb; &#13;
-      padding:1px 4px;&#13;
-  }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-  .myDivTableCell.myCtr { text-align:center; }&#13;
-}&#13;
-&#13;
-div.myDivTable.myGreyGridTable &gt; div.myDivTableBody &gt; div.myDivTableRow.myDivTableRowSelected  {&#13;
-    background:#428bca;&#13;
-    color:#000000;   &#13;
-  	&amp;:hover { cursor: default; }&#13;
-}&#13;
-&#13;
-div.myDivTable.myGreyGridTable &gt; div.myDivTableBody &gt; div.myDivTableRow.myDivTableRowSelected &gt; div.myDivTableCell &gt;ul.list-group &gt; li.list-group-item &gt; a {&#13;
-    color:#ffffff;   &#13;
-}&#13;
-&#13;
-div.myDivTable.myGreyGridTable &gt; div.myDivTableBody &gt; div.myDivTableRow.myDivTableRowSelected &gt; div.myDivTableCell &gt;ul.list-group &gt; li.list-group-item {&#13;
-    span.mySpanLevel-1 { &#13;
-      color:#ffffff;&#13;
-    }&#13;
-    span.mySpanLevel-2 { &#13;
-      color:#ffffff;&#13;
-    }&#13;
-    span.mySpanLevel-3 { &#13;
-      color:#ffffff;&#13;
-    }&#13;
-    span.mySpanLevel-4 { &#13;
-      color:#ffffff;&#13;
-    }&#13;
-    span.mySpanLevel-5 { &#13;
-      color:#ffffff;&#13;
-    }&#13;
-    span.mySpanLevel-6 { &#13;
-      color:#ffffff;&#13;
-    }&#13;
-    span.mySpanLevel-7 { &#13;
-      color:#ffffff;&#13;
-    }&#13;
-    span.mySpanLevel-8 { &#13;
-      color:#ffffff;&#13;
-    }&#13;
-    span.mySpanLevel-9 { &#13;
-      color:#ffffff;&#13;
-    }&#13;
-    span.mySpanLevel-1z { &#13;
-      color: #ffffff;&#13;
-    }&#13;
-    span.mySpanLevel-2z { &#13;
-      color: #ffffff;&#13;
-    }&#13;
-    span.mySpanLevel-3z { &#13;
-      color: #ffffff;&#13;
-    }&#13;
-    span.mySpanLevel-4z { &#13;
-      color: #ffffff;&#13;
-    }    &#13;
-    span.mySpanLevel-5z { &#13;
-      color: #ffffff;&#13;
-    }    &#13;
-    span.mySpanLevel-6z { &#13;
-      color:  #ffffff;&#13;
-    }    &#13;
-    span.mySpanLevel-7z { &#13;
-      color: #ffffff;&#13;
-    }    &#13;
-    span.mySpanLevel-8z { &#13;
-      color: #ffffff;&#13;
-    }    &#13;
-    span.mySpanLevel-9z { &#13;
-      color: #ffffff;&#13;
-    }  &#13;
-}&#13;
-&#13;
-.myCol1 { width:60%; border-right: 1px solid #999999; }&#13;
-.myCol2 { width:20%; border-right: 1px solid #999999; }&#13;
-.myCol3 { width:20%; border-right: 0; }&#13;
-&#13;
-/* Foot Style */&#13;
-.myGreyGridTable .myTableFootStyle {&#13;
-  font-weight:bold;&#13;
-  color:#333333;&#13;
-  border-top:1px solid #333333;&#13;
-}&#13;
-&#13;
-/* Link text */&#13;
-a.myDivTableRow {&#13;
-  color:#3a3f51;&#13;
-  &amp;:hover {&#13;
-    color:#428bca;&#13;
-    text-decoration: underline;&#13;
-  }&#13;
-}&#13;
-.myShadow {&#13;
--webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
--moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
+        <css>a {
+  color:#3a3f51;
+}
+
+li &gt; a {
+  font-size:11px;
+  display: block;
+  width: 100%;
+  height: 100%; 
+  &amp;:hover {
+    //color:#428bca;
+    //text-decoration: underline;
+    //font-weight: bold;
+  }
+}
+
+.list-group {
+  border-style:none;
+}
+
+ul.list-group {
+  margin-bottom: 0px;
+  padding: 0px;
+
+  li.list-group-item {
+    padding: 0px 0px;
+    border-style:none;
+    background-color: transparent;
+    border-style: none;    
+
+    span.glyphicon {
+      float: left;
+      display: inline;
+      font-size:14px;
+      margin-top:2px;
+      padding-right:5px;
+      color:#888888;
+    }    
+    span.mySpanLevel-1 { 
+      padding-left: 0px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-2 { 
+      padding-left: 15px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-3 { 
+      padding-left: 30px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-4 { 
+      padding-left: 45px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-5 { 
+      padding-left: 60px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-6 { 
+      padding-left: 75px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-7 { 
+      padding-left: 90px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-8 { 
+      padding-left: 105px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-9 { 
+      padding-left: 120px; 
+      &amp;:hover {
+        color:#eeeeee;
+        text-shadow: 2px 2px 3px #000000;
+      }
+    }
+    span.mySpanLevel-1z { 
+      color: #ffffff;
+      padding-left: 0px; 
+    }
+    span.mySpanLevel-2z { 
+      color: #ffffff;
+      padding-left: 15px; 
+    }
+    span.mySpanLevel-3z { 
+      color: #ffffff;
+      padding-left: 30px; 
+    }
+    span.mySpanLevel-4z { 
+      color: #ffffff;
+      padding-left: 45px; 
+    }    
+    span.mySpanLevel-5z { 
+      color: #ffffff;
+      padding-left: 60px; 
+    }    
+    span.mySpanLevel-6z { 
+      color:  #ffffff;
+      padding-left: 75px; 
+    }    
+    span.mySpanLevel-7z { 
+      color: #ffffff;
+      padding-left: 90px; 
+    }    
+    span.mySpanLevel-8z { 
+      color: #767676;
+      padding-left: 105px; 
+    }    
+    span.mySpanLevel-9z { 
+      color: #ffffff;
+      padding-left: 120px; 
+    }    
+    
+    a {
+      padding: 0px 5px;
+    }
+  }
+}
+
+.mySpanTriHov {color:#eeeeee !important; text-shadow:2px 2px 3px #000000;}
+.mySpanTriZHov {color:#e6e8ea !important;}
+.myRowHover {cursor: pointer; background: #e6e8ea !important;}
+.mySpanTriZSelected {color:#428bca !important;}
+
+span.label {
+  border-radius: 1em;
+  text-align: center;
+  display: inline;
+  margin-top: 4px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 3px;
+  padding-right: 3px;  
+  font-size:9px;  
+  font-weight:normal;
+}
+
+h2.panel-title {
+	color: #ffffff;
+}
+
+.panel-body {
+  padding:0px 0px 0px 0px;
+}
+
+/* $brand-custom:#78A6CC; */
+$brand-custom:#c2d7e8;
+
+.panel-custom  {
+	background-color: $brand-custom;
+  div.panel-heading {
+    &amp;:hover {
+      background-color: lighten($brand-custom, 20%);
+      cursor: pointer;
+      h2.panel-title {
+        text-shadow: 2px 2px 5px #000000;
+      }
+    }  
+  }     
+}
+
+
+div.panel-primary  {
+	background-color: $brand-primary;
+  div.panel-heading {
+    &amp;:hover {
+      background-color: lighten($brand-primary, 20%);
+      cursor: pointer;
+      h2.panel-title {
+        color: #428bca;   
+        font-weight: bold;      
+      }
+    }  
+  }    
+}
+
+div.panel-info {
+  background-color: $brand-info;
+  div.panel-heading {
+    &amp;:hover {
+      background-color: lighten($brand-info, 20%);
+      cursor: pointer;
+      h2.panel-title {
+        text-shadow: 2px 2px 5px #000000;
+      }
+    }  
+  }  
+}
+
+div.panel-success {
+  background-color: $brand-success;
+  div.panel-heading {
+    &amp;:hover {
+      background-color: lighten($brand-success, 20%);
+      cursor: pointer;
+      h2.panel-title {
+        text-shadow: 2px 2px 5px #000000;
+      }
+    }  
+  }   
+}
+
+div.panel-warning {
+  background-color: $brand-warning;
+  div.panel-heading {
+    &amp;:hover {
+      background-color: lighten($brand-warning, 20%);
+      cursor: pointer;
+      h2.panel-title {
+        text-shadow: 2px 2px 5px #000000;
+      }
+    }  
+  }   
+}
+
+div.panel-danger {
+  background-color: $brand-danger;
+  div.panel-heading {
+    &amp;:hover {
+      background-color: lighten($brand-danger, 20%);
+      cursor: pointer;
+      h2.panel-title {
+        text-shadow: 2px 2px 5px #000000;
+      }
+    }  
+  }  
+}
+
+.text-heading {
+  color: #ffffff;
+  
+  &amp;:hover {
+    color: #cccccc;
+    text-decoration: underline;
+  }
+}
+
+/* ************ */
+/* DivTable  */
+.myDivTable{ 
+  display:table; 
+  width: 100%;
+  table-layout: fixed;
+}
+.myDivTableRow { display:table-row; }
+.myDivTableHeading { display:table-header-group;}
+.myDivTableCell, .myDivTableHead { display:table-cell;}
+.myDivTableFoot { display:table-footer-group;}
+.myDivTableBody { display:table-row-group;}
+
+div.myGreyGridTable {
+  width:100%;
+  text-align:left;
+  border-collapse:collapse;
+}
+
+/* myDivTableHeading */
+.myDivTable.myGreyGridTable .myDivTableHeading {
+  background:#eeeeee;
+}
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+  border-bottom:1px solid #000000;
+}
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+  .myDivTableHead {
+    font-size:10px;
+  	font-weight:bold;
+  	color:#000000;
+  	text-align:center;
+    vertical-align: middle;
+  	padding:1px 1px 1px 4px;
+    word-wrap: break-word;
+  }
+}
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow   {
+  .myDivTableHead.myLeft { text-align:left; }
+}
+
+/* myDivTableBody */
+.myDivTable.myGreyGridTable .myDivTableBody  {
+  .myDivTableRow.myLevel-1 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-2 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-3 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-4 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-5 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-6 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-7 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-8 { background: #fff; border-bottom:1px solid #aaaaaa; }
+  .myDivTableRow.myLevel-9 { background: #fff; border-bottom:1px solid #aaaaaa; }
+
+}
+
+.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow .{
+  .myDivTableCell  {
+      border-right:1px solid #bbbbbb; 
+      padding:1px 4px;
+  }
+}
+.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+  .myDivTableCell.myCtr { text-align:center; }
+}
+
+div.myDivTable.myGreyGridTable &gt; div.myDivTableBody &gt; div.myDivTableRow.myDivTableRowSelected  {
+    background:#428bca;
+    color:#000000;   
+  	&amp;:hover { cursor: default; }
+}
+
+div.myDivTable.myGreyGridTable &gt; div.myDivTableBody &gt; div.myDivTableRow.myDivTableRowSelected &gt; div.myDivTableCell &gt;ul.list-group &gt; li.list-group-item &gt; a {
+    color:#ffffff;   
+}
+
+div.myDivTable.myGreyGridTable &gt; div.myDivTableBody &gt; div.myDivTableRow.myDivTableRowSelected &gt; div.myDivTableCell &gt;ul.list-group &gt; li.list-group-item {
+    span.mySpanLevel-1 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-2 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-3 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-4 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-5 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-6 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-7 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-8 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-9 { 
+      color:#ffffff;
+    }
+    span.mySpanLevel-1z { 
+      color: #ffffff;
+    }
+    span.mySpanLevel-2z { 
+      color: #ffffff;
+    }
+    span.mySpanLevel-3z { 
+      color: #ffffff;
+    }
+    span.mySpanLevel-4z { 
+      color: #ffffff;
+    }    
+    span.mySpanLevel-5z { 
+      color: #ffffff;
+    }    
+    span.mySpanLevel-6z { 
+      color:  #ffffff;
+    }    
+    span.mySpanLevel-7z { 
+      color: #ffffff;
+    }    
+    span.mySpanLevel-8z { 
+      color: #ffffff;
+    }    
+    span.mySpanLevel-9z { 
+      color: #ffffff;
+    }  
+}
+
+.myCol1 { width:55%; border-right: 1px solid #999999; }
+.myCol2 { width:25%; border-right: 1px solid #999999; }
+.myCol3 { width:20%; border-right: 0; }
+
+/* Foot Style */
+.myGreyGridTable .myTableFootStyle {
+  font-weight:bold;
+  color:#333333;
+  border-top:1px solid #333333;
+}
+
+/* Link text */
+a.myDivTableRow {
+  color:#3a3f51;
+  &amp;:hover {
+    color:#428bca;
+    text-decoration: underline;
+  }
+}
+.myShadow {
+-webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+-moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+}
+/* **************** */
+.myTtip {
+  position: relative;
+  display: inline-block;
+}
+.myTtip .myTtiptext {
+  visibility: hidden;
+  width: 350px;
+  background-color: #fff;
+  color: #999;
+  text-align: left;
+  font-size:11px;
+  text-shadow:none;
+  border-radius: 6px;
+  padding: 5px 0;
+  border: 1px solid #999;
+  padding:10px 0px 10px 10px;
+
+  /* Position the tooltip */
+  top:-70px;
+  left:-10px;
+  position: absolute;
+  z-index: 1;
+}	
+.myTtip:hover .myTtiptext {
+  visibility: visible;
+}
+.myTtipUL {
+  list-style-type: disc;
+  margin-bottom: 0px;
+  padding-inline-start: 20px;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
         <docs/>
-        <field_list>color</field_list>
+        <field_list/>
         <has_preview>false</has_preview>
         <id>utassp02_kb_base_widget</id>
         <internal>false</internal>
         <link/>
         <name>UTASSP KB Base2 Widget</name>
-        <option_schema>[&#13;
-  {&#13;
-    "name": "knowledge_base",&#13;
-    "label": "Knowledge Base",&#13;
-    "type": "choice",&#13;
-    "choices": [&#13;
-      {&#13;
-        "label": "Business Affairs Internal",&#13;
-        "value": "Business Affairs Internal"&#13;
-      },&#13;
-      {&#13;
-        "label": "Business Affairs Knowledge Base",&#13;
-        "value": "Business Affairs Knowledge Base"&#13;
-      },&#13;
-      {&#13;
-        "label": "OIT Internal",&#13;
-        "value": "OIT Internal"&#13;
-      },&#13;
-      {&#13;
-        "label": "OIT Knowledge Base",&#13;
-        "value": "OIT Knowledge Base"&#13;
-      }&#13;
-    ]&#13;
-  }&#13;
+        <option_schema>[
+  {
+    "name": "color",
+    "label": "Color",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Default",
+        "value": "default"
+      },
+      {
+        "label": "Custom",
+        "value": "custom"
+      },
+      {
+        "label": "Primary",
+        "value": "primary"
+      },
+      {
+        "label": "Success",
+        "value": "success"
+      },
+      {
+        "label": "Info",
+        "value": "info"
+      },
+      {
+        "label": "Warning",
+        "value": "warning"
+      },
+      {
+        "label": "Danger",
+        "value": "danger"
+      }
+    ]
+  },
+  {
+    "name": "knowledge_base",
+    "label": "Knowledge Base",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Business Affairs Internal",
+        "value": "Business Affairs Internal"
+      },
+      {
+        "label": "Business Affairs Knowledge Base",
+        "value": "Business Affairs Knowledge Base"
+      },
+      {
+        "label": "OIT Internal",
+        "value": "OIT Internal"
+      },
+      {
+        "label": "OIT Knowledge Base",
+        "value": "OIT Knowledge Base"
+      }
+    ]
+  }
 ]</option_schema>
         <public>false</public>
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =  'utassp02_kb_base_widget > '+$sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
 	}
 	// *** End: Debug only code *** //
 	//
@@ -670,7 +751,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_created_on>2018-11-13 19:07:02</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3526e37c4fb12300f006121f9310c73b</sys_id>
-        <sys_mod_count>19</sys_mod_count>
+        <sys_mod_count>41</sys_mod_count>
         <sys_name>UTASSP KB Base2 Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -678,10 +759,16 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_3526e37c4fb12300f006121f9310c73b</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:55:05</sys_updated_on>
+        <sys_updated_on>2019-03-03 17:10:33</sys_updated_on>
         <template><![CDATA[<div class="panel panel-{{::options.color}} b myShadow" dummy="{{::c.myLog()}}">
   <div class="panel-heading" ng-click="myKbSelect($event)" thisid="{{c.data.uKbBaseSysId}}">
-    <h2 class="h4 panel-title">
+    <h2 class="h4 panel-title myTtip">
+      <div  class="myTtiptext">
+        <ul class="myTtipUL">
+          <li style="margin-bottom:5px;">Select from list below to filter articles by category</li>
+          <li>Click here to reset article category/search to all</li>
+        </ul>
+      </div>      
       {{options.knowledge_base}}
     </h2>
   </div>

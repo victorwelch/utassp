@@ -2,18 +2,21 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[function($scope,$rootScope,$timeout,u_cutassp) {  
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
-	/* widget controller */  
+	/* widget controller */
 	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
+	//
 	//	
 }]]></client_script>
         <controller_as>c</controller_as>
@@ -142,15 +145,11 @@ a.kbLink &gt; div.kbCard &gt; span.kb-card-details &gt; span.kb-count {
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();	
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =   'utassp01_kb_link_widget > '+ $sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
 	}
 	// *** End: Debug only code *** //
 	//
@@ -187,7 +186,7 @@ a.kbLink &gt; div.kbCard &gt; span.kb-card-details &gt; span.kb-count {
         <sys_created_on>2018-11-07 20:14:04</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>9dfbf4434fa12300f006121f9310c73c</sys_id>
-        <sys_mod_count>25</sys_mod_count>
+        <sys_mod_count>27</sys_mod_count>
         <sys_name>UTASSP KB Link Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -195,7 +194,7 @@ a.kbLink &gt; div.kbCard &gt; span.kb-card-details &gt; span.kb-count {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_9dfbf4434fa12300f006121f9310c73c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-07 16:07:39</sys_updated_on>
+        <sys_updated_on>2019-03-03 16:40:59</sys_updated_on>
         <template><![CDATA[<div ng-if='data.canRead==true' class='myPanel' dummy="{{::c.myLog()}}">
   <a class="kbLink" ng-href="{{::data.href}}">
     <div class="kbCard kbCard-border-left-{{::options.color}}">

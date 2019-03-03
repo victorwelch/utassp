@@ -32,7 +32,7 @@ u_utassp.prototype = {
 		var myGr = new GlideRecord('kb_category');
 		var thisQuery = 'active=true^parent_id='+_pid;
         myGr.addEncodedQuery(thisQuery);
-        gs.info('getKbCategorySiblings.query: '+thisQuery);
+        //gs.info('getKbCategorySiblings.query: '+thisQuery);
 		myGr.query();
 		while (myGr.next())
 		{
@@ -98,7 +98,7 @@ u_utassp.prototype = {
             var l_thisQuery2 = 'active=true';
             l_thisQuery2 += '^parent_id='+l_id; 
             l_myGaCat.addEncodedQuery(l_thisQuery2);
-            gs.info('getKbSubCategories.query: '+l_thisQuery2);
+            //gs.info('getKbSubCategories.query: '+l_thisQuery2);
             l_myGaCat.addAggregate('COUNT');
             l_myGaCat.query();
             if (l_myGaCat.next()) {
@@ -295,7 +295,7 @@ u_utassp.prototype = {
 		thisQuery += '^workflow_state=published';
         thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';        
         myGaArt.addEncodedQuery(thisQuery);
-		gs.info('getKbCategoryArticleCount.query: '+thisQuery);        
+		//gs.info('getKbCategoryArticleCount.query: '+thisQuery);        
 		myGaArt.addAggregate('COUNT');
 		myGaArt.query();
 		if (myGaArt.next()) {
@@ -304,7 +304,7 @@ u_utassp.prototype = {
 		return myArticleCount;		
 	},
     getKbCategoryArticles: function(_pCatSysId,_pFirstRow,_LastRow) {
-		gs.info('getKbCategoryArticles: 1');
+		//gs.info('getKbCategoryArticles: 1');
 		var myUdata = {};
 		var myArticleList = [];
 		var myRowCount = 0;
@@ -359,7 +359,7 @@ u_utassp.prototype = {
         myGrArt.orderByDesc('rating');
         myGrArt.orderByDesc('published');		
         myGrArt.addEncodedQuery(thisQuery);
-        gs.info('getKbCategoryArticles.query: '+thisQuery);            
+        //gs.info('getKbCategoryArticles.query: '+thisQuery);            
         myGrArt.query();
 		myRowCount = myGrArt.getRowCount();
 		while (myGrArt.next()) {
@@ -377,7 +377,7 @@ u_utassp.prototype = {
         return myUdata;
     },
     getKbCategorySearchArticles: function(_pCatSysId,_pSearch,_pFirstRow,_LastRow) {
-		gs.info('getKbCategorySearchArticles: 1');
+		//gs.info('getKbCategorySearchArticles: 1');
 		var myUdata = {};
 		var myArticleList = [];
 		var myRowCount = 0;
@@ -435,7 +435,7 @@ u_utassp.prototype = {
 		myGrArt.orderByDesc('rating');
 		myGrArt.orderByDesc('published');		
         myGrArt.addEncodedQuery(thisQuery);
-		gs.info('getKbCategorySearchArticles.query: '+thisQuery);        
+		//gs.info('getKbCategorySearchArticles.query: '+thisQuery);        
 		
 		myGrArt.query();
 		myRowCount = myGrArt.getRowCount();
@@ -811,7 +811,7 @@ u_utassp.prototype = {
 			myKbGraQuery=myKbGraQueryTemplate.replace('#catsysid',myCatIdWithNoParent);
 			myKbGra.initialize();
 			myKbGra.addEncodedQuery(myKbGraQuery);
-			gs.info('utilKbBaseCategoriesQuery1.query: '+myKbGraQuery);			
+			//gs.info('utilKbBaseCategoriesQuery1.query: '+myKbGraQuery);			
 			myKbGra.addAggregate('COUNT');
 			myKbGra.query();
 			myEmptyCount = 0;
@@ -834,7 +834,7 @@ u_utassp.prototype = {
         }
 		myCatGr.orderBy('label');
         myCatGr.addEncodedQuery(myQ);
-        gs.info('utilKbBaseCategoriesQuery2.query: '+myQ);
+        //gs.info('utilKbBaseCategoriesQuery2.query: '+myQ);
 		myCatGr.query();
 		// ****************************************
 		//4. Return a GlideRecord with all the category_id's!
@@ -845,6 +845,35 @@ u_utassp.prototype = {
 		//
 		return myRtnObj;
 	},
+	utilGetInstanceSettings: function() {
+		var myInstance = gs.getProperty('instance_name');
+		var myAllSettingsStr = gs.getProperty('x_287765_utassp.utassp_instance_settings');
+		var myAllSettingsList = JSON.parse(myAllSettingsStr);	
+		var myInstanceSettings = myAllSettingsList[myInstance];
+		return myInstanceSettings;
+	},
+	utilLog: function(_sp,_options,_msg) {	
+		var myWidgetId = '';
+		var myWidgetName = '';
+		var myWidgetPage = this.utilIsValueValid(_sp.getParameter('id')) ? _sp.getParameter('id') : 'utassp01_index';			
+		var myTimeTag = (new Date()).getTime();
+		
+		var myGr = _sp.getInstanceRecord();
+		if (myGr != null) {
+			myWidgetId = myGr.sp_widget.getRefRecord().id;
+			myWidgetName = myGr.sp_widget.getRefRecord().name;
+		} else if (typeof _options != typeof myUndefined) {
+			if (typeof _options.id != typeof myUndefined) {
+				myWidgetName = _options.id;
+			}
+			if (typeof _options.name != typeof myUndefined) {
+				myWidgetName = _options.name;
+			}		
+		}
+		var myMsg = this.utilIsValueValid(_msg) ? ': '+_msg : '';
+		var myInfoTag = myWidgetPage+' > ' + myWidgetId + ' > ' + myWidgetName + myMsg;
+		return myInfoTag;
+	},
     type: 'u_utassp'
 };
 
@@ -854,7 +883,7 @@ u_utassp.prototype = {
         <sys_created_on>2018-10-29 15:10:11</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3edf1d4c4f212300f006121f9310c732</sys_id>
-        <sys_mod_count>107</sys_mod_count>
+        <sys_mod_count>120</sys_mod_count>
         <sys_name>u_utassp</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy>read</sys_policy>
@@ -862,6 +891,6 @@ u_utassp.prototype = {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sys_script_include_3edf1d4c4f212300f006121f9310c732</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-22 17:57:58</sys_updated_on>
+        <sys_updated_on>2019-03-03 19:10:03</sys_updated_on>
     </sys_script_include>
 </record_update>

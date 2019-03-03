@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function($scope, spUtil, u_cutassp) {	
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
+	}
+	//
+	/* widget controller */
+	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
+	c.myLog = function() {
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
+		}
+		return '';
+	};
+	//
+	//** Show/Hide 
+	function get() {
+		spUtil.update($scope);
+	}
+	
+	$scope.myShowHide = function(e) {
+		$rootScope.isKbCatShow = !$rootScope.isKbCatShow;
+		c.plusMinusSymbol = $rootScope.isKbCatShow ? 'fa fa-minus-square m-r-sm' : 'fa fa-plus-square m-r-sm';
+		
+		var myEl=e.currentTarget;
+		var myRowDiv=$(myEl).closest('div.sp-row-content');
+		var myRow=myRowDiv.parent();
+		var myWidgetRow1=myRow.next();
+		var myWidgetRow2=myWidgetRow1.next();
+		myWidgetRow1.toggle();
+		myWidgetRow2.toggle();		
+	};
+
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>$brand-custom:#78A6CC; 
+
+a &gt; div.panel-heading {
+  background-color:$brand-custom;
+  &amp;:hover { 
+    background-color: lighten($brand-custom, 20%);
+    text-shadow: 2px 2px 5px #000000;
+  }
+}
+a &gt; div.panel-heading &gt; h2.h4.panel-title {  
+  color: #ffffff;
+}
+.myShadow {
+-webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+-moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+}
+.myTtip {
+  position: relative;
+  display: inline-block;
+}
+.myTtip .myTtiptext {
+  visibility: hidden;
+  width: 250px;
+  background-color: #fff;
+  color: #999;
+  text-align: left;
+  font-size:11px;
+  text-shadow:none;
+  border-radius: 6px;
+  padding: 5px 0;
+  border: 1px solid #999;
+  padding:10px 0px 10px 10px;
+
+  /* Position the tooltip */
+  top:-50px;
+  left:-10px;
+  position: absolute;
+  z-index: 1;
+}	
+.myTtip:hover .myTtiptext {
+  visibility: visible;
+}
+.myTtipUL {
+  list-style-type: disc;
+  margin-bottom: 0px;
+  padding-inline-start: 20px;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data>{
+	"data": {
+		"sometext": "world"
+	}
+}</demo_data>
+        <description/>
+        <docs display_value="Widgets">948bab53d721120023c84f80de61034e</docs>
+        <field_list>title</field_list>
+        <has_preview>true</has_preview>
+        <id>utassp01_kb_view_categories_widget</id>
+        <internal>false</internal>
+        <link/>
+        <name>UTASSP KB View Categories Widget</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function($sp, input, data, options, gs){
+	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();
+	// *** Start: Debug only code *** //
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
+	}
+	// *** End: Debug only code *** //
+	//
+	///* populate the 'data' object */  /* e.g., data.table = $sp.getValue('table'); */
+})($sp, input, data, options, gs);]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-01-28 14:49:58</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>2d24ced5db5b6740e3ad22d405961905</sys_id>
+        <sys_mod_count>60</sys_mod_count>
+        <sys_name>UTASSP KB View Categories Widget</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_widget_2d24ced5db5b6740e3ad22d405961905</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-03-03 17:11:10</sys_updated_on>
+        <template><![CDATA[<div class="panel panel-{{::options.color}} b" dummy="{{::c.myLog()}}">
+    <a id="showhide-btn" href="javascript:void(0)" ng-click="myShowHide($event)">
+      <div class="panel-heading myShadow">
+          <h2 class="h4 panel-title myTtip">
+            <div  class="myTtiptext">
+                <ul class="myTtipUL">
+                  <li>Enable/disable filter articles by category</li>
+                </ul>
+            </div>
+            <i ng-class="c.plusMinusSymbol" aria-hidden="true"></i>
+            {{options.title}}
+          </h2>
+      </div>
+    </a>
+</div>]]></template>
+    </sp_widget>
+</record_update>

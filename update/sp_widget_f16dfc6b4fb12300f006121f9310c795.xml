@@ -3,34 +3,36 @@
         <category>custom</category>
         <client_script><![CDATA[function($scope, u_cutassp) 
 {  
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
-	/* widget controller */  
+	/* widget controller */
 	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
-	//	
+	//
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>a.list-group-item.active {&#13;
-		z-index: 2;&#13;
-    color: #fff;&#13;
-    background-color: #428bca;&#13;
-    border-color: #428bca;&#13;
-		font-weight: bold;  &#13;
-}&#13;
-&#13;
-a.list-group-item {&#13;
-  padding: 2px 0px 2px 3px; &#13;
-  font-size: 12px;&#13;
-  color: f5f5f5;&#13;
-}&#13;
+        <css>a.list-group-item.active {
+		z-index: 2;
+    color: #fff;
+    background-color: #428bca;
+    border-color: #428bca;
+		font-weight: bold;  
+}
+
+a.list-group-item {
+  padding: 2px 0px 2px 3px; 
+  font-size: 12px;
+  color: f5f5f5;
+}
 </css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -47,15 +49,11 @@ a.list-group-item {&#13;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {	
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =  'utassp02_search_nav_widget > '+$sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
 	}
 	// *** End: Debug only code *** //
 	//
@@ -126,7 +124,7 @@ a.list-group-item {&#13;
         <sys_created_on>2018-11-21 19:53:02</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>f16dfc6b4fb12300f006121f9310c795</sys_id>
-        <sys_mod_count>20</sys_mod_count>
+        <sys_mod_count>21</sys_mod_count>
         <sys_name>UTASSP Search Nav Widget 2</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -134,7 +132,7 @@ a.list-group-item {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_f16dfc6b4fb12300f006121f9310c795</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:55:23</sys_updated_on>
+        <sys_updated_on>2019-03-03 17:14:59</sys_updated_on>
         <template><![CDATA[<h2 class="sr-only" dummy="{{::c.myLog()}}">${Search Categories}</h2>
 
 <div role="list" class="list-group">

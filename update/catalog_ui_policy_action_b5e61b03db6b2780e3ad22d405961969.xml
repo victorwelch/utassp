@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="catalog_ui_policy_action">
+    <catalog_ui_policy_action action="INSERT_OR_UPDATE">
+        <catalog_item display_value="Incident Report">49e61bcfdb2b2780e3ad22d4059619d1</catalog_item>
+        <catalog_variable>IO:2de61b03db6b2780e3ad22d405961939</catalog_variable>
+        <cleared>false</cleared>
+        <disabled>false</disabled>
+        <field/>
+        <mandatory>true</mandatory>
+        <order>100</order>
+        <sys_class_name>catalog_ui_policy_action</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-02-15 17:36:35</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>b5e61b03db6b2780e3ad22d405961969</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>u_room</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>catalog_ui_policy_action_b5e61b03db6b2780e3ad22d405961969</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-02-15 17:54:03</sys_updated_on>
+        <table/>
+        <ui_policy display_value="Show/hide previous incident">a5e61b03db6b2780e3ad22d405961966</ui_policy>
+        <variable>u_room</variable>
+        <variable_set/>
+        <visible>true</visible>
+    </catalog_ui_policy_action>
+</record_update>

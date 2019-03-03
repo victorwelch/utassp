@@ -2,23 +2,21 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>kb</category>
         <client_script><![CDATA[function ($scope, spUtil, $sce, $rootScope, $timeout, u_cutassp) {
-	console.log($scope.data.infotag+(new Date()).getTime());
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
+	}
 	//
 	/* widget controller */
 	var c = this;
-	//
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
-	//		
-	//spUtil.setSearchPage('kb');
-	//$scope.data.text = $sce.trustAsHtml($scope.data.text);
-	//$timeout(function() {
-	//	$rootScope.$broadcast('sp.update.breadcrumbs', $scope.data.breadcrumbs);
-	//});
+	//
 }]]></client_script>
         <controller_as>c</controller_as>
         <css>td {
@@ -35,52 +33,42 @@
         <internal>false</internal>
         <link/>
         <name>UTASSP KB Article Page</name>
-        <option_schema>[&#13;
-   {&#13;
-      "name":"show_star_rating",&#13;
-      "default_value":"Use system properties",&#13;
-      "section":"Presentation",&#13;
-      "label":"Show star rating",&#13;
-      "type":"choice",&#13;
-      "choices":[&#13;
-         {&#13;
-            "label":"Yes",&#13;
-            "value":"Yes"&#13;
-         },&#13;
-         {&#13;
-            "label":"No",&#13;
-            "value":"No"&#13;
-         },&#13;
-         {&#13;
-            "label":"Use system properties",&#13;
-            "value":"Use system properties"&#13;
-         }&#13;
-      ]&#13;
-   }&#13;
+        <option_schema>[
+   {
+      "name":"show_star_rating",
+      "default_value":"Use system properties",
+      "section":"Presentation",
+      "label":"Show star rating",
+      "type":"choice",
+      "choices":[
+         {
+            "label":"Yes",
+            "value":"Yes"
+         },
+         {
+            "label":"No",
+            "value":"No"
+         },
+         {
+            "label":"Use system properties",
+            "value":"Use system properties"
+         }
+      ]
+   }
 ]</option_schema>
         <public>true</public>
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =   'utassp01_kb_article_page > '+ $sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp,'2nd Time');
 	}
 	// *** End: Debug only code *** //
 	//
-	//var t = data;
-	/* *** Removed the following -- Not Applicable, vcw 11/14/18 *** */
-	//data.kb_knowledge_page = $sp.getDisplayValue("kb_knowledge_page") || "kb_view";
-	
-	/* *** Include the following to bypass scope restrictions, vcw 11/14/18 *** */
 	var myGlobal = new global.u_utaglobalapi();
-	//	
 	var mySysId = $sp.getParameter('sys_id');
 	var articleGR = new GlideRecord("kb_knowledge");
 	articleGR.get(mySysId);
@@ -90,8 +78,6 @@
 	
 	if (canReadArticle)
 	{
-		/* *** Replaced the following due to scope restrictions, vcw 11/14/18 *** */
-		//old: articleGR.incrementViewCount(); // update sys_view_count immediately on kb_knowledge record
 		myGlobal.u_GlideRecordIncrementViewCount("kb_knowledge",mySysId);
 
 		var art = new GlideRecord("kb_use");
@@ -101,8 +87,6 @@
 			art.user = gs.getUserID();
 			art.viewed = true;
 			art.insert(); // kb_use records are aggregated to update sys_view_count nightly
-			/* *** Replaced the following due to scope restrictions, vcw 11/14/18 *** */
-			//Old: $sp.logStat('KB Article View', "kb_knowledge", articleGR.getUniqueValue(), articleGR.short_description);
 			myGlobal.u_$sp.logStat('KB Article View', "kb_knowledge", articleGR.getUniqueValue(), articleGR.short_description);
 		}
 	
@@ -113,16 +97,12 @@
 			data.showAttachments = true;
 		data.categoryDisplay = articleGR.getDisplayValue('kb_category');
 		data.short_description = articleGR.getValue('short_description');
-		if (articleGR.getValue('article_type') == 'wiki')
-			data.text = GlideWikiModel().render(articleGR.getValue('wiki'));
-		else 
-		{
-			if(new GlidePluginManager().isActive('com.snc.knowledge_blocks'))
-			{
-				data.text = new KBBlock().getArticleContent(articleGR);				
-			}
-			else
-			{
+		if (articleGR.getValue('article_type') == 'wiki') {
+			data.text = GlideWikiModel().render(articleGR.getValue('wiki'));			
+		} else  {
+			if(new GlidePluginManager().isActive('com.snc.knowledge_blocks')) {
+				data.text = new KBBlock().getArticleContent(articleGR);			
+			} else {
 				data.text = articleGR.getValue('text');				
 			}
 		}
@@ -131,54 +111,10 @@
 		data.author = articleGR.getDisplayValue('author');
 		data.publishedUtc = articleGR.getValue('published');
 		data.number = articleGR.getValue('number');
-		/* *** Removed the following -- Not Applicable, vcw 11/14/18 *** */
-		//if (showStarRating())
-			data.rating = articleGR.getValue('rating');
+		data.rating = articleGR.getValue('rating');
 		data.direct = false;
-		if (articleGR.direct)
-			data.direct = true;
-	
-		/* *** Removed the following -- Not Applicable, vcw 11/14/18 *** */
-		//t.breadcrumbs = [{label: t.short_description, url: '#'}];
-		//if (!articleGR.kb_category.nil()) 
-		//{
-		//	var rec = articleGR.kb_category.getRefRecord();
-		//	while (rec.getRecordClassName() == "kb_category") 
-		//	{
-		//		t.breadcrumbs.unshift({label: rec.getDisplayValue(), url: '?id=kb_category&kb_category=' + rec.getUniqueValue()});
-		//		rec = rec.parent_id.getRefRecord();
-		//	}
-		//}
-		//t.breadcrumbs.unshift({label: gs.getMessage("Knowledge Base"), url: '?id=' + t.kb_knowledge_page});
+		if (articleGR.direct) { data.direct = true; }
 	}
-	
-	/* *** Added the following for completeness and clarity, vcw 11/14/18 *** */
-	//data = t;		
-	
-	/* *** Removed the following -- Not Applicable, vcw 11/14/18 *** */
-	//function showStarRating() 
-	//{
- 	//	if (options.show_star_rating == "Yes")
-	//		return true;
-
-	//	if (options.show_star_rating == "No")
-	//		return false;
-
-		// check gating property for all rating options
-	//	if (gs.getProperty("glide.knowman.show_rating_options", "true") != "true")
-	//		return false;
-
-		// does user have the right role?
-	//	if (!gs.hasRole(gs.getProperty("glide.knowman.show_rating_options.roles")))
-	//		return false;
-
-		// check specific property for stars
-	//	if (gs.getProperty("glide.knowman.show_star_rating", "true") != "true")
-	//		return false;
-
-		// does user have the right role?
-	//	return gs.hasRole(gs.getProperty("glide.knowman.show_star_rating.roles"));
-	//}
 })($sp, input, data, options, gs);]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
@@ -186,7 +122,7 @@
         <sys_created_on>2018-11-13 21:02:22</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>2380c84d4ff12300f006121f9310c750</sys_id>
-        <sys_mod_count>33</sys_mod_count>
+        <sys_mod_count>37</sys_mod_count>
         <sys_name>UTASSP KB Article Page</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -194,7 +130,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_2380c84d4ff12300f006121f9310c750</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:42:13</sys_updated_on>
+        <sys_updated_on>2019-03-03 16:42:51</sys_updated_on>
         <template><![CDATA[<div ng-if="data.isvalid" class="panel panel-{{options.color}} b" dummy="{{::c.myLog()}}">
 
   <div class="panel-heading">

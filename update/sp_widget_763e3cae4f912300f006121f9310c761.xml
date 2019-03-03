@@ -2,15 +2,17 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[function ($scope, $rootScope, $element, spUtil, $window, u_cutassp) {
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);		
 	}
 	//
 	/* widget controller */
 	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
@@ -45,7 +47,6 @@
 	}
 	
 	$scope.previousPage_2 = function(e) {
-		debugger;
 		$scope.data.action='prev';
 		if ($scope.data.pagination_2.currentPage > 1)
 			$scope.data.pagination_2.currentPage = $scope.data.pagination_2.currentPage - 1;
@@ -56,7 +57,6 @@
 	};
 
 	$scope.nextPage_2 = function(e) {
-		debugger;
 		$scope.data.action_2 ='next';
 		$scope.data.pagination_2.currentPage = $scope.data.pagination_2.currentPage+1;
 		$scope.get_2();
@@ -64,7 +64,6 @@
 	};	
 
 	$scope.clickSearch_2 = function(e) {
-		debugger;
 		if ($scope.utilIsSearch_2()) {
 			$scope.utilResetSort_2();
 			$scope.data.action_2 = "search";
@@ -72,7 +71,6 @@
 		}
 	};
 	$scope.crCatchSearch_2 = function(e) {
-		debugger;		
 		if ( e.keyCode === 13 ) {
 			if ($scope.utilIsSearch_2()) {
 				$scope.utilResetSort_2();
@@ -84,7 +82,6 @@
 		}	
 	};	
 	$scope.onSelectChange_2 = function() {
-		debugger;	
 		var mySelect = $('#selStateSearchId_2');
 		var mySelectValue = $('#selStateSearchId_2').val();
 		if (this.$parent.utilIsSearch_2()) {
@@ -93,7 +90,6 @@
 		}
 	};	
 	$scope.onDateChange_2 = function() {
-		debugger;	
 		var mySelect = $('#inpCreatedSearchId_2');
 		var mySelectValue = $('#inpCreatedSearchId_2').val();
 		if (this.$parent.utilIsSearch_2()) {
@@ -102,14 +98,12 @@
 		}
 	};	
 	$scope.clickReset_2 = function(e) {
-		debugger;	
 		$scope.utilResetSearch_2();
 		$scope.utilResetSort_2();
 		$scope.data.action_2 = "reset";
 		$scope.get_2();
 	};	
 	$scope.cycleCondition_2 = function(e) {
-		debugger;			
 		var myIcon = $(e.currentTarget).children('i').first();
 		//
 		switch (true) {
@@ -155,7 +149,6 @@
 		descend: "sortdesc"
 	};
 	$scope.colSort_2 = function(e) {
-		debugger;
 		var myHdrDiv = $(e.currentTarget);
 		//
 		var myId=myHdrDiv.attr('id');
@@ -223,8 +216,7 @@
 	{
 		return _utilIsSearch_2();
 	};
-	_utilIsSearch_2 = function() {
-		debugger;		
+	function _utilIsSearch_2() {
 		var mySearchQ = '';
 		var myCharCount = 0;
 		//
@@ -275,24 +267,24 @@
 			$scope.isCurrentSearch_2=false;			
 		}
 		return ($scope.isCurrentSearch_2);
-	};
+	}
 	//
 	$scope.utilResetSearch_2 = function() {
 		_utilResetSearch_2();
 	};
-	_utilResetSearch_2 = function() {
+	function _utilResetSearch_2() {
 		$('#inpNumberSearchId_2').val('');
 		$('#inpDescriptionSearchId_2').val('');
 		$('#inpServiceSearchId_2').val('');
 		$('#selStateSearchId_2').val('');
 		$('#inpCreatedSearchId_2').val('');
 		$scope.isCurrentSearch_2=false;	
-	};
+	}
 	//
 	$scope.utilResetSort_2 = function() {
 		_utilResetSort_2();
 	};	
-	_utilResetSort_2 = function() {
+	function _utilResetSort_2() {
 		$scope.data.isSortOn_2 = {
 			number:false,
 			description:false,
@@ -305,7 +297,7 @@
 		$('#divHdrServiceId_2').attr('title',myNewTitle_2.first);
 		$('#divHdrStateId_2').attr('title',myNewTitle_2.first);
 		$('#divHdrCreatedId_2').attr('title',myNewTitle_2.first);
-	};
+	}
 }]]></client_script>
         <controller_as>c</controller_as>
         <css>.panel-heading
@@ -679,15 +671,11 @@ a.myDivTableRow {
         <roles/>
         <script><![CDATA[(function ($sp, input, data, options, gs) {
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();	
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =  'utassp01_my_closed_tickets_widget > '+ $sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp,options);
 	}
 	// *** End: Debug only code *** //
 	//
@@ -958,7 +946,7 @@ a.myDivTableRow {
         <sys_created_on>2018-10-24 20:51:19</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>763e3cae4f912300f006121f9310c761</sys_id>
-        <sys_mod_count>77</sys_mod_count>
+        <sys_mod_count>81</sys_mod_count>
         <sys_name>UTASSP My Closed Tickets Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -966,7 +954,7 @@ a.myDivTableRow {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_763e3cae4f912300f006121f9310c761</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-14 20:49:26</sys_updated_on>
+        <sys_updated_on>2019-03-03 19:17:49</sys_updated_on>
         <template><![CDATA[<div>
     <div class="panel panel-{{::options.color}} b" dummy="{{::c.myLog()}}">
         <div class="panel-heading myLeftAlign">
