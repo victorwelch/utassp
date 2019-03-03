@@ -2,18 +2,21 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[function ($scope, $rootScope, $element, spUtil, $window, u_cutassp) {
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
+	/* widget controller */
 	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
-	//	
+	//
 	if (typeof c.data == typeof myUndefined) { c.data = {}; }
 	if (typeof c.data.articles == typeof myUndefined ) { c.data.articles = []; }
 	if (typeof c.data.title == typeof myUndefined ) { c.data.title = 'Articles...'; }
@@ -388,18 +391,15 @@ div.myGreyGridTable {&#13;
         <roles/>
         <script><![CDATA[(function ($sp, input, data, options, gs) {
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =  'utassp01_kb_allcat_page_widget > '+ $sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
 	}
 	// *** End: Debug only code *** //
 	//
+
 	// get page id
 	var myPageId = $sp.getParameter('id');
 	data.pageId = myPageId;
@@ -547,7 +547,7 @@ div.myGreyGridTable {&#13;
         <sys_created_on>2019-01-28 20:33:46</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>91d29f551bdfa740715941d8cd4bcb4b</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>UTASSP KB All Categories Page  Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -555,7 +555,7 @@ div.myGreyGridTable {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_91d29f551bdfa740715941d8cd4bcb4b</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-30 14:44:50</sys_updated_on>
+        <sys_updated_on>2019-03-03 17:09:54</sys_updated_on>
         <template><![CDATA[<div>
   <div class="panel panel-{{::options.color}} b myShadow"  dummy="{{::c.myLog()}}">
     <div class="panel-heading">

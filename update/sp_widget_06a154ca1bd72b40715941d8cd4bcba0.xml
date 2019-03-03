@@ -2,20 +2,21 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[function($scope, spUtil, u_cutassp) {	
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
+	/* widget controller */
 	var c = this;
-	c.plusMinusSymbol='fa fa-plus-square m-r-sm';	
-	$rootScope.isKbCatShow = false;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
-	//	
+	//
 	//** Show/Hide 
 	function get() {
 		spUtil.update($scope);
@@ -70,15 +71,11 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs){
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =  'utassp01_kb_view_categories_widget > '+$sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
 	}
 	// *** End: Debug only code *** //
 	//
@@ -90,7 +87,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_created_on>2019-01-30 14:25:13</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>06a154ca1bd72b40715941d8cd4bcba0</sys_id>
-        <sys_mod_count>7</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>UTASSP KB View Categories Widget 2</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -98,7 +95,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_06a154ca1bd72b40715941d8cd4bcba0</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-30 17:19:53</sys_updated_on>
+        <sys_updated_on>2019-03-03 17:05:38</sys_updated_on>
         <template><![CDATA[<div class="panel panel-{{::options.color}} b" dummy="{{::c.myLog()}}">
     <a id="showhide-btn" href="javascript:void(0)" ng-click="myShowHide($event)">
       <div class="panel-heading myShadow">

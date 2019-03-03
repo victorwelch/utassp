@@ -2,14 +2,17 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>standard</category>
         <client_script><![CDATA[function ($scope, spUtil, $rootScope, $timeout, spAriaUtil, u_cutassp) {
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
+	/* widget controller */
 	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
@@ -205,15 +208,11 @@ li.header-menu-item  &gt; a {&#13;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs){
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =  'utassp01_header_menu_widget > '+$sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
 	}
 	// *** End: Debug only code *** //
 	//
@@ -256,7 +255,7 @@ li.header-menu-item  &gt; a {&#13;
         <sys_created_on>2018-10-24 19:01:20</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>eb0560624f912300f006121f9310c7a5</sys_id>
-        <sys_mod_count>57</sys_mod_count>
+        <sys_mod_count>58</sys_mod_count>
         <sys_name>UTASSP Header Menu Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -264,7 +263,7 @@ li.header-menu-item  &gt; a {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_eb0560624f912300f006121f9310c7a5</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-06 17:24:28</sys_updated_on>
+        <sys_updated_on>2019-03-03 16:55:02</sys_updated_on>
         <template><![CDATA[<ul class="nav navbar-nav" aria-label="${Header menu}" dummy="{{::c.myLog()}}">
   <div class="header-loader" ng-show="loadingIndicator">
     <div class="hidden-xs sp-loading-indicator la-sm">

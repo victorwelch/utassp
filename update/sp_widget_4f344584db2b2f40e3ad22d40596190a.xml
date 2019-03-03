@@ -2,14 +2,17 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>standard</category>
         <client_script><![CDATA[function ($http, $filter, $location,spAriaUtil, $window, $scope, spAriaFocusManager, u_cutassp) {
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);		
 	}
 	//
+	/* widget controller */
 	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
@@ -283,17 +286,13 @@ div.myDivWidth {}&#13;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();	
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle = 'utassp02_typeahead_search_widget > '+$sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp,options);
 	}
-	// *** End: Debug only code *** //	
+	// *** End: Debug only code *** //
 	//
 	data.isLoggedIn = gs.isLoggedIn();
 	var myGlobal = new global.u_utaglobalapi();
@@ -348,7 +347,7 @@ div.myDivWidth {}&#13;
         <sys_created_on>2019-02-05 23:14:01</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>4f344584db2b2f40e3ad22d40596190a</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>14</sys_mod_count>
         <sys_name>UTASSP Typeahead Search Widget 3</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -356,10 +355,10 @@ div.myDivWidth {}&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_4f344584db2b2f40e3ad22d40596190a</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-12 23:08:02</sys_updated_on>
+        <sys_updated_on>2019-03-03 19:03:09</sys_updated_on>
         <template><![CDATA[<div ng-if="::!data.isLoggedIn" class="text-center myMarginTop">
   <div class="text-center myPublicBox">
-    <a href="/utassp?id=utassp01_dummy" class="myPublicLoginLink">Login to continue »</a>
+    <a href="?id=utassp01_dummy" class="myPublicLoginLink">Login to continue »</a>
     <a href="https://netidss.uta.edu" class="myPublicPwdHelp">Password Reset Help</a>
   </div>
 </div>

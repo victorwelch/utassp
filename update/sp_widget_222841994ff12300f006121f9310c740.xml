@@ -2,18 +2,20 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>other</category>
         <client_script><![CDATA[function($scope, u_cutassp) {
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);		
 	}
 	//
-	var c = this;	
+	/* widget controller */
+	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
-	//	
 	//
 	for (var x in $scope.data.dates) {
 		var dateStr = moment($scope.data.dates[x]).format('ll').split(',')[0];
@@ -108,15 +110,11 @@ font-size: 18px;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();	
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle = 'utassp01_status_history_widget > '+$sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
 	}
 	// *** End: Debug only code *** //
 	//
@@ -144,7 +142,7 @@ font-size: 18px;
 	data.services = [];
 	var myGlobal = new global.u_utaglobalapi();
 	var ga_CmdbCi = new GlideAggregate('cmdb_ci_outage');
-	ga_CmdbCi.addQuery('begin', '>=', gs.daysAgoStart(5)).addOrCondition('end', '>=', gs.daysAgoEnd(5));
+	ga_CmdbCi.addEncodedQuery('begin>='+gs.daysAgoStart(5)+'^ORend>='+gs.daysAgoStart(5)+'^ORendISEMPTY');
 	ga_CmdbCi.groupBy('cmdb_ci');
 	ga_CmdbCi.query();	
 	var currentCmdbCiIndex = -1;	
@@ -160,9 +158,10 @@ font-size: 18px;
 		var l_outs = [];	
 		for (var i=0;i<=4;i++) {
 			var llga_CmdbCi = new GlideAggregate('cmdb_ci_outage'); 
-			llga_CmdbCi.addQuery('cmdb_ci', l_CmdbCiSysId);
-			llga_CmdbCi.addQuery('end', '>=', myGlobal.u_gs.daysAgoStart(i)).addOrCondition("end", "=", "NULL");
-			llga_CmdbCi.addQuery('begin', '<=', myGlobal.u_gs.daysAgoEnd(i));
+			llga_CmdbCi.addEncodedQuery(
+				'cmdb_ci='+l_CmdbCiSysId+
+				'^begin>='+gs.daysAgoStart(i)+'^ORend>='+gs.daysAgoStart(i)+'^ORendISEMPTY'
+			);				
 			llga_CmdbCi.addAggregate('COUNT', 'type');	
 			var ll_svcOutageDay = {};
 			ll_svcOutageDay.count = 0;
@@ -208,7 +207,7 @@ font-size: 18px;
         <sys_created_on>2018-11-14 20:53:43</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>222841994ff12300f006121f9310c740</sys_id>
-        <sys_mod_count>28</sys_mod_count>
+        <sys_mod_count>34</sys_mod_count>
         <sys_name>UTASSP Status History Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -216,7 +215,7 @@ font-size: 18px;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_222841994ff12300f006121f9310c740</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-19 19:59:10</sys_updated_on>
+        <sys_updated_on>2019-03-03 20:18:13</sys_updated_on>
         <template><![CDATA[<div class="panel panel-default" dummy="{{::c.myLog()}}">
   <div class="panel-heading">&nbsp;</div>
   <div class="panel-body">

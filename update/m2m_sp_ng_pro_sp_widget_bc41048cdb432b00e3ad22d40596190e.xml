@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_ng_pro_sp_widget">
     <m2m_sp_ng_pro_sp_widget action="INSERT_OR_UPDATE">
         <sp_angular_provider display_value="u_cutassp">7552858b4fa12300f006121f9310c7ba</sp_angular_provider>
-        <sp_widget display_value="UTASSP Breadcrumbs Std Widget 3 ">7841048cdb432b00e3ad22d40596190c</sp_widget>
+        <sp_widget display_value="UASSP Breadcrumbs Std Widget 3">7841048cdb432b00e3ad22d40596190c</sp_widget>
         <sys_class_name>m2m_sp_ng_pro_sp_widget</sys_class_name>
         <sys_created_by>welchv</sys_created_by>
         <sys_created_on>2019-01-11 21:50:02</sys_created_on>

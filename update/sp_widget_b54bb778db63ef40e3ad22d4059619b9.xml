@@ -2,14 +2,17 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[function($scope, spUtil, u_cutassp) {	
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
-	var c = this;		
+	/* widget controller */
+	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
@@ -168,15 +171,11 @@ span.myNavItemEmpty {&#13;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs){
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =  'utassp01_my_tickets_widget > '+$sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp,options);
 	}
 	// *** End: Debug only code *** //
 	//
@@ -189,7 +188,7 @@ span.myNavItemEmpty {&#13;
         <sys_created_on>2019-02-08 20:29:12</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>b54bb778db63ef40e3ad22d4059619b9</sys_id>
-        <sys_mod_count>36</sys_mod_count>
+        <sys_mod_count>49</sys_mod_count>
         <sys_name>UTASSP My Tickets Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -197,7 +196,7 @@ span.myNavItemEmpty {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_b54bb778db63ef40e3ad22d4059619b9</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-14 17:46:13</sys_updated_on>
+        <sys_updated_on>2019-03-03 19:25:15</sys_updated_on>
         <template><![CDATA[<div class="panel text-center">
     <div id="tabMenu" class="myTabMenu">
         <ul class="nav nav-tabs" >
@@ -216,6 +215,8 @@ span.myNavItemEmpty {&#13;
                 id="utassp01_my_open_tickets_widget" 
                 options='{
                     "title": "My Open Tickets",
+                    "name": "UTASSP My Open Tickets",
+                     "id": "utassp01_my_open_tickets",
                     "max_number_of_elements_shown_on_the_list": "25",
                     "pageid":"utassp01_my_tickets"}'></widget>
       	  </div>
@@ -224,6 +225,8 @@ span.myNavItemEmpty {&#13;
                 id="utassp01_my_closed_tickets_widget" 
                 options='{
                     "title": "My Closed Tickets",
+                  	"name": "UTASSP My Closed Tickets",
+                    "id": "utassp01_my_closed_tickets",                       
                     "max_number_of_elements_shown_on_the_list": "25",
                     "pageid":"utassp01_my_tickets"}'></widget>
           <div>   

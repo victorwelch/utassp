@@ -2,14 +2,17 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>sp_platform</category>
         <client_script><![CDATA[function($rootScope, $scope, $timeout, $location, $log, $window, spUtil, nowAttachmentHandler, spAriaUtil, spNavStateManager, u_cutassp) {
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
-	var c=this;
+	/* widget controller */
+	var c = this;
+
+	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
-		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-			console.log($scope.data.infotag.replace(':',' HTMl view:')+(new Date()).getTime());
+		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+			console.log((new Date()).getTime()+'.HTML View - '+$scope.data.infotag);
 		}
 		return '';
 	};
@@ -398,15 +401,11 @@
         <script><![CDATA[// form functionality - URL parameter driven
 (function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
+	data.uSettings=myU.utilGetInstanceSettings();
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle =  'utassp02_form_widget > '+$sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
 	}
 	// *** End: Debug only code *** //
 	//
@@ -526,7 +525,7 @@
         <sys_created_on>2018-10-30 15:31:50</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>89ae6a584f212300f006121f9310c79c</sys_id>
-        <sys_mod_count>45</sys_mod_count>
+        <sys_mod_count>46</sys_mod_count>
         <sys_name>UTASSP Form Widget 2</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -534,7 +533,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_89ae6a584f212300f006121f9310c79c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-15 20:53:43</sys_updated_on>
+        <sys_updated_on>2019-03-03 17:24:01</sys_updated_on>
         <template><![CDATA[<div ng-if="::!data.isValid && !data.emptyStateTemplate" class="panel panel-default" dummy="{{::c.myLog()}}">
   <div class="panel-body wrapper-lg text-center">
     <span ng-if="!data.tableUnsupported">${Record not found}</span>
