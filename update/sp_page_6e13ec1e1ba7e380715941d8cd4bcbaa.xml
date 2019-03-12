@@ -106,6 +106,77 @@
 */
 .field-has-reference .add-on {
     display: none;
+}
+/*
+Modal panel hacks for Safari
+*/
+.modal-panel-body {
+  padding: 0;
+  display: inline-table;
+  background-color: #fff;
+	box-sizing: border-box;
+}
+#baseUl {
+  padding-left: 0px;  
+  list-style-type: none;
+  margin:0;
+}
+ul.modalTp {
+  list-style-type: none;
+  padding-left: 18px;
+  margin:0;
+}
+div.myHeaderModal {
+  padding:4px 4px 4px 6px;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size:15px;
+  color:#fff;
+  background-color:#0064b1;
+  display:block;
+  margin:0;
+}
+i.myCloseModal {
+  float:right;
+  padding-right:4px;
+  padding-top:3px;
+  &amp;:hover {
+    cursor:pointer;
+  }
+}
+div.myLiDivModal {
+  opacity:.75 !important;
+  &amp;:hover {
+    cursor:pointer;
+    opacity:1 !important;
+  }
+}
+div.myImgHolderModal {
+  display: inline-block;
+  width: 36px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto;	
+}
+div.myPlusModal {
+  background-image: url(treePlus.png);
+}
+div.myMinusModal {
+  background-image: url(treeMinus.png);
+}
+div.myLeafModal {
+  background-image: url(leaf.png);
+}
+div.myNodeModal {
+  display: inline-block;
+  font-size: 13px;
+  position: relative;
+  top: -4px;
+  padding-left: 4px;		
+}
+div.myLinkModal {
+  color: #0064b1;
+  text-decoration: underline;
 }</css>
         <draft>false</draft>
         <dynamic_title_structure/>
@@ -119,7 +190,7 @@
         <sys_created_on>2019-02-12 20:35:37</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>6e13ec1e1ba7e380715941d8cd4bcbaa</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>utassp01_report_incident</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -127,7 +198,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_page_6e13ec1e1ba7e380715941d8cd4bcbaa</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-26 21:32:40</sys_updated_on>
+        <sys_updated_on>2019-03-07 01:41:14</sys_updated_on>
         <title>UTASSP Report Incident</title>
     </sp_page>
 </record_update>

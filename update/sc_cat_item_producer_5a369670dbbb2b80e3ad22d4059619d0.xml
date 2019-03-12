@@ -10,10 +10,9 @@
         <delivery_plan display_value="DEFAULT">523da512c611228900811a37c97c2014</delivery_plan>
         <delivery_plan_script/>
         <delivery_time>1970-01-03 00:00:00</delivery_time>
-        <description><![CDATA[<div>Thank you for contacting the service desk. Please describe the nature of your&nbsp;request&nbsp;in the fields below. Upon receipt, the service desk will categorize and prioritize your&nbsp;request&nbsp;at which time you will receive an automated email with the details of that update.</div>
-<p>&nbsp;</p>]]></description>
+        <description/>
         <entitlement_script/>
-        <group display_value="Help Desk" name="Help Desk">ac1b7cbd6f7da500d03fcb512e3ee4e0</group>
+        <group/>
         <hide_sp>false</hide_sp>
         <icon/>
         <ignore_price>true</ignore_price>
@@ -25,7 +24,7 @@
         <mobile_picture/>
         <mobile_picture_type>use_desktop_picture</mobile_picture_type>
         <model/>
-        <name>UTASSP: Request Something</name>
+        <name>Incident Report 2</name>
         <no_cart>false</no_cart>
         <no_order>false</no_order>
         <no_order_now>false</no_order_now>
@@ -37,7 +36,7 @@
         <ordered_item_link/>
         <picture/>
         <post_insert_script/>
-        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=bd6b64f91b5fe740715941d8cd4bcb9b&amp;sysparm_preview=true", "summary");</preview>
+        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=5a369670dbbb2b80e3ad22d4059619d0&amp;sysparm_preview=true", "summary");</preview>
         <price>0</price>
         <recurring_frequency/>
         <recurring_price>0</recurring_price>
@@ -50,35 +49,32 @@
 
 //If a Support Group defined for the Business Service, auto assign to it
 //Else, assign to group defined in the template ESS Incident
-var getRecordProducerData = new GlideRecord('sc_cat_item_producer');
-if(getRecordProducerData.get('bd6b64f91b5fe740715941d8cd4bcb9b')) //itself 
-{
-	current.assignment_group=getRecordProducerData.group;
-	current.u_category=getRecordProducerData.u_category;
+if(producer.u_business_service.support_group){
+current.assignment_group = producer.u_business_service.support_group;
 }]]></script>
         <short_description/>
         <show_variable_help_on_load>false</show_variable_help_on_load>
         <start_closed>false</start_closed>
         <sys_class_name>sc_cat_item_producer</sys_class_name>
         <sys_created_by>welchv</sys_created_by>
-        <sys_created_on>2019-01-29 21:39:13</sys_created_on>
+        <sys_created_on>2019-02-20 23:23:23</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
-        <sys_id>bd6b64f91b5fe740715941d8cd4bcb9b</sys_id>
-        <sys_mod_count>12</sys_mod_count>
-        <sys_name>UTASSP: Request Something</sys_name>
+        <sys_id>5a369670dbbb2b80e3ad22d4059619d0</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Incident Report 2</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
-        <sys_update_name>sc_cat_item_producer_bd6b64f91b5fe740715941d8cd4bcb9b</sys_update_name>
+        <sys_update_name>sc_cat_item_producer_5a369670dbbb2b80e3ad22d4059619d0</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-05 19:52:45</sys_updated_on>
-        <table_name>sc_request</table_name>
-        <template display_value="">fd6b68f91b5fe740715941d8cd4bcb70</template>
+        <sys_updated_on>2019-02-21 01:56:53</sys_updated_on>
+        <table_name>incident</table_name>
+        <template display_value="ESS Incident 3">a636dab0dbbb2b80e3ad22d405961944</template>
         <type>item</type>
         <u_business_service/>
-        <u_category display_value="General Inquiry">45ae3cad6fbbe2007a07fee09d3ee497</u_category>
-        <u_owner display_value="David Cruz">c4485aad6fb3490028235d65ad3ee494</u_owner>
+        <u_category/>
+        <u_owner/>
         <use_sc_layout>true</use_sc_layout>
         <vendor/>
         <view>ess</view>
@@ -87,22 +83,22 @@ if(getRecordProducerData.get('bd6b64f91b5fe740715941d8cd4bcb9b')) //itself
         <visible_standalone>true</visible_standalone>
         <workflow/>
     </sc_cat_item_producer>
-    <sys_translated_text action="delete_multiple" query="documentkey=bd6b64f91b5fe740715941d8cd4bcb9b"/>
-    <fx_price action="delete_multiple" query="id=bd6b64f91b5fe740715941d8cd4bcb9b"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=5a369670dbbb2b80e3ad22d4059619d0"/>
+    <fx_price action="delete_multiple" query="id=5a369670dbbb2b80e3ad22d4059619d0"/>
     <fx_price action="INSERT_OR_UPDATE">
         <amount>0</amount>
         <currency display_value="USD">USD</currency>
         <field>price</field>
-        <id>bd6b64f91b5fe740715941d8cd4bcb9b</id>
+        <id>5a369670dbbb2b80e3ad22d4059619d0</id>
         <parent/>
         <reference_amount>0</reference_amount>
         <reference_currency display_value="USD">USD</reference_currency>
         <sys_created_by>welchv</sys_created_by>
-        <sys_created_on>2019-01-29 22:45:58</sys_created_on>
-        <sys_id>a3aa70fd1b93a740dde2bb39cd4bcbdc</sys_id>
+        <sys_created_on>2019-03-06 22:57:22</sys_created_on>
+        <sys_id>e5861e9d1b883b80543e8480cd4bcbdc</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-29 22:45:58</sys_updated_on>
+        <sys_updated_on>2019-03-06 22:57:22</sys_updated_on>
         <table>sc_cat_item_producer</table>
         <type>calculated</type>
     </fx_price>
@@ -110,16 +106,16 @@ if(getRecordProducerData.get('bd6b64f91b5fe740715941d8cd4bcb9b')) //itself
         <amount>0</amount>
         <currency display_value="USD">USD</currency>
         <field>recurring_price</field>
-        <id>bd6b64f91b5fe740715941d8cd4bcb9b</id>
+        <id>5a369670dbbb2b80e3ad22d4059619d0</id>
         <parent/>
         <reference_amount>0</reference_amount>
         <reference_currency display_value="USD">USD</reference_currency>
         <sys_created_by>welchv</sys_created_by>
-        <sys_created_on>2019-01-29 22:45:58</sys_created_on>
-        <sys_id>a7aa70fd1b93a740dde2bb39cd4bcbdd</sys_id>
+        <sys_created_on>2019-03-06 22:57:22</sys_created_on>
+        <sys_id>6d861e9d1b883b80543e8480cd4bcbdd</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-29 22:45:58</sys_updated_on>
+        <sys_updated_on>2019-03-06 22:57:22</sys_updated_on>
         <table>sc_cat_item_producer</table>
         <type>calculated</type>
     </fx_price>

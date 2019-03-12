@@ -45,6 +45,7 @@
 	//
 	$scope.myAfectedServiceLinkHander = function(e) {
 		$('#treePickerModal').modal('show');
+		$('#treePickerModal').appendTo('body');		
 	};
 	//
 	$scope.closeClick = function(e) {
@@ -52,6 +53,7 @@
 		for (var i=0;i<c.flatListLength;i++) {
 			c.data.flatlist[i].ulstate = 'collapsed';
 		}		
+		$('body>#treePickerModal').remove();		
 	};
 	//
 	$scope.divClick = function(e){
@@ -696,22 +698,23 @@ h1,  h2,  h3,  h4,  h5,  h6,  p,  li {
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
-.panel-body {
-  padding:0;
-  /* border-radius:3px;
-  	 border:1px solid #888; */
-  display:inline-table;
-  background-color:#fff;
+.modal-panel-body {
+  padding: 0;
+  display: inline-table;
+  background-color: #fff;
+	box-sizing: border-box;
 }
 #baseUl {
-  padding-left: 0px;
+  padding-left: 0px;  
+  list-style-type: none;
+  margin:0;
 }
-ul {
+ul.modalTp {
   list-style-type: none;
   padding-left: 18px;
   margin:0;
 }
-div.myHeader {
+div.myHeaderModal {
   padding:4px 4px 4px 6px;
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-size:15px;
@@ -720,7 +723,7 @@ div.myHeader {
   display:block;
   margin:0;
 }
-i.myClose {
+i.myCloseModal {
   float:right;
   padding-right:4px;
   padding-top:3px;
@@ -728,14 +731,14 @@ i.myClose {
     cursor:pointer;
   }
 }
-div.myLiDiv {
+div.myLiDivModal {
   opacity:.75 !important;
   &amp;:hover {
     cursor:pointer;
     opacity:1 !important;
   }
 }
-div.myImgHolder {
+div.myImgHolderModal {
   display: inline-block;
   width: 36px;
   height: 16px;
@@ -743,27 +746,26 @@ div.myImgHolder {
   background-position: center;
   background-size: auto;	
 }
-div.myPlus {
+div.myPlusModal {
   background-image: url(treePlus.png);
 }
-div.myMinus {
+div.myMinusModal {
   background-image: url(treeMinus.png);
 }
-div.myLeaf {
+div.myLeafModal {
   background-image: url(leaf.png);
 }
-div.myNode {
+div.myNodeModal {
   display: inline-block;
   font-size: 13px;
   position: relative;
   top: -4px;
   padding-left: 4px;		
 }
-div.myLink {
+div.myLinkModal {
   color: #0064b1;
   text-decoration: underline;
-}
-</css>
+}</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
@@ -1093,7 +1095,7 @@ div.myLink {
         <sys_created_on>2019-02-21 16:59:10</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>ffd70e4ddbb36b80e3ad22d40596194f</sys_id>
-        <sys_mod_count>15</sys_mod_count>
+        <sys_mod_count>40</sys_mod_count>
         <sys_name>UTASSP Catalog Item Incident Widget 4</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -1101,13 +1103,14 @@ div.myLink {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_ffd70e4ddbb36b80e3ad22d40596194f</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 16:48:48</sys_updated_on>
+        <sys_updated_on>2019-03-07 21:33:30</sys_updated_on>
         <template><![CDATA[<div id="sc_cat_item" ng-if="::data.recordFound" dummy="{{::c.myLog()}}">
   <div class="myTitle">
     Something Wrong? Report Incident...    
   </div>
 	<div class="row" ng-if="::data.sc_cat_item">	
-		<div class="col-sm-12 ol-md-12" id="catItemTop">
+		<!-- ************************************************************ -->
+    <div class="col-sm-12" ng-class="{true: 'col-md-9', false: 'col-md-12'}[options.display_cart_on_right === 'true']" id="catItemTop">
 			<div class="panel panel-default">
 				<!-- ------------- -->
 				<div class="" ng-class="{'b-b wrapper-md': !data.no_fields}">
@@ -1118,16 +1121,23 @@ div.myLink {
 					</form>
 				</div>
 				<!-- Bottom cart -->
-				<div class="inline-cart">
-					<div class="wrapper-md b-b">
-						<button id="submitButtonId" tabindex="0" name="submit" ng-disabled="submitting || submitted"
-						 ng-click="triggerOnSubmit()" class="btn btn-primary">{{::submitButtonMsg}}</button>
+				<div class="inline-cart" ng-if="::options.display_cart_on_right !== 'true'">
+					<div class="col-sm-12 wrapper-md b-b">
+						<button 
+                    id="submitButtonId" 
+                    tabindex="0" 
+                    name="submit" 
+                    ng-disabled="submitting || submitted"
+						 				ng-click="triggerOnSubmit()" 
+                    class="btn btn-primary">{{::submitButtonMsg}}</button>
 						<span ng-if="submitting" style="padding-left:4px">${Submitting...}</span>
 					</div>
 					<div ng-show="hasMandatory(c.mandatory)" class="alert alert-info" style="margin-top: .5em" ng-if="c.options.show_field_validation_messages === 'true'">
 						<span ng-if="hasMandatory(mandatory)">${Required information} </span>
-						<label ng-repeat="f in c.mandatory" for="sp_formfield_{{::f.catalogFieldName}}" class="label label-danger sc-field-error-label"
-						 style="margin-right: .5em; display: inline-block;">{{::f.label}}</label>
+						<label ng-repeat="f in c.mandatory" 
+                   for="sp_formfield_{{::f.catalogFieldName}}" 
+                   class="label label-danger sc-field-error-label"
+						 			 style="margin-right: .5em; display: inline-block;">{{::f.label}}</label>
 					</div>
 				</div>
 			</div>
@@ -1139,88 +1149,124 @@ div.myLink {
 				</label>
 			</div>
 		</div>
+    <!-- ************************************************************ -->  
+    <!-- Right side content -->
+    <!-- ************************************************************ -->  
+    <div class="col-sm-12 col-md-3 right-side-cart" ng-show="::options.display_cart_on_right === 'true'">
+      <!-- Right side cart( If you are chaning anything here, please change in bottom cart section also) -->
+      <div ng-class="{true:'sc-fixed', false:'' }[options.display_cart_on_right === 'true']">
+      	<div ng-if="data.sc_cat_item.sys_class_name != 'sc_cat_item_content'" class="panel panel-{{::options.color}} b wrapper-md">
+           <div class="form-group">
+             <button 
+                     ng-if="::c.showOrderNowButton()" 
+                     tabindex="0" 
+                     name="submit" 
+                     ng-disabled="submitting || submitted" 
+                     ng-click="triggerOnSubmit()" 
+                     class="btn btn-primary btn-block">{{::submitButtonMsg}}</button>
+             <span ng-if="submitting" style="padding-left:4px">${Submitting...}</span>
+           </div>
+         </div>
+      	<div class="sc-item-error-messages" ng-if="c.options.show_field_validation_messages === 'true'">
+            <div class="row" ng-if="hasMandatory(c.mandatory)" class=" row alert alert-info" style="margin-top: .5em">
+              <div class="col-sm-12">
+                <div ng-if="hasMandatory(c.mandatory)">${Required information} </div>
+                <label ng-repeat="f in c.mandatory" 
+                       for="sp_formfield_{{::f.name}}" 
+                       class="label label-danger sc-field-error-label">{{::f.label}}</label>
+              </div>
+           </div>
+         </div>
+      </div>
+    </div>
+    <!-- ************************************************************ -->      
 	</div>  
+</div>
 
-  <!-- Modal Tree Picker -->
-  <div class="modal fade" id="treePickerModal" tabindex="-1" role="dialog" aria-labelledby="Affecte Service"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content" style="display:inline-table;border-radius:0;">
-        <div class="modal-header" style="padding:0;">
-            <div class="modal-title myHeader">
-              Select Affected Service<i class="far fa-window-close myClose" ng-click="closeClick($event)"></i>
-            </div>
+<!-- ************************************************************************************************************************ -->      
+<!-- ************************************************************************************************************************ -->      
+
+<!-- Modal Tree Picker -->
+<div class="modal" 
+     id="treePickerModal" 
+     tabindex="-1" 
+     role="dialog" 
+     aria-labelledby="Affected Service"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document" style="background:transparent;">
+    <div class="modal-content clickable" style="display:inline-table;border-radius:0;">
+      <div class="modal-header" style="padding:0;">
+        <div class="modal-title myHeaderModal">
+          Select Affected Service<i class="far fa-window-close myCloseModal" ng-click="closeClick($event)"></i>
         </div>
-        <div class="modal-body">
-          <!-- Tree Picker Pop-up -->
-          <div id="treePickerDiv" class="panel-body">
-            <div style="padding:10px; display:inline-block;">
-              <!-- Tree Nodes -->
-              <ul id="baseUl">
-                <li ng-repeat="i1 in data.treelist" id="{{i1.id}}" idnumber="{{i1.idnumber}}" sysid="{{i1.sysid}}"
+      </div>
+      <div class="modal-body">
+        <!-- Tree Picker Pop-up -->
+        <div id="treePickerDiv" class="modal-panel-body">
+          <div style="padding:10px; display:inline-block;">
+            <!-- Tree Nodes -->
+            <ul id="baseUl">
+              <li ng-repeat="i1 in data.treelist" id="{{i1.id}}" idnumber="{{i1.idnumber}}" sysid="{{i1.sysid}}"
                   nodetype="{{i1.nodetype}}">
-                  <div class="myLiDiv" ng-click="divClick($event)">
-                    <div class="myImgHolder" ng-class="{'myLeaf': i1.nodetype=='leaf', 'myPlus': i1.nodetype=='tree' && data.flatlist[i1.idnumber].ulstate=='collapsed', 'myMinus': i1.nodetype=='tree' && data.flatlist[i1.idnumber].ulstate!='collapsed'}"></div>
-                    <div class="myNode" ng-class="{'myLink': i1.nodetype=='leaf'}">{{i1.name}}</div>
-                  </div>
-                  <!-- nested repeat i2 -->
-                  <ul ng-if="i1.nodetype=='tree'" ng-show="data.flatlist[i1.idnumber].ulstate=='expanded'" class="ng-hide">
-                    <li ng-repeat="i2 in i1.servicelist" id="{{i2.id}}" idnumber="{{i2.idnumber}}" sysid="{{i2.sysid}}"
+                <div class="myLiDivModal" ng-click="divClick($event)">
+                  <div class="myImgHolderModal" ng-class="{'myLeafModal': i1.nodetype=='leaf', 'myPlusModal': i1.nodetype=='tree' && data.flatlist[i1.idnumber].ulstate=='collapsed', 'myMinusModal': i1.nodetype=='tree' && data.flatlist[i1.idnumber].ulstate!='collapsed'}"></div>
+                  <div class="myNodeModal" ng-class="{'myLinkModal': i1.nodetype=='leaf'}">{{i1.name}}</div>
+                </div>
+                <!-- nested repeat i2 -->
+                <ul ng-if="i1.nodetype=='tree'" ng-show="data.flatlist[i1.idnumber].ulstate=='expanded'" class="ng-hide modalTp">
+                  <li ng-repeat="i2 in i1.servicelist" id="{{i2.id}}" idnumber="{{i2.idnumber}}" sysid="{{i2.sysid}}"
                       nodetype="{{i2.nodetype}}">
-                      <div class="myLiDiv" ng-click="divClick($event)">
-                        <div class="myImgHolder" ng-class="{'myLeaf': i2.nodetype=='leaf', 'myPlus': i2.nodetype=='tree' && data.flatlist[i2.idnumber].ulstate=='collapsed', 'myMinus': i2.nodetype=='tree' && data.flatlist[i2.idnumber].ulstate!='collapsed'}"></div>
-                        <div class="myNode" ng-class="{'myLink': i2.nodetype=='leaf'}">{{i2.name}}</div>
-                      </div>
-                      <!-- nested repeat i3 -->
-                      <ul ng-if="i2.nodetype=='tree'" ng-show="data.flatlist[i2.idnumber].ulstate=='expanded'" class="ng-hide">
-                        <li ng-repeat="i3 in i2.servicelist" id="{{i3.id}}" idnumber="{{i3.idnumber}}" sysid="{{i3.sysid}}"
+                    <div class="myLiDivModal" ng-click="divClick($event)">
+                      <div class="myImgHolderModal" ng-class="{'myLeafModal': i2.nodetype=='leaf', 'myPlusModal': i2.nodetype=='tree' && data.flatlist[i2.idnumber].ulstate=='collapsed', 'myMinusModal': i2.nodetype=='tree' && data.flatlist[i2.idnumber].ulstate!='collapsed'}"></div>
+                      <div class="myNodeModal" ng-class="{'myLinkModal': i2.nodetype=='leaf'}">{{i2.name}}</div>
+                    </div>
+                    <!-- nested repeat i3 -->
+                    <ul ng-if="i2.nodetype=='tree'" ng-show="data.flatlist[i2.idnumber].ulstate=='expanded'" class="ng-hide modalTp">
+                      <li ng-repeat="i3 in i2.servicelist" id="{{i3.id}}" idnumber="{{i3.idnumber}}" sysid="{{i3.sysid}}"
                           nodetype="{{i3.nodetype}}">
-                          <div class="myLiDiv" ng-click="divClick($event)">
-                            <div class="myImgHolder" ng-class="{'myLeaf': i3.nodetype=='leaf', 'myPlus': i3.nodetype=='tree' && data.flatlist[i3.idnumber].ulstate=='collapsed', 'myMinus': i3.nodetype=='tree' && data.flatlist[i3.idnumber].ulstate!='collapsed'}"></div>
-                            <div class="myNode" ng-class="{'myLink': i3.nodetype=='leaf'}">{{i3.name}}</div>
-                          </div>
-                          <!-- nested repeat i4 -->
-                          <ul ng-if="i3.nodetype=='tree'" ng-show="data.flatlist[i3.idnumber].ulstate=='expanded'" class="ng-hide">
-                            <li ng-repeat="i4 in i3.servicelist" ng-class="i4.nodetype=='leaf' ? 'myLeafLi' : 'myTreeLi'"
-                              id="{{i4.id}}" idnumber="{{i4.idnumber}}" sysid="{{i4.sysid}}" nodetype="{{i4.nodetype}}">
-                              <div class="myLiDiv" ng-click="divClick($event)">
-                                <div class="myImgHolder" ng-class="{'myLeaf': i4.nodetype=='leaf', 'myPlus': i4.nodetype=='tree' && data.flatlist[i4.idnumber].ulstate=='collapsed', 'myMinus': i4.nodetype=='tree' && data.flatlist[i4.idnumber].ulstate!='collapsed'}"></div>
-                                <div class="myNode" ng-class="{'myLink': i4.nodetype=='leaf'}">{{i4.name}}</div>
-                              </div>
-                              <!-- nested repeat i5 -->
-                              <ul ng-if="i4.nodetype=='tree'" ng-show="data.flatlist[i2.idnumber].ulstate=='expanded'"
-                                class="ng-hide">
-                                <li ng-repeat="i5 in i4.servicelist" ng-class="i5.nodetype=='leaf' ? 'myLeafLi' : 'myTreeLi'"
-                                  id="{{i5.id}}" idnumber="{{i5.idnumber}}" sysid="{{i5.sysid}}" nodetype="{{i5.nodetype}}">
-                                  <div class="myLiDiv" ng-click="divClick($event)">
-                                    <div class="myImgHolder" ng-class="{'myLeaf': i5.nodetype=='leaf', 'myPlus': i5.nodetype=='tree' && data.flatlist[i5.idnumber].ulstate=='collapsed', 'myMinus': i5.nodetype=='tree' && data.flatlist[i5.idnumber].ulstate!='collapsed'}"></div>
-                                    <div class="myNode" ng-class="{'myLink': i5.nodetype=='leaf'}">{{i5.name}}</div>
-                                  </div>
-                                </li>
-                              </ul>
-                              <!-- end nested repeat i5 -->
-                            </li>
-                          </ul>
-                          <!-- end nested repeat i4 -->
-                        </li>
-                      </ul>
-                      <!-- end nested repeat i3 -->
-                    </li>
-                  </ul>
-                  <!-- end nested repeat i2 -->
-                </li>
-              </ul>
-              <!-- ---------- -->
-            </div>
+                        <div class="myLiDivModal" ng-click="divClick($event)">
+                          <div class="myImgHolderModal" ng-class="{'myLeafModal': i3.nodetype=='leaf', 'myPlusModal': i3.nodetype=='tree' && data.flatlist[i3.idnumber].ulstate=='collapsed', 'myMinusModal': i3.nodetype=='tree' && data.flatlist[i3.idnumber].ulstate!='collapsed'}"></div>
+                          <div class="myNodeModal" ng-class="{'myLinkModal': i3.nodetype=='leaf'}">{{i3.name}}</div>
+                        </div>
+                        <!-- nested repeat i4 -->
+                        <ul ng-if="i3.nodetype=='tree'" ng-show="data.flatlist[i3.idnumber].ulstate=='expanded'" class="ng-hide modalTp">
+                          <li ng-repeat="i4 in i3.servicelist" id="{{i4.id}}" idnumber="{{i4.idnumber}}" sysid="{{i4.sysid}}" 
+                              nodetype="{{i4.nodetype}}">
+                            <div class="myLiDivModal" ng-click="divClick($event)">
+                              <div class="myImgHolderModal" ng-class="{'myLeafModal': i4.nodetype=='leaf', 'myPlusModal': i4.nodetype=='tree' && data.flatlist[i4.idnumber].ulstate=='collapsed', 'myMinusModal': i4.nodetype=='tree' && data.flatlist[i4.idnumber].ulstate!='collapsed'}"></div>
+                              <div class="myNodeModal" ng-class="{'myLinkModal': i4.nodetype=='leaf'}">{{i4.name}}</div>
+                            </div>
+                            <!-- nested repeat i5 -->
+                            <ul ng-if="i4.nodetype=='tree'" ng-show="data.flatlist[i2.idnumber].ulstate=='expanded'" class="ng-hide modalTp">
+                              <li ng-repeat="i5 in i4.servicelist" id="{{i5.id}}" idnumber="{{i5.idnumber}}" sysid="{{i5.sysid}}" 
+                                  nodetype="{{i5.nodetype}}">
+                                <div class="myLiDivModal" ng-click="divClick($event)">
+                                  <div class="myImgHolderModal" ng-class="{'myLeafModal': i5.nodetype=='leaf', 'myPlusModal': i5.nodetype=='tree' && data.flatlist[i5.idnumber].ulstate=='collapsed', 'myMinusModal': i5.nodetype=='tree' && data.flatlist[i5.idnumber].ulstate!='collapsed'}"></div>
+                                  <div class="myNodeModal" ng-class="{'myLinkModal': i5.nodetype=='leaf'}">{{i5.name}}</div>
+                                </div>
+                              </li>
+                            </ul>
+                            <!-- end nested repeat i5 -->
+                          </li>
+                        </ul>
+                        <!-- end nested repeat i4 -->
+                      </li>
+                    </ul>
+                    <!-- end nested repeat i3 -->
+                  </li>
+                </ul>
+                <!-- end nested repeat i2 -->
+              </li>
+            </ul>
+            <!-- ---------- -->
           </div>
-          <!-- end Tree Picker Pop-up -->
         </div>
+        <!-- end Tree Picker Pop-up -->
       </div>
     </div>
   </div>
-  <!-- End Modal Tree Picker -->  
-  
 </div>
+<!-- End Modal Tree Picker -->  
 ]]></template>
     </sp_widget>
 </record_update>
