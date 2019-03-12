@@ -860,7 +860,7 @@ div.myContainerInit {&#13;
         <sys_created_on>2019-02-15 16:26:10</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>86c68787db2b2780e3ad22d4059619ce</sys_id>
-        <sys_mod_count>12</sys_mod_count>
+        <sys_mod_count>14</sys_mod_count>
         <sys_name>UTASSP Catalog Item Incident 2 Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -868,7 +868,7 @@ div.myContainerInit {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_86c68787db2b2780e3ad22d4059619ce</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-19 02:05:07</sys_updated_on>
+        <sys_updated_on>2019-03-12 15:09:40</sys_updated_on>
         <template><![CDATA[<div id="sc_cat_item" ng-if="::data.recordFound" dummy="{{::c.myLog()}}">
   <sp-widget widget="c.orderItemModal" ng-if="c.orderItemModal"></sp-widget>
   <div class="row" ng-if="::data.sc_cat_item" >
@@ -892,7 +892,7 @@ div.myContainerInit {&#13;
           </form>
         </div>
         <!-- Bottom cart -->
-        <div class="inline-cart" ng-if="::options.display_cart_on_right !== 'true'">
+        <div>
           <div ng-if="data.sc_cat_item.sys_class_name != 'sc_cat_item_content'" class="wrapper-md b-b">
 								<button ng-if="::c.showOrderNowButton()" tabindex="0" name="submit" ng-disabled="submitting || submitted" ng-click="triggerOnSubmit()" class="btn btn-primary">{{::submitButtonMsg}}</button>
                 <span ng-if="submitting" style="padding-left:4px">${Submitting...}</span>

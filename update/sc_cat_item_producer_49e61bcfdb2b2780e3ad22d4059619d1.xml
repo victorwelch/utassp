@@ -70,7 +70,7 @@ current.assignment_group = producer.u_business_service.support_group;
         <sys_updated_by>welchv</sys_updated_by>
         <sys_updated_on>2019-02-21 18:05:30</sys_updated_on>
         <table_name>incident</table_name>
-        <template display_value="Copy of ESS Incident">dde6d703db6b2780e3ad22d4059619d4</template>
+        <template/>
         <type>item</type>
         <u_business_service/>
         <u_category/>

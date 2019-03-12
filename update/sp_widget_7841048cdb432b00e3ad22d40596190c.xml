@@ -165,7 +165,7 @@ margin-top: 10px;
         <id>utassp03_breadcrumbs_std_widget</id>
         <internal>false</internal>
         <link/>
-        <name>UASSP Breadcrumbs Std Widget 3</name>
+        <name>UTASSP Breadcrumbs Std Widget 3</name>
         <option_schema/>
         <public>true</public>
         <roles/>
@@ -174,7 +174,6 @@ margin-top: 10px;
 	data.isSecondTime = false;
 	if (myU.utilIsValueValid(input)) {
 		data.isSecondTime = true;
-		gs.info('2nd Time!!!');
 	} 
 	data.uSettings=myU.utilGetInstanceSettings();	
 	data.infotag = '';
@@ -255,15 +254,15 @@ margin-top: 10px;
         <sys_created_on>2019-01-11 21:50:02</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>7841048cdb432b00e3ad22d40596190c</sys_id>
-        <sys_mod_count>129</sys_mod_count>
-        <sys_name>UASSP Breadcrumbs Std Widget 3</sys_name>
+        <sys_mod_count>131</sys_mod_count>
+        <sys_name>UTASSP Breadcrumbs Std Widget 3</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_7841048cdb432b00e3ad22d40596190c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 19:04:55</sys_updated_on>
+        <sys_updated_on>2019-03-06 20:58:44</sys_updated_on>
         <template><![CDATA[<div ng-hide="c.isHomePage" class="ng-show myDivDisplayFlexToggle myDivFlexWrap"  dummy="{{::c.myLog()}}">
   <ul class="nav nav-pills nav-sm myBcFontSize myDivDisplayFlexToggle" aria-label="${Navigation breadcrumbs}">
     <li class="myDivDisplayFlexToggle"><a ng-href="?id={{::portal.homepage_dv}}">${Home}</a></li>
