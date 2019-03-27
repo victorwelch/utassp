@@ -30,18 +30,16 @@
 	
 	$rootScope.$on('spModel.gForm.rendered', function() {
 		//
-		debugger;
-		var myIsLoadedAlready = (typeof $('sp-attachment-button').attr('reloadOnNext') != typeof myUndefined);
 		if (c.data.isSsoRequest) {
-			if (!myIsLoadedAlready) {
+			//if (!myIsLoadedAlready) {
 				var myAttachmentButton =  $('sp-attachment-button');
-				myAttachmentButton.attr('reloadOnNext','true');
-				var myAttachmentLabel =$('sp-attachment-button').parent('label');
-				//myAttachmentLabel.hide();
-				var myAttachmentDiv = myAttachmentLabel.parent('div');
-				var myNewAttachmentDiv = $('#divListMsgId');
-				myNewAttachmentDiv.append(myAttachmentDiv);					
-			}
+				//myAttachmentButton.attr('reloadOnNext','true');
+				var myAttachmentLabel=myAttachmentButton.parent('label');
+				myAttachmentLabel.addClass('myAddAttachmentButton');
+				//var myAttachmentDiv = myAttachmentLabel.parent('div');
+				//var myNewAttachmentDiv = $('#divMyAttachmentPaperClipId');
+				//myNewAttachmentDiv.append(myAttachmentDiv);					
+			//}
 			c.data.isSsoRequest=false;
 		}
 		//
@@ -199,7 +197,6 @@
 	}
 	
 	$scope.triggerOnSubmit = function(){
-		debugger;
 		if ($scope.options.isServiceWorkspace && $window.frameElement) {
 			var workspaceParams = {};
 			workspaceParams.sysparm_parent_table = $window.frameElement.getAttribute('parent-table');
@@ -210,7 +207,7 @@
 		$scope.data.sc_cat_item.quantity = c.quantity;
 		if (g_form) {
 				var myReturn=g_form.submit();
-			  if (myReturn) {
+			    if (myReturn) {
 					$('#myBlankerDiv').show();
 					$('#myBlankerDiv').css('position','fixed');					
 				}
@@ -433,12 +430,7 @@
 									) + 
 									'px;';
         }
-   });
-
-	$rootScope.$on('myAddAttachmentEvent', function(e,eObj) {
-		debugger;
-		c.scope.attachmentHandler.openSelector(eObj);			
-	});		
+   });	
 }]]></client_script>
         <controller_as>c</controller_as>
         <css>.panel-button {&#13;
@@ -605,6 +597,38 @@
   #myBlankerDiv {&#13;
 	  background-size: 600px 600px;  &#13;
   }&#13;
+}&#13;
+&#13;
+label.myAddAttachmentButton {&#13;
+    float: left !important;&#13;
+    padding: 5px 20px 0 0 !important;&#13;
+    color: #fff;&#13;
+    background-color: #278efc;&#13;
+    border-color: #0e81fc;  &#13;
+	padding: 5px;&#13;
+    border-radius: 4px;&#13;
+    margin-left: 10px;&#13;
+    margin-right: 10px;  &#13;
+  	-webkit-box-shadow: 0 0 15px 0px rgba(0,0,0,0.33);&#13;
+	-moz-box-shadow: 0 0 15px 0px rgba(0,0,0,0.33);&#13;
+	box-shadow: 0 0 15px 0px rgba(0,0,0,0.33);&#13;
+  	&amp;:hover {&#13;
+      -webkit-box-shadow: 0 0 15px 0px rgba(0,0,0,0.68);&#13;
+      -moz-box-shadow: 0 0 15px 0px rgba(0,0,0,0.68);&#13;
+      box-shadow: 0 0 15px 0px rgba(0,0,0,0.68);&#13;
+      background-color: #3276b1;      &#13;
+    }&#13;
+}&#13;
+&#13;
+.fa-pencil:before {&#13;
+    content: "\f303";&#13;
+}&#13;
+&#13;
+.fa-file-o:before {&#13;
+    content: "\f15b";&#13;
+}&#13;
+.fa-file-image-o:before {&#13;
+    content: "\f1c5";&#13;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -612,7 +636,7 @@
         <docs/>
         <field_list>color</field_list>
         <has_preview>false</has_preview>
-        <id>utassp03_sc_catalog_item_widget</id>
+        <id>utassp04_catalog_item_widget</id>
         <internal>false</internal>
         <link><![CDATA[function(scope, elem){
     scope.setFocusToAttachment = function () {
@@ -623,7 +647,7 @@
 	};
 }
 	]]></link>
-        <name>UTASSP Catalog Item Widget 3</name>
+        <name>UTASSP Catalog Item Widget 4</name>
         <option_schema>[{&#13;
 	"name": "show_add_cart_button",&#13;
   	"default_value": "false",&#13;
@@ -902,19 +926,19 @@
 })($sp, input, data, options, gs);]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2018-11-09 15:13:59</sys_created_on>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-03-13 14:45:23</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
-        <sys_id>997a86674f212300f006121f9310c7c8</sys_id>
-        <sys_mod_count>178</sys_mod_count>
-        <sys_name>UTASSP Catalog Item Widget 3</sys_name>
+        <sys_id>9309ecefdb407bc0e3ad22d405961959</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_name>UTASSP Catalog Item Widget 4</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
-        <sys_update_name>sp_widget_997a86674f212300f006121f9310c7c8</sys_update_name>
+        <sys_update_name>sp_widget_9309ecefdb407bc0e3ad22d405961959</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-26 16:57:15</sys_updated_on>
+        <sys_updated_on>2019-03-26 20:09:42</sys_updated_on>
         <template><![CDATA[<div id="sc_cat_item" ng-if="::data.recordFound" dummy="{{::c.myLog()}}">
 	<sp-widget widget="c.orderItemModal" ng-if="c.orderItemModal"></sp-widget>
 	<div class="row" ng-if="::data.sc_cat_item">
@@ -1116,6 +1140,6 @@
 <now-message key="Added item to shopping cart" value="${Added item to shopping cart}" />
 <div id="myBlankerDiv">
 </div>
- ]]></template>
+   ]]></template>
     </sp_widget>
 </record_update>

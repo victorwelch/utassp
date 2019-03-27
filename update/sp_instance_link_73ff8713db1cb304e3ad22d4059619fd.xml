@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance_link">
+    <sp_instance_link action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <kb_article/>
+        <kb_category/>
+        <kb_topic/>
+        <order>1</order>
+        <roles/>
+        <sc_cat_item/>
+        <sc_category display_value="Teaching and Learning">2c012ed6db503304e3ad22d40596193a</sc_category>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">e18af778db63ef40e3ad22d405961966</sp_column>
+        <sp_page/>
+        <sp_widget display_value="UTASSP Catalog Category Widget">4bc5ba97db98b304e3ad22d40596191a</sp_widget>
+        <sys_class_name>sp_instance_link</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-03-25 18:32:00</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>73ff8713db1cb304e3ad22d4059619fd</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Test Widget</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_instance_link_73ff8713db1cb304e3ad22d4059619fd</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-03-25 19:36:51</sys_updated_on>
+        <title>Test Widget</title>
+        <type>sc_category</type>
+        <u_image display_value="utassp_teachinglearning_img.png">a1665b9edbd03304e3ad22d4059619a1</u_image>
+        <url/>
+        <widget_parameters/>
+    </sp_instance_link>
+</record_update>

@@ -145,18 +145,26 @@ label[for="password"] {&#13;
 	// We don't want to set a starting page until we've begun the login process.
 	var myGlobal = new global.u_utaglobalapi();
 	var myU = new u_utassp();
+	var myRefUrl =  (myGlobal.u_GlideTransactionHeader()).toString();	
+	var mySubStrStart = myRefUrl.indexOf('?');
+	var myRefUrlEndPart = myRefUrl.slice(mySubStrStart);
+	
+	var isHomePage = (!myU.utilIsValueValid(myRefUrlEndPart)) ||
+  				     (myRefUrlEndPart.indexOf('index')>-1) ||
+					 (myRefUrlEndPart.indexOf('dummy')>-1);
 	if (input && input.action === "set_sso_destination") {	
  		var myPortalGr = $sp.getPortalRecord();
 		var myUrlSuffix = myPortalGr.getDisplayValue('url_suffix');
 		if (myU.utilIsValueValid(myUrlSuffix)) {
 			myUrlSuffix = '/'+myUrlSuffix;
+			if (!isHomePage) {
+				myUrlSuffix += myRefUrlEndPart;				
+			}
 		} else {
 			myUrlSuffix  = '';
 		}
 		myGlobal.u_gs_getSession_putProperty("nav_to", null);
 		myGlobal.u_gs_getSession_putProperty("starting_page",myUrlSuffix);
-		//if (!gs.getSession().getProperty("starting_page"))
-		//	gs.getSession().putProperty("starting_page", gs_nav_to);
 		return;
 	}
 
@@ -185,7 +193,7 @@ label[for="password"] {&#13;
         <sys_created_on>2019-01-25 16:59:15</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>c2f48f58dbd3e340e3ad22d4059619ad</sys_id>
-        <sys_mod_count>16</sys_mod_count>
+        <sys_mod_count>52</sys_mod_count>
         <sys_name>UTASSP Login Widget 4</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -193,7 +201,7 @@ label[for="password"] {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_c2f48f58dbd3e340e3ad22d4059619ad</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-01-25 20:53:28</sys_updated_on>
+        <sys_updated_on>2019-03-26 16:54:02</sys_updated_on>
         <template><![CDATA[<div ng-if="!data.is_logged_in">
   <form ng-if="!c.externalLoginMode" class="form-signin" ng-submit="c.login(c.username, c.password)" method="post">
 		<div ng-class="{'panel panel-default': c.options.show_panel}">
@@ -258,6 +266,7 @@ label[for="password"] {&#13;
 			</div>
 		</div>
 	</form>
-</div>]]></template>
+</div>
+  ]]></template>
     </sp_widget>
 </record_update>

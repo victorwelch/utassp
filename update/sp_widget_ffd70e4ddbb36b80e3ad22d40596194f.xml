@@ -36,13 +36,6 @@
 			$window.open("/sp_config?id=form&table=" + item.table + "&sys_id=" + item.sys_id); }]
 	];
 	
-	// *** ****************** ***
-	// Affected Service Selected Event
-	//$rootScope.$on('onServiceSelected', function(event,selected) {
-	//		//
-	//		g_form.setValue('u_business_service',selected.sysid);
-	//});
-	//
 	$scope.myAfectedServiceLinkHander = function(e) {
 		$('#treePickerModal').modal('show');
 		$('#treePickerModal').appendTo('body');		
@@ -93,7 +86,6 @@
 
 	$rootScope.$on('spModel.gForm.rendered', function() {
 		//
-		//$('#treePickerDiv').hide();
 		$scope.myAffectedServiceLink = $($('a.select2-choice')[2]);
 		$scope.myAffectedServiceLink.off();
 		$scope.myAffectedServiceLink.on('click',$scope.myAfectedServiceLinkHander);
@@ -330,7 +322,12 @@
 		$scope.data.sc_cat_item.item_action = "order";
 		$scope.data.sc_cat_item.quantity = c.quantity;
 		if (g_form) {
-			return g_form.submit();			
+				var myReturn=g_form.submit();
+				if (myReturn) {
+					$('#myBlankerDiv').show();
+					$('#myBlankerDiv').css('position','fixed');					
+				}
+				return myReturn;
 		}
 		return false;
 	};
@@ -554,217 +551,264 @@
     });
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>.panel-button {
-  float: none;
-}
-
-.sp-attachment-add {
-  padding: 5px;
-}
-
-.p-t-none {
-  padding-top: 0 !important;
-}
-
-.file-list-wrap {
-	margin-bottom: 10px;
-}
-
-.sc-btn {
-  color: $text-color;
-}
-
-.dismiss-button {
-  position: absolute;
-  top: 1rem;
-	right: 10px;
-	color: $text-color;
-	cursor: pointer;
-}
-
-.item-header {
-  padding-top: 10px !important;
-  padding-bottom: 10px !important;
-}
-
-.sc-sticky-item-header {
-  position: sticky;
-  position: -webkit-sticky;
-  position: -ms-sticky;
-  top: -($font-size-h2 + $font-size-base);
-  z-index: 10;
-  background-color: inherit;
-  border-radius: 4px 4px 0 0;
-}
-.sc-fixed {
-  position: fixed;
-  max-height: 100%;
-  width: 17.67777%;
-}
-.no-margin {
-	margin: 0px; 
-}
-.sc-item-error-messages {
-  max-height: 100%;
-  position: absolute;
-  overflow-y: auto;
-  overflow-x: hidden;
-  width: 100%; 
-}
-.sc-field-error-label {
-  margin-right: .5em; 
-  display: inline-block;
-  cursor: pointer;
-}
-.image-gallery {
-  font-size: 8px;
-  color: #CECECE;
-  .active {
-    color: #717171;
-  }
-  i {
-    padding: 0 5px;
-  }
-}
-.relative {
-  position: relative;
-}
-.sc-order-widget-btn {
-   position: absolute;
-   left: 9%;
-   top: 10px
-}
-@media (min-width: 992px)
-  .col-md-12 {
-    width:100%;
-  }
-@media only screen and (max-width : 992px) {
-  .sc-fixed {
-    position: relative;
-    width: 100%;
-  }
-  .wishlist-update-message {
-    display : block;
-  }
-  .sc-item-error-messages {
-    position: relative;
-  }
-  .read-more, .read-less {
-    font-size: 15px;
-    cursor: pointer;
-  }
-  .more-text {
-    display: none;
-  }
-  /*
-  .inline-cart {
-    display: none;
-  }
-  .right-side-cart {
-    display: inherit !important;
-  }
-  */
-}
-@media only screen and (max-width : 768px) {
-  .sc-sticky-item-header {
-     position: inherit;
-  }
-  
-}
-.inline-cart {
-  .quantity-selector {
-    display: inline-block !important;
-    width: 65px;
-    padding-top: 2px;
-  }
-}
-/* ************ */
-#treePickerDiv.myInitHide {
-  display:none;
-}
-div.myTitle {
-  color: #3a3f51;
-  background-color: #f5f5f5;
-  border-top: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  border-left: 1px solid #ddd;
-  font-weight:bold;
-  margin: 0;
-  font-size: 20px;
-  padding: 5px 10px 5px 10px;
-}
-
-h1,  h2,  h3,  h4,  h5,  h6,  p,  li {
-    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-}
-
-.modal-panel-body {
-  padding: 0;
-  display: inline-table;
-  background-color: #fff;
-	box-sizing: border-box;
-}
-#baseUl {
-  padding-left: 0px;  
-  list-style-type: none;
-  margin:0;
-}
-ul.modalTp {
-  list-style-type: none;
-  padding-left: 18px;
-  margin:0;
-}
-div.myHeaderModal {
-  padding:4px 4px 4px 6px;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-size:15px;
-  color:#fff;
-  background-color:#0064b1;
-  display:block;
-  margin:0;
-}
-i.myCloseModal {
-  float:right;
-  padding-right:4px;
-  padding-top:3px;
-  &amp;:hover {
-    cursor:pointer;
-  }
-}
-div.myLiDivModal {
-  opacity:.75 !important;
-  &amp;:hover {
-    cursor:pointer;
-    opacity:1 !important;
-  }
-}
-div.myImgHolderModal {
-  display: inline-block;
-  width: 36px;
-  height: 16px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: auto;	
-}
-div.myPlusModal {
-  background-image: url(treePlus.png);
-}
-div.myMinusModal {
-  background-image: url(treeMinus.png);
-}
-div.myLeafModal {
-  background-image: url(leaf.png);
-}
-div.myNodeModal {
-  display: inline-block;
-  font-size: 13px;
-  position: relative;
-  top: -4px;
-  padding-left: 4px;		
-}
-div.myLinkModal {
-  color: #0064b1;
-  text-decoration: underline;
+        <css>.panel-button {&#13;
+  float: none;&#13;
+}&#13;
+&#13;
+.sp-attachment-add {&#13;
+  padding: 5px;&#13;
+}&#13;
+&#13;
+.p-t-none {&#13;
+  padding-top: 0 !important;&#13;
+}&#13;
+&#13;
+.file-list-wrap {&#13;
+	margin-bottom: 10px;&#13;
+}&#13;
+&#13;
+.sc-btn {&#13;
+  color: $text-color;&#13;
+}&#13;
+&#13;
+.dismiss-button {&#13;
+  position: absolute;&#13;
+  top: 1rem;&#13;
+	right: 10px;&#13;
+	color: $text-color;&#13;
+	cursor: pointer;&#13;
+}&#13;
+&#13;
+.item-header {&#13;
+  padding-top: 10px !important;&#13;
+  padding-bottom: 10px !important;&#13;
+}&#13;
+&#13;
+.sc-sticky-item-header {&#13;
+  position: sticky;&#13;
+  position: -webkit-sticky;&#13;
+  position: -ms-sticky;&#13;
+  top: -($font-size-h2 + $font-size-base);&#13;
+  z-index: 10;&#13;
+  background-color: inherit;&#13;
+  border-radius: 4px 4px 0 0;&#13;
+}&#13;
+.sc-fixed {&#13;
+  position: fixed;&#13;
+  max-height: 100%;&#13;
+  width: 17.67777%;&#13;
+}&#13;
+.no-margin {&#13;
+	margin: 0px; &#13;
+}&#13;
+.sc-item-error-messages {&#13;
+  max-height: 100%;&#13;
+  position: absolute;&#13;
+  overflow-y: auto;&#13;
+  overflow-x: hidden;&#13;
+  width: 100%; &#13;
+}&#13;
+.sc-field-error-label {&#13;
+  margin-right: .5em; &#13;
+  display: inline-block;&#13;
+  cursor: pointer;&#13;
+}&#13;
+.image-gallery {&#13;
+  font-size: 8px;&#13;
+  color: #CECECE;&#13;
+  .active {&#13;
+    color: #717171;&#13;
+  }&#13;
+  i {&#13;
+    padding: 0 5px;&#13;
+  }&#13;
+}&#13;
+.relative {&#13;
+  position: relative;&#13;
+}&#13;
+.sc-order-widget-btn {&#13;
+   position: absolute;&#13;
+   left: 9%;&#13;
+   top: 10px&#13;
+}&#13;
+@media (min-width: 992px)&#13;
+  .col-md-12 {&#13;
+    width:100%;&#13;
+  }&#13;
+@media only screen and (max-width : 992px) {&#13;
+  .sc-fixed {&#13;
+    position: relative;&#13;
+    width: 100%;&#13;
+  }&#13;
+  .wishlist-update-message {&#13;
+    display : block;&#13;
+  }&#13;
+  .sc-item-error-messages {&#13;
+    position: relative;&#13;
+  }&#13;
+  .read-more, .read-less {&#13;
+    font-size: 15px;&#13;
+    cursor: pointer;&#13;
+  }&#13;
+  .more-text {&#13;
+    display: none;&#13;
+  }&#13;
+  /*&#13;
+  .inline-cart {&#13;
+    display: none;&#13;
+  }&#13;
+  .right-side-cart {&#13;
+    display: inherit !important;&#13;
+  }&#13;
+  */&#13;
+}&#13;
+@media only screen and (max-width : 768px) {&#13;
+  .sc-sticky-item-header {&#13;
+     position: inherit;&#13;
+  }&#13;
+  &#13;
+}&#13;
+.inline-cart {&#13;
+  .quantity-selector {&#13;
+    display: inline-block !important;&#13;
+    width: 65px;&#13;
+    padding-top: 2px;&#13;
+  }&#13;
+}&#13;
+/* ************ */&#13;
+#treePickerDiv.myInitHide {&#13;
+  display:none;&#13;
+}&#13;
+div.myTitle {&#13;
+  color: #3a3f51;&#13;
+  background-color: #f5f5f5;&#13;
+  border-top: 1px solid #ddd;&#13;
+  border-right: 1px solid #ddd;&#13;
+  border-left: 1px solid #ddd;&#13;
+  font-weight:bold;&#13;
+  margin: 0;&#13;
+  font-size: 20px;&#13;
+  padding: 5px 10px 5px 10px;&#13;
+}&#13;
+&#13;
+h1,  h2,  h3,  h4,  h5,  h6,  p,  li {&#13;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;&#13;
+}&#13;
+&#13;
+.modal-panel-body {&#13;
+  padding: 0;&#13;
+  display: inline-table;&#13;
+  background-color: #fff;&#13;
+	box-sizing: border-box;&#13;
+}&#13;
+#baseUl {&#13;
+  padding-left: 0px;  &#13;
+  list-style-type: none;&#13;
+  margin:0;&#13;
+}&#13;
+ul.modalTp {&#13;
+  list-style-type: none;&#13;
+  padding-left: 18px;&#13;
+  margin:0;&#13;
+}&#13;
+div.myHeaderModal {&#13;
+  padding:4px 4px 4px 6px;&#13;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;&#13;
+  font-size:15px;&#13;
+  color:#fff;&#13;
+  background-color:#0064b1;&#13;
+  display:block;&#13;
+  margin:0;&#13;
+}&#13;
+i.myCloseModal {&#13;
+  float:right;&#13;
+  padding-right:4px;&#13;
+  padding-top:3px;&#13;
+  &amp;:hover {&#13;
+    cursor:pointer;&#13;
+  }&#13;
+}&#13;
+div.myLiDivModal {&#13;
+  opacity:.75 !important;&#13;
+  &amp;:hover {&#13;
+    cursor:pointer;&#13;
+    opacity:1 !important;&#13;
+  }&#13;
+}&#13;
+div.myImgHolderModal {&#13;
+  display: inline-block;&#13;
+  width: 36px;&#13;
+  height: 16px;&#13;
+  background-repeat: no-repeat;&#13;
+  background-position: center;&#13;
+  background-size: auto;	&#13;
+}&#13;
+div.myPlusModal {&#13;
+  background-image: url(treePlus.png);&#13;
+}&#13;
+div.myMinusModal {&#13;
+  background-image: url(treeMinus.png);&#13;
+}&#13;
+div.myLeafModal {&#13;
+  background-image: url(leaf.png);&#13;
+}&#13;
+div.myNodeModal {&#13;
+  display: inline-block;&#13;
+  font-size: 13px;&#13;
+  position: relative;&#13;
+  top: -4px;&#13;
+  padding-left: 4px;		&#13;
+}&#13;
+div.myLinkModal {&#13;
+  color: #0064b1;&#13;
+  text-decoration: underline;&#13;
+}&#13;
+&#13;
+/* *********** */&#13;
+#myBlankerDiv {&#13;
+  display:none;&#13;
+  top:0;&#13;
+  bottom:0;&#13;
+  left:0;&#13;
+  right:0;&#13;
+  z-index:1040;&#13;
+  opacity:0.5;&#13;
+  background-color:#888; &#13;
+  background-image: url(waitspinner.gif);&#13;
+  background-size: 200px 200px;  &#13;
+  background-repeat: no-repeat;&#13;
+  background-attachment: fixed;&#13;
+  background-position: center;   &#13;
+}&#13;
+// Extra small devices (portrait phones, less than 576px)&#13;
+// No media query since this is the default in Bootstrap&#13;
+&#13;
+// Small devices (landscape phones, 576px and up)&#13;
+@media (min-width: 576px) { &#13;
+  #myBlankerDiv {&#13;
+	  background-size: 300px 300px;  &#13;
+  }&#13;
+}&#13;
+&#13;
+// Medium devices (tablets, 768px and up)&#13;
+@media (min-width: 768px) {&#13;
+  #myBlankerDiv {&#13;
+	  background-size: 400px 400px;  &#13;
+  }&#13;
+}&#13;
+&#13;
+// Large devices (desktops, 992px and up)&#13;
+@media (min-width: 992px) { &#13;
+  #myBlankerDiv {&#13;
+	  background-size: 500px 500px;  &#13;
+  }&#13;
+}&#13;
+&#13;
+// Extra large devices (large desktops, 1200px and up)&#13;
+@media (min-width: 1200px) { &#13;
+  #myBlankerDiv {&#13;
+	  background-size: 600px 600px;  &#13;
+  }&#13;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -1095,7 +1139,7 @@ div.myLinkModal {
         <sys_created_on>2019-02-21 16:59:10</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>ffd70e4ddbb36b80e3ad22d40596194f</sys_id>
-        <sys_mod_count>39</sys_mod_count>
+        <sys_mod_count>45</sys_mod_count>
         <sys_name>UTASSP Catalog Item Incident Widget 4</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -1103,7 +1147,7 @@ div.myLinkModal {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_ffd70e4ddbb36b80e3ad22d40596194f</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-07 01:41:43</sys_updated_on>
+        <sys_updated_on>2019-03-26 16:53:50</sys_updated_on>
         <template><![CDATA[<div id="sc_cat_item" ng-if="::data.recordFound" dummy="{{::c.myLog()}}">
   <div class="myTitle">
     Something Wrong? Report Incident...    
@@ -1267,6 +1311,11 @@ div.myLinkModal {
   </div>
 </div>
 <!-- End Modal Tree Picker -->  
-]]></template>
+
+<!-- Blanker Div -->
+<div id="myBlankerDiv">
+</div>
+<!-- End Blanker Div -->
+  ]]></template>
     </sp_widget>
 </record_update>

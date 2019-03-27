@@ -170,12 +170,18 @@ margin-top: 10px;
         <public>true</public>
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
+	var myGlobal = new global.u_utaglobalapi();
 	var myU = new u_utassp();
 	data.isSecondTime = false;
+	var curSession = gs.getSession();
+	var isLoggedIn = curSession.isLoggedIn();	
+	if (!isLoggedIn) {
+		var myReferrer = myGlobal.u_GlideTransactionHeader();
+	}
 	if (myU.utilIsValueValid(input)) {
 		data.isSecondTime = true;
 	} 
-	data.uSettings=myU.utilGetInstanceSettings();	
+	data.uSettings=myU.utilGetInstanceSettings($sp);	
 	data.infotag = '';
 	// *** Start: Debug only code *** //
 	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn))
@@ -254,7 +260,7 @@ margin-top: 10px;
         <sys_created_on>2019-01-11 21:50:02</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>7841048cdb432b00e3ad22d40596190c</sys_id>
-        <sys_mod_count>131</sys_mod_count>
+        <sys_mod_count>139</sys_mod_count>
         <sys_name>UTASSP Breadcrumbs Std Widget 3</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -262,7 +268,7 @@ margin-top: 10px;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_7841048cdb432b00e3ad22d40596190c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-06 20:58:44</sys_updated_on>
+        <sys_updated_on>2019-03-26 16:54:44</sys_updated_on>
         <template><![CDATA[<div ng-hide="c.isHomePage" class="ng-show myDivDisplayFlexToggle myDivFlexWrap"  dummy="{{::c.myLog()}}">
   <ul class="nav nav-pills nav-sm myBcFontSize myDivDisplayFlexToggle" aria-label="${Navigation breadcrumbs}">
     <li class="myDivDisplayFlexToggle"><a ng-href="?id={{::portal.homepage_dv}}">${Home}</a></li>
@@ -275,6 +281,6 @@ margin-top: 10px;
     </li>
   </ul>  
 </div>
-]]></template>
+  ]]></template>
     </sp_widget>
 </record_update>

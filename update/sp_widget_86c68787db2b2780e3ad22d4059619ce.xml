@@ -2,10 +2,11 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>sc</category>
         <client_script><![CDATA[function ($scope, $http, spScUtil, spUtil, nowAttachmentHandler, $rootScope, $sanitize, $window, $sce, i18n, $timeout, $log, spAriaUtil, $document, spModal, $q, spAtf, $location, u_cutassp) {
-	if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
-		console.log($scope.data.infotag+(new Date()).getTime());		
+	if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+		console.log((new Date()).getTime()+'.Client - '+$scope.data.infotag);
 	}
 	//
+	
 	var c = this;
 	c.myLog = function(_p) {
 		if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
@@ -199,8 +200,14 @@
 		}
 		$scope.data.sc_cat_item.item_action = "order";
 		$scope.data.sc_cat_item.quantity = c.quantity;
-		if (g_form)
-			return g_form.submit();
+		if (g_form) {
+				var myReturn=g_form.submit();
+				if (myReturn) {
+					$('#myBlankerDiv').show();
+					$('#myBlankerDiv').css('position','fixed');					
+				}
+				return myReturn;
+		}
 		return false;
 	};
 
@@ -505,6 +512,53 @@
 div.myContainerInit {&#13;
   z-index:100;&#13;
   background-color:rgba(0, 0, 0, 0.5);&#13;
+}&#13;
+&#13;
+/* *********** */&#13;
+#myBlankerDiv {&#13;
+  display:none;&#13;
+  top:0;&#13;
+  bottom:0;&#13;
+  left:0;&#13;
+  right:0;&#13;
+  z-index:1040;&#13;
+  opacity:0.5;&#13;
+  background-color:#888; &#13;
+  background-image: url(waitspinner.gif);&#13;
+  background-size: 200px 200px;  &#13;
+  background-repeat: no-repeat;&#13;
+  background-attachment: fixed;&#13;
+  background-position: center;   &#13;
+}&#13;
+// Extra small devices (portrait phones, less than 576px)&#13;
+// No media query since this is the default in Bootstrap&#13;
+&#13;
+// Small devices (landscape phones, 576px and up)&#13;
+@media (min-width: 576px) { &#13;
+  #myBlankerDiv {&#13;
+	  background-size: 300px 300px;  &#13;
+  }&#13;
+}&#13;
+&#13;
+// Medium devices (tablets, 768px and up)&#13;
+@media (min-width: 768px) {&#13;
+  #myBlankerDiv {&#13;
+	  background-size: 400px 400px;  &#13;
+  }&#13;
+}&#13;
+&#13;
+// Large devices (desktops, 992px and up)&#13;
+@media (min-width: 992px) { &#13;
+  #myBlankerDiv {&#13;
+	  background-size: 500px 500px;  &#13;
+  }&#13;
+}&#13;
+&#13;
+// Extra large devices (large desktops, 1200px and up)&#13;
+@media (min-width: 1200px) { &#13;
+  #myBlankerDiv {&#13;
+	  background-size: 600px 600px;  &#13;
+  }&#13;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -579,16 +633,12 @@ div.myContainerInit {&#13;
 (function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
 	// *** Start: Debug only code *** //
-	data.isDebugOn = false;
-	if (myU.utilIsValueValidAndTrue(gs.getProperty('x_287765_utassp.utassp_isDebugOn')))
-	{
-		data.widgettitle = 'utassp02_sc_catalog_incident_widget > '+$sp.getDisplayValue("title");
-		data.widgetpage = myU.utilIsValueValid($sp.getParameter('id')) ? $sp.getParameter('id') : 'utassp01_index';
-		data.isDebugOn = true;
-		data.infotag = data.widgetpage+' > '+data.widgettitle+': ';
-		gs.info(data.infotag +(new Date()).getTime());		
-	}
-	// *** End: Debug only code *** //
+	data.uSettings=myU.utilGetInstanceSettings();
+	// *** Start: Debug only code *** //
+	data.infotag = '';
+	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+		data.infotag = myU.utilLog($sp);
+	}	
 	//
 	/* *** removed following as Not Applicable, vcw 11/09/18 *** */
 	var embeddedWidgetOptions = ['auto_redirect', 'requested_for_id', 'requested_for_display'];
@@ -860,7 +910,7 @@ div.myContainerInit {&#13;
         <sys_created_on>2019-02-15 16:26:10</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>86c68787db2b2780e3ad22d4059619ce</sys_id>
-        <sys_mod_count>14</sys_mod_count>
+        <sys_mod_count>18</sys_mod_count>
         <sys_name>UTASSP Catalog Item Incident 2 Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -868,7 +918,7 @@ div.myContainerInit {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_86c68787db2b2780e3ad22d4059619ce</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-12 15:09:40</sys_updated_on>
+        <sys_updated_on>2019-03-26 17:15:10</sys_updated_on>
         <template><![CDATA[<div id="sc_cat_item" ng-if="::data.recordFound" dummy="{{::c.myLog()}}">
   <sp-widget widget="c.orderItemModal" ng-if="c.orderItemModal"></sp-widget>
   <div class="row" ng-if="::data.sc_cat_item" >
@@ -960,6 +1010,11 @@ div.myContainerInit {&#13;
 </div>
 <div ng-if="::!data.recordFound" class="alert alert-info">{{::m.invalidRecordMsg}}</div>
 <now-message key="Added item to shopping cart" value="${Added item to shopping cart}"/>  
-]]></template>
+
+<!-- Blanker Div -->
+<div id="myBlankerDiv">
+</div>
+<!-- End Blanker Div -->
+   ]]></template>
     </sp_widget>
 </record_update>

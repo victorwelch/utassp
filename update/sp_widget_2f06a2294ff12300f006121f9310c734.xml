@@ -122,7 +122,7 @@
         <sys_created_on>2018-11-15 22:22:25</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>2f06a2294ff12300f006121f9310c734</sys_id>
-        <sys_mod_count>35</sys_mod_count>
+        <sys_mod_count>36</sys_mod_count>
         <sys_name>UTASSP Item Status History Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -130,7 +130,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_2f06a2294ff12300f006121f9310c734</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 20:26:55</sys_updated_on>
+        <sys_updated_on>2019-03-26 17:09:24</sys_updated_on>
         <template><![CDATA[<div class="panel panel-{{::c.options.color}} b" dummy="{{::c.myLog()}}">
   <div class="panel-heading">
     <h4 class="panel-title">${STATUS: }{{::c.data.serviceDisplay}} <span class="text-muted">(${last 90 days})</span></h4>    
@@ -140,6 +140,7 @@
     <div ng-repeat="day in ::c.data.days" class="day" ng-class="{'multiple-issues': (day.count > 0)}" ng-style="::{'background-color': day.color}" tooltips tooltip-template="{{::day.msg}} {{::day.date}}">
     </div>
   </div>
-</div>]]></template>
+</div>
+ ]]></template>
     </sp_widget>
 </record_update>

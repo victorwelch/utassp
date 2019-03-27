@@ -277,113 +277,123 @@
 			
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>.btn-form-menu {
-	vertical-align: inherit;
-  padding: inherit;
-  background: none;
-}
-
-.panel-title {
-  word-wrap: break-word;
-}
-
-.panel-heading {
-  .dropdown-menu {
-    a {
-      white-space: normal;
-    }
-  }
-}
-
-.comment {
-	font-weight: bold;
-	margin-top: 2px;
-	margin-bottom: 2px;
-}
-.mce-panel, .mce-btn {
-	background-image: none;
-	background-color: #f0f3f4;
-}
-
-.action-btn {
-  margin-right: 5px;
-}
-
-.timeline-container {
-   max-height: 50vh;
-   height: 100%;
-   overflow-y: auto;
-}
-
-.panel .panel {
-    height: auto !important;
-}
-
-.attachment-button {
-  .glyphicon-paperclip {
-    font-size: 18px;
-  }
-}
-
-.dropdown {
-  .glyphicon-menu-hamburger:focus {
- 		outline: thin dotted;
-		outline: 5px auto -webkit-focus-ring-color;
-		outline-offset: -2px; 
-	}
-}
-
-.empty-state-wrapper {
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  padding: 10vh 20px 20px;
-
-  .empty-state {
-    border: 1px solid #e7e9eb;
-    border-radius: 10px;
-    max-width: 700px;
-    padding: 30px 40px 20px;
-    position: relative;
-
-    .empty-state-badge {
-      top: -36px;
-      left: 50%;
-      position: absolute;
-      height: 72px;
-      width: 72px;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center;
-      border-radius: 100%;
-      color: #ffffff;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      font-size: 40px;
-      -webkit-justify-content: center;
-      -ms-flex-pack: center;
-      justify-content: center;
-      margin-left: -36px;
-      text-align: center;
-    }
-
-    .empty-state-header {
-      font-size: 30px;
-      text-align: center;
-      color: #343d47;
-    }
-
-    .empty-state-content {
-      ul {
-        list-style: disc outside;
-        margin: 0 0 10px 0;
-        padding: 0 0 0 30px;
-      }
-    }
-  }
+        <css>.btn-form-menu {&#13;
+	vertical-align: inherit;&#13;
+  padding: inherit;&#13;
+  background: none;&#13;
+}&#13;
+&#13;
+.panel-title {&#13;
+  word-wrap: break-word;&#13;
+}&#13;
+&#13;
+.panel-heading {&#13;
+  .dropdown-menu {&#13;
+    a {&#13;
+      white-space: normal;&#13;
+    }&#13;
+  }&#13;
+}&#13;
+&#13;
+.comment {&#13;
+	font-weight: bold;&#13;
+	margin-top: 2px;&#13;
+	margin-bottom: 2px;&#13;
+}&#13;
+.mce-panel, .mce-btn {&#13;
+	background-image: none;&#13;
+	background-color: #f0f3f4;&#13;
+}&#13;
+&#13;
+.action-btn {&#13;
+  margin-right: 5px;&#13;
+}&#13;
+&#13;
+.timeline-container {&#13;
+   max-height: 50vh;&#13;
+   height: 100%;&#13;
+   overflow-y: auto;&#13;
+}&#13;
+&#13;
+.panel .panel {&#13;
+    height: auto !important;&#13;
+}&#13;
+&#13;
+.attachment-button {&#13;
+  .glyphicon-paperclip {&#13;
+    font-size: 18px;&#13;
+  }&#13;
+}&#13;
+&#13;
+.dropdown {&#13;
+  .glyphicon-menu-hamburger:focus {&#13;
+ 		outline: thin dotted;&#13;
+		outline: 5px auto -webkit-focus-ring-color;&#13;
+		outline-offset: -2px; &#13;
+	}&#13;
+}&#13;
+&#13;
+.empty-state-wrapper {&#13;
+  width: 100%;&#13;
+  height: 100%;&#13;
+  align-items: center;&#13;
+  display: flex;&#13;
+  flex-direction: column;&#13;
+  padding: 10vh 20px 20px;&#13;
+&#13;
+  .empty-state {&#13;
+    border: 1px solid #e7e9eb;&#13;
+    border-radius: 10px;&#13;
+    max-width: 700px;&#13;
+    padding: 30px 40px 20px;&#13;
+    position: relative;&#13;
+&#13;
+    .empty-state-badge {&#13;
+      top: -36px;&#13;
+      left: 50%;&#13;
+      position: absolute;&#13;
+      height: 72px;&#13;
+      width: 72px;&#13;
+      -webkit-align-items: center;&#13;
+      -ms-flex-align: center;&#13;
+      align-items: center;&#13;
+      border-radius: 100%;&#13;
+      color: #ffffff;&#13;
+      display: -webkit-flex;&#13;
+      display: -ms-flexbox;&#13;
+      display: flex;&#13;
+      font-size: 40px;&#13;
+      -webkit-justify-content: center;&#13;
+      -ms-flex-pack: center;&#13;
+      justify-content: center;&#13;
+      margin-left: -36px;&#13;
+      text-align: center;&#13;
+    }&#13;
+&#13;
+    .empty-state-header {&#13;
+      font-size: 30px;&#13;
+      text-align: center;&#13;
+      color: #343d47;&#13;
+    }&#13;
+&#13;
+    .empty-state-content {&#13;
+      ul {&#13;
+        list-style: disc outside;&#13;
+        margin: 0 0 10px 0;&#13;
+        padding: 0 0 0 30px;&#13;
+      }&#13;
+    }&#13;
+  }&#13;
+}&#13;
+&#13;
+.fa-pencil:before {&#13;
+    content: "\f303";&#13;
+}&#13;
+.fa-file-o:before {&#13;
+    content: "\f15b";&#13;
+}&#13;
+.fa-file-image-o:before {&#13;
+    content: "\f1c5";&#13;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -525,7 +535,7 @@
         <sys_created_on>2018-10-30 15:31:50</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>89ae6a584f212300f006121f9310c79c</sys_id>
-        <sys_mod_count>46</sys_mod_count>
+        <sys_mod_count>49</sys_mod_count>
         <sys_name>UTASSP Form Widget 2</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -533,7 +543,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_89ae6a584f212300f006121f9310c79c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 17:24:01</sys_updated_on>
+        <sys_updated_on>2019-03-26 16:56:05</sys_updated_on>
         <template><![CDATA[<div ng-if="::!data.isValid && !data.emptyStateTemplate" class="panel panel-default" dummy="{{::c.myLog()}}">
   <div class="panel-body wrapper-lg text-center">
     <span ng-if="!data.tableUnsupported">${Record not found}</span>
@@ -634,6 +644,7 @@
       </div>
     </div>
   </div>
-</div>]]></template>
+</div>
+  ]]></template>
     </sp_widget>
 </record_update>
