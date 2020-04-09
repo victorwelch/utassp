@@ -8,7 +8,8 @@
 	//
 	/* widget controller */
 	var c = this;
-
+	c.event$location = $location;
+	c.event$timeout = $timeout;
 	c.myLabel = function (_p) { return u_cutassp.fmtLabel(_p); };
 	c.myLog = function() {
 		if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
@@ -17,7 +18,10 @@
 		return '';
 	};
 	//
-	var paramList = $location.search();
+	debugger;
+	var absUrl = $location.absUrl();
+	var urlObj = new URL(absUrl);
+	var paramList = u_cutassp.getParamList(urlObj.search);
 	c.isHomePage = false;
 	if (u_cutassp.utilIsValueValid(paramList.id)) {
 		if (paramList.id.toString().indexOf('index')>-1) {
@@ -28,9 +32,14 @@
 		c.isHomePage = true;
 	}
 	var isHeaderMenu = u_cutassp.utilIsValueValid(paramList.ishdrmenu);
+	if ($window.lrootscope) {
+		$rootScope.bc = $window.lrootscope.bc;
+		$window.lrootscope=null;
+	}
 	var isRootScopeBc = u_cutassp.utilIsValueValid($rootScope.bc);
 	var iLen=0;	
-	var bcitem = {label: $scope.page.title, url: window.location.search, level: 1};
+	var oldParamList;
+	var bcitem = {label: $scope.page.title, url: absUrl, level: 1};
 	//
 	if (c.isHomePage)
 	{
@@ -40,6 +49,7 @@
 	else
 	{
 		//We are not at the home page, so process the breadrumb stack
+		debugger;
 		if (isRootScopeBc && !isHeaderMenu) {
 			var isSamePage = false;
 			var isBackNav = false;
@@ -52,6 +62,25 @@
 					// *** Catpures case of browser 'go back' click
 					if ($rootScope.bc[idx-1].label == bcitem.label) { 
 						isBackNav=true;
+					} else {
+						//debugger
+						var isParamListIdKb = 
+							u_cutassp.utilIsValueValid(paramList.sys_id) && 
+							u_cutassp.utilIsValueValid(paramList.id) && 
+							paramList.id.toLowerCase().endsWith('kb_article');
+						var oldUrlObj = new URL($rootScope.bc[idx-1].url);
+						var oldParamList = u_cutassp.getParamList(oldUrlObj.search);
+						var isOldParamListIdKb = 
+							u_cutassp.utilIsValueValid(oldParamList.sys_id) && 
+							u_cutassp.utilIsValueValid(oldParamList.id) && 
+							oldParamList.id.toLowerCase().endsWith('kb_article');
+							
+						if (
+							(isParamListIdKb) && (isOldParamListIdKb) &&
+							(oldParamList.sys_id == paramList.sys_id) 
+						){
+							isBackNav=true;							
+						}
 					}
 				}
 			}
@@ -68,13 +97,22 @@
 			else if (u_cutassp.utilIsValueValid(paramList.level))
 			{
 				iLen = parseInt(paramList.level);
-				c.data.breadcrumbs = $rootScope.bc.slice(0,iLen);
+				console.log('breadcrumb level: '+iLen)
+				c.data.breadcrumbs = $rootScope.bc.slice(0,iLen);	
 			}
 			else
 			{
 				c.data.breadcrumbs = $rootScope.bc;	
-				bcitem.level = c.data.breadcrumbs.length+1;
-				c.data.breadcrumbs.push(bcitem);			
+				bcitem.level=$rootScope.bc.length+1;
+				c.data.breadcrumbs.push(bcitem);
+				for (var i=0,iEnd=c.data.breadcrumbs.length;i<iEnd;i++) {
+				   console.log('!!! c.data.breadcrumbs['+i+'].level: '+
+							   c.data.breadcrumbs[i].level+
+							   ', i+1: '+(i+1));
+					if (c.data.breadcrumbs[i].level != i+1) {
+						c.data.breadcrumbs[i].level == i+1
+					}
+				}
 			}
 		}
 		// This was a header menu item selection, so reset stack to just current level
@@ -82,16 +120,17 @@
 		{
 			c.data.breadcrumbs = [ bcitem ];
 		}
-
+		
 		// *************************************************************************
 		// *** Go back to server to check for special cases
 		c.breadcrumbs = c.data.breadcrumbs;
 		c.server.update().then(function(){
-			if (u_cutassp.utilIsValueValidAndTrue($scope.data.isDebugOn)) {
+			if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
 				console.log($scope.data.infotag+(new Date()).getTime()); 
 			}
+			//$scope.data.breadcrumbs.url = $location
 			$rootScope.bc=$scope.data.breadcrumbs;
-			c.breadcrumbs=$scope.data.breadcrumbs;
+			c.breadcrumbs=$scope.data.breadcrumbs;			
 		});		
 		//		
 	}
@@ -133,7 +172,85 @@
 	$scope.$on('$destroy', function(){
 		deregister();
 	});	
+	//
+	$window.event$scope = $scope;
+	$window.event$rootScope = $rootScope;
+	$window.onpopstate = function(event) {
+		if ($window.ignorePopState) {
+			return false;
+		}
+		//event.preventDefault();
+		//event.stopPropagation();
+		$window.noredirect=true;
+	    var l$scope = $window.event$scope;
+	    var l$location = l$scope.c.event$location;
+	    var l$timeout = l$scope.c.event$timeout;
+	    var l$rootScope = $window.event$rootScope;
+	    var isFound = false;
+	    var breadItem = {
+	        label: 'home',
+	        url: '?id=utassp01_index&ishdrmenu=1',
+	        level: 0
+	    }
+	    if ((l$rootScope.bc) && (l$rootScope.bc.length > 0)) {
+	        l$rootScope.bc.pop();
+	        if (l$rootScope.bc.length > 0) {
+	            breadItem = l$rootScope.bc.pop();
+	        }
+	    }
+		var redirUrlStr=
+			l$location.protocol()+'://'+
+			l$location.host()+
+			l$location.path()+
+			breadItem.url;
+		var redirUrlObj = new URL(redirUrlStr);
+		var newPath = redirUrlObj.pathname;
+		l$location.search('');
+		var newSp;
+		var isMsIeEdge = (redirUrlObj.searchParams) ? false : true;
+		if (isMsIeEdge) {
+            newSp = u_cutassp.getParamList(redirUrlObj.search);
+            for (pkey in newSp) {
+                l$location.search(pkey, newSp[pkey]);
+            }
+        } else {
+            newSp = redirUrlObj.searchParams;
+            newSp.forEach(
+                function(value, key) {
+                    l$location.search(key, value);
+                }
+            );
+		}
+		$window.llocationabsurl = l$location.absUrl();		
+		$window.llocationurl = l$location.url();		
+		$window.lrootscope = l$rootScope;
+		$window.llocation = l$location;
+		$window.newPath = newPath;
+		$window.llocation.path($window.newPath);
+		$rootScope = $window.lrootscope;
+		return false;
+	};
+	
 	// ***
+ 	$scope.$on('$locationChangeStart', function(event, newUrl, oldUrl, newState, oldState) {
+ 		var newUrlObj = new URL(newUrl);
+ 		var oldUrlObj = new URL(oldUrl);
+ 		var isMsIeEdge = (newUrlObj.searchParams) ? false : true;
+ 		if (isMsIeEdge) {
+ 		    var newSp = u_cutassp.getParamList(newUrlObj.search);
+ 		    if ((newSp.id) && (newSp.id.indexOf('kbar') > -1)) {
+ 		        $window.ignorePopState = false;
+ 		    } else {
+ 		        $window.ignorePopState = true;
+ 		    }
+ 		} else {
+ 		    if ((newUrlObj.searchParams.get('id').indexOf('kbar') > -1)) {
+ 		        $window.ignorePopState = false;
+ 		    } else {
+ 		        $window.ignorePopState = true;
+ 		    }
+ 		}
+	});	
 }
 ]]></client_script>
         <controller_as>c</controller_as>
@@ -173,11 +290,11 @@ margin-top: 10px;
 	var myGlobal = new global.u_utaglobalapi();
 	var myU = new u_utassp();
 	data.isSecondTime = false;
-	var curSession = gs.getSession();
-	var isLoggedIn = curSession.isLoggedIn();	
-	if (!isLoggedIn) {
-		var myReferrer = myGlobal.u_GlideTransactionHeader();
-	}
+	//var curSession = gs.getSession();
+	//var isLoggedIn = curSession.isLoggedIn();	
+	//if (!isLoggedIn) {
+	//	var myReferrer = myGlobal.u_GlideTransactionHeader();
+	//}
 	if (myU.utilIsValueValid(input)) {
 		data.isSecondTime = true;
 	} 
@@ -245,8 +362,12 @@ margin-top: 10px;
 			idx = data.breadcrumbs.length-1;
 			if (idx>1) 
 			{
-				if (data.breadcrumbs[idx-2].label==data.breadcrumbs[idx].label)
+				if (data.breadcrumbs[idx-1].label==data.breadcrumbs[idx].label)
 				{
+					gs.info('breadcrumb -- bc['+idx+']: '+
+							data.breadcrumbs[idx].label+
+							',  bc['+idx-1+']: '+
+							data.breadcrumbs[idx-1].label);
 					data.breadcrumbs.pop();
 					data.breadcrumbs.pop();
 				}
@@ -260,7 +381,7 @@ margin-top: 10px;
         <sys_created_on>2019-01-11 21:50:02</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>7841048cdb432b00e3ad22d40596190c</sys_id>
-        <sys_mod_count>139</sys_mod_count>
+        <sys_mod_count>249</sys_mod_count>
         <sys_name>UTASSP Breadcrumbs Std Widget 3</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -268,7 +389,7 @@ margin-top: 10px;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_7841048cdb432b00e3ad22d40596190c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-26 16:54:44</sys_updated_on>
+        <sys_updated_on>2020-02-05 21:50:06</sys_updated_on>
         <template><![CDATA[<div ng-hide="c.isHomePage" class="ng-show myDivDisplayFlexToggle myDivFlexWrap"  dummy="{{::c.myLog()}}">
   <ul class="nav nav-pills nav-sm myBcFontSize myDivDisplayFlexToggle" aria-label="${Navigation breadcrumbs}">
     <li class="myDivDisplayFlexToggle"><a ng-href="?id={{::portal.homepage_dv}}">${Home}</a></li>
@@ -278,9 +399,9 @@ margin-top: 10px;
     </li>
     <li aria-hidden="true" ng-if="!$last" ng-repeat-end class="myDivDisplayFlexToggle">
       <i class="fa fa-chevron-right"></i>
-    </li>
+    </li>  
   </ul>  
 </div>
-  ]]></template>
+   ]]></template>
     </sp_widget>
 </record_update>

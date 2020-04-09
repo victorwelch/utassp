@@ -671,7 +671,7 @@ a.myDivTableRow {
         <roles/>
         <script><![CDATA[(function ($sp, input, data, options, gs) {
 	var myU = new u_utassp();
-	data.uSettings=myU.utilGetInstanceSettings();	
+	data.uSettings=myU.utilGetInstanceSettings($sp);	
 	// *** Start: Debug only code *** //
 	data.infotag = '';
 	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
@@ -946,7 +946,7 @@ a.myDivTableRow {
         <sys_created_on>2018-10-24 20:51:19</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>763e3cae4f912300f006121f9310c761</sys_id>
-        <sys_mod_count>81</sys_mod_count>
+        <sys_mod_count>82</sys_mod_count>
         <sys_name>UTASSP My Closed Tickets Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -954,7 +954,7 @@ a.myDivTableRow {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_763e3cae4f912300f006121f9310c761</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 19:17:49</sys_updated_on>
+        <sys_updated_on>2019-04-02 16:33:54</sys_updated_on>
         <template><![CDATA[<div>
     <div class="panel panel-{{::options.color}} b" dummy="{{::c.myLog()}}">
         <div class="panel-heading myLeftAlign">

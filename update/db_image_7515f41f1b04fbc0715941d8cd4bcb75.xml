@@ -30,17 +30,18 @@
         <compressed>true</compressed>
         <content_type>image/gif</content_type>
         <file_name>image</file_name>
+        <hash/>
         <image_height>800</image_height>
         <image_width>800</image_width>
         <size_bytes>454706</size_bytes>
         <size_compressed>454632</size_compressed>
-        <state/>
+        <state>available</state>
         <sys_created_by>welchv</sys_created_by>
         <sys_created_on>2019-03-12 20:59:52</sys_created_on>
         <sys_id>b625b8db1b04fbc0715941d8cd4bcb7e</sys_id>
-        <sys_mod_count>2</sys_mod_count>
-        <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-12 20:59:54</sys_updated_on>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_updated_by>guest</sys_updated_by>
+        <sys_updated_on>2019-09-11 17:44:53</sys_updated_on>
         <table_name>ZZ_YYdb_image</table_name>
         <table_sys_id>7515f41f1b04fbc0715941d8cd4bcb75</table_sys_id>
     </sys_attachment>

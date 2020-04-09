@@ -1,182 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
     <sp_page action="INSERT_OR_UPDATE">
         <category>sc</category>
-        <css>@media  (min-width: 768px) {
-	.container {
-		width: 762px;
-	}
-}
-@media  (min-width: 800px) {
-	.container {
-		width: 794px;
-	}
-}
-@media  (min-width: 810px) {
-	.container {
-		width: 804px;
-	}
-}
-@media  (min-width: 880px) {
-	.container {
-		width: 874px;
-	}
-}
-@media  (min-width: 890px) {
-	.container {
-		width: 884px;
-	}
-}
-@media  (min-width: 900px) {
-	.container {
-		width: 894px;
-	}
-}
-@media  (min-width: 910px) {
-	.container {
-		width: 904px;
-	}
-}
-@media  (min-width: 920px) {
-	.container {
-		width: 914px;
-	}
-}
-@media  (min-width: 930px) {
-	.container {
-		width: 924px;
-	}
-}
-@media  (min-width: 940px) {
-	.container {
-		width: 934px;
-	}
-}
-@media  (min-width: 950px) {
-	.container {
-		width: 944px;
-	}
-}
-@media  (min-width: 960px) {
-	.container {
-		width: 950px;
-	}
-}
-@media  (min-width: 970px) {
-	.container {
-		width: 960px;
-	}
-}
-@media  (min-width: 990px) {
-	.container {
-		width: 980px;
-	}
-}
-@media  (min-width: 1002px) {
-	.container {
-		width: 992px;
-	}
-}
-@media  (min-width: 1010px) {
-	.container {
-		width: 1000px;
-	}
-}
-@media  (min-width: 1060px) {
-	.container {
-		width: 1050px;
-	}
-}
-@media  (min-width: 1110px) {
-	.container {
-		width: 1100px;
-	}
-}
-@media (min-width: 1150px) {
-	.container {
-		width: 1140px;
-	}
-}
-@media  (min-width: 1200px) {
-	.container {
-		width: 1170px;
-	}
-}
-/*
-
-*/
-.field-has-reference .add-on {
-    display: none;
-}
-/*
-Modal panel hacks for Safari
-*/
-.modal-panel-body {
-  padding: 0;
-  display: inline-table;
-  background-color: #fff;
-	box-sizing: border-box;
-}
-#baseUl {
-  padding-left: 0px;  
-  list-style-type: none;
-  margin:0;
-}
-ul.modalTp {
-  list-style-type: none;
-  padding-left: 18px;
-  margin:0;
-}
-div.myHeaderModal {
-  padding:4px 4px 4px 6px;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-size:15px;
-  color:#fff;
-  background-color:#0064b1;
-  display:block;
-  margin:0;
-}
-i.myCloseModal {
-  float:right;
-  padding-right:4px;
-  padding-top:3px;
-  &amp;:hover {
-    cursor:pointer;
-  }
-}
-div.myLiDivModal {
-  opacity:.75 !important;
-  &amp;:hover {
-    cursor:pointer;
-    opacity:1 !important;
-  }
-}
-div.myImgHolderModal {
-  display: inline-block;
-  width: 36px;
-  height: 16px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: auto;	
-}
-div.myPlusModal {
-  background-image: url(treePlus.png);
-}
-div.myMinusModal {
-  background-image: url(treeMinus.png);
-}
-div.myLeafModal {
-  background-image: url(leaf.png);
-}
-div.myNodeModal {
-  display: inline-block;
-  font-size: 13px;
-  position: relative;
-  top: -4px;
-  padding-left: 4px;		
-}
-div.myLinkModal {
-  color: #0064b1;
-  text-decoration: underline;
+        <css>@media  (min-width: 768px) {&#13;
+	.container {&#13;
+		width: 762px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 800px) {&#13;
+	.container {&#13;
+		width: 794px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 810px) {&#13;
+	.container {&#13;
+		width: 804px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 880px) {&#13;
+	.container {&#13;
+		width: 874px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 890px) {&#13;
+	.container {&#13;
+		width: 884px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 900px) {&#13;
+	.container {&#13;
+		width: 894px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 910px) {&#13;
+	.container {&#13;
+		width: 904px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 920px) {&#13;
+	.container {&#13;
+		width: 914px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 930px) {&#13;
+	.container {&#13;
+		width: 924px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 940px) {&#13;
+	.container {&#13;
+		width: 934px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 950px) {&#13;
+	.container {&#13;
+		width: 944px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 960px) {&#13;
+	.container {&#13;
+		width: 950px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 970px) {&#13;
+	.container {&#13;
+		width: 960px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 990px) {&#13;
+	.container {&#13;
+		width: 980px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 1002px) {&#13;
+	.container {&#13;
+		width: 992px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 1010px) {&#13;
+	.container {&#13;
+		width: 1000px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 1060px) {&#13;
+	.container {&#13;
+		width: 1050px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 1110px) {&#13;
+	.container {&#13;
+		width: 1100px;&#13;
+	}&#13;
+}&#13;
+@media (min-width: 1150px) {&#13;
+	.container {&#13;
+		width: 1140px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 1200px) {&#13;
+	.container {&#13;
+		width: 1170px;&#13;
+	}&#13;
+}&#13;
+/*&#13;
+&#13;
+*/&#13;
+.field-has-reference .add-on {&#13;
+    display: none;&#13;
+}&#13;
+/*&#13;
+Modal panel hacks for Safari&#13;
+*/&#13;
+.modal-panel-body {&#13;
+  padding: 0;&#13;
+  display: inline-table;&#13;
+  background-color: #fff;&#13;
+	box-sizing: border-box;&#13;
+}&#13;
+#baseUl {&#13;
+  padding-left: 0px;  &#13;
+  list-style-type: none;&#13;
+  margin:0;&#13;
+}&#13;
+ul.modalTp {&#13;
+  list-style-type: none;&#13;
+  padding-left: 18px;&#13;
+  margin:0;&#13;
+}&#13;
+div.myHeaderModal {&#13;
+  padding:4px 4px 4px 6px;&#13;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;&#13;
+  font-size:15px;&#13;
+  color:#fff;&#13;
+  background-color:#0064b1;&#13;
+  display:block;&#13;
+  margin:0;&#13;
+}&#13;
+i.myCloseModal {&#13;
+  float:right;&#13;
+  padding-right:4px;&#13;
+  padding-top:3px;&#13;
+  &amp;:hover {&#13;
+    cursor:pointer;&#13;
+  }&#13;
+}&#13;
+div.myLiDivModal {&#13;
+  opacity:.75 !important;&#13;
+  &amp;:hover {&#13;
+    cursor:pointer;&#13;
+    opacity:1 !important;&#13;
+  }&#13;
+}&#13;
+div.myImgHolderModal {&#13;
+  display: inline-block;&#13;
+  width: 36px;&#13;
+  height: 16px;&#13;
+  background-repeat: no-repeat;&#13;
+  background-position: center;&#13;
+  background-size: auto;	&#13;
+}&#13;
+div.myPlusModal {&#13;
+  background-image: url(treePlus.png);&#13;
+}&#13;
+div.myMinusModal {&#13;
+  background-image: url(treeMinus.png);&#13;
+}&#13;
+div.myLeafModal {&#13;
+  background-image: url(leaf.png);&#13;
+}&#13;
+div.myNodeModal {&#13;
+  display: inline-block;&#13;
+  font-size: 13px;&#13;
+  position: relative;&#13;
+  top: -4px;&#13;
+  padding-left: 4px;		&#13;
+}&#13;
+div.myLinkModal {&#13;
+  color: #0064b1;&#13;
+  text-decoration: underline;&#13;
 }</css>
         <draft>false</draft>
         <dynamic_title_structure/>
@@ -201,4 +201,5 @@ div.myLinkModal {
         <sys_updated_on>2019-03-07 01:41:14</sys_updated_on>
         <title>UTASSP Report Incident</title>
     </sp_page>
+    <sys_translated_text action="delete_multiple" query="documentkey=6e13ec1e1ba7e380715941d8cd4bcbaa"/>
 </record_update>

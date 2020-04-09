@@ -97,4 +97,5 @@
         <typeahead_glyph/>
         <typeahead_template/>
     </sp_search_source>
+    <sys_translated_text action="delete_multiple" query="documentkey=c7bf34444f922300f006121f9310c7d0"/>
 </record_update>

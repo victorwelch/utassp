@@ -10,60 +10,60 @@
 	var c = this;
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>*:focus {&#13;
-    outline: none !important;&#13;
-}&#13;
-&#13;
-/** Fixes Safari **/ &#13;
-.row:before, .row:after {&#13;
-    display: flex !important;&#13;
-} &#13;
-&#13;
-&#13;
- h1,  h2,  h3,  h4,  h5,  h6,  p,  li {&#13;
-    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;&#13;
-}&#13;
-&#13;
- p,  span,  li {&#13;
-    color: #363636;&#13;
-    font-size: 14px;&#13;
-}&#13;
-&#13;
- a {&#13;
-    cursor: pointer !important;&#13;
-}&#13;
-&#13;
- h1 {&#13;
-    margin-top:0;&#13;
-    font-size: 25px;&#13;
-    color: #232323;&#13;
-}&#13;
-&#13;
- #defaultOpen {&#13;
-    display: none;&#13;
-}&#13;
-#defaultSection {&#13;
-  padding:10px 10px 0 10px;;&#13;
-  margin-left:25px;&#13;
-  margin-right:25px;&#13;
-  background-color:#f0f0f0;&#13;
-  border:1px solid #ddd;&#13;
-}&#13;
-&#13;
-@media only screen and (min-width: 992px) {&#13;
-    div#myContainer {&#13;
-      display:none;&#13;
-    }&#13;
-}&#13;
-&#13;
-&#13;
-@media only screen and (max-width: 991.1px) {&#13;
-    div#myContainer {&#13;
-      margin-top:20px;&#13;
-      display:inherit;&#13;
-    }&#13;
-}&#13;
-&#13;
+        <css>*:focus {
+    outline: none !important;
+}
+
+/** Fixes Safari **/ 
+.row:before, .row:after {
+    display: flex !important;
+} 
+
+
+ h1,  h2,  h3,  h4,  h5,  h6,  p,  li {
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+ p,  span,  li {
+    color: #363636;
+    font-size: 14px;
+}
+
+ a {
+    cursor: pointer !important;
+}
+
+ h1 {
+    margin-top:0;
+    font-size: 25px;
+    color: #232323;
+}
+
+ #defaultOpen {
+    display: none;
+}
+#defaultSection {
+  padding:10px 10px 0 10px;;
+  margin-left:25px;
+  margin-right:25px;
+  background-color:#f0f0f0;
+  border:1px solid #ddd;
+}
+
+@media only screen and (min-width: 992px) {
+    div#myContainer {
+      display:none;
+    }
+}
+
+
+@media only screen and (max-width: 991.1px) {
+    div#myContainer {
+      margin-top:20px;
+      display:inherit;
+    }
+}
+
 </css>
         <data_table>sp_instance</data_table>
         <demo_data/>

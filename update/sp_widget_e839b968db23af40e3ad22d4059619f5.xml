@@ -407,65 +407,65 @@ i.myHeaderCircleIcon {
         <internal>false</internal>
         <link/>
         <name>UTASSP Business Service Tree</name>
-        <option_schema>[&#13;
-  {&#13;
-    "name": "color",&#13;
-    "label": "Color",&#13;
-    "type": "choice",&#13;
-    "choices": [&#13;
-      {&#13;
-        "label": "Default",&#13;
-        "value": "default"&#13;
-      },&#13;
-      {&#13;
-        "label": "Custom",&#13;
-        "value": "custom"&#13;
-      },&#13;
-      {&#13;
-        "label": "Primary",&#13;
-        "value": "primary"&#13;
-      },&#13;
-      {&#13;
-        "label": "Success",&#13;
-        "value": "success"&#13;
-      },&#13;
-      {&#13;
-        "label": "Info",&#13;
-        "value": "info"&#13;
-      },&#13;
-      {&#13;
-        "label": "Warning",&#13;
-        "value": "warning"&#13;
-      },&#13;
-      {&#13;
-        "label": "Danger",&#13;
-        "value": "danger"&#13;
-      }&#13;
-    ]&#13;
-  },&#13;
-  {&#13;
-    "name": "knowledge_base",&#13;
-    "label": "Knowledge Base",&#13;
-    "type": "choice",&#13;
-    "choices": [&#13;
-      {&#13;
-        "label": "Business Affairs Internal",&#13;
-        "value": "Business Affairs Internal"&#13;
-      },&#13;
-      {&#13;
-        "label": "Business Affairs Knowledge Base",&#13;
-        "value": "Business Affairs Knowledge Base"&#13;
-      },&#13;
-      {&#13;
-        "label": "OIT Internal",&#13;
-        "value": "OIT Internal"&#13;
-      },&#13;
-      {&#13;
-        "label": "OIT Knowledge Base",&#13;
-        "value": "OIT Knowledge Base"&#13;
-      }&#13;
-    ]&#13;
-  }&#13;
+        <option_schema>[
+  {
+    "name": "color",
+    "label": "Color",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Default",
+        "value": "default"
+      },
+      {
+        "label": "Custom",
+        "value": "custom"
+      },
+      {
+        "label": "Primary",
+        "value": "primary"
+      },
+      {
+        "label": "Success",
+        "value": "success"
+      },
+      {
+        "label": "Info",
+        "value": "info"
+      },
+      {
+        "label": "Warning",
+        "value": "warning"
+      },
+      {
+        "label": "Danger",
+        "value": "danger"
+      }
+    ]
+  },
+  {
+    "name": "knowledge_base",
+    "label": "Knowledge Base",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Business Affairs Internal",
+        "value": "Business Affairs Internal"
+      },
+      {
+        "label": "Business Affairs Knowledge Base",
+        "value": "Business Affairs Knowledge Base"
+      },
+      {
+        "label": "OIT Internal",
+        "value": "OIT Internal"
+      },
+      {
+        "label": "OIT Knowledge Base",
+        "value": "OIT Knowledge Base"
+      }
+    ]
+  }
 ]</option_schema>
         <public>false</public>
         <roles/>

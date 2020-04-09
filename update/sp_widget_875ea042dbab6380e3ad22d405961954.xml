@@ -485,132 +485,132 @@
     });
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>.panel-button {&#13;
-  float: none;&#13;
-}&#13;
-&#13;
-.sp-attachment-add {&#13;
-  padding: 5px;&#13;
-}&#13;
-&#13;
-.p-t-none {&#13;
-  padding-top: 0 !important;&#13;
-}&#13;
-&#13;
-.file-list-wrap {&#13;
-	margin-bottom: 10px;&#13;
-}&#13;
-&#13;
-.sc-btn {&#13;
-  color: $text-color;&#13;
-}&#13;
-&#13;
-.dismiss-button {&#13;
-  position: absolute;&#13;
-  top: 1rem;&#13;
-	right: 10px;&#13;
-	color: $text-color;&#13;
-	cursor: pointer;&#13;
-}&#13;
-&#13;
-.item-header {&#13;
-  padding-top: 10px !important;&#13;
-  padding-bottom: 10px !important;&#13;
-}&#13;
-&#13;
-.sc-sticky-item-header {&#13;
-  position: sticky;&#13;
-  position: -webkit-sticky;&#13;
-  position: -ms-sticky;&#13;
-  top: -($font-size-h2 + $font-size-base);&#13;
-  z-index: 10;&#13;
-  background-color: inherit;&#13;
-  border-radius: 4px 4px 0 0;&#13;
-}&#13;
-.sc-fixed {&#13;
-  position: fixed;&#13;
-  max-height: 100%;&#13;
-  width: 17.67777%;&#13;
-}&#13;
-.no-margin {&#13;
-	margin: 0px; &#13;
-}&#13;
-.sc-item-error-messages {&#13;
-  max-height: 100%;&#13;
-  position: absolute;&#13;
-  overflow-y: auto;&#13;
-  overflow-x: hidden;&#13;
-  width: 100%; &#13;
-}&#13;
-.sc-field-error-label {&#13;
-  margin-right: .5em; &#13;
-  display: inline-block;&#13;
-  cursor: pointer;&#13;
-}&#13;
-.image-gallery {&#13;
-  font-size: 8px;&#13;
-  color: #CECECE;&#13;
-  .active {&#13;
-    color: #717171;&#13;
-  }&#13;
-  i {&#13;
-    padding: 0 5px;&#13;
-  }&#13;
-}&#13;
-.relative {&#13;
-  position: relative;&#13;
-}&#13;
-.sc-order-widget-btn {&#13;
-   position: absolute;&#13;
-   left: 9%;&#13;
-   top: 10px&#13;
-}&#13;
-@media (min-width: 992px)&#13;
-  .col-md-12 {&#13;
-    width:100%;&#13;
-  }&#13;
-@media only screen and (max-width : 992px) {&#13;
-  .sc-fixed {&#13;
-    position: relative;&#13;
-    width: 100%;&#13;
-  }&#13;
-  .wishlist-update-message {&#13;
-    display : block;&#13;
-  }&#13;
-  .sc-item-error-messages {&#13;
-    position: relative;&#13;
-  }&#13;
-  .read-more, .read-less {&#13;
-    font-size: 15px;&#13;
-    cursor: pointer;&#13;
-  }&#13;
-  .more-text {&#13;
-    display: none;&#13;
-  }&#13;
-  .inline-cart {&#13;
-    display: none;&#13;
-  }&#13;
-  .right-side-cart {&#13;
-    display: inherit !important;&#13;
-  }&#13;
-}&#13;
-@media only screen and (max-width : 768px) {&#13;
-  .sc-sticky-item-header {&#13;
-     position: inherit;&#13;
-  }&#13;
-  &#13;
-}&#13;
-.inline-cart {&#13;
-  .quantity-selector {&#13;
-    display: inline-block;&#13;
-    width: 65px;&#13;
-    padding-top: 2px;&#13;
-  }&#13;
-}&#13;
-/* ************ */&#13;
-div.myContainerInit {&#13;
-  z-index:100;&#13;
-  background-color:rgba(0, 0, 0, 0.5);&#13;
+        <css>.panel-button {
+  float: none;
+}
+
+.sp-attachment-add {
+  padding: 5px;
+}
+
+.p-t-none {
+  padding-top: 0 !important;
+}
+
+.file-list-wrap {
+	margin-bottom: 10px;
+}
+
+.sc-btn {
+  color: $text-color;
+}
+
+.dismiss-button {
+  position: absolute;
+  top: 1rem;
+	right: 10px;
+	color: $text-color;
+	cursor: pointer;
+}
+
+.item-header {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.sc-sticky-item-header {
+  position: sticky;
+  position: -webkit-sticky;
+  position: -ms-sticky;
+  top: -($font-size-h2 + $font-size-base);
+  z-index: 10;
+  background-color: inherit;
+  border-radius: 4px 4px 0 0;
+}
+.sc-fixed {
+  position: fixed;
+  max-height: 100%;
+  width: 17.67777%;
+}
+.no-margin {
+	margin: 0px; 
+}
+.sc-item-error-messages {
+  max-height: 100%;
+  position: absolute;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%; 
+}
+.sc-field-error-label {
+  margin-right: .5em; 
+  display: inline-block;
+  cursor: pointer;
+}
+.image-gallery {
+  font-size: 8px;
+  color: #CECECE;
+  .active {
+    color: #717171;
+  }
+  i {
+    padding: 0 5px;
+  }
+}
+.relative {
+  position: relative;
+}
+.sc-order-widget-btn {
+   position: absolute;
+   left: 9%;
+   top: 10px
+}
+@media (min-width: 992px)
+  .col-md-12 {
+    width:100%;
+  }
+@media only screen and (max-width : 992px) {
+  .sc-fixed {
+    position: relative;
+    width: 100%;
+  }
+  .wishlist-update-message {
+    display : block;
+  }
+  .sc-item-error-messages {
+    position: relative;
+  }
+  .read-more, .read-less {
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .more-text {
+    display: none;
+  }
+  .inline-cart {
+    display: none;
+  }
+  .right-side-cart {
+    display: inherit !important;
+  }
+}
+@media only screen and (max-width : 768px) {
+  .sc-sticky-item-header {
+     position: inherit;
+  }
+  
+}
+.inline-cart {
+  .quantity-selector {
+    display: inline-block;
+    width: 65px;
+    padding-top: 2px;
+  }
+}
+/* ************ */
+div.myContainerInit {
+  z-index:100;
+  background-color:rgba(0, 0, 0, 0.5);
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -630,54 +630,54 @@ div.myContainerInit {&#13;
 }
 	]]></link>
         <name>UTASSP Catalog Item Incident Widget</name>
-        <option_schema>[{&#13;
-	"name": "show_add_cart_button",&#13;
-  	"default_value": "false",&#13;
-	"section": "other",&#13;
-	"label": "Show Add Cart Button",&#13;
-	"type": "boolean"&#13;
-}, {&#13;
-	"hint": "If you turn on this, you will be able to see field validation messages on right side",&#13;
-	"name": "show_field_validation_messages",&#13;
-	"default_value": "true",&#13;
-	"section": "other",&#13;
-	"label": "Show field validation messages",&#13;
-	"type": "boolean"&#13;
-}, {&#13;
-	"hint": "Show Add/Update Wish List buttons",&#13;
-	"name": "show_add_to_wishlist_button",&#13;
-	"default_value": "false",&#13;
-	"section": "other",&#13;
-	"label": "Show Add/Update Wish List buttons",&#13;
-	"type": "boolean"&#13;
-}, {&#13;
-	"hint": "Order item section on top. If you uncheck this, order section will be displayed at bottom of screen",&#13;
-	"name": "display_cart_on_right",&#13;
-	"default_value": "true",&#13;
-	"section": "other",&#13;
-	"label": "Order Item Section On Top",&#13;
-	"type": "boolean"&#13;
-}, {&#13;
-	"hint": "Show item description in few words with an option to read more",&#13;
-	"name": "show_less_description",&#13;
-	"default_value": "true",&#13;
-	"section": "other",&#13;
-	"label": "Enable Show More/Less for Item description on Mobile",&#13;
-	"type": "boolean"&#13;
-}, {&#13;
-	"hint": "Hide the Delivery Time in the widget",&#13;
-	"name": "hide_delivery_time",&#13;
-	"section": "other",&#13;
-	"default_value": "false",&#13;
-	"label": "Hide Delivery Time",&#13;
-	"type": "boolean"&#13;
-}, {&#13;
-	"hint": "Simplified redirect",&#13;
-	"name": "url",&#13;
-	"section": "other",&#13;
-	"default_value": "id=utassp01_view_tickets&amp;pageid={pageid}",&#13;
-	"label": "Url",&#13;
-	"type": "string"&#13;
+        <option_schema>[{
+	"name": "show_add_cart_button",
+  	"default_value": "false",
+	"section": "other",
+	"label": "Show Add Cart Button",
+	"type": "boolean"
+}, {
+	"hint": "If you turn on this, you will be able to see field validation messages on right side",
+	"name": "show_field_validation_messages",
+	"default_value": "true",
+	"section": "other",
+	"label": "Show field validation messages",
+	"type": "boolean"
+}, {
+	"hint": "Show Add/Update Wish List buttons",
+	"name": "show_add_to_wishlist_button",
+	"default_value": "false",
+	"section": "other",
+	"label": "Show Add/Update Wish List buttons",
+	"type": "boolean"
+}, {
+	"hint": "Order item section on top. If you uncheck this, order section will be displayed at bottom of screen",
+	"name": "display_cart_on_right",
+	"default_value": "true",
+	"section": "other",
+	"label": "Order Item Section On Top",
+	"type": "boolean"
+}, {
+	"hint": "Show item description in few words with an option to read more",
+	"name": "show_less_description",
+	"default_value": "true",
+	"section": "other",
+	"label": "Enable Show More/Less for Item description on Mobile",
+	"type": "boolean"
+}, {
+	"hint": "Hide the Delivery Time in the widget",
+	"name": "hide_delivery_time",
+	"section": "other",
+	"default_value": "false",
+	"label": "Hide Delivery Time",
+	"type": "boolean"
+}, {
+	"hint": "Simplified redirect",
+	"name": "url",
+	"section": "other",
+	"default_value": "id=utassp01_view_tickets&amp;pageid={pageid}",
+	"label": "Url",
+	"type": "string"
 }]</option_schema>
         <public>false</public>
         <roles>snc_external,snc_internal</roles>

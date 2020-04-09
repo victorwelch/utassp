@@ -275,7 +275,7 @@ a.myPublicPwdHelp {&#13;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
-	data.uSettings=myU.utilGetInstanceSettings();
+	data.uSettings=myU.utilGetInstanceSettings($sp);
 	// *** Start: Debug only code *** //
 	data.infotag = '';
 	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
@@ -335,7 +335,7 @@ a.myPublicPwdHelp {&#13;
         <sys_created_on>2018-11-16 18:29:17</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>ce4ab23d4f7d2300f006121f9310c7ae</sys_id>
-        <sys_mod_count>46</sys_mod_count>
+        <sys_mod_count>47</sys_mod_count>
         <sys_name>UTASSP Typeahead Search Widget 2</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -343,7 +343,7 @@ a.myPublicPwdHelp {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_ce4ab23d4f7d2300f006121f9310c7ae</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 16:58:56</sys_updated_on>
+        <sys_updated_on>2019-04-02 16:43:10</sys_updated_on>
         <template><![CDATA[<form ng-submit="c.submitSearch()">
   <input type="hidden" name="id" value="search"/>
   <input type="hidden" name="t" value="{{c.searchType}}"/>

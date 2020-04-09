@@ -10,58 +10,58 @@
 	var c = this;
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>*:focus {&#13;
-    outline: none !important;&#13;
-}&#13;
-&#13;
-/** Fixes Safari **/ &#13;
-.row:before, .row:after {&#13;
-    display: flex !important;&#13;
-} &#13;
-&#13;
-&#13;
- h1,  h2,  h3,  h4,  h5,  h6,  p,  li {&#13;
-    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;&#13;
-}&#13;
-&#13;
- p,  span,  li {&#13;
-    color: #363636;&#13;
-    font-size: 16px;&#13;
-}&#13;
-&#13;
- a {&#13;
-    cursor: pointer !important;&#13;
-}&#13;
-&#13;
- h1 {&#13;
-    font-size: 38px;&#13;
-    color: #232323;&#13;
-}&#13;
-&#13;
- #defaultOpen {&#13;
-    display: none;&#13;
-}&#13;
-&#13;
-#defaultSection {&#13;
-    min-height: 500px;&#13;
-}&#13;
-&#13;
-#defaultSection h1 {&#13;
-    line-height: 120%;&#13;
-}&#13;
-@media only screen and (min-width: 992px) {&#13;
-    div#myContainer {&#13;
-      display:inherit;&#13;
-    }&#13;
-}&#13;
-&#13;
-&#13;
-@media only screen and (max-width: 991.1px) {&#13;
-    div#myContainer {&#13;
-      display:none;&#13;
-    }&#13;
-}&#13;
-&#13;
+        <css>*:focus {
+    outline: none !important;
+}
+
+/** Fixes Safari **/ 
+.row:before, .row:after {
+    display: flex !important;
+} 
+
+
+ h1,  h2,  h3,  h4,  h5,  h6,  p,  li {
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+ p,  span,  li {
+    color: #363636;
+    font-size: 16px;
+}
+
+ a {
+    cursor: pointer !important;
+}
+
+ h1 {
+    font-size: 38px;
+    color: #232323;
+}
+
+ #defaultOpen {
+    display: none;
+}
+
+#defaultSection {
+    min-height: 500px;
+}
+
+#defaultSection h1 {
+    line-height: 120%;
+}
+@media only screen and (min-width: 992px) {
+    div#myContainer {
+      display:inherit;
+    }
+}
+
+
+@media only screen and (max-width: 991.1px) {
+    div#myContainer {
+      display:none;
+    }
+}
+
 </css>
         <data_table>sp_instance</data_table>
         <demo_data/>

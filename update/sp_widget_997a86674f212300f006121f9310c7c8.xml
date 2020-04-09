@@ -198,7 +198,7 @@
 		return " <a href=" + url + ">" + msg + "</a>";
 	}
 	
-	$scope.triggerOnSubmit = function(){
+	$scope.triggerOnSubmit = function(event){
 		debugger;
 		if ($scope.options.isServiceWorkspace && $window.frameElement) {
 			var workspaceParams = {};
@@ -677,228 +677,234 @@
         <roles>snc_external,snc_internal</roles>
         <script><![CDATA[// populate the 'data' variable with catalog item, variables, and variable view
 (function($sp, input, data, options, gs) {
-	var myU = new u_utassp();
-	data.uSettings=myU.utilGetInstanceSettings();
-	// *** Start: Debug only code *** //
-	data.infotag = '';
-	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
-		data.infotag = myU.utilLog($sp);
-	}
-	// *** End: Debug only code *** //
-	//
-	data.isSsoRequest = false;
+    var myU = new u_utassp();
+    data.uSettings = myU.utilGetInstanceSettings($sp);
+    // *** Start: Debug only code *** //
+    data.infotag = '';
+    if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+        data.infotag = myU.utilLog($sp);
+    }
+    // *** End: Debug only code *** //
+    //
+    data.isSsoRequest = false;
 
-	var embeddedWidgetOptions = ['auto_redirect', 'requested_for_id', 'requested_for_display'];
-	if (input && input.action == 'init_item') {
-		data._generatedItemGUID = gs.generateGUID();
-		return;
-	}
-	else if (input && input.action === "order_one_step") {
-		
-	}
-	else if (input && input.action === "order_item") {
-		//Minimum set of widget options supported for Embedded widget
-		embeddedWidgetOptions.forEach(function (embeddedWidgetOption) {
-			if (typeof input[embeddedWidgetOption] != 'undefined')
-				options[embeddedWidgetOption] = input[embeddedWidgetOption];
-		});
-		data.orderItemModal = $sp.getWidget('widget-modal', {
-			embeddedWidgetId: 'utassp01_sc_checkout_widget', 
-			embeddedWidgetOptions: {
-				cart: {name: input.cart}, 
-				action: 'order_now', 
-				item: input.itemDetails, 
-				requested_for: {id:options.requested_for_id, displayValue:options.requested_for_display},
-				auto_redirect: options.auto_redirect,
-				parentParams: input.workspaceParams
-			}, 
-			backdrop: 'static', 
-			keyboard: false, 
-			size: 'md'
-		});
-		return;
-	} else if (input && input.action == "order_wishlist_item") {
-		//Minimum set of widget options supported for Embedded widget
-		embeddedWidgetOptions.forEach(function (embeddedWidgetOption) {
-			if (typeof input[embeddedWidgetOption] != 'undefined')
-				options[embeddedWidgetOption] = input[embeddedWidgetOption];
-		});
-		data.orderItemModal = $sp.getWidget('widget-modal', {
-			embeddedWidgetId: 'utassp01_sc_checkout_widget', 
-			embeddedWidgetOptions: {
-				cart: {name: input.cart}, 
-				action: 'order_now_wishlisted_item', 
-				item: input.itemDetails, 
-				requested_for: {id:options.requested_for_id, displayValue:options.requested_for_display},
-				auto_redirect: options.auto_redirect,
-				parentParams: input.workspaceParams
-			}, 
-			backdrop: 'static', 
-			keyboard: false, 
-			size: 'md'
-		});
-		return;
-	} else if (input && input.action === 'log_request') {
-		 $sp.logStat('Cat Item Request', input.itemDetails.sys_class_name, input.itemDetails.sys_id, input.itemDetails.name);
-		 return;
-	}
+    var embeddedWidgetOptions = ['auto_redirect', 'requested_for_id', 'requested_for_display'];
+    if (input && input.action == 'init_item') {
+        data._generatedItemGUID = gs.generateGUID();
+        return;
+    } else if (input && input.action === "order_one_step") {
+		var dummy = (1==1);
+    } else if (input && input.action === "order_item") {
+        //Minimum set of widget options supported for Embedded widget
+        embeddedWidgetOptions.forEach(function(embeddedWidgetOption) {
+            if (typeof input[embeddedWidgetOption] != 'undefined')
+                options[embeddedWidgetOption] = input[embeddedWidgetOption];
+        });
+        data.orderItemModal = $sp.getWidget('widget-modal', {
+            embeddedWidgetId: 'utassp01_sc_checkout_widget',
+            embeddedWidgetOptions: {
+                cart: {
+                    name: input.cart
+                },
+                action: 'order_now',
+                item: input.itemDetails,
+                requested_for: {
+                    id: options.requested_for_id,
+                    displayValue: options.requested_for_display
+                },
+                auto_redirect: options.auto_redirect,
+                parentParams: input.workspaceParams
+            },
+            backdrop: 'static',
+            keyboard: false,
+            size: 'md'
+        });
+        return;
+    } else if (input && input.action == "order_wishlist_item") {
+        //Minimum set of widget options supported for Embedded widget
+        embeddedWidgetOptions.forEach(function(embeddedWidgetOption) {
+            if (typeof input[embeddedWidgetOption] != 'undefined')
+                options[embeddedWidgetOption] = input[embeddedWidgetOption];
+        });
+        data.orderItemModal = $sp.getWidget('widget-modal', {
+            embeddedWidgetId: 'utassp01_sc_checkout_widget',
+            embeddedWidgetOptions: {
+                cart: {
+                    name: input.cart
+                },
+                action: 'order_now_wishlisted_item',
+                item: input.itemDetails,
+                requested_for: {
+                    id: options.requested_for_id,
+                    displayValue: options.requested_for_display
+                },
+                auto_redirect: options.auto_redirect,
+                parentParams: input.workspaceParams
+            },
+            backdrop: 'static',
+            keyboard: false,
+            size: 'md'
+        });
+        return;
+    } else if (input && input.action === 'log_request') {
+        $sp.logStat('Cat Item Request', input.itemDetails.sys_class_name, input.itemDetails.sys_id, input.itemDetails.name);
+        return;
+    }
 
-	// portal can specify a catalog and catalog category home page
-	data.sc_catalog_page = $sp.getDisplayValue("sc_catalog_page") || "sc_home";
-	data.sc_category_page = $sp.getDisplayValue("sc_category_page") || "sc_category";
-	data.sc_catalog = $sp.getDisplayValue('sc_catalog');
+    // portal can specify a catalog and catalog category home page
+    data.sc_catalog_page = $sp.getDisplayValue("sc_catalog_page") || "sc_home";
+    data.sc_category_page = $sp.getDisplayValue("sc_category_page") || "sc_category";
+    data.sc_catalog = $sp.getDisplayValue('sc_catalog');
 
-	data.show_wishlist_msg = false;
-	data.recordFound = true;
-	var catalogID = $sp.getValue('sc_catalog');
+    data.show_wishlist_msg = false;
+    data.recordFound = true;
+    var catalogID = $sp.getValue('sc_catalog');
 
-	options.url = options.url || "id={page}&is_new_order=true&table={table}&sys_id={sys_id}";		
+    options.url = options.url || "id={page}&is_new_order=true&table={table}&sys_id={sys_id}";
 
-	data.showPrices = $sp.showCatalogPrices();
-	var m = data.msgs = {};
-	m.submitMsg = gs.getMessage("Submit");
-	m.orderNowMsg = gs.getMessage("Order Now");
-	m.submittedMsg = gs.getMessage("Submitted");
-	m.createdMsg = gs.getMessage("Created");
-	m.trackMsg = gs.getMessage("track using 'Requests' in the header or");
-	m.clickMsg = gs.getMessage("click here to view");
-	m.dialogTitle = gs.getMessage("Delete Attachment");
-	m.dialogMessage = gs.getMessage("Are you sure?");
-	m.dialogOK = gs.getMessage("OK");
-	m.dialogCancel = gs.getMessage("Cancel");
-	
-	m.renameSuccessMsg = gs.getMessage("Attachment renamed successfully");
-	m.deleteSuccessMsg = gs.getMessage("Attachment deleted successfully");
-	m.wishlistMsg = gs.getMessage('Wish List');
-	m.cartMsg = gs.getMessage('Cart');
-	m.itemWishlistMsg = gs.getMessage('This item is already in your Wish List. If you attempt to add this item to your Wish List it will overwrite the existing item.');
-	m.invalidRecordMsg = gs.getMessage('You are either not authorized or record is not valid.');
-	m.wishlistUpdateMsg = gs.getMessage('Your Wish List has been updated.');
-	m.wishlistAddMsg = gs.getMessage('Your item has been added to your Wish List.');
-	m.cartAddMsg = gs.getMessage('Your item has been added to your Cart. To make changes to the items in your cart, click ');
-	m.viewWishListMsg = gs.getMessage('View Wish List');
-	m.viewCartMsg = gs.getMessage('View Cart');
-	m.delete_attachment = gs.getMessage("Delete Attachment?");
+    data.showPrices = $sp.showCatalogPrices();
+    var m = data.msgs = {};
+    m.submitMsg = gs.getMessage("Submit");
+    m.orderNowMsg = gs.getMessage("Order Now");
+    m.submittedMsg = gs.getMessage("Submitted");
+    m.createdMsg = gs.getMessage("Created");
+    m.trackMsg = gs.getMessage("track using 'Requests' in the header or");
+    m.clickMsg = gs.getMessage("click here to view");
+    m.dialogTitle = gs.getMessage("Delete Attachment");
+    m.dialogMessage = gs.getMessage("Are you sure?");
+    m.dialogOK = gs.getMessage("OK");
+    m.dialogCancel = gs.getMessage("Cancel");
 
-	data.maxAttachmentSize = parseInt(gs.getProperty("com.glide.attachment.max_size", 1024));
-	if (isNaN(data.maxAttachmentSize))
-		data.maxAttachmentSize = 24;
-	m.largeAttachmentMsg = gs.getMessage("Attached files must be smaller than {0} - please try again", "" + data.maxAttachmentSize + "MB");
-	
-	var cartName = data.is_cart_item ? 'DEFAULT' : 'saved_items';
-	var cart = new sn_sc.CartJS(cartName);
+    m.renameSuccessMsg = gs.getMessage("Attachment renamed successfully");
+    m.deleteSuccessMsg = gs.getMessage("Attachment deleted successfully");
+    m.wishlistMsg = gs.getMessage('Wish List');
+    m.cartMsg = gs.getMessage('Cart');
+    m.itemWishlistMsg = gs.getMessage('This item is already in your Wish List. If you attempt to add this item to your Wish List it will overwrite the existing item.');
+    m.invalidRecordMsg = gs.getMessage('You are either not authorized or record is not valid.');
+    m.wishlistUpdateMsg = gs.getMessage('Your Wish List has been updated.');
+    m.wishlistAddMsg = gs.getMessage('Your item has been added to your Wish List.');
+    m.cartAddMsg = gs.getMessage('Your item has been added to your Cart. To make changes to the items in your cart, click ');
+    m.viewWishListMsg = gs.getMessage('View Wish List');
+    m.viewCartMsg = gs.getMessage('View Cart');
+    m.delete_attachment = gs.getMessage("Delete Attachment?");
 
-	data.showWishlist = new sn_sc.Catalog('' + catalogID).isWishlistEnabled();
+    data.maxAttachmentSize = parseInt(gs.getProperty("com.glide.attachment.max_size", 1024));
+    if (isNaN(data.maxAttachmentSize))
+        data.maxAttachmentSize = 24;
+    m.largeAttachmentMsg = gs.getMessage("Attached files must be smaller than {0} - please try again", "" + data.maxAttachmentSize + "MB");
 
-		if (input)
-			data.sys_id = input.sys_id;
-		else if (options.sys_id)
-			data.sys_id = options.sys_id;
-		else
-			data.sys_id = $sp.getParameter("sys_id") || $sp.getParameter('sl_sys_id');
-	
-		if (!data.sys_id) {
-			data.recordFound = false;
-			return;
-		} 
-		/* *** start block added, vcw 11/12/18 *** */
-		else 
-		{
-			data.pageid='request';
-			var mySysId = data.sys_id;	
-			if (myU.isIncident(mySysId)) {
-				data.pageid='incident';
-			} else if (myU.isSsoRequest(mySysId)) {
-				data.isSsoRequest=true;
-			}
-		}
-		/* *** end block added, vcw 11/12/18 *** */
-	
-		data._generatedItemGUID = gs.generateGUID();
-		var validatedItem = new sn_sc.CatItem('' + data.sys_id);
-		if (!validatedItem.canView() || !validatedItem.isVisibleServicePortal()) {
-			data.recordFound = false;
-			return;
-		}
-	
-		data.sc_cat_item = $sp.getCatalogItem(data.sys_id, true);
-		data.hideDeliveryTime = (
-									options.hide_delivery_time == "true" || 
-									data.sc_cat_item.sys_class_name == 'sc_cat_item_producer' || 
-									data.sc_cat_item.sys_class_name == 'sc_cat_item_guide' || 
-									data.sc_cat_item.sys_class_name == 'std_change_record_producer'
-								);
-		if (data.sc_cat_item.category) {
-			var categoryJS;
-			var categoryID = validatedItem.getFirstAccessibleCategoryForSearch(catalogID);
-			if ($sp.getParameter("sysparm_category")) {
-				categoryJS = new sn_sc.CatCategory($sp.getParameter("sysparm_category") + "");
-				categoryID = $sp.getParameter("sysparm_category") + "";
-			}
-			else {
-				categoryJS = new sn_sc.CatCategory(categoryID);
-			}
-			
-			data.category = {
-				name: categoryJS.getTitle(),
-				url: categoryJS.canView() ? '?id=' + data.sc_category_page + '&sys_id=' + categoryID : "#"
-			};
-			data.categories = [];
-			if (categoryJS && GlideStringUtil.isEligibleSysID(categoryJS.getID()))
-				data.categories.push({
-					label: categoryJS.getTitle(),
-					url: categoryJS.canView() ? '?id=' + data.sc_category_page + '&sys_id=' + categoryID : "#"
-				});
-			while(categoryJS && categoryJS.getParent()) {
-				var parentId =  categoryJS.getParent();
-				categoryJS = new sn_sc.CatCategory(parentId);
-				var category = {
-					label: categoryJS.getTitle(),
-					url: categoryJS.canView() ? '?id=' + data.sc_category_page + '&sys_id=' + parentId : "#"
-				};
-				data.categories.unshift(category);
-			}
-		}
-		var gr1 = new GlideRecord('sc_cart_item');
-		gr1.addQuery('cart', cart.getCartID());
-		gr1.addQuery('cat_item', data.sys_id);
-		gr1.query();
-		if (gr1.next() && !options.isServiceWorkspace)
-			data.show_wishlist_msg = true;
+    var cartName = data.is_cart_item ? 'DEFAULT' : 'saved_items';
+    var cart = new sn_sc.CartJS(cartName);
 
-	data.sys_properties = {
-		twostep: gs.getProperty("glide.sc.sp.twostep", "true") == 'true'
-	};
+    data.showWishlist = new sn_sc.Catalog('' + catalogID).isWishlistEnabled();
 
-	var athTblName = 'sc_cart_item';
-	var className = data.sc_cat_item.sys_class_name;
-	if (!new global.CatalogItemTypeProcessor().canCreateNormalCartItem(className)) {
-		
-		if (className == 'sc_cat_item_producer' || className == 'std_change_record_producer') {
-				var gr2 = new GlideRecord(className);
-				gr2.get(data.sc_cat_item.sys_id);
-				if (gr2.isValidRecord())
-					athTblName = gr2.getValue('table_name');
-		}
-	}
-	data._attachmentTable = athTblName;
+    if (input)
+        data.sys_id = input.sys_id;
+    else if (options.sys_id)
+        data.sys_id = options.sys_id;
+    else
+        data.sys_id = $sp.getParameter("sys_id") || $sp.getParameter('sl_sys_id');
 
-	data.stdChg = {};
-	if (className === 'std_change_record_producer') {
-		//Populate scope with the porperty for two step
-		data.stdChg.twoStep = false;
-		var twoStepProp = new global.StdChangeUtils().getValue('two_step') + '';
-		if (twoStepProp)
-			data.stdChg.twoStep = twoStepProp === '1';
+    if (!data.sys_id) {
+        data.recordFound = false;
+        return;
+    }
+    /* *** start block added, vcw 11/12/18 *** */
+    else {
+        data.pageid = 'request';
+        var mySysId = data.sys_id;
+        if (myU.isIncident(mySysId)) {
+            data.pageid = 'incident';
+        } else if (myU.isSsoRequest(mySysId)) {
+            data.isSsoRequest = true;
+        }
+    }
+    /* *** end block added, vcw 11/12/18 *** */
 
-		var stdChgProducerGr = new GlideRecord('std_change_record_producer');
-		stdChgProducerGr.get(data.sc_cat_item.sys_id);
-		if (stdChgProducerGr.isValidRecord())
-			data.stdChg.currentVersion = stdChgProducerGr.getValue('current_version');
-	}
-	
-	$sp.logStat('Cat Item View', data.sc_cat_item.sys_class_name, data.sc_cat_item.sys_id, data.sc_cat_item.name);
-	
+    data._generatedItemGUID = gs.generateGUID();
+    var validatedItem = new sn_sc.CatItem('' + data.sys_id);
+    if (!validatedItem.canView() || !validatedItem.isVisibleServicePortal()) {
+        data.recordFound = false;
+        return;
+    }
+
+    data.sc_cat_item = $sp.getCatalogItem(data.sys_id, true);
+    data.hideDeliveryTime = (
+        options.hide_delivery_time == "true" ||
+        data.sc_cat_item.sys_class_name == 'sc_cat_item_producer' ||
+        data.sc_cat_item.sys_class_name == 'sc_cat_item_guide' ||
+        data.sc_cat_item.sys_class_name == 'std_change_record_producer'
+    );
+    if (data.sc_cat_item.category) {
+        var categoryJS;
+        var categoryID = validatedItem.getFirstAccessibleCategoryForSearch(catalogID);
+        if ($sp.getParameter("sysparm_category")) {
+            categoryJS = new sn_sc.CatCategory($sp.getParameter("sysparm_category") + "");
+            categoryID = $sp.getParameter("sysparm_category") + "";
+        } else {
+            categoryJS = new sn_sc.CatCategory(categoryID);
+        }
+
+        data.category = {
+            name: categoryJS.getTitle(),
+            url: categoryJS.canView() ? '?id=' + data.sc_category_page + '&sys_id=' + categoryID : "#"
+        };
+        data.categories = [];
+        if (categoryJS && GlideStringUtil.isEligibleSysID(categoryJS.getID()))
+            data.categories.push({
+                label: categoryJS.getTitle(),
+                url: categoryJS.canView() ? '?id=' + data.sc_category_page + '&sys_id=' + categoryID : "#"
+            });
+        while (categoryJS && categoryJS.getParent()) {
+            var parentId = categoryJS.getParent();
+            categoryJS = new sn_sc.CatCategory(parentId);
+            var category = {
+                label: categoryJS.getTitle(),
+                url: categoryJS.canView() ? '?id=' + data.sc_category_page + '&sys_id=' + parentId : "#"
+            };
+            data.categories.unshift(category);
+        }
+    }
+    var gr1 = new GlideRecord('sc_cart_item');
+    gr1.addQuery('cart', cart.getCartID());
+    gr1.addQuery('cat_item', data.sys_id);
+    gr1.query();
+    if (gr1.next() && !options.isServiceWorkspace)
+        data.show_wishlist_msg = true;
+
+    data.sys_properties = {
+        twostep: gs.getProperty("glide.sc.sp.twostep", "true") == 'true'
+    };
+
+    var athTblName = 'sc_cart_item';
+    var className = data.sc_cat_item.sys_class_name;
+    if (!new global.CatalogItemTypeProcessor().canCreateNormalCartItem(className)) {
+
+        if (className == 'sc_cat_item_producer' || className == 'std_change_record_producer') {
+            var gr2 = new GlideRecord(className);
+            gr2.get(data.sc_cat_item.sys_id);
+            if (gr2.isValidRecord())
+                athTblName = gr2.getValue('table_name');
+        }
+    }
+    data._attachmentTable = athTblName;
+
+    data.stdChg = {};
+    if (className === 'std_change_record_producer') {
+        //Populate scope with the porperty for two step
+        data.stdChg.twoStep = false;
+        var twoStepProp = new global.StdChangeUtils().getValue('two_step') + '';
+        if (twoStepProp)
+            data.stdChg.twoStep = twoStepProp === '1';
+
+        var stdChgProducerGr = new GlideRecord('std_change_record_producer');
+        stdChgProducerGr.get(data.sc_cat_item.sys_id);
+        if (stdChgProducerGr.isValidRecord())
+            data.stdChg.currentVersion = stdChgProducerGr.getValue('current_version');
+    }
+
+    $sp.logStat('Cat Item View', data.sc_cat_item.sys_class_name, data.sc_cat_item.sys_id, data.sc_cat_item.name);
+
 })($sp, input, data, options, gs);]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
@@ -906,7 +912,7 @@
         <sys_created_on>2018-11-09 15:13:59</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>997a86674f212300f006121f9310c7c8</sys_id>
-        <sys_mod_count>178</sys_mod_count>
+        <sys_mod_count>180</sys_mod_count>
         <sys_name>UTASSP Catalog Item Widget 3</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -914,7 +920,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_997a86674f212300f006121f9310c7c8</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-26 16:57:15</sys_updated_on>
+        <sys_updated_on>2019-11-11 18:06:47</sys_updated_on>
         <template><![CDATA[<div id="sc_cat_item" ng-if="::data.recordFound" dummy="{{::c.myLog()}}">
 	<sp-widget widget="c.orderItemModal" ng-if="c.orderItemModal"></sp-widget>
 	<div class="row" ng-if="::data.sc_cat_item">

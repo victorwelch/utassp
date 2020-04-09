@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_css">
+    <sp_css action="DELETE">
+        <css>@font-face {&#13;
+  font-family: fontawesome-webfont;&#13;
+  src: url('/sys_attachment.do?sys_id=fbc4bfa1dbf14c147c295434ce9619c0');&#13;
+}</css>
+        <name>fontawesome-webfont-ttf</name>
+        <sys_class_name>sp_css</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-12-18 20:37:02</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>2596fb65dbf14c147c295434ce961921</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>fontawesome-webfont-ttf</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_css_2596fb65dbf14c147c295434ce961921</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-12-18 20:44:54</sys_updated_on>
+    </sp_css>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="utassp">2e58c8624f112300f006121f9310c726</application>
+        <comments/>
+        <file_path/>
+        <instance_id>5a5766b099da014870acd38ad3bda438</instance_id>
+        <instance_name>utadev</instance_name>
+        <name>sp_css_2596fb65dbf14c147c295434ce961921</name>
+        <order/>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_css"><sp_css action="INSERT_OR_UPDATE"><css>@font-face {&#13;
+  font-family: fontawesome-webfont;&#13;
+  src: url('/sys_attachment.do?sys_id=fbc4bfa1dbf14c147c295434ce9619c0');&#13;
+}</css><name>fontawesome-webfont-ttf</name><sys_class_name>sp_css</sys_class_name><sys_created_by>welchv</sys_created_by><sys_created_on>2019-12-18 20:37:02</sys_created_on><sys_customer_update>false</sys_customer_update><sys_id>2596fb65dbf14c147c295434ce961921</sys_id><sys_mod_count>1</sys_mod_count><sys_name>fontawesome-webfont-ttf</sys_name><sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package><sys_policy/><sys_replace_on_upgrade>false</sys_replace_on_upgrade><sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope><sys_update_name>sp_css_2596fb65dbf14c147c295434ce961921</sys_update_name><sys_updated_by>welchv</sys_updated_by><sys_updated_on>2019-12-18 20:44:54</sys_updated_on></sp_css></record_update>]]></payload>
+        <payload_hash>-1588001904</payload_hash>
+        <record_name>fontawesome-webfont-ttf</record_name>
+        <reverted_from/>
+        <source>93c0fb2ddb79c8107020d8965e9619cb</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-12-18 20:44:55</sys_created_on>
+        <sys_id>ef78fb65dbf14c147c295434ce961927</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>16f1ac1a1660000001</sys_recorded_at>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-12-18 20:44:55</sys_updated_on>
+        <type>Style Sheet</type>
+        <u_link>[code]&lt;a title="sp_css_2596fb65dbf14c147c295434ce961921" class="linked" href="sp_css.do?sys_id=2596fb65dbf14c147c295434ce961921"&gt;sp_css_2596fb65dbf14c147c295434ce961921&lt;/a&gt;[/code]</u_link>
+        <update_guid>a778fb65cef14c14082b315138024d27</update_guid>
+        <update_guid_history>a778fb65cef14c14082b315138024d27:-1588001904,dcb637e180f14c14b5516c2ed1047848:-594521737</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Record deleted 12-18-2019 15:10:10">ad4ebba1dbf9c8107020d8965e961962</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-12-18 21:10:10</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="sp_css">sp_css</sys_db_object>
+        <sys_id>07c324e36e2448759846019fcacb0a61</sys_id>
+        <sys_metadata>2596fb65dbf14c147c295434ce961921</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>fontawesome-webfont-ttf</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_scope_delete display_value="">4e892d72dd3742d1bab838492aebccb1</sys_scope_delete>
+        <sys_update_name>sp_css_2596fb65dbf14c147c295434ce961921</sys_update_name>
+        <sys_update_version display_value="sp_css_2596fb65dbf14c147c295434ce961921">ef78fb65dbf14c147c295434ce961927</sys_update_version>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-12-18 21:10:10</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

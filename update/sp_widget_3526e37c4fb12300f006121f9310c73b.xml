@@ -722,7 +722,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
-	data.uSettings=myU.utilGetInstanceSettings();
+	data.uSettings=myU.utilGetInstanceSettings($sp);
 	// *** Start: Debug only code *** //
 	data.infotag = '';
 	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
@@ -751,7 +751,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_created_on>2018-11-13 19:07:02</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3526e37c4fb12300f006121f9310c73b</sys_id>
-        <sys_mod_count>41</sys_mod_count>
+        <sys_mod_count>42</sys_mod_count>
         <sys_name>UTASSP KB Base2 Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -759,7 +759,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_3526e37c4fb12300f006121f9310c73b</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 17:10:33</sys_updated_on>
+        <sys_updated_on>2019-04-02 16:38:05</sys_updated_on>
         <template><![CDATA[<div class="panel panel-{{::options.color}} b myShadow" dummy="{{::c.myLog()}}">
   <div class="panel-heading" ng-click="myKbSelect($event)" thisid="{{c.data.uKbBaseSysId}}">
     <h2 class="h4 panel-title myTtip">

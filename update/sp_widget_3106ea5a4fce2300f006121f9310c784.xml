@@ -70,7 +70,7 @@ div.myMargin {&#13;
         <roles/>
         <script><![CDATA[(function ($sp, input, data, options, gs) {
 	var myU = new u_utassp();
-	data.uSettings=myU.utilGetInstanceSettings();
+	data.uSettings=myU.utilGetInstanceSettings($sp);
 	// *** Start: Debug only code *** //
 	data.infotag = '';
 	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
@@ -139,7 +139,7 @@ div.myMargin {&#13;
         <sys_created_on>2018-11-30 16:33:26</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3106ea5a4fce2300f006121f9310c784</sys_id>
-        <sys_mod_count>30</sys_mod_count>
+        <sys_mod_count>31</sys_mod_count>
         <sys_name>UTASSP KB Article Helpful Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -147,7 +147,7 @@ div.myMargin {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_3106ea5a4fce2300f006121f9310c784</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 16:44:54</sys_updated_on>
+        <sys_updated_on>2019-04-02 16:44:35</sys_updated_on>
         <template><![CDATA[<div ng-if="data.isValidArticle && !c.hide" class='myMargin' dummy="{{::c.myLog()}}">
   <span ng-if="!c.submitted" class="sp-helpful-text">{{::data.title}}</span>
   <button type="button" ng-if="!c.submitted" name="useful_yes" class="btn btn-success btn-question" ng-click="c.action('useful_yes')">${Yes}</button>

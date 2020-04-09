@@ -30,12 +30,12 @@
         <parent/>
         <reference_amount>0</reference_amount>
         <reference_currency display_value="USD">USD</reference_currency>
-        <sys_created_by>welchv</sys_created_by>
-        <sys_created_on>2019-02-20 23:23:25</sys_created_on>
-        <sys_id>cb36dab0dbbb2b80e3ad22d4059619d4</sys_id>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2019-03-03 22:35:33</sys_created_on>
+        <sys_id>b4c4f6901bccff80dde2bb39cd4bcbdc</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-20 23:23:25</sys_updated_on>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2019-03-03 22:35:33</sys_updated_on>
         <table>question_choice</table>
         <type>calculated</type>
     </fx_price>
@@ -47,12 +47,12 @@
         <parent/>
         <reference_amount>0</reference_amount>
         <reference_currency display_value="USD">USD</reference_currency>
-        <sys_created_by>welchv</sys_created_by>
-        <sys_created_on>2019-02-20 23:23:25</sys_created_on>
-        <sys_id>8336dab0dbbb2b80e3ad22d4059619d4</sys_id>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2019-03-03 22:35:33</sys_created_on>
+        <sys_id>f8c4f6901bccff80dde2bb39cd4bcbdb</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-20 23:23:25</sys_updated_on>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2019-03-03 22:35:33</sys_updated_on>
         <table>question_choice</table>
         <type>calculated</type>
     </fx_price>

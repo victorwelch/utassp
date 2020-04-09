@@ -166,6 +166,7 @@
 			}
 		}		
 		
+		debugger;
 		$rootScope.$broadcast('myCatSelectEvent', obj);
 		return false;
 	};
@@ -836,6 +837,10 @@ span.myExpOnOff {&#13;
       {&#13;
         "label": "OIT Knowledge Base",&#13;
         "value": "OIT Knowledge Base"&#13;
+      },&#13;
+      {&#13;
+        "label": "Public Knowledge Base",&#13;
+        "value": "Public Knowledge Base"&#13;
       }&#13;
     ]&#13;
   }&#13;
@@ -844,7 +849,7 @@ span.myExpOnOff {&#13;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
-	data.uSettings=myU.utilGetInstanceSettings();
+	data.uSettings=myU.utilGetInstanceSettings($sp);
 	// *** Start: Debug only code *** //
 	data.infotag = '';
 	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
@@ -873,7 +878,7 @@ span.myExpOnOff {&#13;
         <sys_created_on>2019-01-31 15:56:08</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>c010f11adb932b40e3ad22d40596193e</sys_id>
-        <sys_mod_count>10</sys_mod_count>
+        <sys_mod_count>14</sys_mod_count>
         <sys_name>UTASSP KB Base Widget 4</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -881,7 +886,7 @@ span.myExpOnOff {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_c010f11adb932b40e3ad22d40596193e</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 17:01:23</sys_updated_on>
+        <sys_updated_on>2019-06-18 16:29:11</sys_updated_on>
         <template><![CDATA[<div class="panel panel-{{::options.color}} b myShadow" dummy="{{::c.myLog()}}">
   <div class="panel-heading" ng-class="{ myPanelHdPad:c.isCatSelected }">
     <h2 class="h4 panel-title myCatSelectHdr">

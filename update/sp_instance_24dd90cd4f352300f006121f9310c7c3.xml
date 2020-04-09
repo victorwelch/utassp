@@ -3,7 +3,7 @@
         <active>true</active>
         <class_name/>
         <color>default</color>
-        <css/>
+        <css> </css>
         <glyph/>
         <id/>
         <order>1</order>
@@ -11,23 +11,24 @@
         <short_description/>
         <size>md</size>
         <sp_column display_value="1">3edef77c4ff12300f006121f9310c7e6</sp_column>
-        <sp_widget display_value="UTASSP KB Article Page">2380c84d4ff12300f006121f9310c750</sp_widget>
+        <sp_widget display_value="UTASSP KB Article Page Widget">6e466ba5db28c81079f4d144ce961942</sp_widget>
         <sys_class_name>sp_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-11-13 23:10:14</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>24dd90cd4f352300f006121f9310c7c3</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>Article</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_instance_24dd90cd4f352300f006121f9310c7c3</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-04 18:12:13</sys_updated_on>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-11-01 22:22:39</sys_updated_on>
         <title>Article</title>
         <url/>
         <widget_parameters/>
     </sp_instance>
+    <sys_translated_text action="delete_multiple" query="documentkey=24dd90cd4f352300f006121f9310c7c3"/>
 </record_update>

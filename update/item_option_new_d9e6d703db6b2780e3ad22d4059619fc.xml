@@ -49,7 +49,7 @@
         <reference>u_category</reference>
         <reference_qual>u_active=true^u_table=incident^EQ</reference_qual>
         <reference_qual_condition table="u_category">u_active=true^u_table=incident^EQ<item endquery="false" field="u_active" goto="false" newquery="false" operator="=" or="false" value="true"/>
-            <item endquery="false" field="u_table" goto="false" newquery="false" operator="=" or="false" value="incident"/>
+            <item display_value="Incident" endquery="false" field="u_table" goto="false" newquery="false" operator="=" or="false" value="incident"/>
             <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
         </reference_qual_condition>
         <scale_max>5</scale_max>
@@ -78,6 +78,7 @@
         <ui_page/>
         <use_dynamic_default>false</use_dynamic_default>
         <use_reference_qualifier>simple</use_reference_qualifier>
+        <validate_regex/>
         <variable_name/>
         <variable_set/>
         <variable_width/>
@@ -98,12 +99,12 @@
         <parent/>
         <reference_amount>0</reference_amount>
         <reference_currency display_value="USD">USD</reference_currency>
-        <sys_created_by>welchv</sys_created_by>
-        <sys_created_on>2019-02-15 17:36:34</sys_created_on>
-        <sys_id>51e6d703db6b2780e3ad22d4059619fe</sys_id>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2019-02-19 15:56:06</sys_created_on>
+        <sys_id>284623501b3ba780dde2bb39cd4bcbe2</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-15 17:36:34</sys_updated_on>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2019-02-19 15:56:06</sys_updated_on>
         <table>item_option_new</table>
         <type>calculated</type>
     </fx_price>
@@ -115,12 +116,12 @@
         <parent/>
         <reference_amount>0</reference_amount>
         <reference_currency display_value="USD">USD</reference_currency>
-        <sys_created_by>welchv</sys_created_by>
-        <sys_created_on>2019-02-15 17:36:34</sys_created_on>
-        <sys_id>19e6d703db6b2780e3ad22d4059619fd</sys_id>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2019-02-19 15:56:06</sys_created_on>
+        <sys_id>684623501b3ba780dde2bb39cd4bcbe1</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-15 17:36:34</sys_updated_on>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2019-02-19 15:56:06</sys_updated_on>
         <table>item_option_new</table>
         <type>calculated</type>
     </fx_price>

@@ -106,4 +106,5 @@
 <strong ng-if="match.model.type=='sc_content' && match.model.content_type == 'external'">➚</strong>
 <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>]]></typeahead_template>
     </sp_search_source>
+    <sys_translated_text action="delete_multiple" query="documentkey=9c904d444f922300f006121f9310c7d2"/>
 </record_update>

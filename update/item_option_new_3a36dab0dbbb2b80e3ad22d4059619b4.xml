@@ -75,6 +75,7 @@
         <ui_page/>
         <use_dynamic_default>false</use_dynamic_default>
         <use_reference_qualifier>simple</use_reference_qualifier>
+        <validate_regex/>
         <variable_name/>
         <variable_set/>
         <variable_width/>
@@ -95,12 +96,12 @@
         <parent/>
         <reference_amount>0</reference_amount>
         <reference_currency display_value="USD">USD</reference_currency>
-        <sys_created_by>welchv</sys_created_by>
-        <sys_created_on>2019-02-20 23:23:25</sys_created_on>
-        <sys_id>be36dab0dbbb2b80e3ad22d4059619b5</sys_id>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2019-03-03 22:35:03</sys_created_on>
+        <sys_id>9da476901bccff80dde2bb39cd4bcb81</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-20 23:23:25</sys_updated_on>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2019-03-03 22:35:03</sys_updated_on>
         <table>item_option_new</table>
         <type>calculated</type>
     </fx_price>
@@ -112,12 +113,12 @@
         <parent/>
         <reference_amount>0</reference_amount>
         <reference_currency display_value="USD">USD</reference_currency>
-        <sys_created_by>welchv</sys_created_by>
-        <sys_created_on>2019-02-20 23:23:25</sys_created_on>
-        <sys_id>7636dab0dbbb2b80e3ad22d4059619b5</sys_id>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2019-03-03 22:35:02</sys_created_on>
+        <sys_id>99a476901bccff80dde2bb39cd4bcb7f</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-20 23:23:25</sys_updated_on>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2019-03-03 22:35:02</sys_updated_on>
         <table>item_option_new</table>
         <type>calculated</type>
     </fx_price>

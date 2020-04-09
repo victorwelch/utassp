@@ -86,7 +86,7 @@
 					spUtil.addErrorMessage($scope.data.errorMsg2);
 				});
 		});
-	}
+	};
 
 	function handleLoginSuccess() {
 		alert('handleLoginSuccess');
@@ -97,7 +97,7 @@
 	c.setExternalLogin = function(newVal) {
 		alert('setExternalLogin');
 		c.externalLoginMode = newVal;
-	}
+	};
 }]]></client_script>
         <controller_as>c</controller_as>
         <css>.set-login-type-link {&#13;
@@ -193,7 +193,7 @@ label[for="password"] {&#13;
         <sys_created_on>2019-01-25 16:59:15</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>c2f48f58dbd3e340e3ad22d4059619ad</sys_id>
-        <sys_mod_count>52</sys_mod_count>
+        <sys_mod_count>54</sys_mod_count>
         <sys_name>UTASSP Login Widget 4</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -201,8 +201,8 @@ label[for="password"] {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_c2f48f58dbd3e340e3ad22d4059619ad</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-26 16:54:02</sys_updated_on>
-        <template><![CDATA[<div ng-if="!data.is_logged_in">
+        <sys_updated_on>2019-11-01 22:19:47</sys_updated_on>
+        <template><![CDATA[<div ng-if="!data.is_logged_in"> 
   <form ng-if="!c.externalLoginMode" class="form-signin" ng-submit="c.login(c.username, c.password)" method="post">
 		<div ng-class="{'panel panel-default': c.options.show_panel}">
 			<div ng-if="c.options.show_panel" class="panel-heading">	      

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
+    <sp_page action="INSERT_OR_UPDATE">
+        <category>kb</category>
+        <css>@media  (min-width: 768px) {&#13;
+	.container {&#13;
+		width: 762px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 800px) {&#13;
+	.container {&#13;
+		width: 794px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 810px) {&#13;
+	.container {&#13;
+		width: 804px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 880px) {&#13;
+	.container {&#13;
+		width: 874px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 890px) {&#13;
+	.container {&#13;
+		width: 884px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 900px) {&#13;
+	.container {&#13;
+		width: 894px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 910px) {&#13;
+	.container {&#13;
+		width: 904px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 920px) {&#13;
+	.container {&#13;
+		width: 914px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 930px) {&#13;
+	.container {&#13;
+		width: 924px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 940px) {&#13;
+	.container {&#13;
+		width: 934px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 950px) {&#13;
+	.container {&#13;
+		width: 944px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 960px) {&#13;
+	.container {&#13;
+		width: 950px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 970px) {&#13;
+	.container {&#13;
+		width: 960px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 990px) {&#13;
+	.container {&#13;
+		width: 980px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 1002px) {&#13;
+	.container {&#13;
+		width: 992px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 1010px) {&#13;
+	.container {&#13;
+		width: 1000px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 1060px) {&#13;
+	.container {&#13;
+		width: 1050px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 1110px) {&#13;
+	.container {&#13;
+		width: 1100px;&#13;
+	}&#13;
+}&#13;
+@media (min-width: 1150px) {&#13;
+	.container {&#13;
+		width: 1140px;&#13;
+	}&#13;
+}&#13;
+@media  (min-width: 1200px) {&#13;
+	.container {&#13;
+		width: 1170px;&#13;
+	}&#13;
+}&#13;
+/*&#13;
+&#13;
+*/&#13;
+@media (max-width: 834) {&#13;
+  h2.h4 {&#13;
+    font-size:15px;&#13;
+  }&#13;
+}&#13;
+&#13;
+// Medium devices (tablets, 768px and less)&#13;
+@media (max-width: 768px) { &#13;
+  h2.h4 {&#13;
+    font-size:14px;&#13;
+    font-weight:normal;&#13;
+  }  &#13;
+}&#13;
+&#13;
+// Small devices (landscape phones, 576px and less)&#13;
+@media (max-width: 576px) { &#13;
+  h2.h4 {&#13;
+    font-size:12px;&#13;
+    font-weight:normal;&#13;
+  }    &#13;
+}</css>
+        <draft>false</draft>
+        <dynamic_title_structure/>
+        <id>utassp02_kb_public_knowledge_base</id>
+        <internal>false</internal>
+        <public>true</public>
+        <roles/>
+        <short_description/>
+        <sys_class_name>sp_page</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-07-16 15:21:58</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>392028f7db2e734079f4d144ce96196d</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>utassp02_kb_public_knowledge_base</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_page_392028f7db2e734079f4d144ce96196d</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-07-16 21:38:29</sys_updated_on>
+        <title>UTASSP Public Knowledge Base</title>
+    </sp_page>
+    <sys_translated_text action="delete_multiple" query="documentkey=392028f7db2e734079f4d144ce96196d"/>
+</record_update>

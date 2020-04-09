@@ -9,7 +9,7 @@
         <kb_article/>
         <kb_category/>
         <kb_topic/>
-        <order>4</order>
+        <order>5</order>
         <roles/>
         <sc_cat_item/>
         <sc_category display_value="Enterprise Data Services">a91313946ff5e6007a07fee09d3ee4d8</sc_category>
@@ -23,7 +23,7 @@
         <sys_created_on>2019-03-25 20:09:53</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>b1666f13db5cb304e3ad22d405961958</sys_id>
-        <sys_mod_count>10</sys_mod_count>
+        <sys_mod_count>11</sys_mod_count>
         <sys_name>Enterprise Data Services</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -31,11 +31,12 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_instance_link_b1666f13db5cb304e3ad22d405961958</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-26 17:21:52</sys_updated_on>
+        <sys_updated_on>2019-08-09 20:01:32</sys_updated_on>
         <title>Enterprise Data Services</title>
         <type>sc_category</type>
         <u_image display_value="utassp_enterprise_data_services_img.png">7544bec34f312300f006121f9310c71b</u_image>
         <url/>
         <widget_parameters/>
     </sp_instance_link>
+    <sys_translated_text action="delete_multiple" query="documentkey=b1666f13db5cb304e3ad22d405961958"/>
 </record_update>

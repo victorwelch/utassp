@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sp_column action="DELETE">
+<class_name/>
+<order>1</order>
+<size/>
+<size_lg/>
+<size_sm>6</size_sm>
+<size_xs/>
+<sp_row display_value="3">fa6658ea1b4a7300715941d8cd4bcbb3</sp_row>
+<sys_class_name>sp_column</sys_class_name>
+<sys_created_by>welchv</sys_created_by>
+<sys_created_on>2019-06-17 20:55:43</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>4476d8ea1b4a7300715941d8cd4bcbcf</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>1</sys_name>
+<sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+<sys_update_name>sp_column_4476d8ea1b4a7300715941d8cd4bcbcf</sys_update_name>
+<sys_updated_by>welchv</sys_updated_by>
+<sys_updated_on>2019-06-18 14:51:00</sys_updated_on>
+</sp_column>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="utassp">2e58c8624f112300f006121f9310c726</application>
+        <comments/>
+        <file_path/>
+        <instance_id>9e5766b099da014870acd38ad3bda443</instance_id>
+        <instance_name>uta</instance_name>
+        <name>sp_column_4476d8ea1b4a7300715941d8cd4bcbcf</name>
+        <order/>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sp_column action="INSERT_OR_UPDATE">
+<class_name/>
+<order>1</order>
+<size/>
+<size_lg/>
+<size_sm>6</size_sm>
+<size_xs/>
+<sp_row display_value="3">fa6658ea1b4a7300715941d8cd4bcbb3</sp_row>
+<sys_class_name>sp_column</sys_class_name>
+<sys_created_by>welchv</sys_created_by>
+<sys_created_on>2019-06-17 20:55:43</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>4476d8ea1b4a7300715941d8cd4bcbcf</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>1</sys_name>
+<sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+<sys_update_name>sp_column_4476d8ea1b4a7300715941d8cd4bcbcf</sys_update_name>
+<sys_updated_by>welchv</sys_updated_by>
+<sys_updated_on>2019-06-18 14:51:00</sys_updated_on>
+</sp_column></record_update>]]></payload>
+        <payload_hash>-1422502607</payload_hash>
+        <record_name>1</record_name>
+        <reverted_from/>
+        <source>57c52ce6db8fb700d48b5e65ce9619cc</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-08-06 15:05:41</sys_created_on>
+        <sys_id>48d5ace6db8fb700d48b5e65ce96197c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>16c6776e6a00000001</sys_recorded_at>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-08-06 15:05:41</sys_updated_on>
+        <type>Column</type>
+        <u_link>[code]&lt;a title="sp_column_4476d8ea1b4a7300715941d8cd4bcbcf" class="linked" href="sp_column.do?sys_id=4476d8ea1b4a7300715941d8cd4bcbcf"&gt;sp_column_4476d8ea1b4a7300715941d8cd4bcbcf&lt;/a&gt;[/code]</u_link>
+        <update_guid>de9c375f5b6e73401289a96d7ffb9aa1</update_guid>
+        <update_guid_history>de9c375f5b6e73401289a96d7ffb9aa1:-1422502607,f6e93bd7c06e7340c3c1653d3f5ee862:-1422502607</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="">3c6aec22db8bb7000ed7dbf0ce9619b0</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-08-06 15:25:40</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="sp_column">sp_column</sys_db_object>
+        <sys_id>0e593be21d244f309520247ae31b4690</sys_id>
+        <sys_metadata>4476d8ea1b4a7300715941d8cd4bcbcf</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>1</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_scope_delete display_value="">4e892d72dd3742d1bab838492aebccb1</sys_scope_delete>
+        <sys_update_name>sp_column_4476d8ea1b4a7300715941d8cd4bcbcf</sys_update_name>
+        <sys_update_version display_value="sp_column_4476d8ea1b4a7300715941d8cd4bcbcf">48d5ace6db8fb700d48b5e65ce96197c</sys_update_version>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-08-06 15:25:40</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

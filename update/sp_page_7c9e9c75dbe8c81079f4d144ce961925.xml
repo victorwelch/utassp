@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
+    <sp_page action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <css>body { display: none; } </css>
+        <draft>false</draft>
+        <dynamic_title_structure/>
+        <id>kbar</id>
+        <internal>false</internal>
+        <public>true</public>
+        <roles/>
+        <short_description/>
+        <sys_class_name>sp_page</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-10-17 20:13:19</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>7c9e9c75dbe8c81079f4d144ce961925</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>kbar</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_page_7c9e9c75dbe8c81079f4d144ce961925</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-11-01 22:17:31</sys_updated_on>
+        <title>UTASSP Knowledge Base Artircle Redirect</title>
+    </sp_page>
+    <sys_translated_text action="delete_multiple" query="documentkey=7c9e9c75dbe8c81079f4d144ce961925"/>
+</record_update>

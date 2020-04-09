@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance_link">
+    <sp_instance_link action="DELETE">
+        <active>true</active>
+        <class_name/>
+        <color>info</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <kb_article/>
+        <kb_category/>
+        <kb_topic/>
+        <order>1</order>
+        <roles/>
+        <sc_cat_item/>
+        <sc_category/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">4476d8ea1b4a7300715941d8cd4bcbcf</sp_column>
+        <sp_page display_value="utassp02_kb_public_knowledge_bas">392028f7db2e734079f4d144ce96196d</sp_page>
+        <sp_widget display_value="UTASSP KB Link Widget">9dfbf4434fa12300f006121f9310c73c</sp_widget>
+        <sys_class_name>sp_instance_link</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-06-17 20:57:33</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f2d6142e1b4a7300715941d8cd4bcb67</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Public Knowledge Base</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_instance_link_f2d6142e1b4a7300715941d8cd4bcb67</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-07-16 21:31:04</sys_updated_on>
+        <title>Public Knowledge Base</title>
+        <type>page</type>
+        <u_image/>
+        <url/>
+        <widget_parameters><![CDATA[{
+	"knowledge_base": {
+		"value": "Public Knowledge Base",
+		"displayValue": "Public Knowledge Base"
+	}
+}]]></widget_parameters>
+    </sp_instance_link>
+    <sys_translated_text action="DELETE" query="documentkey=f2d6142e1b4a7300715941d8cd4bcb67"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="utassp">2e58c8624f112300f006121f9310c726</application>
+        <comments/>
+        <file_path/>
+        <instance_id>9e5766b099da014870acd38ad3bda443</instance_id>
+        <instance_name>uta</instance_name>
+        <name>sp_instance_link_f2d6142e1b4a7300715941d8cd4bcb67</name>
+        <order/>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_instance_link"&gt;&lt;sp_instance_link action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;class_name/&gt;&lt;color&gt;info&lt;/color&gt;&lt;css/&gt;&lt;glyph/&gt;&lt;id/&gt;&lt;kb_article/&gt;&lt;kb_category/&gt;&lt;kb_topic/&gt;&lt;order&gt;1&lt;/order&gt;&lt;roles/&gt;&lt;sc_cat_item/&gt;&lt;sc_category/&gt;&lt;short_description/&gt;&lt;size&gt;md&lt;/size&gt;&lt;sp_column display_value="1"&gt;4476d8ea1b4a7300715941d8cd4bcbcf&lt;/sp_column&gt;&lt;sp_page display_value="utassp02_kb_public_knowledge_bas"&gt;392028f7db2e734079f4d144ce96196d&lt;/sp_page&gt;&lt;sp_widget display_value="UTASSP KB Link Widget"&gt;9dfbf4434fa12300f006121f9310c73c&lt;/sp_widget&gt;&lt;sys_class_name&gt;sp_instance_link&lt;/sys_class_name&gt;&lt;sys_created_by&gt;welchv&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2019-06-17 20:57:33&lt;/sys_created_on&gt;&lt;sys_customer_update&gt;false&lt;/sys_customer_update&gt;&lt;sys_id&gt;f2d6142e1b4a7300715941d8cd4bcb67&lt;/sys_id&gt;&lt;sys_mod_count&gt;6&lt;/sys_mod_count&gt;&lt;sys_name&gt;Public Knowledge Base&lt;/sys_name&gt;&lt;sys_package display_value="utassp" source="x_287765_utassp"&gt;2e58c8624f112300f006121f9310c726&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_replace_on_upgrade&gt;false&lt;/sys_replace_on_upgrade&gt;&lt;sys_scope display_value="utassp"&gt;2e58c8624f112300f006121f9310c726&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_instance_link_f2d6142e1b4a7300715941d8cd4bcb67&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;welchv&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-07-16 21:31:04&lt;/sys_updated_on&gt;&lt;title&gt;Public Knowledge Base&lt;/title&gt;&lt;type&gt;page&lt;/type&gt;&lt;u_image/&gt;&lt;url/&gt;&lt;widget_parameters&gt;&lt;![CDATA[{
+	"knowledge_base": {
+		"value": "Public Knowledge Base",
+		"displayValue": "Public Knowledge Base"
+	}
+}]]&gt;&lt;/widget_parameters&gt;&lt;/sp_instance_link&gt;&lt;sys_translated_text action="delete_multiple" query="documentkey=f2d6142e1b4a7300715941d8cd4bcb67"/&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>733146267</payload_hash>
+        <record_name>Public Knowledge Base</record_name>
+        <reverted_from/>
+        <source>57c52ce6db8fb700d48b5e65ce9619cc</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-08-06 15:05:44</sys_created_on>
+        <sys_id>cdd5206adb8fb700d48b5e65ce96194f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>16c6776f5200000001</sys_recorded_at>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-08-06 15:05:44</sys_updated_on>
+        <type>Instance with Link</type>
+        <u_link>[code]&lt;a title="sp_instance_link_f2d6142e1b4a7300715941d8cd4bcb67" class="linked" href="sp_instance_link.do?sys_id=f2d6142e1b4a7300715941d8cd4bcb67"&gt;sp_instance_link_f2d6142e1b4a7300715941d8cd4bcb67&lt;/a&gt;[/code]</u_link>
+        <update_guid>f8a4f13f576ef340dff49a340928ce66</update_guid>
+        <update_guid_history>f8a4f13f576ef340dff49a340928ce66:733146267,b77ab35bc36e73403362ffba0f2a3989:227284369,260af072be0ab300340ec79cc60b39f8:-467941109,1218546ea44a73007c4cdc2b15c8655a:2050011821,bc57d82ed04a73006caec1446c99e627:1523050956,caf698eaf84a73005abfb85065afd5e6:1788005655,b6d6142ea54a73001eafb6f2022f6468:961710510</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="">b06aec22db8bb7000ed7dbf0ce9619ac</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-08-06 15:25:40</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="sp_instance_link">sp_instance_link</sys_db_object>
+        <sys_id>1e42b8f786844d2aaa1dbc97b2a41081</sys_id>
+        <sys_metadata>f2d6142e1b4a7300715941d8cd4bcb67</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Public Knowledge Base</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_scope_delete display_value="">4e892d72dd3742d1bab838492aebccb1</sys_scope_delete>
+        <sys_update_name>sp_instance_link_f2d6142e1b4a7300715941d8cd4bcb67</sys_update_name>
+        <sys_update_version display_value="sp_instance_link_f2d6142e1b4a7300715941d8cd4bcb67">cdd5206adb8fb700d48b5e65ce96194f</sys_update_version>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-08-06 15:25:40</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

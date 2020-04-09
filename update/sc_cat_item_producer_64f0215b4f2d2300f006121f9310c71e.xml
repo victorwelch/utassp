@@ -12,6 +12,7 @@
         <delivery_time>1970-01-03 00:00:00</delivery_time>
         <description><![CDATA[<div>Thank you for contacting the service desk. Please describe the nature of your problem in the fields below. Upon receipt, the service desk will categorize and prioritize your problem at which time you will receive an automated email with the details of that update.</div>
 <p>&nbsp;</p>]]></description>
+        <display_price_property>never</display_price_property>
         <entitlement_script/>
         <group/>
         <hide_sp>false</hide_sp>
@@ -20,18 +21,24 @@
         <image/>
         <list_price>0</list_price>
         <location/>
+        <mandatory_attachment>false</mandatory_attachment>
         <meta/>
         <mobile_hide_price>false</mobile_hide_price>
         <mobile_picture/>
         <mobile_picture_type>use_desktop_picture</mobile_picture_type>
         <model/>
         <name>INCIDENT REPORT: Something Broken</name>
+        <no_attachment_v2>false</no_attachment_v2>
         <no_cart>false</no_cart>
+        <no_cart_v2>false</no_cart_v2>
+        <no_delivery_time_v2>false</no_delivery_time_v2>
         <no_order>false</no_order>
         <no_order_now>false</no_order_now>
         <no_proceed_checkout>false</no_proceed_checkout>
         <no_quantity>false</no_quantity>
+        <no_quantity_v2>false</no_quantity_v2>
         <no_search>false</no_search>
+        <no_wishlist_v2>false</no_wishlist_v2>
         <omit_price>false</omit_price>
         <order>0</order>
         <ordered_item_link/>
@@ -42,6 +49,7 @@
         <recurring_frequency/>
         <recurring_price>0</recurring_price>
         <redirect_url>generated_record</redirect_url>
+        <request_method/>
         <roles/>
         <sc_catalogs>6ba2b82d6f542e0028232d65ad3ee4b6</sc_catalogs>
         <sc_ic_item_staging/>

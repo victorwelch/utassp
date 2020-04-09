@@ -101,4 +101,5 @@
         <typeahead_glyph/>
         <typeahead_template/>
     </sp_search_source>
+    <sys_translated_text action="delete_multiple" query="documentkey=f1e5f0cc4f522300f006121f9310c708"/>
 </record_update>

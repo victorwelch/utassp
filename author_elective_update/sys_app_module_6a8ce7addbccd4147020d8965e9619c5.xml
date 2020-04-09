@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module">
+    <sys_app_module action="DELETE">
+        <active>true</active>
+        <application display_value="Utassp Table Lookup">2e8ce7addbccd4147020d8965e9619c1</application>
+        <assessment/>
+        <content_page/>
+        <device_type/>
+        <filter/>
+        <hint/>
+        <homepage/>
+        <image/>
+        <link_type>LIST</link_type>
+        <map_page/>
+        <mobile_title>Utassp Table Lookups</mobile_title>
+        <mobile_view_name>Mobile</mobile_view_name>
+        <name>x_287765_utassp_table_lookup</name>
+        <order/>
+        <override_menu_roles>false</override_menu_roles>
+        <query/>
+        <report/>
+        <roles>x_287765_utassp.utassp_table_lookup_user</roles>
+        <survey/>
+        <survey_overwrite>true</survey_overwrite>
+        <sys_class_name>sys_app_module</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2020-04-08 16:13:57</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_id>6a8ce7addbccd4147020d8965e9619c5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Utassp Table Lookups</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sys_app_module_6a8ce7addbccd4147020d8965e9619c5</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2020-04-08 16:13:57</sys_updated_on>
+        <timeline_page/>
+        <title>Utassp Table Lookups</title>
+        <uncancelable>false</uncancelable>
+        <view_name/>
+        <window_name/>
+    </sys_app_module>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="utassp">2e58c8624f112300f006121f9310c726</application>
+        <comments/>
+        <file_path/>
+        <instance_id>5a5766b099da014870acd38ad3bda438</instance_id>
+        <instance_name>utadev</instance_name>
+        <name>sys_app_module_6a8ce7addbccd4147020d8965e9619c5</name>
+        <order/>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module"><sys_app_module action="INSERT_OR_UPDATE"><active>true</active><application display_value="Utassp Table Lookup">2e8ce7addbccd4147020d8965e9619c1</application><assessment/><content_page/><device_type/><filter/><hint/><homepage/><image/><link_type>LIST</link_type><map_page/><mobile_title>Utassp Table Lookups</mobile_title><mobile_view_name>Mobile</mobile_view_name><name>x_287765_utassp_table_lookup</name><order/><override_menu_roles>false</override_menu_roles><query/><report/><roles>x_287765_utassp.utassp_table_lookup_user</roles><survey/><survey_overwrite>true</survey_overwrite><sys_class_name>sys_app_module</sys_class_name><sys_created_by>welchv</sys_created_by><sys_created_on>2020-04-08 16:13:57</sys_created_on><sys_customer_update>false</sys_customer_update><sys_domain>global</sys_domain><sys_id>6a8ce7addbccd4147020d8965e9619c5</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Utassp Table Lookups</sys_name><sys_overrides/><sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package><sys_policy/><sys_replace_on_upgrade>false</sys_replace_on_upgrade><sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope><sys_update_name>sys_app_module_6a8ce7addbccd4147020d8965e9619c5</sys_update_name><sys_updated_by>welchv</sys_updated_by><sys_updated_on>2020-04-08 16:13:57</sys_updated_on><timeline_page/><title>Utassp Table Lookups</title><uncancelable>false</uncancelable><view_name/><window_name/></sys_app_module></record_update>]]></payload>
+        <payload_hash>691265319</payload_hash>
+        <record_name>Utassp Table Lookups</record_name>
+        <reverted_from/>
+        <source>788b43981bc03f04df92a7d4bd4bcb48</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2020-04-08 16:13:57</sys_created_on>
+        <sys_id>ae8ce7addbccd4147020d8965e9619c8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1715a91d06b0000001</sys_recorded_at>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2020-04-08 16:13:57</sys_updated_on>
+        <type>Module</type>
+        <u_link>[code]&lt;a title="sys_app_module_6a8ce7addbccd4147020d8965e9619c5" class="linked" href="sys_app_module.do?sys_id=6a8ce7addbccd4147020d8965e9619c5"&gt;sys_app_module_6a8ce7addbccd4147020d8965e9619c5&lt;/a&gt;[/code]</u_link>
+        <update_guid>a68ce7ad92ccd414551ffaec46dc84c8</update_guid>
+        <update_guid_history>a68ce7ad92ccd414551ffaec46dc84c8:691265319</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Record deleted 04-08-2020 11:20:18">5bfde721db0018147020d8965e96195d</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2020-04-08 16:20:18</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="sys_app_module">sys_app_module</sys_db_object>
+        <sys_id>0eb73e6cd4ce4060b022ed93e559f1a4</sys_id>
+        <sys_metadata>6a8ce7addbccd4147020d8965e9619c5</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Utassp Table Lookups</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_scope_delete display_value="">4e892d72dd3742d1bab838492aebccb1</sys_scope_delete>
+        <sys_update_name>sys_app_module_6a8ce7addbccd4147020d8965e9619c5</sys_update_name>
+        <sys_update_version display_value="sys_app_module_6a8ce7addbccd4147020d8965e9619c5">ae8ce7addbccd4147020d8965e9619c8</sys_update_version>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2020-04-08 16:20:18</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

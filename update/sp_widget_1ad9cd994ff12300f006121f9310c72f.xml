@@ -62,7 +62,7 @@ font-size: 18px;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
-	data.uSettings=myU.utilGetInstanceSettings();
+	data.uSettings=myU.utilGetInstanceSettings($sp);
 	// *** Start: Debug only code *** //
 	data.infotag = '';
 	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
@@ -85,7 +85,7 @@ font-size: 18px;
         <sys_created_on>2018-11-14 21:01:05</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>1ad9cd994ff12300f006121f9310c72f</sys_id>
-        <sys_mod_count>17</sys_mod_count>
+        <sys_mod_count>18</sys_mod_count>
         <sys_name>UTASSP Status Legend Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -93,7 +93,7 @@ font-size: 18px;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_1ad9cd994ff12300f006121f9310c72f</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 17:20:03</sys_updated_on>
+        <sys_updated_on>2019-04-02 16:36:21</sys_updated_on>
         <template><![CDATA[<div class="panel panel-{{::options.color}} b" aria-hidden="true" dummy="{{::c.myLog()}}">
   <div class="panel-heading">
     <label class="panel-title">${Legend}</label>

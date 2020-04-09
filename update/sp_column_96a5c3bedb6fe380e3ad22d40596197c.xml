@@ -2,9 +2,9 @@
     <sp_column action="INSERT_OR_UPDATE">
         <class_name/>
         <order>1</order>
-        <size>12</size>
+        <size/>
         <size_lg/>
-        <size_sm/>
+        <size_sm>6</size_sm>
         <size_xs/>
         <sp_row display_value="3">ec958f72dbafe380e3ad22d4059619d2</sp_row>
         <sys_class_name>sp_column</sys_class_name>
@@ -12,7 +12,7 @@
         <sys_created_on>2019-02-14 21:42:47</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>96a5c3bedb6fe380e3ad22d40596197c</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>1</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -20,6 +20,6 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_column_96a5c3bedb6fe380e3ad22d40596197c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-02-14 21:42:58</sys_updated_on>
+        <sys_updated_on>2019-06-18 15:51:45</sys_updated_on>
     </sp_column>
 </record_update>

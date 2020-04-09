@@ -3,394 +3,437 @@
         <access>package_private</access>
         <active>true</active>
         <api_name>x_287765_utassp.u_utassp</api_name>
+        <caller_access/>
         <client_callable>false</client_callable>
         <description/>
         <name>u_utassp</name>
-        <script><![CDATA[var u_utassp = Class.create(); 
+        <script><![CDATA[var u_utassp = Class.create();
 u_utassp.prototype = {
-    initialize: function() {
-    },
-	getKbBaseSysId: function(_pKbKnowledgeBase) {
-		var uData = {};
+    initialize: function() {},
+    getKbBaseSysId: function(_pKbKnowledgeBase) {
+        var uData = {};
         var thisCanRead = {};
         var thisParentSysId = {};
-		var myGr = new GlideRecord('kb_knowledge_base'); 
-        var thisQuery = 'active=true^title=' +_pKbKnowledgeBase;		
+        var myGr = new GlideRecord('kb_knowledge_base');
+        var thisQuery = 'active=true^title=' + _pKbKnowledgeBase;
         myGr.addEncodedQuery(thisQuery);
-        myGr.query();       
+        myGr.query();
         if (myGr.next()) {
             thisCanRead = myGr.canRead();
-            thisParentSysId  = myGr.getValue('sys_id');
+            thisParentSysId = myGr.getValue('sys_id');
         }
         uData.uCanRead = thisCanRead;
-		uData.uKbBaseSysId = thisParentSysId;
-		return uData;
-	},
-	getKbCategorySiblings: function(_pid)
-	{
-		var uData = [];
-		var myGr = new GlideRecord('kb_category');
-		var thisQuery = 'active=true^parent_id='+_pid;
+        //gs.info('--> can read?: '+thisCanRead);
+        uData.uKbBaseSysId = thisParentSysId;
+        return uData;
+    },
+    getKbCategorySiblings: function(_pid) {
+        var uData = [];
+        var myGr = new GlideRecord('kb_category');
+        var thisQuery = 'active=true^parent_id=' + _pid;
         myGr.addEncodedQuery(thisQuery);
         //gs.info('getKbCategorySiblings.query: '+thisQuery);
-		myGr.query();
-		while (myGr.next())
-		{
-			var l_item = {};
-			l_item.value=myGr.getUniqueValue();
-			l_item.label=myGr.getValue('label');
-			l_item.count=this.getKbCategoryArticleCount(l_item.sysid);
-			uData.push(l_item);
-		}
-		return uData;		
-	},
+        myGr.query();
+        while (myGr.next()) {
+            var l_item = {};
+            l_item.value = myGr.getUniqueValue();
+            l_item.label = myGr.getValue('label');
+            l_item.count = this.getKbCategoryArticleCount(l_item.sysid);
+            uData.push(l_item);
+        }
+        return uData;
+    },
     getKbCategoriesBase: function(_pKbKnowledgeBase) {
         var uData = {};
         uData.uCanRead = {};
-		uData.uKbBaseSysId = {};
+        uData.uKbBaseSysId = {};
         uData.uCategoryList = [];
-		uData.uFlatCategoryList = [];
-		uData.uDepth=0;
-		var uKb = {};
-		uKb = this.getKbBaseSysId(_pKbKnowledgeBase);
-		uData.uCanRead = uKb.uCanRead;
-		uData.uKbBaseSysId = uKb.uKbBaseSysId;
+        uData.uFlatCategoryList = [];
+        uData.uDepth = 0;
+        var uKb = {};
+        uKb = this.getKbBaseSysId(_pKbKnowledgeBase);
+        uData.uCanRead = uKb.uCanRead;
+        uData.uKbBaseSysId = uKb.uKbBaseSysId;
 
-		var thisCanRead = uData.uCanRead;
+        var thisCanRead = uData.uCanRead;
         var thisParentSysId = uData.uKbBaseSysId;
 
-        if (thisCanRead) {                     
-            uData.uCategoryList = this.getKbSubCategories(thisParentSysId);			
-			this.setKbCategoryListDepth(uData.uCategoryList,0);
-			uData.uFlatCategoryList=this.getFlatKbCategoryList(uData.uCategoryList);
-			for (var i=0,iL=uData.uFlatCategoryList.length;i<iL;i++) {
-				if (uData.uDepth<uData.uFlatCategoryList[i].level) { uData.uDepth=uData.uFlatCategoryList[i].level; }
-			}
-        }               
+        if (thisCanRead) {
+            uData.uCategoryList = this.getKbSubCategories(thisParentSysId);
+            this.setKbCategoryListDepth(uData.uCategoryList, 0);
+            uData.uFlatCategoryList = this.getFlatKbCategoryList(uData.uCategoryList);
+            for (var i = 0, iL = uData.uFlatCategoryList.length; i < iL; i++) {
+                if (uData.uDepth < uData.uFlatCategoryList[i].level) {
+                    uData.uDepth = uData.uFlatCategoryList[i].level;
+                }
+            }
+        }
         return uData;
-    },  
+    },
     getKbSubCategories: function(_pParentId) {
-		var uCategoryList = [];
-		var myGrCat = {};
-		var myEmptyCatIdObj = {};
-		if (this.utilIsKbBase(_pParentId)) {
-			var myRtnObj = this.utilKbBaseCategoriesQuery(_pParentId);
-			myGrCat=myRtnObj.gr;			
-			myEmptyCatIdObj=myRtnObj.emptyCatIdObj;
-			if (myEmptyCatIdObj.artcount>0) {
-				uCategoryList.push(myEmptyCatIdObj);
-			}
-		} else {
-			myGrCat=this.utilKbCategoriesQuery(_pParentId);
-		}
-		//
+        var uCategoryList = [];
+        var myGrCat = {};
+        var myEmptyCatIdObj = {};
+        if (this.utilIsKbBase(_pParentId)) {
+            var myRtnObj = this.utilKbBaseCategoriesQuery(_pParentId);
+            myGrCat = myRtnObj.gr;
+            myEmptyCatIdObj = myRtnObj.emptyCatIdObj;
+            if (myEmptyCatIdObj.artcount > 0) {
+                uCategoryList.push(myEmptyCatIdObj);
+            }
+        } else {
+            myGrCat = this.utilKbCategoriesQuery(_pParentId);
+        }
+        //
         while (myGrCat.next()) {
-			var l_parentid = _pParentId;
+            var l_parentid = _pParentId;
             var l_id = {};
             var l_label = {};
             var l_count = {};
-			var l_artcount = {};
-			var l_level = 0;
-			var l_uCategoryList=[];
+            var l_artcount = {};
+            var l_level = 0;
+            var l_uCategoryList = [];
             l_id = myGrCat.getUniqueValue();
             l_label = myGrCat.getValue('label');
             var l_myGaCat = new GlideAggregate('kb_category');
             var l_thisQuery2 = 'active=true';
-            l_thisQuery2 += '^parent_id='+l_id; 
+            l_thisQuery2 += '^parent_id=' + l_id;
             l_myGaCat.addEncodedQuery(l_thisQuery2);
             //gs.info('getKbSubCategories.query: '+l_thisQuery2);
             l_myGaCat.addAggregate('COUNT');
             l_myGaCat.query();
             if (l_myGaCat.next()) {
-                l_count=l_myGaCat.getAggregate('COUNT');
+                l_count = l_myGaCat.getAggregate('COUNT');
             }
-			l_artcount = this.getKbCategoryArticleCount(l_id);
-			if (l_artcount>0) {
-				l_uCategoryList=this.getKbSubCategories(l_id);
-				uCategoryList.push({ 
-					label: l_label, 
-					value: l_id, 
-					subcount:l_count, 
-					artcount:l_artcount,
-					level: l_level, 
-					parentid: l_parentid,
-					uCategoryList: l_uCategoryList
-				});				
-			}
-        }  		
+            l_artcount = this.getKbCategoryArticleCount(l_id);
+            if (l_artcount > 0) {
+                l_uCategoryList = this.getKbSubCategories(l_id);
+                uCategoryList.push({
+                    label: l_label,
+                    value: l_id,
+                    subcount: l_count,
+                    artcount: l_artcount,
+                    level: l_level,
+                    parentid: l_parentid,
+                    uCategoryList: l_uCategoryList
+                });
+            }
+        }
         return uCategoryList;
     },
-	getIdSubList: function(uCategoryList) {
-        var myId={};
-		var uIdSubList=[];
-		if (uCategoryList.length>0) {
-			for (var i=0,iL=uCategoryList.length;i<iL;i++)
-			{
+    getIdSubList: function(uCategoryList) {
+        var myId = {};
+        var uIdSubList = [];
+        if (uCategoryList.length > 0) {
+            for (var i = 0, iL = uCategoryList.length; i < iL; i++) {
                 myId = uCategoryList[i];
                 uIdSubList.push(myId.value);
-				if (uCategoryList[i].idsublist.length>0) {
-					uIdSubList.push(uCategoryList[i].idsublist);
-				}
-			}
-		}
-		return uIdSubList;
-	},
-	setKbCategoryListDepth: function (uCategoryList,uLevel) {	
-		var thisULevel = uLevel;
-		if (uCategoryList.length>0) {
-			uLevel += 1;
-			for (var i=0, iL=uCategoryList.length;i<iL;i++) {
-				uCategoryList[i].level = uLevel;
-				this.setKbCategoryListDepth(uCategoryList[i].uCategoryList,uLevel);
-			}
-		}
-	},	
-	getFlatKbCategoryList: function(uCategoryList){
-		var uFlatCategoryList=[];
-        var tmpFlatCategoryList=[];        
-		if (uCategoryList.length>0) {
-			for (var i=0,iL=uCategoryList.length;i<iL;i++) {
-				var myCategoryItem = {};
-				myCategoryItem.label = uCategoryList[i].label;
-				myCategoryItem.value = uCategoryList[i].value;
-				myCategoryItem.subcount = uCategoryList[i].subcount;
-				myCategoryItem.artcount = uCategoryList[i].artcount;
-				myCategoryItem.level = uCategoryList[i].level;
-				myCategoryItem.parentid = uCategoryList[i].parentid;
-				uFlatCategoryList.push(myCategoryItem);
-				tmpFlatCategoryList = this.getFlatKbCategoryList(uCategoryList[i].uCategoryList);
-				for (var j=0,jL=tmpFlatCategoryList.length;j<jL;j++) {	
-					uFlatCategoryList.push(tmpFlatCategoryList[j]);
-				}
-			}					
-		}
-		return uFlatCategoryList;
-	},
-	getKbCategoryTreeTitle: function(_pCatId)
-	{
-		var myCat = this.getKbCategoryTreeStr(_pCatId);
-		if (myCat != '') {
-			return 'Articles: '+myCat;			
-		}
-		return 'Articles: #kbname (all categories)';
-	},
-	getKbCategoryTreeStr: function(_pCatId) {
-		var thisCatStr = ''; 
-		var thisParentId = '';
+                if (uCategoryList[i].idsublist.length > 0) {
+                    uIdSubList.push(uCategoryList[i].idsublist);
+                }
+            }
+        }
+        return uIdSubList;
+    },
+    setKbCategoryListDepth: function(uCategoryList, uLevel) {
+        var thisULevel = uLevel;
+        if (uCategoryList.length > 0) {
+            uLevel += 1;
+            for (var i = 0, iL = uCategoryList.length; i < iL; i++) {
+                uCategoryList[i].level = uLevel;
+                this.setKbCategoryListDepth(uCategoryList[i].uCategoryList, uLevel);
+            }
+        }
+    },
+    getFlatKbCategoryList: function(uCategoryList) {
+        var uFlatCategoryList = [];
+        var tmpFlatCategoryList = [];
+        if (uCategoryList.length > 0) {
+            for (var i = 0, iL = uCategoryList.length; i < iL; i++) {
+                var myCategoryItem = {};
+                myCategoryItem.label = uCategoryList[i].label;
+                myCategoryItem.value = uCategoryList[i].value;
+                myCategoryItem.subcount = uCategoryList[i].subcount;
+                myCategoryItem.artcount = uCategoryList[i].artcount;
+                myCategoryItem.level = uCategoryList[i].level;
+                myCategoryItem.parentid = uCategoryList[i].parentid;
+                uFlatCategoryList.push(myCategoryItem);
+                tmpFlatCategoryList = this.getFlatKbCategoryList(uCategoryList[i].uCategoryList);
+                for (var j = 0, jL = tmpFlatCategoryList.length; j < jL; j++) {
+                    uFlatCategoryList.push(tmpFlatCategoryList[j]);
+                }
+            }
+        }
+        return uFlatCategoryList;
+    },
+    getKbCategoryTreeTitle: function(_pCatId) {
+        var myCat = this.getKbCategoryTreeStr(_pCatId);
+        if (myCat != '') {
+            return 'Articles: ' + myCat;
+        }
+        return 'Articles: #kbname (all categories)';
+    },
+    getKbCatRoot: function(_pKbCatGr) {
+        function getParentRec(_pSysId) {
+            var myNewGr = new GlideRecord('kb_category');
+            myNewGr.get(_pSysId);
+            return myNewGr;
+        }
+        //
+        var myRtn = '';
+        if (_pKbCatGr.parent_table == 'kb_knowledge_base') {
+            myRtn = _pKbCatGr.parent_id.getDisplayValue();
+        } else if (_pKbCatGr.parent_id) {
+            var myNewKbCatGr = getParentRec(_pKbCatGr.parent_id);
+            while (myNewKbCatGr.parent_id) {
+                if (myNewKbCatGr.parent_table == 'kb_knowledge_base') {
+                    myRtn = myNewKbCatGr.parent_id.getDisplayValue();
+                    break;
+                } else {
+                    myNewKbCatGr = getParentRec(myNewKbCatGr.parent_id);
+                }
+            }
+        }
+        return myRtn;
+    },
+    getKbCategoryTreeStr: function(_pCatId) {
+        var thisCatStr = '';
+        var thisParentId = '';
         var thisParentTable = '';
-        var isCatEmpty = (_pCatId.toString().indexOf('empty')>-1);
+        var isCatEmpty = (_pCatId.toString().indexOf('empty') > -1);
         var isKbBase = this.utilIsKbBase(_pCatId);
-        var isFound = false;     
-   
-		if (!isKbBase) {
+        var isFound = false;
+
+        if (!isKbBase) {
             if (!isCatEmpty) {
-				isFound = false;
-				var myGrCat = new GlideRecord('kb_category');
-				var thisQuery = 'active=true';
-				thisQuery += '^sys_id='+_pCatId;
-				myGrCat.addEncodedQuery(thisQuery);
-				myGrCat.query();
+                isFound = false;
+                var myGrCat = new GlideRecord('kb_category');
+                var thisQuery = 'active=true';
+                thisQuery += '^sys_id=' + _pCatId;
+                myGrCat.addEncodedQuery(thisQuery);
+                myGrCat.query();
                 if (myGrCat.next()) {
                     thisCatStr = myGrCat.getValue('label');
                     thisParentId = myGrCat.getValue('parent_id');
                     thisParentTable = myGrCat.getValue('parent_table');
-                    isFound = true;			
+                    isFound = true;
                 }
                 //If ParentTable found, and is valid, check to see if a category or a knowledge_base
                 if (isFound && this.utilIsValueValid(thisParentTable) && this.utilIsValueValid(thisParentId)) {
                     // If not a kb_knowledge_base record, then a valid category...  keep going
                     if (thisParentTable.indexOf('kb_knowledge_base') < 0) {
-                        return this.getKbCategoryTreeStr(thisParentId) + ' > ' + thisCatStr;	
-                    }				
-                }     
+                        return this.getKbCategoryTreeStr(thisParentId) + ' > ' + thisCatStr;
+                    }
+                }
             } else {
                 thisCatStr = '(empty)';
             }
-		}
-		return thisCatStr;	
-	},
-	getKbCategoryListForArticle: function(_pArtSysId) {
-		var myCatListStr = '';
-		var myGr = new GlideRecord('kb_knowledge');
-		if (myGr.get(_pArtSysId))
-		{
-			var l_title = myGr.getValue('short_description');
+        }
+        return thisCatStr;
+    },
+    getKbCategoryListForArticle: function(_pArtSysId) {
+        var myCatListStr = '';
+        var myGr = new GlideRecord('kb_knowledge');
+        if (myGr.get(_pArtSysId)) {
+            var l_title = myGr.getValue('short_description');
             var l_catSysId = myGr.getValue('kb_category');
             if (!this.utilIsValueValid(l_catSysId)) {
                 l_catSysId = '(empty)';
             }
-			myCatListStr = this.getKbCategoryTreeStr(l_catSysId);
-			//myCatListStr = myCatListStr.replace(/ > /g,'>');
-			myCatListStr = myCatListStr.trim();
-            myCatListStr = (myCatListStr.length>0)?myCatListStr+' > "'+l_title+'"':'"'+l_title+'"';
-		}
-		return myCatListStr;
-	},	
-	getKbCategoryDescendants: function(_pParentId) {
-		var idList = [];
-		var myGrCat = {};
-		if (this.utilIsKbBase(_pParentId)) {
-			var myRtnObj = this.utilKbBaseCategoriesQuery(_pParentId);
-			myGrCat=myRtnObj.gr;			
-			myEmptyCatIdObj=myRtnObj.emptyCatIdObj;
-			if (myEmptyCatIdObj.artcount>0) {
-				idList.push('(empty)');
-			}
-		} else {
-			myGrCat=this.utilKbCategoriesQuery(_pParentId);
-		}
-		while (myGrCat.next())
-		{
-			var l_id = {};
-			l_id = myGrCat.getUniqueValue();
-			idList.push(l_id);
-			var l_idList = [];
-			l_idList = this.getKbCategoryDescendants(l_id);
-			if (l_idList.length>0) { 
-				idList = idList.concat(l_idList);
-			}		
-		}
-		return idList;		
-	},
-	getKbCategoryArticleCount: function(_pParentId) {
-		var myIdList = [];
-		myIdList.push(_pParentId);
+            myCatListStr = this.getKbCategoryTreeStr(l_catSysId);
+            //myCatListStr = myCatListStr.replace(/ > /g,'>');
+            myCatListStr = myCatListStr.trim();
+            myCatListStr = (myCatListStr.length == 0 || myCatListStr.indexOf('empty') > -1) ? ' "' + l_title + '"' : myCatListStr + ' > "' + l_title + '"';
+        }
+        //gs.info(myCatListStr);
+        return myCatListStr;
+    },
+    getKbCategoryDescendants: function(_pParentId) {
+        var idList = [];
+        var myGrCat = {};
+        if (this.utilIsKbBase(_pParentId)) {
+            var myRtnObj = this.utilKbBaseCategoriesQuery(_pParentId);
+            myGrCat = myRtnObj.gr;
+            myEmptyCatIdObj = myRtnObj.emptyCatIdObj;
+            if (myEmptyCatIdObj.artcount > 0) {
+                idList.push('(empty)');
+            }
+        } else {
+            myGrCat = this.utilKbCategoriesQuery(_pParentId);
+        }
+        while (myGrCat.next()) {
+            var l_id = {};
+            l_id = myGrCat.getUniqueValue();
+            idList.push(l_id);
+            var l_idList = [];
+            l_idList = this.getKbCategoryDescendants(l_id);
+            if (l_idList.length > 0) {
+                idList = idList.concat(l_idList);
+            }
+        }
+        return idList;
+    },
+    getKbCategoryArticleCount: function(_pParentId) {
+        var myIdList = [];
+        myIdList.push(_pParentId);
         myIdList = myIdList.concat(this.getKbCategoryDescendants(_pParentId));
         //var myIdEmptyExistsCheck = 
-		var myArticleCount = 0;
+        var myArticleCount = 0;
         /* ******************** */
-		var myGaArt = new GlideAggregate('kb_knowledge');
-		var thisQuery = '';
+        var myGaArt = new GlideAggregate('kb_knowledge');
+        var thisQuery = '';
         /* ******************** */
         /* ******************** */
-        var myKbBaseSysIdForEmpty='';
+        var myKbBaseSysIdForEmpty = '';
         var myEmptyCheck = this.utilEmptyIdExistsCheck(myIdList);
         var myIncludeEmptyQuery = myEmptyCheck.emptyIdExists;
         if (myIncludeEmptyQuery) {
-            myIdList=myEmptyCheck.idListWithoutEmpty;
-            myKbBaseSysIdForEmpty=myEmptyCheck.emptyId;
+            myIdList = myEmptyCheck.idListWithoutEmpty;
+            myKbBaseSysIdForEmpty = myEmptyCheck.emptyId;
         }
-		if (myIdList.length > 1) {
-            var myIdListStr = myIdList.join();          
-			thisQuery += 'kb_categoryIN'+myIdListStr;					
-			if (myIncludeEmptyQuery) {
-                thisQuery += '^ORkb_categoryISEMPTY';  
-                thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty;             
-			}
-		} else {
-            if (myIdList.length > 0)
-            {
-                thisQuery += 'kb_category='+myIdList[0];
+        if (myIdList.length > 1) {
+            var myIdListStr = myIdList.join();
+            thisQuery += 'kb_categoryIN' + myIdListStr;
+            if (myIncludeEmptyQuery) {
+                thisQuery += '^ORkb_categoryISEMPTY';
+                thisQuery += '^kb_knowledge_base=' + myKbBaseSysIdForEmpty;
+            }
+        } else {
+            if (myIdList.length > 0) {
+                thisQuery += 'kb_category=' + myIdList[0];
                 if (myIncludeEmptyQuery) {
                     thisQuery += '^ORkb_categoryISEMPTY';
-                    thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty; 
-                }	
+                    thisQuery += '^kb_knowledge_base=' + myKbBaseSysIdForEmpty;
+                }
             } else if (myIncludeEmptyQuery) {
-                thisQuery += 'kb_categoryISEMPTY'; 
-                thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty;            
+                thisQuery += 'kb_categoryISEMPTY';
+                thisQuery += '^kb_knowledge_base=' + myKbBaseSysIdForEmpty;
             }
         }
         /* ******************** */
-		thisQuery += '^active=true';			
-		thisQuery += '^workflow_state=published';
-        thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';        
+        thisQuery += '^active=true';
+        thisQuery += '^workflow_state=published';
+        thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';
         myGaArt.addEncodedQuery(thisQuery);
-		//gs.info('getKbCategoryArticleCount.query: '+thisQuery);        
-		myGaArt.addAggregate('COUNT');
-		myGaArt.query();
-		if (myGaArt.next()) {
-			myArticleCount=myGaArt.getAggregate('COUNT');
-		}			
-		return myArticleCount;		
-	},
-    getKbCategoryArticles: function(_pCatSysId,_pFirstRow,_LastRow) {
-		//gs.info('getKbCategoryArticles: 1');
-		var myUdata = {};
-		var myArticleList = [];
-		var myRowCount = 0;
-		var myIdList = [];
+        //gs.info('getKbCategoryArticleCount.query: '+thisQuery);        
+        myGaArt.addAggregate('COUNT');
+        myGaArt.query();
+        if (myGaArt.next()) {
+            myArticleCount = myGaArt.getAggregate('COUNT');
+        }
+        return myArticleCount;
+    },
+    getKbCategoryArticles: function(_pCatSysId, _pFirstRow, _LastRow, _pSortObj) {
+		var mySortObj = this.utilIsValueValid(_pSortObj) ? _pSortObj : null;		
+        //gs.info('getKbCategoryArticles: 1');
+        var myUdata = {};
+        var myArticleList = [];
+        var myRowCount = 0;
+        var myIdList = [];
         /* ******************** */
-		var myGrArt = new GlideRecord('kb_knowledge');
-		myGrArt.chooseWindow(_pFirstRow,_LastRow);		
-		var thisQuery = '';
+        var myGrArt = new GlideRecord('kb_knowledge');
+        myGrArt.chooseWindow(_pFirstRow, _LastRow);
+        var thisQuery = '';
         /* ******************** */
         /* ******************** */
         var myIsKbBase = this.utilIsKbBase(_pCatSysId);
         if (myIsKbBase) {
-            thisQuery += 'kb_knowledge_base='+_pCatSysId;      
+            thisQuery += 'kb_knowledge_base=' + _pCatSysId;
         } else {
             myIdList.push(_pCatSysId);
             myIdList = myIdList.concat(this.getKbCategoryDescendants(_pCatSysId));
             /* ************* */
-            var myKbBaseSysIdForEmpty='';
+            var myKbBaseSysIdForEmpty = '';
             var myEmptyCheck = this.utilEmptyIdExistsCheck(myIdList);
-            var myIncludeEmptyQuery = myEmptyCheck.emptyIdExists;		
+            var myIncludeEmptyQuery = myEmptyCheck.emptyIdExists;
             if (myIncludeEmptyQuery) {
-                myIdList=myEmptyCheck.idListWithoutEmpty;
-                myKbBaseSysIdForEmpty=myEmptyCheck.emptyId;
+                myIdList = myEmptyCheck.idListWithoutEmpty;
+                myKbBaseSysIdForEmpty = myEmptyCheck.emptyId;
             }
             /* ************* */
             if (myIdList.length > 1) {
-                var myIdListStr = myIdList.join();          
-                thisQuery += 'kb_categoryIN'+myIdListStr;	
+                var myIdListStr = myIdList.join();
+                thisQuery += 'kb_categoryIN' + myIdListStr;
                 if (myIncludeEmptyQuery) {
-                    thisQuery += '^ORkb_categoryISEMPTY';  
-                    thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty;             
-                }                				
+                    thisQuery += '^ORkb_categoryISEMPTY';
+                    thisQuery += '^kb_knowledge_base=' + myKbBaseSysIdForEmpty;
+                }
             } else {
-                if (myIdList.length > 0)
-                {
-                    thisQuery += 'kb_category='+myIdList[0];
+                if (myIdList.length > 0) {
+                    thisQuery += 'kb_category=' + myIdList[0];
                     if (myIncludeEmptyQuery) {
                         thisQuery += '^ORkb_categoryISEMPTY';
-                        thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty; 
-                    }	
+                        thisQuery += '^kb_knowledge_base=' + myKbBaseSysIdForEmpty;
+                    }
                 } else if (myIncludeEmptyQuery) {
-                    thisQuery += 'kb_categoryISEMPTY'; 
-                    thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty;            
+                    thisQuery += 'kb_categoryISEMPTY';
+                    thisQuery += '^kb_knowledge_base=' + myKbBaseSysIdForEmpty;
                 }
             }
         }
         /* ******************** */
-		thisQuery += '^active=true';			
-		thisQuery += '^workflow_state=published';
-        thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';        
+        thisQuery += '^active=true';
+        thisQuery += '^workflow_state=published';
+        thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';
 
-        myGrArt.orderByDesc('rating');
-        myGrArt.orderByDesc('published');		
+        var isSort = false;
+        var isAsc;
+        var sortColName;
+        if (this.utilIsValueValid(_pSortObj)) {
+            if ((_pSortObj.isSortAsc) || (_pSortObj.isSortDesc)) {
+                if (this.utilIsValueValid(_pSortObj.sortField)) {
+                    isSort = true;
+                    isAsc = _pSortObj.isSortAsc;
+                    sortColName = _pSortObj.sortField;
+					//gs.info('kbpubsort 0: ' + sortColName);
+                }
+            }
+        }
+        if (isSort) {
+            if (isAsc) {
+                myGrArt.orderBy(sortColName);
+            } else {
+                myGrArt.orderByDesc(sortColName);
+            }
+        } else {
+            myGrArt.orderByDesc('rating');
+            myGrArt.orderByDesc('published');
+        }		
         myGrArt.addEncodedQuery(thisQuery);
         //gs.info('getKbCategoryArticles.query: '+thisQuery);            
         myGrArt.query();
-		myRowCount = myGrArt.getRowCount();
-		while (myGrArt.next()) {
-			var l_item = {
-				sys_id: myGrArt.getUniqueValue(),
-				short_description: myGrArt.short_description.toString(),
-				rating: myGrArt.getValue('rating'),
-				published: myGrArt.getDisplayValue('published'),
-				author: myGrArt.getDisplayValue('author')
-			};
-			myArticleList.push(l_item);
-		}		
-		myUdata.articles = myArticleList;
-		myUdata.rowCount = myRowCount;
+        myRowCount = myGrArt.getRowCount();
+        while (myGrArt.next()) {
+            var l_item = {
+                sys_id: myGrArt.getUniqueValue(),
+                short_description: myGrArt.short_description.toString(),
+                rating: myGrArt.getValue('rating'),
+                published: myGrArt.getDisplayValue('published'),
+                author: myGrArt.getDisplayValue('author'),
+				kbnumber: myGrArt.getValue('number')
+            };
+            myArticleList.push(l_item);
+        }
+        myUdata.articles = myArticleList;
+        myUdata.rowCount = myRowCount;
         return myUdata;
     },
-    getKbCategorySearchArticles: function(_pCatSysId,_pSearch,_pFirstRow,_LastRow) {
-		//gs.info('getKbCategorySearchArticles: 1');
-		var myUdata = {};
-		var myArticleList = [];
-		var myRowCount = 0;
+    getKbCategorySearchArticles: function(_pCatSysId, _pSearch, _pFirstRow, _LastRow, _pSortObj) {
+		var mySortObj = this.utilIsValueValid(_pSortObj) ? _pSortObj : null;		
+        //gs.info('getKbCategorySearchArticles: 1');
+        var myUdata = {};
+        var myArticleList = [];
+        var myRowCount = 0;
         var myIdList = [];
-        /* ******************** */		
-		var myGrArt = new GlideRecord('kb_knowledge');
-		myGrArt.chooseWindow(_pFirstRow,_LastRow);		
-		var thisQuery = '';			
-        /* ******************** */		
-		/* ******************** */		
-		var myIsKbBase = this.utilIsKbBase(_pCatSysId);
+        /* ******************** */
+        var myGrArt = new GlideRecord('kb_knowledge');
+        myGrArt.chooseWindow(_pFirstRow, _LastRow);
+        var thisQuery = '';
+        /* ******************** */
+        /* ******************** */
+        var myIsKbBase = this.utilIsKbBase(_pCatSysId);
         if (myIsKbBase) {
-            thisQuery += 'kb_knowledge_base='+_pCatSysId;      
+            thisQuery += 'kb_knowledge_base=' + _pCatSysId;
         } else {
             myIdList.push(_pCatSysId);
             myIdList = myIdList.concat(this.getKbCategoryDescendants(_pCatSysId));
@@ -398,531 +441,725 @@ u_utassp.prototype = {
             var myEmptyCheck = this.utilEmptyIdExistsCheck(myIdList);
             var myIncludeEmptyQuery = myEmptyCheck.emptyIdExists;
             if (myIncludeEmptyQuery) {
-                myIdList=myEmptyCheck.idListWithoutEmpty;
-                myKbBaseSysIdForEmpty=myEmptyCheck.emptyId;
+                myIdList = myEmptyCheck.idListWithoutEmpty;
+                myKbBaseSysIdForEmpty = myEmptyCheck.emptyId;
             }
             /* ************* */
             if (myIdList.length > 1) {
-                var myIdListStr = myIdList.join();          
-                thisQuery += 'kb_categoryIN'+myIdListStr;	
+                var myIdListStr = myIdList.join();
+                thisQuery += 'kb_categoryIN' + myIdListStr;
                 if (myIncludeEmptyQuery) {
-                    thisQuery += '^ORkb_categoryISEMPTY';  
-                    thisQuery += '^kb_knowledge_base=' +  myKbBaseSysIdForEmpty;             
-                }                				
+                    thisQuery += '^ORkb_categoryISEMPTY';
+                    thisQuery += '^kb_knowledge_base=' + myKbBaseSysIdForEmpty;
+                }
             } else {
                 if (myIdList.length > 0) {
-                    thisQuery += 'kb_category='+myIdList[0];
+                    thisQuery += 'kb_category=' + myIdList[0];
                     if (myIncludeEmptyQuery) {
-                        thisQuery += '^ORkb_categoryISEMPTY';            
-                    }                    			
+                        thisQuery += '^ORkb_categoryISEMPTY';
+                    }
                 } else {
                     if (myIncludeEmptyQuery) {
-                        thisQuery += 'kb_categoryISEMPTY';            
+                        thisQuery += 'kb_categoryISEMPTY';
                     }
                 }
             }
-            /* ************* */            
-        }        
-        /* ******************** */	
-		thisQuery += '^active=true';			
-		thisQuery += '^workflow_state=published';
-        thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';        
-        var isSearch = this.utilIsValueValid(_pSearch.trim());
-        if (isSearch) {
-            thisQuery += '^IR_AND_OR_QUERY='+_pSearch;
-            myGrArt.orderByDesc('ir_query_score');
+            /* ************* */
         }
-		myGrArt.orderByDesc('rating');
-		myGrArt.orderByDesc('published');		
-        myGrArt.addEncodedQuery(thisQuery);
-		//gs.info('getKbCategorySearchArticles.query: '+thisQuery);        
+        /* ******************** */
+        thisQuery += '^active=true';
+        thisQuery += '^workflow_state=published';
+        thisQuery += '^valid_to>=javascript:gs.beginningOfToday()';
+
+		var isSearch = this.utilIsValueValid(_pSearch.trim());
+        var isSort = false;
+        var isAsc;
+        var sortColName;
+        if (this.utilIsValueValid(_pSortObj)) {
+            if ((_pSortObj.isSortAsc) || (_pSortObj.isSortDesc)) {
+                if (this.utilIsValueValid(_pSortObj.sortField)) {
+                    isSort = true;
+                    isAsc = _pSortObj.isSortAsc;
+                    sortColName = _pSortObj.sortField;
+					//gs.info('kbpubsort 0: ' + sortColName);
+                }
+            }
+        }		
 		
-		myGrArt.query();
-		myRowCount = myGrArt.getRowCount();
-		while (myGrArt.next()) {
-			var l_item = {
-				sys_id: myGrArt.getUniqueValue(),
-				short_description: myGrArt.short_description.toString(),
-				rating: myGrArt.getValue('rating'),
-				published: myGrArt.getDisplayValue('published'),
-				author: myGrArt.getDisplayValue('author')
-			};
-			myArticleList.push(l_item);
-		}		
-		myUdata.articles = myArticleList;
-		myUdata.rowCount = myRowCount;
+		
+        if (isSearch) {
+			thisQuery += '^IR_AND_OR_QUERY=' + _pSearch;
+			if (isSort) {
+				if (isAsc) {
+					myGrArt.orderBy(sortColName);
+				} else {
+					myGrArt.orderByDesc(sortColName);
+				}
+			} else {
+				myGrArt.orderByDesc('ir_query_score');
+				myGrArt.orderByDesc('rating');
+				myGrArt.orderByDesc('published');
+			}
+            
+        } else {
+			myGrArt.orderByDesc('rating');
+			myGrArt.orderByDesc('published');			
+		}
+        myGrArt.addEncodedQuery(thisQuery);
+        //gs.info('getKbCategorySearchArticles.query: '+thisQuery);        
+
+        myGrArt.query();
+        myRowCount = myGrArt.getRowCount();
+        while (myGrArt.next()) {
+            var l_item = {
+                sys_id: myGrArt.getUniqueValue(),
+                short_description: myGrArt.short_description.toString(),
+                rating: myGrArt.getValue('rating'),
+                published: myGrArt.getDisplayValue('published'),
+                author: myGrArt.getDisplayValue('author'),
+                kbnumber: myGrArt.getValue('number')				
+            };
+            myArticleList.push(l_item);
+        }
+        myUdata.articles = myArticleList;
+        myUdata.rowCount = myRowCount;
         return myUdata;
 
     },
-	getBusinessServiceTree: function(_pParentId) {
-		var servicelist = [];
-		var thisQ = 'operational_status!=2';
-		if (!this.utilIsValueValid(_pParentId)) {
-			thisQ += '^parentISEMPTY';
-		} else if (_pParentId.toString().indexOf('empty')>-1) {
-			thisQ += '^parentISEMPTY';	
-		} else {
-			thisQ += '^parent='+_pParentId;
-		}
+    getKbArticleByKbNum: function(_kbNum) {
+        var myUdata = {
+            sys_id: '',
+            rowCount: 0
+        };
+        var myGrKb = new GlideRecord('kb_knowledge');
+        if (myGrKb.get('number', _kbNum)) {
+            myUdata.sys_id = myGrKb.getValue('sys_id');
+            myUdata.rowCount = 1;
+        }
+        return myUdata;
+    },
+    getKbPublicArticles: function(_pFirstRow, _pLastRow, _pSortObj) {
+        var mySortObj = this.utilIsValueValid(_pSortObj) ? _pSortObj : null;
+        return this.getKbPublicSearchArticles(null, _pFirstRow, _pLastRow, mySortObj);
+    },
+    getKbPublicSearchArticles: function(_pSearch, _pFirstRow, _pLastRow, _pSortObj) {
+        var mySearch = '';
+        var myUdata = {};
+        var myRowCount = 0;
+		var myArticleList = [];
+		//
+        var myGrArt = new GlideRecord('kb_knowledge');
+        myGrArt.chooseWindow(_pFirstRow, _pLastRow);
+        myGrArt.addQuery('active', 'true');
+        myGrArt.addQuery('workflow_state', 'published');
+        myGrArt.addJoinQuery('u_kb_public','sys_id','u_kb_article');
+		//
+        var isSort = false;
+        var isAsc;
+        var sortColName;
+        if (this.utilIsValueValid(_pSortObj)) {
+            if ((_pSortObj.isSortAsc) || (_pSortObj.isSortDesc)) {
+                if (this.utilIsValueValid(_pSortObj.sortField)) {
+                    isSort = true;
+                    isAsc = _pSortObj.isSortAsc;
+                    sortColName = _pSortObj.sortField;
+					//gs.info('kbpubsort 0: ' + sortColName);
+                }
+            }
+        }
+        var isSearch = false;
+        if ((typeof _pSearch) == (typeof 'string')) {
+            mySearch = _pSearch.trim();
+            //gs.info('kbpubsearch 0a.: ' + _pSearch);
+            if (this.utilIsValueValid(mySearch)) {
+                isSearch = true;
+                //gs.info('kbpubsearch 0b.: ' + isSearch + ',' + mySearch);
+            }
+        }
+        if (isSearch) {
+            myGrArt.addQuery('IR_AND_OR_QUERY', mySearch);
+            if (!isSort) {
+                myGrArt.orderByDesc('ir_query_score');
+            }
+        }
+        if (isSort) {
+            if (isAsc) {
+                myGrArt.orderBy(sortColName);
+            } else {
+                myGrArt.orderByDesc(sortColName);
+            }
+        } else {
+            myGrArt.orderByDesc('rating');
+            myGrArt.orderByDesc('published');
+        }
+        /* ******************** */
+        /* ******************** */
+        myGrArt.query();
+        myRowCount = myGrArt.getRowCount();
+        //gs.info('kbpubsearch 1.: ' + myRowCount);
+        while (myGrArt.next()) {
+            var l_item = {
+                sys_id: myGrArt.getUniqueValue(),
+                short_description: myGrArt.short_description.toString(),
+                rating: myGrArt.getValue('rating'),
+                published: myGrArt.getDisplayValue('published'),
+                author: myGrArt.getDisplayValue('author'),
+                kbnumber: myGrArt.getValue('number')
+            };
+            myArticleList.push(l_item);
+        }
+        /* ******************** */
+        /* ******************** */
+        myUdata.articles = myArticleList;
+        myUdata.rowCount = myRowCount;
+        return myUdata;
+    },
+    getKbPublicArticleByKbNum: function(_kbNum) {
+        var myUdata = {
+            sys_id: '',
+            rowCount: 0
+        };
+        var myGrPub = new GlideRecord('u_kb_public');
+        myGrPub.addQuery('u_kb_article.number', _kbNum);
+        myGrPub.query();
+        if (myGrPub.next()) {
+            myUdata.sys_id = myGrPub.getValue('u_kb_article');
+            myUdata.rowCount = 1;
+        }
+        return myUdata;
+    },
+    getBusinessServiceTree: function(_pParentId) {
+        var servicelist = [];
+        var thisQ = 'operational_status!=2';
+        if (!this.utilIsValueValid(_pParentId)) {
+            thisQ += '^parentISEMPTY';
+        } else if (_pParentId.toString().indexOf('empty') > -1) {
+            thisQ += '^parentISEMPTY';
+        } else {
+            thisQ += '^parent=' + _pParentId;
+        }
 
-		var myGr = new GlideRecord('cmdb_ci_service');
-		myGr.addEncodedQuery(thisQ);
-		myGr.orderBy('name');
-		myGr.query();
-		while (myGr.next()) {
-			var l_name = myGr.getValue('name');
-			var l_sysid = myGr.getValue('sys_id');
-			var l_servicelist = [];
-			if (l_name.indexOf('Applications & Systems')<0) {
-				l_servicelist = this.utilEmptyListLast(this.getBusinessServiceTree(l_sysid));				
-			} else {
-				l_servicelist =  this.utilEmptyListFirst(this.utilGetBusinessServiceTreeAlpha(l_sysid));
-			}
-			servicelist.push({
-				name: l_name,
-				sysid: l_sysid,
+        var myGr = new GlideRecord('cmdb_ci_service');
+        myGr.addEncodedQuery(thisQ);
+        myGr.orderBy('name');
+        myGr.query();
+        while (myGr.next()) {
+            var l_name = myGr.getValue('name');
+            var l_sysid = myGr.getValue('sys_id');
+            var l_servicelist = [];
+            if (l_name.indexOf('Applications & Systems') < 0) {
+                l_servicelist = this.utilEmptyListLast(this.getBusinessServiceTree(l_sysid));
+            } else {
+                l_servicelist = this.utilEmptyListFirst(this.utilGetBusinessServiceTreeAlpha(l_sysid));
+            }
+            servicelist.push({
+                name: l_name,
+                sysid: l_sysid,
                 servicelist: l_servicelist,
-                nodetype: l_servicelist.length>0? 'tree' : 'leaf',
+                nodetype: l_servicelist.length > 0 ? 'tree' : 'leaf',
                 idnumber: 0,
                 id: ''
-			});
+            });
         }
         servicelist = this.utilEmptyListLast(servicelist);
-		return servicelist;
+        return servicelist;
     },
     utilEmptyListLast: function(_pList) {
-		var rtnList = [];
-		var tmpMTList = [];
-		var tmpOList = [];
-		var tmpItem = {};
-		if (_pList.length>0) {
-			for (var i=0,iL=_pList.length;i<iL;i++) {
-				tmpItem=_pList[i]; 
-				if (this.utilIsValueValid(tmpItem.servicelist) && tmpItem.servicelist.length>0){
-					tmpOList.push(tmpItem);
-				} else {
-					tmpMTList.push(tmpItem);					
-				}				
-			}
-			rtnList = tmpOList.concat(tmpMTList);
-		}
-		return rtnList;        
+        var rtnList = [];
+        var tmpMTList = [];
+        var tmpOList = [];
+        var tmpItem = {};
+        if (_pList.length > 0) {
+            for (var i = 0, iL = _pList.length; i < iL; i++) {
+                tmpItem = _pList[i];
+                if (this.utilIsValueValid(tmpItem.servicelist) && tmpItem.servicelist.length > 0) {
+                    tmpOList.push(tmpItem);
+                } else {
+                    tmpMTList.push(tmpItem);
+                }
+            }
+            rtnList = tmpOList.concat(tmpMTList);
+        }
+        return rtnList;
     },
     utilEmptyListFirst: function(_pList) {
-		var rtnList = [];
-		var tmpMTList = [];
-		var tmpOList = [];
-		var tmpItem = {};
-		if (_pList.length>0) {
-			for (var i=0,iL=_pList.length;i<iL;i++) {
-				tmpItem=_pList[i]; 
-				if (this.utilIsValueValid(tmpItem.servicelist) && tmpItem.servicelist.length>0){
-					tmpOList.push(tmpItem);
-				} else {
-					tmpMTList.push(tmpItem);					
-				}				
-			}
-			rtnList = tmpMTList.concat(tmpOList);
-		}
-		return rtnList;        
-    },	
-	utilGetBusinessServiceTreeAlpha: function(_pParentId) {
-		// ***  This whole routine breaks up the list of 'Applications & Systems' into alphabetical groups
-		// ***  *** but first, we will grab the items that start with non-alpha's
-		var myAlphaList = [];  //Initialize the array we will return
-		var myQ = 'operational_status!=2^parent='+_pParentId;  //Initialize the encoded Query
-		var myGr = new GlideRecord('cmdb_ci_service');  //Initialize the GlideRecord
-		myGr.addEncodedQuery(myQ);  //Add encoded query
-		myGr.addQuery('name','<','a'); //Add our "less than 'a'" condition
-		myGr.query();
-		while (myGr.next()) {
-			//Push what we find into our array
-			var l_name = myGr.getValue('name');
-			var l_sysid = myGr.getValue('sys_id');
-            var l_servicelist =this.getBusinessServiceTree(l_sysid);	
-            l_servicelist=this.utilEmptyListLast(l_servicelist);
-			myAlphaList.push({
-				name: l_name,
-				sysid: l_sysid,
-				servicelist: l_servicelist,
-                nodetype: l_servicelist.length>0? 'tree' : 'leaf',
+        var rtnList = [];
+        var tmpMTList = [];
+        var tmpOList = [];
+        var tmpItem = {};
+        if (_pList.length > 0) {
+            for (var i = 0, iL = _pList.length; i < iL; i++) {
+                tmpItem = _pList[i];
+                if (this.utilIsValueValid(tmpItem.servicelist) && tmpItem.servicelist.length > 0) {
+                    tmpOList.push(tmpItem);
+                } else {
+                    tmpMTList.push(tmpItem);
+                }
+            }
+            rtnList = tmpMTList.concat(tmpOList);
+        }
+        return rtnList;
+    },
+    utilGetBusinessServiceTreeAlpha: function(_pParentId) {
+        // ***  This whole routine breaks up the list of 'Applications & Systems' into alphabetical groups
+        // ***  *** but first, we will grab the items that start with non-alpha's
+        var myAlphaList = []; //Initialize the array we will return
+        var myQ = 'operational_status!=2^parent=' + _pParentId; //Initialize the encoded Query
+        var myGr = new GlideRecord('cmdb_ci_service'); //Initialize the GlideRecord
+        myGr.addEncodedQuery(myQ); //Add encoded query
+        myGr.addQuery('name', '<', 'a'); //Add our "less than 'a'" condition
+        myGr.query();
+        while (myGr.next()) {
+            //Push what we find into our array
+            var l_name = myGr.getValue('name');
+            var l_sysid = myGr.getValue('sys_id');
+            var l_servicelist = this.getBusinessServiceTree(l_sysid);
+            l_servicelist = this.utilEmptyListLast(l_servicelist);
+            myAlphaList.push({
+                name: l_name,
+                sysid: l_sysid,
+                servicelist: l_servicelist,
+                nodetype: l_servicelist.length > 0 ? 'tree' : 'leaf',
                 idnumber: 0,
                 id: ''
-			});			
-		} 
-		var myChar = ''; //Initialize our single character string
-		var thisQ = '';  //Initialize our new encoded query
-		var idx=0;       //Initialize an index for our array
-		var found=false; //Initialize a boolean for indicating if our query returned anything
-		for (var i=65,iL=91;i<iL;i++) {       //Cycle through the alphabet
-			myChar = String.fromCharCode(i);  //...creating an entry for each char
-			myAlphaList.push({
-				name: myChar+'...',
-				sysid: -1,
-				servicelist: [],
+            });
+        }
+        var myChar = ''; //Initialize our single character string
+        var thisQ = ''; //Initialize our new encoded query
+        var idx = 0; //Initialize an index for our array
+        var found = false; //Initialize a boolean for indicating if our query returned anything
+        for (var i = 65, iL = 91; i < iL; i++) { //Cycle through the alphabet
+            myChar = String.fromCharCode(i); //...creating an entry for each char
+            myAlphaList.push({
+                name: myChar + '...',
+                sysid: -1,
+                servicelist: [],
                 nodetype: 'tree',
                 idnumber: 0,
                 id: ''
-			});
-			idx = myAlphaList.length-1;
-			thisQ = myQ+'^nameSTARTSWITH'+myChar;  //Query for our character
-			myGr.initialize();
-			myGr.addEncodedQuery(thisQ);
-			myGr.orderBy('name');
-			myGr.query();
-			found=myGr.getRowCount()>0?true:false;
-			while (myGr.next()) {
-				//Store what we find
-				var ll_name = myGr.getValue('name');
-				var ll_sysid = myGr.getValue('sys_id');
-				var ll_servicelist = this.getBusinessServiceTree(ll_sysid);
-                ll_servicelist=this.utilEmptyListLast(ll_servicelist);
-				myAlphaList[idx].servicelist.push({
-					name: ll_name,
-					sysid: ll_sysid,
-					servicelist: ll_servicelist,
-                    nodetype: ll_servicelist.length>0? 'tree' : 'leaf',
+            });
+            idx = myAlphaList.length - 1;
+            thisQ = myQ + '^nameSTARTSWITH' + myChar; //Query for our character
+            myGr.initialize();
+            myGr.addEncodedQuery(thisQ);
+            myGr.orderBy('name');
+            myGr.query();
+            found = myGr.getRowCount() > 0 ? true : false;
+            while (myGr.next()) {
+                //Store what we find
+                var ll_name = myGr.getValue('name');
+                var ll_sysid = myGr.getValue('sys_id');
+                var ll_servicelist = this.getBusinessServiceTree(ll_sysid);
+                ll_servicelist = this.utilEmptyListLast(ll_servicelist);
+                myAlphaList[idx].servicelist.push({
+                    name: ll_name,
+                    sysid: ll_sysid,
+                    servicelist: ll_servicelist,
+                    nodetype: ll_servicelist.length > 0 ? 'tree' : 'leaf',
                     idnumber: 0,
                     id: ''
                 });
-			}
-			if (!found) {
-				//If we didn't find anything, remove that alpha item from the array
-				myAlphaList.splice(idx,1);
-			}
-		}
-		return myAlphaList;
+            }
+            if (!found) {
+                //If we didn't find anything, remove that alpha item from the array
+                myAlphaList.splice(idx, 1);
+            }
+        }
+        return myAlphaList;
     },
-	getFlatBusinessServiceTree: function(_pList) {
-		var myObj = {
-			list: _pList,
-			ix: 0
-		};
-		var rtnList = [];
-		rtnList = this.utilGetFlatBusinessServiceTree(myObj);
-		return rtnList;
-	},
-	utilGetFlatBusinessServiceTree: function(_pObj){
-		var ixtmp=_pObj.ix;
-		var uFlatList=[];
-        var tmpFlatList=[];        
-		if (_pObj.list.length>0) {
-			for (var i=0,iL=_pObj.list.length;i<iL;i++) {
-				var myFlatItem = {};
-				myFlatItem.name = _pObj.list[i].name;
+    getFlatBusinessServiceTree: function(_pList) {
+        var myObj = {
+            list: _pList,
+            ix: 0
+        };
+        var rtnList = [];
+        rtnList = this.utilGetFlatBusinessServiceTree(myObj);
+        return rtnList;
+    },
+    utilGetFlatBusinessServiceTree: function(_pObj) {
+        var ixtmp = _pObj.ix;
+        var uFlatList = [];
+        var tmpFlatList = [];
+        if (_pObj.list.length > 0) {
+            for (var i = 0, iL = _pObj.list.length; i < iL; i++) {
+                var myFlatItem = {};
+                myFlatItem.name = _pObj.list[i].name;
                 myFlatItem.sysid = _pObj.list[i].sysid;
-                myFlatItem.nodetype =  _pObj.list[i].nodetype;
+                myFlatItem.nodetype = _pObj.list[i].nodetype;
                 myFlatItem.idnumber = ixtmp;
-                myFlatItem.id = 'li'+ixtmp;
+                myFlatItem.id = 'li' + ixtmp;
                 myFlatItem.ulstate = 'collapsed';
                 _pObj.list[i].idnumber = myFlatItem.idnumber;
-                _pObj.list[i].id = myFlatItem.id;				
-				uFlatList.push(myFlatItem);
-				ixtmp++;
-				var myObj = {
-					list: _pObj.list[i].servicelist,
-					ix: ixtmp
-				};
-				tmpFlatList = this.utilGetFlatBusinessServiceTree(myObj);				
-                uFlatList=uFlatList.concat(tmpFlatList);
-				ixtmp = myObj.ix;
-			}					
-		}
-		_pObj.ix=ixtmp;
-		return uFlatList;
-	},   
-	isIncident: function(_p) {
+                _pObj.list[i].id = myFlatItem.id;
+                uFlatList.push(myFlatItem);
+                ixtmp++;
+                var myObj = {
+                    list: _pObj.list[i].servicelist,
+                    ix: ixtmp
+                };
+                tmpFlatList = this.utilGetFlatBusinessServiceTree(myObj);
+                uFlatList = uFlatList.concat(tmpFlatList);
+                ixtmp = myObj.ix;
+            }
+        }
+        _pObj.ix = ixtmp;
+        return uFlatList;
+    },
+    isIncident: function(_p) {
         var myName = '';
         var myGr = new GlideRecord('sc_cat_item');
-		if (myGr.get(_p)) {
+        if (myGr.get(_p)) {
             myName = (myGr.name.toString()).toLowerCase();
         }
-		return (myName.indexOf('incident')>-1);
-	},
-	isSsoRequest: function(_p) {
+        return (myName.indexOf('incident') > -1);
+    },
+    isSpecialAttachButton: function(_p) {
+        return (
+            this.isSsoRequest(_p) ||
+            this.isDsaHwRequest(_p) ||
+            this.isSwPurchaseRequest(_p)
+        );
+    },
+    isSsoRequest: function(_p) {
         var myName = '';
         var myGr = new GlideRecord('sc_cat_item');
-		if (myGr.get(_p)) {
+        if (myGr.get(_p)) {
             myName = (myGr.name.toString()).toLowerCase();
         }
-		return (myName.indexOf('single sign-on (sso) request')>-1);			
-	},
-	utilIsEmptyObj: function(_p) {
-		var myEmptyObj = {};
-		var myRtn=false;
-		if (typeof _p == typeof myEmptyObj) {
-			myRtn=true;
-			for (var k in _p) {
-				myRtn=false;
-				break;
-			}
-		} 
-		return myRtn;	
-	},
-	utilIsValueValid: function(_p) {
-		if ((typeof _p == typeof myUnknown) || (_p == null) || !(_p)) {
-			return false;			
-		} else if (Array.isArray(_p)) {
-			if (_p.length < 1) {
-				return false;
-			}					
-		} else if ((new global.u_utaglobalapi()).u_IsEmptyString(_p)) {
-			return false;				
-		} else if (this.utilIsEmptyObj(_p)) {
-			return false;
-		}
-		return true;
-	},
-	utilMakeValueValid: function(_p) {
-		if (this.utilIsValueValid(_p)) {
-			return _p;
-		} else {
-			if (Array.isArray(_p)) {
-				return [];
-			} else {
-				return '';				
-			}
-		}
-	},	
-	utilIsValueValidAndTrue: function(_p) {
-		if (this.utilIsValueValid(_p)) {
-			if (Array.isArray(_p)) {
-				if (_p[0]==true || _p[0]=='true') { return true; }
-			} else {
-				if (_p==true || _p=='true') { return true; }
-			}
-		}
-		return false;
-    },   
+        return (myName.indexOf('single sign-on (sso) request') > -1);
+    },
+    isDsaHwRequest: function(_p) {
+        var myName = '';
+        var myGr = new GlideRecord('sc_cat_item');
+        if (myGr.get(_p)) {
+            myName = (myGr.name.toString()).toLowerCase();
+        }
+        return (myName.indexOf('dsa it - general hardware') > -1);
+    },
+    isSwPurchaseRequest: function(_p) {
+        var myName = '';
+        var myGr = new GlideRecord('sc_cat_item');
+        if (myGr.get(_p)) {
+            myName = (myGr.name.toString()).toLowerCase();
+        }
+        return (myName.indexOf('software purchase approval') > -1);
+    },
+    utilIsEmptyObj: function(_p) {
+        var myRtn = false;
+        var myEmptyObj = {};
+        if (typeof _p == typeof myEmptyObj) {
+            var _pStr = JSON.stringify(_p);
+            var myEmptyObjStr = JSON.stringify(myEmptyObj);
+            if (_pStr == myEmptyObjStr) {
+                myRtn = true;
+            }
+        }
+        return myRtn;
+    },
+    utilIsValueValid: function(_p) {
+        var alphaStr = 'alpha';
+        if ((typeof _p == typeof myUnknown) || (_p == null) || !(_p)) {
+            return false;
+        } else if (Array.isArray(_p)) {
+            if (_p.length < 1) {
+                return false;
+            }
+        } else if (typeof _p == typeof alphaStr) {
+            if (_p.length < 1) {
+                return false;
+            }
+        } else if (this.utilIsEmptyObj(_p)) {
+            return false;
+        }
+        return true;
+    },
+    utilMakeValueValid: function(_p) {
+        if (this.utilIsValueValid(_p)) {
+            return _p;
+        } else {
+            if (Array.isArray(_p)) {
+                return [];
+            } else {
+                return '';
+            }
+        }
+    },
+    utilIsValueValidAndTrue: function(_p) {
+        if (this.utilIsValueValid(_p)) {
+            if (Array.isArray(_p)) {
+                if (_p[0] == true || _p[0] == 'true') {
+                    return true;
+                }
+            } else {
+                if (_p == true || _p == 'true') {
+                    return true;
+                }
+            }
+        }
+        return false;
+    },
     utilEmptyIdExistsCheck: function(_p) {
         var myRtn = {};
         myRtn.emptyIdExists = false;
         myRtn.idListWithoutEmpty = _p;
         myRtn.emptyId = '';
         if (Array.isArray(_p)) {
-            for (var i=0,iL=_p.length;i<iL;i++) {
-                if (_p[i].toString().indexOf('empty')>-1) {
+            for (var i = 0, iL = _p.length; i < iL; i++) {
+                if (_p[i].toString().indexOf('empty') > -1) {
                     myRtn.emptyIdExists = true;
-                    myRtn.emptyId=_p.splice(i,1)[0].toString();
-                    myRtn.emptyId=myRtn.emptyId.replace('empty:','');
-					myRtn.idListWithoutEmpty = _p;
+                    myRtn.emptyId = _p.splice(i, 1)[0].toString();
+                    myRtn.emptyId = myRtn.emptyId.replace('empty:', '');
+                    myRtn.idListWithoutEmpty = _p;
                     break;
                 }
             }
         }
         return myRtn;
-    },		
-	utilGetIsPageIdList: function(_p) {
-		var _pId = _p.split('&')[0];
-		var myRtnObj = {};
-		var mySpPackageSysId = {};
-		var mySpPageId = {};
-		var mySplit = [];
-		var myJoin = '';
-		var mySpGr = new GlideRecord('sp_page');
-		var mySaGr = new GlideRecord('sys_app');
-		mySaGr.addQuery('name','utassp');		
-		mySaGr.query();
-		if (mySaGr.next())
-		{
-			mySpPackageSysId = mySaGr.getValue('sys_id');
-			mySpGr.addQuery('sys_package',mySpPackageSysId);
-			mySpGr.query();
-			while (mySpGr.next())
-			{
-				mySpPageId = mySpGr.getDisplayValue('id');
-				mySplit = mySpPageId.split('_');
-				mySplit = mySplit.slice(1);
-				myJoin = mySplit.join('_');
-				myRtnObj[myJoin] = false;
-				if (_pId.indexOf(myJoin)>-1)
-				{
-					myRtnObj[myJoin] =true;
-				}
-			}
-		}
-		return myRtnObj;	
-	},
-	utilGetSysId: function(_p1Table,_p2Column,_p3Value)
-	{
-		var myRtnSysId = {};
-		var myGr = new GlideRecord(_p1Table);
-		myGr.addQuery(_p2Column,_p3Value);
-		myGr.query();
-		if (myGr.next())
-		{
-			myRtnSysId = myGr.getValue('sys_id');
-		}
-		return myRtnSysId;
-	},
-	utilIsKbBase: function(_pCatId)
-	{
-		var myRtn=
-			this.utilIsValueValid(
-				this.utilGetSysId('kb_knowledge_base','sys_id',_pCatId)
-			);
-		return myRtn;
-	},
-	utilKbCategoriesQuery: function(_p)
-	{
-		var myGrCat = new GlideRecord('kb_category');		
-		myGrCat.addEncodedQuery('active=true^parent_id='+_p);
+    },
+    utilGetIsPageIdList: function(_p) {
+        var _pId = _p.split('&')[0];
+        var myRtnObj = {};
+        var mySpPackageSysId = {};
+        var mySpPageId = {};
+        var mySplit = [];
+        var myJoin = '';
+        var mySpGr = new GlideRecord('sp_page');
+        var mySaGr = new GlideRecord('sys_app');
+        mySaGr.addQuery('name', 'utassp');
+        mySaGr.query();
+        if (mySaGr.next()) {
+            mySpPackageSysId = mySaGr.getValue('sys_id');
+            mySpGr.addQuery('sys_package', mySpPackageSysId);
+            mySpGr.query();
+            while (mySpGr.next()) {
+                mySpPageId = mySpGr.getDisplayValue('id');
+                mySplit = mySpPageId.split('_');
+                mySplit = mySplit.slice(1);
+                myJoin = mySplit.join('_');
+                myRtnObj[myJoin] = false;
+                if (_pId.indexOf(myJoin) > -1) {
+                    myRtnObj[myJoin] = true;
+                }
+            }
+        }
+        return myRtnObj;
+    },
+    utilGetSysId: function(_p1Table, _p2Column, _p3Value) {
+        var myRtnSysId = {};
+        var myGr = new GlideRecord(_p1Table);
+        myGr.addQuery(_p2Column, _p3Value);
+        myGr.query();
+        if (myGr.next()) {
+            myRtnSysId = myGr.getValue('sys_id');
+        }
+        return myRtnSysId;
+    },
+    utilIsKbBase: function(_pCatId) {
+        var myRtn =
+            this.utilIsValueValid(
+                this.utilGetSysId('kb_knowledge_base', 'sys_id', _pCatId)
+            );
+        return myRtn;
+    },
+    utilKbCategoriesQuery: function(_p) {
+        var myGrCat = new GlideRecord('kb_category');
+        myGrCat.addEncodedQuery('active=true^parent_id=' + _p);
         myGrCat.orderBy('label');
-		myGrCat.query();		
-		return myGrCat;
-	},
-	utilKbBaseCategoriesQuery: function(_p)
-	{
-		// ****************************************
-		//1. Any articles with empty category_id?
-		var myEmptyCatIdObj =  {
-			label: '(empty)', 
-			value: 'empty:'+_p, 
-			subcount: 0, 
-			artcount: 0,
-			level: 0, 
-			parentid: '',
-			uCategoryList: []
-		};
-		var myEmptyCount = 0;
-		var myKbGra = new GlideAggregate('kb_knowledge');	
-		var myKbGraQuery = 'kb_knowledge_base='+_p;
-		myKbGraQuery += '^active=true';			
-		myKbGraQuery += '^workflow_state=published';
-		myKbGraQuery += '^valid_to>=javascript:gs.beginningOfToday()';
-		myKbGraQuery += '^kb_categoryISEMPTY';
-		myKbGra.addEncodedQuery(myKbGraQuery);
-		myKbGra.addAggregate('COUNT');
-		myKbGra.query();
-		if (myKbGra.next()) {
-			myEmptyCount = myKbGra.getAggregate('COUNT');
-			if (myEmptyCount>0){
+        myGrCat.query();
+        return myGrCat;
+    },
+    utilKbBaseCategoriesQuery: function(_p) {
+        // ****************************************
+        //1. Any articles with empty category_id?
+        var myEmptyCatIdObj = {
+            label: '(empty)',
+            value: 'empty:' + _p,
+            subcount: 0,
+            artcount: 0,
+            level: 0,
+            parentid: '',
+            uCategoryList: []
+        };
+        var myEmptyCount = 0;
+        var myKbGra = new GlideAggregate('kb_knowledge');
+        var myKbGraQuery = 'kb_knowledge_base=' + _p;
+        myKbGraQuery += '^active=true';
+        myKbGraQuery += '^workflow_state=published';
+        myKbGraQuery += '^valid_to>=javascript:gs.beginningOfToday()';
+        myKbGraQuery += '^kb_categoryISEMPTY';
+        myKbGra.addEncodedQuery(myKbGraQuery);
+        myKbGra.addAggregate('COUNT');
+        myKbGra.query();
+        if (myKbGra.next()) {
+            myEmptyCount = myKbGra.getAggregate('COUNT');
+            if (myEmptyCount > 0) {
                 myEmptyCatIdObj.artcount = myEmptyCount;
-			}
-		}
-		// ****************************************
-		//2. Any articles with category_id that doesn't have a parent?
-		var myCatIdWithNoParentList = [];
-		var myIsCatIdWithNoParent=false;
-		myEmptyCount = 0;
-		var myCatIdWithNoParent='';
-		var myKbGraQueryTemplate = 'kb_knowledge_base='+_p+'^kb_category=#catsysid';
-		myKbGraQueryTemplate += '^active=true';			
-		myKbGraQueryTemplate += '^workflow_state=published';
-		myKbGraQueryTemplate += '^valid_to>=javascript:gs.beginningOfToday()';
-		//
-		var myCatGr=new GlideRecord('kb_category');
-		myCatGr.addEncodedQuery('active=true^parent_idISEMPTY');
-		myCatGr.query();
-		while (myCatGr.next()) {
-			myCatIdWithNoParent=myCatGr.getValue('sys_id');
-			myKbGraQuery=myKbGraQueryTemplate.replace('#catsysid',myCatIdWithNoParent);
-			myKbGra.initialize();
-			myKbGra.addEncodedQuery(myKbGraQuery);
-			//gs.info('utilKbBaseCategoriesQuery1.query: '+myKbGraQuery);			
-			myKbGra.addAggregate('COUNT');
-			myKbGra.query();
-			myEmptyCount = 0;
-			if (myKbGra.next()) {
-				myEmptyCount = myKbGra.getAggregate('COUNT');
-				if (myEmptyCount>0) {
-					myCatIdWithNoParentList.push(myCatIdWithNoParent);
-                    myIsCatIdWithNoParent=true;					
-				}
-			}  
-		}
-		// ****************************************
-		//3. Query for Category Id's
-		var myCatdId = '';
-        var myQ = 'active=true^parent_id='+_p;
+            }
+        }
+        // ****************************************
+        //2. Any articles with category_id that doesn't have a parent?
+        var myCatIdWithNoParentList = [];
+        var myIsCatIdWithNoParent = false;
+        myEmptyCount = 0;
+        var myCatIdWithNoParent = '';
+        var myKbGraQueryTemplate = 'kb_knowledge_base=' + _p + '^kb_category=#catsysid';
+        myKbGraQueryTemplate += '^active=true';
+        myKbGraQueryTemplate += '^workflow_state=published';
+        myKbGraQueryTemplate += '^valid_to>=javascript:gs.beginningOfToday()';
+        //
+        var myCatGr = new GlideRecord('kb_category');
+        myCatGr.addEncodedQuery('active=true^parent_idISEMPTY');
+        myCatGr.query();
+        while (myCatGr.next()) {
+            myCatIdWithNoParent = myCatGr.getValue('sys_id');
+            myKbGraQuery = myKbGraQueryTemplate.replace('#catsysid', myCatIdWithNoParent);
+            myKbGra.initialize();
+            myKbGra.addEncodedQuery(myKbGraQuery);
+            //gs.info('utilKbBaseCategoriesQuery1.query: '+myKbGraQuery);			
+            myKbGra.addAggregate('COUNT');
+            myKbGra.query();
+            myEmptyCount = 0;
+            if (myKbGra.next()) {
+                myEmptyCount = myKbGra.getAggregate('COUNT');
+                if (myEmptyCount > 0) {
+                    myCatIdWithNoParentList.push(myCatIdWithNoParent);
+                    myIsCatIdWithNoParent = true;
+                }
+            }
+        }
+        // ****************************************
+        //3. Query for Category Id's
+        var myCatdId = '';
+        var myQ = 'active=true^parent_id=' + _p;
         myCatGr.initialize();
         if (myIsCatIdWithNoParent) {
             var myCatIdWithNoParentStr = myCatIdWithNoParentList.join();
-            myQ += '^ORsys_idIN'+myCatIdWithNoParentStr;
+            myQ += '^ORsys_idIN' + myCatIdWithNoParentStr;
         }
-		myCatGr.orderBy('label');
+        myCatGr.orderBy('label');
         myCatGr.addEncodedQuery(myQ);
         //gs.info('utilKbBaseCategoriesQuery2.query: '+myQ);
-		myCatGr.query();
-		// ****************************************
-		//4. Return a GlideRecord with all the category_id's!
-		//	
-		myRtnObj = {};
-		myRtnObj.emptyCatIdObj=myEmptyCatIdObj;
-		myRtnObj.gr=myCatGr;
-		//
-		return myRtnObj;
-	},
-	utilGetInstanceSettings: function(_sp) {
-		var mySplit = [];
-		var myJoin = '';
-		var myWidgetId = '';
-		var myPageId = '';
-		var myIsUnderTest = (_sp);
-		if (myIsUnderTest) {
-			myWidgetId =  $sp.getDisplayValue("id");
-			myPageId = 
-				this.utilIsValueValid($sp.getParameter('id')) ? 
-				$sp.getParameter('id') : 
-				'utassp01_index';			
-			mySplit = myPageId.split('_');
-			mySplit = mySplit.slice(1);
-			myJoin = mySplit.join('_');
-			myPageId=myJoin;
-			mySplit = myWidgetId.split('_');
-			mySplit = mySplit.slice(1);
-			myJoin = mySplit.join('_');
-			myWidgetId=myJoin;			
-		}
-		myInstance = gs.getProperty('instance_name');
-		var myAllSettingsStr = gs.getProperty('x_287765_utassp.utassp_instance_settings');
-		var myAllSettingsList = JSON.parse(myAllSettingsStr);	
-		var myInstanceSettings = myAllSettingsList[myInstance];
-		if (myIsUnderTest) {
-			if (myInstanceSettings.isDebugOnPage[myPageId]) {
-				 myInstanceSettings.isDebugOn = true;
-			} else if (myInstanceSettings.isDebugOnWidget[myWidgetId]) {
-				 myInstanceSettings.isDebugOn = true;
-			}			
-		}
+        myCatGr.query();
+        // ****************************************
+        //4. Return a GlideRecord with all the category_id's!
+        //	
+        myRtnObj = {};
+        myRtnObj.emptyCatIdObj = myEmptyCatIdObj;
+        myRtnObj.gr = myCatGr;
+        //
+        return myRtnObj;
+    },
+    utilGetInstanceSettings: function(_sp) {
+        var mySplit = [];
+        var myJoin = '';
+        var myWidgetId = '';
+        var myPageId = '';
+        var myIsUnderTest = this.utilIsValueValid(_sp);
+        if (myIsUnderTest) {
+            var myGr = new GlideRecord('sp_widget');
+            var mySysId = _sp.getValue('sp_widget');
+            if (myGr.get(mySysId)) {
+                myWidgetId = myGr.getValue('id');
+            }
+            myPageId =
+                this.utilIsValueValid(_sp.getParameter('id')) ?
+                _sp.getParameter('id') :
+                'utassp01_index';
+            mySplit = myPageId.split('_');
+            mySplit = mySplit.slice(1);
+            myJoin = mySplit.join('_');
+            myPageId = myJoin;
+            mySplit = myWidgetId.split('_');
+            mySplit = mySplit.slice(1);
+            myJoin = mySplit.join('_');
+            myWidgetId = myJoin;
+        }
+        //gs.info('...*** myWidgetId: '+myWidgetId);
+        myInstance = gs.getProperty('instance_name');
+        var myAllSettingsStr = gs.getProperty('x_287765_utassp.utassp_instance_settings');
+        var myAllSettingsList = JSON.parse(myAllSettingsStr);
+        var myInstanceSettings = myAllSettingsList[myInstance];
+        if (myIsUnderTest) {
+            if (myInstanceSettings.isDebugOnPage[myPageId]) {
+                myInstanceSettings.isDebugOn = true;
+            } else if (myInstanceSettings.isDebugOnWidget[myWidgetId]) {
+                myInstanceSettings.isDebugOn = true;
+            }
+        }
+        return myInstanceSettings;
+    },
+    utilLog: function(_sp, _options, _msg) {
+        var myWidgetId = '';
+        var myWidgetName = '';
+        var myWidgetPage =
+            this.utilIsValueValid(_sp.getParameter('id')) ?
+            _sp.getParameter('id') :
+            'utassp01_index';
+        var myTimeTag = (new Date()).getTime();
 
-		return myInstanceSettings;
-	},
-	utilLog: function(_sp,_options,_msg) {	
-		var myWidgetId = '';
-		var myWidgetName = '';
-		var myWidgetPage = 
-			this.utilIsValueValid(_sp.getParameter('id')) ? 
-			_sp.getParameter('id') : 
-			'utassp01_index';			
-		var myTimeTag = (new Date()).getTime();
-		
-		var myGr = _sp.getInstanceRecord();
-		if (myGr != null) {
-			myWidgetId = myGr.sp_widget.getRefRecord().id;
-			myWidgetName = myGr.sp_widget.getRefRecord().name;
-		} else if (typeof _options != typeof myUndefined) {
-			if (typeof _options.id != typeof myUndefined) {
-				myWidgetName = _options.id;
-			}
-			if (typeof _options.name != typeof myUndefined) {
-				myWidgetName = _options.name;
-			}		
-		}
-		var myMsg = this.utilIsValueValid(_msg) ? ': '+_msg : '';
-		var myInfoTag = myWidgetPage+' > ' + myWidgetId + ' > ' + myWidgetName + myMsg;
-		return myInfoTag;
-	},
+        var myGr = _sp.getInstanceRecord();
+        if (myGr != null) {
+            myWidgetId = myGr.sp_widget.getRefRecord().id;
+            myWidgetName = myGr.sp_widget.getRefRecord().name;
+        } else if (typeof _options != typeof myUndefined) {
+            if (typeof _options.id != typeof myUndefined) {
+                myWidgetName = _options.id;
+            }
+            if (typeof _options.name != typeof myUndefined) {
+                myWidgetName = _options.name;
+            }
+        }
+        var myMsg = this.utilIsValueValid(_msg) ? ': ' + _msg : '';
+        var myInfoTag = myWidgetPage + ' > ' + myWidgetId + ' > ' + myWidgetName + myMsg;
+        return myInfoTag;
+    },
+    utilGetYrMoDyAgo: function(_pStartDtm) {
+        var ug = new global.u_utaglobalapi();
+        var endDtm = ug.u_gsNowDateTime();
+        var dateDiff = ug.u_gsDateDiff(_pStartDtm, endDtm, false);
+        // Start Dtm == End Dtm, only 'hh:mm:ss' is returned instead of 'numofdays hh:mm:ss'
+        // ...thus if our dateDiffRtnList length is less than 2, then we are on the same date
+        // ...In that case, we will keeps dateDiffInt set to zero
+        var dateDiffInt = 0;
+        var dateDiffRtnList = dateDiff.split(' ');
+        if (dateDiffRtnList.length > 1) {
+            dateDiffInt = parseInt(dateDiff.split(' ')[0]);
+        }
+        var yearsInt = Math.floor(dateDiffInt / 365.25);
+        var daysAfterYearsInt = Math.ceil(dateDiffInt % 365.25);
+        var monthsInt = Math.floor(daysAfterYearsInt / (365.25 / 12));
+        var daysAfterMonthsInt = Math.ceil(daysAfterYearsInt % (365.25 / 12));
+
+        var myRtn = '';
+        var myCase = '';
+        myCase = (yearsInt > 0) ? 'x' : 'z';
+        myCase += (monthsInt > 0) ? 'x' : 'z';
+        myCase += (daysAfterMonthsInt > 0) ? 'x' : 'z';
+        switch (myCase) {
+            case 'zzz':
+            case 'zzx':
+                myRtn = daysAfterMonthsInt + 'dys ago';
+                break;
+            case 'zxx':
+            case 'zxz':
+                myRtn = monthsInt + 'mos ' + daysAfterMonthsInt + 'dys ago';
+                break;
+            case 'xxx':
+            case 'xzx':
+            case 'xzz':
+                myRtn = yearsInt + 'yrs ' + monthsInt + 'mos ' + daysAfterMonthsInt + 'dys ago';
+                break;
+        }
+        return myRtn;
+    },
     type: 'u_utassp'
-};
-
-]]></script>
+};]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-29 15:10:11</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3edf1d4c4f212300f006121f9310c732</sys_id>
-        <sys_mod_count>137</sys_mod_count>
+        <sys_mod_count>232</sys_mod_count>
         <sys_name>u_utassp</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy>read</sys_policy>
@@ -930,6 +1167,6 @@ u_utassp.prototype = {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sys_script_include_3edf1d4c4f212300f006121f9310c732</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-26 17:31:35</sys_updated_on>
+        <sys_updated_on>2020-01-23 15:13:40</sys_updated_on>
     </sys_script_include>
 </record_update>

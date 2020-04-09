@@ -48,7 +48,7 @@
         <record_producer_table>incident</record_producer_table>
         <reference>cmdb_ci_service</reference>
         <reference_qual>operational_status!=2^ORoperational_status=^EQ</reference_qual>
-        <reference_qual_condition table="cmdb_ci_service">operational_status!=2^ORoperational_status=^EQ<item endquery="false" field="operational_status" goto="false" newquery="false" operator="!=" or="false" value="2"/>
+        <reference_qual_condition table="cmdb_ci_service">operational_status!=2^ORoperational_status=^EQ<item display_value="Non-Operational" endquery="false" field="operational_status" goto="false" newquery="false" operator="!=" or="false" value="2"/>
             <item endquery="false" field="operational_status" goto="false" newquery="false" operator="=" or="true" value=""/>
             <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
         </reference_qual_condition>
@@ -78,6 +78,7 @@
         <ui_page/>
         <use_dynamic_default>false</use_dynamic_default>
         <use_reference_qualifier>simple</use_reference_qualifier>
+        <validate_regex/>
         <variable_name/>
         <variable_set/>
         <variable_width/>

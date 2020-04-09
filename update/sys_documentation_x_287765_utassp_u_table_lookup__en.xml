@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="" label="Table Lookup" language="en" table="x_287765_utassp_u_table_lookup">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element/>
+            <help/>
+            <hint/>
+            <label>Table Lookup</label>
+            <language>en</language>
+            <name>x_287765_utassp_u_table_lookup</name>
+            <plural>Table Lookups</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>welchv</sys_created_by>
+            <sys_created_on>2020-04-08 16:24:29</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>ecfe6f61db0018147020d8965e9619af</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Table Lookup</sys_name>
+            <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+            <sys_update_name>sys_documentation_x_287765_utassp_u_table_lookup__en</sys_update_name>
+            <sys_updated_by>welchv</sys_updated_by>
+            <sys_updated_on>2020-04-08 16:24:29</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

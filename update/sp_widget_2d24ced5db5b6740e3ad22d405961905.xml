@@ -104,7 +104,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs){
 	var myU = new u_utassp();
-	data.uSettings=myU.utilGetInstanceSettings();
+	data.uSettings=myU.utilGetInstanceSettings($sp);
 	// *** Start: Debug only code *** //
 	data.infotag = '';
 	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
@@ -120,7 +120,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_created_on>2019-01-28 14:49:58</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>2d24ced5db5b6740e3ad22d405961905</sys_id>
-        <sys_mod_count>60</sys_mod_count>
+        <sys_mod_count>61</sys_mod_count>
         <sys_name>UTASSP KB View Categories Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -128,7 +128,7 @@ box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_2d24ced5db5b6740e3ad22d405961905</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 17:11:10</sys_updated_on>
+        <sys_updated_on>2019-04-02 16:37:42</sys_updated_on>
         <template><![CDATA[<div class="panel panel-{{::options.color}} b" dummy="{{::c.myLog()}}">
     <a id="showhide-btn" href="javascript:void(0)" ng-click="myShowHide($event)">
       <div class="panel-heading myShadow">

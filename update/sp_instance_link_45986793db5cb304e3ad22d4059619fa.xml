@@ -9,10 +9,10 @@
         <kb_article/>
         <kb_category/>
         <kb_topic/>
-        <order>2</order>
+        <order>1</order>
         <roles/>
         <sc_cat_item/>
-        <sc_category display_value="Accounts &amp; Access">984fbc160f1dbe00c601419ce1050e6b</sc_category>
+        <sc_category display_value="Accounts &amp; Access">ad6555296f942e0028232d65ad3ee4a1</sc_category>
         <short_description/>
         <size>md</size>
         <sp_column display_value="1">124fdc6e4f512300f006121f9310c7eb</sp_column>
@@ -23,7 +23,7 @@
         <sys_created_on>2019-03-25 20:19:23</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>45986793db5cb304e3ad22d4059619fa</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>Accounts &amp; Access</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -31,11 +31,12 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_instance_link_45986793db5cb304e3ad22d4059619fa</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-26 17:20:17</sys_updated_on>
+        <sys_updated_on>2019-08-09 20:01:31</sys_updated_on>
         <title>Accounts &amp; Access</title>
         <type>sc_category</type>
         <u_image display_value="utassp_accounts_access_img.png">1495be074f312300f006121f9310c715</u_image>
         <url/>
         <widget_parameters/>
     </sp_instance_link>
+    <sys_translated_text action="delete_multiple" query="documentkey=45986793db5cb304e3ad22d4059619fa"/>
 </record_update>

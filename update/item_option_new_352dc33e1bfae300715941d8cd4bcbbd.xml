@@ -49,7 +49,7 @@
         <reference>u_category</reference>
         <reference_qual>u_active=true^u_table=incident^EQ</reference_qual>
         <reference_qual_condition table="u_category">u_active=true^u_table=incident^EQ<item endquery="false" field="u_active" goto="false" newquery="false" operator="=" or="false" value="true"/>
-            <item endquery="false" field="u_table" goto="false" newquery="false" operator="=" or="false" value="incident"/>
+            <item display_value="Incident" endquery="false" field="u_table" goto="false" newquery="false" operator="=" or="false" value="incident"/>
             <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
         </reference_qual_condition>
         <scale_max>5</scale_max>
@@ -78,6 +78,7 @@
         <ui_page/>
         <use_dynamic_default>false</use_dynamic_default>
         <use_reference_qualifier>simple</use_reference_qualifier>
+        <validate_regex/>
         <variable_name/>
         <variable_set/>
         <variable_width/>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function($scope, $rootScope, $timeout, $location, $window, $document, $sce, spUtil, u_cutassp) {
+    if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+        console.log((new Date()).getTime() + '.Client - ' + $scope.data.infotag);
+    }
+    /* widget controller */
+    var c = this;
+
+    c.myLabel = function(_p) {
+        return u_cutassp.fmtLabel(_p);
+    };
+    c.myLog = function() {
+        if (u_cutassp.utilIsValueValidAndTrue($scope.data.uSettings.isDebugOn)) {
+            console.log((new Date()).getTime() + '.HTML View - ' + $scope.data.infotag);
+        }
+        return '';
+    };
+    //
+    $window.ignorePopState = true;
+    //	
+    var isMsIeEdge;
+    var newPath;
+    var newSp;
+    if ($window.noredirect) {
+        directUrlStr = $window.llocationabsurl;
+        directUrlObj = new URL(directUrlStr)
+        newPath = directUrlObj.pathname;
+        isMsIeEdge = (urlObj.searchParams) ? false : true;
+        if (isMsIeEdge) {
+            newSp = u_cutassp.getParamList(urlObj.search);
+            for (pkey in newSp) {
+                $location.search(pkey, newSp[pkey]);
+            }
+        } else {
+            newSp = urlObj.searchParams;
+            newSp.forEach(
+                function(value, key) {
+                    $location.search(key, value);
+                }
+            );
+        }
+        c.data.newPath = newPath;
+        $window.noredirect = null;
+        $window.llocationabsurl = null;
+        $timeout(
+            function() {
+                $location.path(c.data.newPath);
+            }
+        );
+    } else {
+        var urlObj = new URL($scope.data.newHref);
+        var newHost = urlObj.host.toLowerCase();
+        if ((newHost) && (newHost.indexOf('service-now.com') < 0)) {
+            c.data.href = urlObj.href;
+            $timeout(
+                function() {
+                    $window.open(c.data.href);
+                }
+            );
+        } else {
+            newPath = urlObj.pathname;
+            isMsIeEdge = (urlObj.searchParams) ? false : true;
+            if (isMsIeEdge) {
+                newSp = u_cutassp.getParamList(urlObj.search);
+                for (pkey in newSp) {
+                    $location.search(pkey, newSp[pkey]);
+                }
+            } else {
+                newSp = urlObj.searchParams;
+                newSp.forEach(
+                    function(value, key) {
+                        $location.search(key, value);
+                    }
+                );
+            }
+            //c.data.url = $location.url();
+            //c.data.absurl = $location.absUrl();
+            c.data.newPath = newPath;
+			
+            $timeout(
+                function() {
+                    $location.path(c.data.newPath);
+                }
+            );
+        }
+    }
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>utassp01_kb_article_redirect_widget</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>UTASSP KB Article Redirect Widget</name>
+        <option_schema>[&#13;
+  {&#13;
+    "name": "color",&#13;
+    "label": "Color",&#13;
+    "type": "choice",&#13;
+    "choices": [&#13;
+      {&#13;
+        "label": "Default",&#13;
+        "value": "default"&#13;
+      },&#13;
+      {&#13;
+        "label": "Custom",&#13;
+        "value": "custom"&#13;
+      },&#13;
+      {&#13;
+        "label": "Primary",&#13;
+        "value": "primary"&#13;
+      },&#13;
+      {&#13;
+        "label": "Success",&#13;
+        "value": "success"&#13;
+      },&#13;
+      {&#13;
+        "label": "Info",&#13;
+        "value": "info"&#13;
+      },&#13;
+      {&#13;
+        "label": "Warning",&#13;
+        "value": "warning"&#13;
+      },&#13;
+      {&#13;
+        "label": "Danger",&#13;
+        "value": "danger"&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "name": "knowledge_base",&#13;
+    "label": "Knowledge Base",&#13;
+    "type": "choice",&#13;
+    "choices": [&#13;
+      {&#13;
+        "label": "Business Affairs Internal",&#13;
+        "value": "Business Affairs Internal"&#13;
+      },&#13;
+      {&#13;
+        "label": "Business Affairs Knowledge Base",&#13;
+        "value": "Business Affairs Knowledge Base"&#13;
+      },&#13;
+      {&#13;
+        "label": "OIT Internal",&#13;
+        "value": "OIT Internal"&#13;
+      },&#13;
+      {&#13;
+        "label": "OIT Knowledge Base",&#13;
+        "value": "OIT Knowledge Base"&#13;
+      },&#13;
+      {&#13;
+        "label": "Public Knowledge Base",&#13;
+        "value": "Public Knowledge Base"&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "hint": "Maximum number of elements that are shown",&#13;
+    "name": "maxitems",&#13;
+    "default_value": "20",&#13;
+    "label": "Max number of elements shown in the list (only positive numbers &gt; 0, 20 otherwise)",&#13;
+    "type": "integer"&#13;
+  }&#13;
+]</option_schema>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function($sp, input, data, options, gs) {
+    var myU = new u_utassp();
+    var myG = new global.u_utaglobalapi();
+    // 
+    data.uSettings = myU.utilGetInstanceSettings($sp);
+    // *** Start: Debug only code *** //
+    data.infotag = '';
+    if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
+        data.infotag = myU.utilLog($sp);
+    }
+    // *** End: Debug only code *** //
+    //
+    // is logged in?
+    var isLoggedIn = gs.isLoggedIn();
+
+    // get page kb number
+    var myUrl = gs.getProperty('glide.servlet.uri');
+    var URL = new global.u_URL(myUrl);
+    URL.pathname = $sp.getPortalRecord().getValue('url_suffix');
+    var myKbNum = $sp.getParameter('kbnumber');
+    //var myLevel = $sp.getParameter('level');
+	//gs.info('kbar server: level: '+JSON.stringify(myLevel));
+    var isKbNum = myU.utilIsValueValid(myKbNum);
+    //var isLevel = myU.utilIsValueValid(myLevel);
+    if (isKbNum) {
+        var isFound = false;
+        var articleData = {};
+        if (!isLoggedIn) {
+            articleData = myU.getKbPublicArticleByKbNum(myKbNum);
+            if (!(articleData.rowCount > 0)) {
+				articleData.sys_id=0;
+			}
+            isFound = true;
+        } else {
+            articleData = myU.getKbArticleByKbNum(myKbNum);
+            if (articleData.rowCount > 0) {
+                var articleGr = new GlideRecord('kb_knowledge');
+                if (articleGr.get(articleData.sys_id)) {
+                    if (articleGr.canRead()) {
+                        isFound = true;
+                    }
+                }
+            } else {
+                isFound = true;
+            }
+        }
+        if (isFound) {
+            URL.searchParams.set('id', 'utassp01_kb_article');
+            URL.searchParams.set('sys_id', articleData.sys_id);
+            URL.searchParams.set('kbnumber', myKbNum);
+            //if (isLevel) {
+            //    URL.searchParams.set('level', myLevel);
+            //}
+        } else {
+            //URL.searchParams.set('id', 'utassp02_kb_public_knowledge_base');
+            URL.searchParams.set('id', 'utassp01_index');
+        }
+    }
+    //populate the 'data' variable
+    data.newHref = URL.getURL();
+})($sp, input, data, options, gs);]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-10-17 20:15:36</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f53f5475dbe8c81079f4d144ce9619e7</sys_id>
+        <sys_mod_count>134</sys_mod_count>
+        <sys_name>UTASSP KB Article Redirect Widget</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_widget_f53f5475dbe8c81079f4d144ce9619e7</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2020-02-05 21:50:37</sys_updated_on>
+        <template><![CDATA[<div> 
+</div> 
+
+
+
+]]></template>
+    </sp_widget>
+</record_update>

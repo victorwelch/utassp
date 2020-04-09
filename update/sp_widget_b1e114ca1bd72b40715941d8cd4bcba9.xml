@@ -23,26 +23,60 @@
 	c.isSearchInput = true;
 	c.isSearchDisplay = !c.isSearchInput;
 	c.pgTotalsMsg = "Items #first to #last of #total";	
-	
+	console.log('*** categprId: '+c.data.categoryId);
+
 	//if (u_cutassp.utilIsValueValid(c.data.pagination.countmsg)) {
 	//	$scope.data.pagination.countmsg=c.data.pagination.countmsg;
 	//}
-	
+
 	$rootScope.$on('myCatSelectEvent', function (event, obj) {
 		//$window.location.href = '/ssp';
 		$scope.data.categoryId = obj.selectionId;
 		$scope.data.action = 'new';
 		$scope.data.pagination.currentPage = 0;
 		c.isSearchInput = true;
-		c.isSearchDisplay = !c.isSearchInput;		
+		c.isSearchDisplay = !c.isSearchInput;
+		//
+		debugger;
+		//
+		var hdrDiv = $('#divHdrNumber');
+		hdrDiv.attr('title',myNewTitle.first);
+		var icon = hdrDiv.children('i').first();
+		icon.removeClass(myClassRemove.ascend);
+		icon.removeClass(myClassRemove.descend);
+		//
+		hdrDiv = $('#divHdrDescription');
+		hdrDiv.attr('title',myNewTitle.first);
+		icon = hdrDiv.children('i').first();
+		icon.removeClass(myClassRemove.ascend);
+		icon.removeClass(myClassRemove.descend);		
+		//
+		hdrDiv = $('#divHdrRating');
+		hdrDiv.attr('title',myNewTitle.first);
+		icon = hdrDiv.children('i').first();
+		icon.removeClass(myClassRemove.ascend);
+		icon.removeClass(myClassRemove.descend);		
+		//	
+		hdrDiv = $('#divHdrPublished');
+		hdrDiv.attr('title',myNewTitle.first);
+		icon = hdrDiv.children('i').first();
+		icon.removeClass(myClassRemove.ascend);
+		icon.removeClass(myClassRemove.descend);		
+		//		
+		hdrDiv = $('#divHdrAuthor');
+		hdrDiv.attr('title',myNewTitle.first);
+		icon = hdrDiv.children('i').first();
+		icon.removeClass(myClassRemove.ascend);
+		icon.removeClass(myClassRemove.descend);		
+		//		
 		get();
 	});
-	
+
 	//*** pagination 
 	function get() {
 		spUtil.update($scope);
 	}
-	
+
 	$scope.previousPage = function() {
 		$scope.data.action='page';
 		if ($scope.data.pagination.currentPage > 1)
@@ -57,7 +91,98 @@
 		$scope.data.pagination.currentPage = $scope.data.pagination.currentPage+1;
 		get();
 	};	
-	
+
+	// -----------------------------------------
+	// Column sort
+	//
+	$scope.gget = function() {
+		get();
+	};	
+	var myNewTitle= {
+		first: "Click to sort...",
+		ascend: "Click to sort descending...",
+		descend: "Click to sort ascending..."
+	};
+	var myClassRemove= {
+		ascend: "fa-caret-down",
+		descend: "fa-caret-up"
+	};
+	var myClassAdd= {
+		ascend: "fa-caret-up",
+		descend: "fa-caret-down"
+	};
+	var myNewSortAction = {
+		ascend: "sortasc",
+		descend: "sortdesc"
+	};	
+
+	$scope.data.isSortOn={};
+	$scope.data.action='';
+	$scope.colSort = function(e) {
+		var myHdrDiv = $(e.currentTarget);
+		//
+		var myId=myHdrDiv.attr('id');
+		var myTitle=myHdrDiv.attr('title');
+		var mySortState='';
+		if (myTitle.indexOf("sort...")>-1) {
+			mySortState= "ascend";
+		} else if (myTitle.indexOf("descending...")>-1) {
+			mySortState = "descend";
+		} else if (myTitle.indexOf("ascending...")>-1) {
+			mySortState= "ascend";
+		}
+		//
+		var myParent = myHdrDiv.closest('div.myDivTableRow');
+		var myDivSiblings = myParent.find('div');
+		myDivSiblings.attr('title',myNewTitle.first);
+		//
+		$scope.data.isSortOn = {
+			number:false,
+			description:false,
+			rating:false,
+			published:false,
+			author:false
+		};
+		//
+		myHdrDiv.attr('title',myNewTitle[mySortState]);
+		var myIcon = myHdrDiv.children('i').first();
+		myIcon.removeClass(myClassRemove[mySortState]);
+		myIcon.addClass(myClassAdd[mySortState]);
+		//
+		var mySortAction = '';
+		switch(true) {
+			case (myId.indexOf('Number')>-1):
+				$scope.data.isSortOn.number = true;
+				mySortAction = myNewSortAction[mySortState];
+				break;
+			case (myId.indexOf('Description')>-1):
+				$scope.data.isSortOn.description = true;
+				mySortAction = myNewSortAction[mySortState];
+				break;
+			case (myId.indexOf('Rating')>-1):
+				$scope.data.isSortOn.rating = true;
+				mySortAction = myNewSortAction[mySortState];
+				break;
+			case (myId.indexOf('Published')>-1):
+				$scope.data.isSortOn.published = true;
+				mySortAction = myNewSortAction[mySortState];
+				break;
+			case (myId.indexOf('Author')>-1):
+				$scope.data.isSortOn.author = true;
+				mySortAction = myNewSortAction[mySortState];
+				break;
+		}
+		//
+		//console.log(JSON.stringify($scope.data.isSortOn)+','+mySortAction);
+		if (mySortAction.length>0){
+			$scope.data.action = mySortAction;
+			$scope.gget();
+		}
+	};
+	//	
+	// End Column Sort
+	// -----------------------------------------	
+
 	$scope.artSearch = function(e) {
 		//alert('btn');
 		var myBtn=$(e.currentTarget);
@@ -70,7 +195,7 @@
 		c.isSearchDisplay = !c.isSearchInput;		
 		get();
 	};
-	
+
 	$scope.crCatchArtSearch = function(e) {
 		if ( e.keyCode === 13 ) {
 			var myInput=$(e.currentTarget);
@@ -84,7 +209,7 @@
 			return false;
 		}	
 	};
-	
+
 	$scope.artSearchReset = function(e) {
 		$scope.data.action = 'search';
 		$scope.data.q = '';
@@ -94,278 +219,282 @@
 	};		
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>mark {&#13;
-  background:#ff0;&#13;
-  padding:.2em;&#13;
-}&#13;
-&#13;
-h2.panel-title {&#13;
-	color: #ffffff;&#13;
-  	/* text-shadow: 3px 3px 5px #000000; */&#13;
-}&#13;
-&#13;
-.panel-body {&#13;
-  padding:0px 0px 0px 0px;&#13;
-}&#13;
-&#13;
-$brand-custom:#78A6CC;&#13;
-/* $brand-custom:#c2d7e8; */&#13;
-&#13;
-.panel-custom  {&#13;
-	background-color: $brand-custom;&#13;
-}&#13;
-&#13;
-.panel-primary  {&#13;
-	background-color: $brand-primary;&#13;
-}&#13;
-&#13;
-.panel-info {&#13;
-  background-color: $brand-info;&#13;
-}&#13;
-&#13;
-.panel-success {&#13;
-  background-color: $brand-success;&#13;
-}&#13;
-&#13;
-.panel-warning {&#13;
-  background-color: $brand-warning;&#13;
-}&#13;
-&#13;
-.panel-danger {&#13;
-  background-color: $brand-danger;&#13;
-}&#13;
-&#13;
-.myShadow {&#13;
--webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
--moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);&#13;
-}&#13;
-&#13;
-/* ********** */&#13;
-/* Pagination */&#13;
-a.mybtn {&#13;
-    padding: 5px 10px;&#13;
-    font-size: 12px;&#13;
-    line-height: 1.5;&#13;
-    border-radius: 3px;&#13;
-}&#13;
-&#13;
-/* ************ */&#13;
-/* DivTable  */&#13;
-.myDivTable{ &#13;
-  display:table; &#13;
-  width: 100%;&#13;
-  table-layout: fixed;&#13;
-  font-size: 12px;&#13;
-}&#13;
-.myDivTableRow { display:table-row; }&#13;
-.myDivTableHeading { display:table-header-group;}&#13;
-.myDivTableCell, .myDivTableHead { display:table-cell;}&#13;
-.myDivTableHeading { display:table-header-group;}&#13;
-.myDivTableFoot { display:table-footer-group;}&#13;
-.myDivTableBody { display:table-row-group;}&#13;
-&#13;
-div.myGreyGridTable {&#13;
-  width:100%;&#13;
-  text-align:left;&#13;
-  border-collapse:collapse;&#13;
-}&#13;
-&#13;
-/* myDivTableHeading */&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading {&#13;
-  background:#eeeeee;&#13;
-}&#13;
-&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-  .myDivTableHead {&#13;
-    font-size:10px;&#13;
-  	font-weight:bold;&#13;
-  	color:#000000;&#13;
-  	text-align:center;&#13;
-    vertical-align: middle;&#13;
-  	padding:1px 1px 1px 4px;&#13;
-    border-right:1px solid #bbbbbb;&#13;
-  	border-bottom:1px solid #000000;    &#13;
-    word-wrap: break-word;    &#13;
-  }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow   {&#13;
-  .myDivTableHead.myLeft { text-align:left; }&#13;
-}&#13;
-&#13;
-/* myDivTableBody */&#13;
-.myDivTable.myGreyGridTable .myDivTableBody {&#13;
-	a.myDivTableRow {&#13;
-    color:#000000;&#13;
-  	width:100%;&#13;
-  	height:100%; &#13;
-    border-bottom:1px solid #aaaaaa;&#13;
-	}&#13;
-}&#13;
-&#13;
-.myDivTable.myGreyGridTable .myDivTableBody {&#13;
-  a.myDivTableRow:hover { &#13;
-    color: #1565C0;&#13;
-	  text-decoration:underline;&#13;
-    font-weight: bold;&#13;
-    background-color:#e6e8ea; &#13;
-  }&#13;
-}&#13;
-&#13;
-.myDivTable.myGreyGridTable .myDivTableBody {&#13;
-	.myDivTableRow:nth-child(odd) { background: #ffffff; }&#13;
-	.myDivTableRow:nth-child(even) { background: #f5f5f5; }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableBody&#13;
-{&#13;
-	.myDivTableRow:last-child { border-bottom-style:none;  }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-  .myDivTableCell  {&#13;
-      border-right:1px solid #bbbbbb; &#13;
-      padding:1px 4px;&#13;
-  }&#13;
-}&#13;
-.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-  .myDivTableCell.myCtr { text-align:center; }&#13;
-}&#13;
-&#13;
-.myColSpanAll { &#13;
-  display:table;&#13;
-  width:100%;&#13;
-	background: #EEEEEE;&#13;
-  color: #444444;&#13;
-}&#13;
-&#13;
-/* Foot Style */&#13;
-.myGreyGridTable .myTableFootStyle {&#13;
-  font-weight:bold;&#13;
-  color:#333333;&#13;
-  border-top:1px solid #333333;&#13;
-}&#13;
-&#13;
-// Above Medium devices (tablets, 768px and up)&#13;
-@media (min-width: 768.01px) &#13;
-{&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefLgOnlyShow { display:table-cell; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefMedUpShow { display:table-cell; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMedOnlyShow { display:none; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead:nth-last-child(1) { border-right-style:none; }&#13;
-  } &#13;
-  &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefLgOnlyShow { display:table-cell; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMeUpShow { display:table-cell; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMedOnlyShow { display:none; }&#13;
-  }&#13;
-  &#13;
-  .myCol1 { width:46% }&#13;
-  .myCol2 { width:10% }&#13;
-  .myCol3 { width:14% }&#13;
-  .myCol4 { &#13;
-    width:18%;&#13;
-  	font-size: 10px;&#13;
-  } &#13;
-  &#13;
-}&#13;
-&#13;
-// Medium devices (tablets, 768px and less)&#13;
-@media (max-width: 768px) { &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefLgOnlyShow { display:none; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefMedUpShow { display:table-cell; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead.myDefMedOnlyShow { display:table-cell; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead:nth-last-child(1) { border-right-style:none; }&#13;
-  }    &#13;
-  &#13;
- .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell.myDefLgOnlyShow { display:none; }&#13;
-  }   &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMedUpShow { display:table-cell; }&#13;
-  }    &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell.myDefMedOnlyShow { display:table-cell; }&#13;
-  }     &#13;
-  &#13;
-  .myCol1 { width:48% }&#13;
-  .myCol2 { width:10% }&#13;
-  .myCol3 { width:12% }&#13;
-  .myCol4 { &#13;
-    width:14%;&#13;
-  	font-size: 10px;&#13;
-  } &#13;
-}&#13;
-&#13;
-// Small devices (landscape phones, 576px and less)&#13;
-@media (max-width: 576px) { &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefLgOnlyShow { display:none; }&#13;
-  }&#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {&#13;
-    .myDivTableHead.myDefMedUpShow { display:none; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead.myDefMedOnlyShow { display:none; }&#13;
-  }  &#13;
-  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {&#13;
-    .myDivTableHead:nth-last-child(2) { border-right-style:none; }&#13;
-  }   &#13;
-  &#13;
- .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell.myDefLgOnlyShow { display:none; }&#13;
-  }   &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {&#13;
-    .myDivTableCell.myDefMedUpShow { display:none; }&#13;
-  }    &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell.myDefMedOnlyShow {display:none; }&#13;
-  }   &#13;
-  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {&#13;
-    .myDivTableCell:nth-last-child(2) { border-right-style:none; }&#13;
-  }  &#13;
-  .myCol1 { width:66% }&#13;
-  .myCol2 { width:22% }&#13;
-  .myCol3 { &#13;
-    width:22%; &#13;
-  	font-size: 10px;&#13;
-  }&#13;
-  .myCol4 { width:0% }&#13;
-}&#13;
-&#13;
-&#13;
-&#13;
-.myMarginBottom10px {&#13;
-   margin-bottom:10px;&#13;
-}&#13;
-.myRefreshButton {&#13;
-  border-left:1px solid #fff;&#13;
-}&#13;
-.myPgTotals {&#13;
-    color: #fff;&#13;
-    font-size: 12px;&#13;
-    position: relative;&#13;
-    top: 4px;  &#13;
-}&#13;
-.myTextAlignCenter {&#13;
-  	text-align:center;&#13;
+        <css>mark {
+  background:#ff0;
+  padding:.2em;
+}
+
+h2.panel-title {
+	color: #ffffff;
+  	/* text-shadow: 3px 3px 5px #000000; */
+}
+
+.panel-body {
+  padding:0px 0px 0px 0px;
+}
+
+$brand-custom:#78A6CC;
+/* $brand-custom:#c2d7e8; */
+
+.panel-custom  {
+	background-color: $brand-custom;
+}
+
+.panel-primary  {
+	background-color: $brand-primary;
+}
+
+.panel-info {
+  background-color: $brand-info;
+}
+
+.panel-success {
+  background-color: $brand-success;
+}
+
+.panel-warning {
+  background-color: $brand-warning;
+}
+
+.panel-danger {
+  background-color: $brand-danger;
+}
+
+.myShadow {
+-webkit-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+-moz-box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+box-shadow: 0px 0px 10px 4px rgba(158,158,158,0.6);
+}
+
+/* ********** */
+/* Pagination */
+a.mybtn {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+/* ************ */
+/* DivTable  */
+.myDivTable{ 
+  display:table; 
+  width: 100%;
+  table-layout: fixed;
+  font-size: 12px;
+}
+.myDivTableRow { display:table-row; }
+.myDivTableHeading { display:table-header-group;}
+.myDivTableCell, .myDivTableHead { display:table-cell;}
+.myDivTableHeading { display:table-header-group;}
+.myDivTableFoot { display:table-footer-group;}
+.myDivTableBody { display:table-row-group;}
+
+div.myGreyGridTable {
+  width:100%;
+  text-align:left;
+  border-collapse:collapse;
+}
+
+/* myDivTableHeading */
+.myDivTable.myGreyGridTable .myDivTableHeading {
+  background:#eeeeee;
+}
+
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+  .myDivTableHead {
+    font-size:10px;
+  	font-weight:bold;
+  	color:#000000;
+  	text-align:center;
+    vertical-align: middle;
+  	padding:1px 1px 1px 4px;
+    border-right:1px solid #bbbbbb;
+  	border-bottom:1px solid #000000;    
+    word-wrap: break-word;    
+  }
+}
+.myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow   {
+  .myDivTableHead.myLeft { text-align:left; }
+}
+
+/* myDivTableBody */
+.myDivTable.myGreyGridTable .myDivTableBody {
+	a.myDivTableRow {
+    color:#000000;
+  	width:100%;
+  	height:100%; 
+    border-bottom:1px solid #aaaaaa;
+	}
+}
+
+.myDivTable.myGreyGridTable .myDivTableBody {
+  a.myDivTableRow:hover { 
+    color: #1565C0;
+	  text-decoration:underline;
+    font-weight: bold;
+    background-color:#e6e8ea; 
+  }
+}
+
+.myDivTable.myGreyGridTable .myDivTableBody {
+	.myDivTableRow:nth-child(odd) { background: #ffffff; }
+	.myDivTableRow:nth-child(even) { background: #f5f5f5; }
+}
+.myDivTable.myGreyGridTable .myDivTableBody
+{
+	.myDivTableRow:last-child { border-bottom-style:none;  }
+}
+.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+  .myDivTableCell  {
+      border-right:1px solid #bbbbbb; 
+      padding:1px 4px;
+  }
+}
+.myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+  .myDivTableCell.myCtr { text-align:center; }
+}
+
+.myColSpanAll { 
+  display:table;
+  width:100%;
+	background: #EEEEEE;
+  color: #444444;
+}
+
+/* Foot Style */
+.myGreyGridTable .myTableFootStyle {
+  font-weight:bold;
+  color:#333333;
+  border-top:1px solid #333333;
+}
+
+// Above Medium devices (tablets, 768px and up)
+@media (min-width: 768.01px) 
+{
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefLgOnlyShow { display:table-cell; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefMedUpShow { display:table-cell; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableCell.myDefMedOnlyShow { display:none; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead:nth-last-child(1) { border-right-style:none; }
+  } 
+  
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefLgOnlyShow { display:table-cell; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefMeUpShow { display:table-cell; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefMedOnlyShow { display:none; }
+  }
+  
+  .myCol0 { width:12% }
+  .myCol1 { width:54% }
+  .myCol2 { width:8% }
+  .myCol3 { width:12% }
+  .myCol4 { 
+    width:14%;
+  	font-size: 10px;
+  } 
+  
+}
+
+// Medium devices (tablets, 768px and less)
+@media (max-width: 768px) { 
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefLgOnlyShow { display:none; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefMedUpShow { display:table-cell; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead.myDefMedOnlyShow { display:table-cell; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead:nth-last-child(1) { border-right-style:none; }
+  }    
+  
+ .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell.myDefLgOnlyShow { display:none; }
+  }   
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefMedUpShow { display:table-cell; }
+  }    
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell.myDefMedOnlyShow { display:table-cell; }
+  }     
+  
+  .myCol0 { width:12% }
+  .myCol1 { width:46% }
+  .myCol2 { width:8% }
+  .myCol3 { width:12% }
+  .myCol4 { 
+    width:14%;
+  	font-size: 10px;
+  } 
+}
+
+// Small devices (landscape phones, 576px and less)
+@media (max-width: 576px) { 
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefLgOnlyShow { display:none; }
+  }
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow  {
+    .myDivTableHead.myDefMedUpShow { display:none; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead.myDefMedOnlyShow { display:none; }
+  }  
+  .myDivTable.myGreyGridTable .myDivTableHeading .myDivTableRow {
+    .myDivTableHead:nth-last-child(2) { border-right-style:none; }
+  }   
+  
+ .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell.myDefLgOnlyShow { display:none; }
+  }   
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow  {
+    .myDivTableCell.myDefMedUpShow { display:none; }
+  }    
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell.myDefMedOnlyShow {display:none; }
+  }   
+  .myDivTable.myGreyGridTable .myDivTableBody .myDivTableRow {
+    .myDivTableCell:nth-last-child(2) { border-right-style:none; }
+  }  
+  .myCol0 {
+    width:20%;
+  	/* font-size: 10px;   */ 
+  }
+  .myCol1 { width:47% }
+  .myCol2 { width:11% }
+  .myCol3 { 
+    width:21%; 
+  	/* font-size: 10px; */
+  }
+  .myCol4 { width:0% }
+}
+
+.myMarginBottom10px {
+   margin-bottom:10px;
+}
+.myRefreshButton {
+  border-left:1px solid #fff;
+}
+.myPgTotals {
+    color: #fff;
+    font-size: 12px;
+    position: relative;
+    top: 4px;  
+}
+.myTextAlignCenter {
+  	text-align:center;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -433,6 +562,10 @@ div.myGreyGridTable {&#13;
       {&#13;
         "label": "OIT Knowledge Base",&#13;
         "value": "OIT Knowledge Base"&#13;
+      },&#13;
+      {&#13;
+        "label": "Public Knowledge Base",&#13;
+        "value": "Public Knowledge Base"&#13;
       }&#13;
     ]&#13;
   },&#13;
@@ -448,7 +581,7 @@ div.myGreyGridTable {&#13;
         <roles/>
         <script><![CDATA[(function ($sp, input, data, options, gs) {
 	var myU = new u_utassp();
-	data.uSettings=myU.utilGetInstanceSettings();
+	data.uSettings=myU.utilGetInstanceSettings($sp);
 	// *** Start: Debug only code *** //
 	data.infotag = '';
 	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
@@ -459,7 +592,7 @@ div.myGreyGridTable {&#13;
 	// get page id
 	var myPageId = $sp.getParameter('id');
 	data.pageId = myPageId;
-	
+
 	// populate the 'data' variable
 	if (typeof data.articles == typeof myUndefined) { data.articles = []; } 
 	if (typeof data.title == typeof myUndefined) { data.title = {}; }
@@ -471,10 +604,10 @@ div.myGreyGridTable {&#13;
 				data.kbname='';
 			}
 		} else {
-				data.kbname='';		
+			data.kbname='';		
 		}		
 	}
-	
+
 	var myCategoryId = '';
 	var myTitle = 'Articles: #kbname (all categories)';
 	data.articles = [];
@@ -491,10 +624,14 @@ div.myGreyGridTable {&#13;
 		data.pagination.hasPrevious = false;
 		data.showPagination = false;
 	}
-	
+
 	var isData = false;
 	var isPage = false;
 	var isSearch = false;
+	var myIsSortAsc = false;
+	var myIsSortDesc = false;
+	var mySortField = '';		
+
 	if (typeof input == typeof myUndefined) {
 		isData = false;
 		isPage = false;
@@ -524,9 +661,43 @@ div.myGreyGridTable {&#13;
 			} else {
 				isSearch = false;
 			}
-		}
+			//Q: Sort button?
+		} else if (input.action.indexOf('sort') > -1) {
+			//A: Yes
+			isPage = false;
+			isData = true;
+			myIsSortAsc = (input.action.indexOf('asc') > -1);
+			myIsSortDesc = !myIsSortAsc;
+			if (typeof input.q != typeof myUndefined && (input.q)) {
+				isSearch = true;
+			} else {
+				isSearch = false;
+			}
+			if (myU.utilIsValueValid(input.isSortOn)) {
+				switch (true) {
+					case input.isSortOn.number:
+						mySortField = 'number';
+						break;
+					case input.isSortOn.description:
+						mySortField = 'short_description';
+						break;
+					case input.isSortOn.rating:
+						mySortField = 'rating';
+						break;
+					case input.isSortOn.published:
+						mySortField = 'published';
+						break;
+					case input.isSortOn.author:
+						mySortField = 'author';
+						break;
+					default:
+						myIsSortAsc = false;
+						myIsSortDesc = false;
+				}
+			}
+		}		
 	}
-	
+
 	if (isData) {
 		myCategoryId=input.categoryId;
 		var l_title = myU.getKbCategoryTreeTitle(myCategoryId);
@@ -575,7 +746,15 @@ div.myGreyGridTable {&#13;
 			}
 		}
 	}
-	
+
+	var qSearch='';
+	if ((data) && (data.q)) {
+		isSearch = true;
+		qSearch=data.q;
+	} else if ((input) && (input.q)) {
+		isSearch = true;
+		qSearch=input.q;
+	}
 	data.title = myTitle;
 	data.isSearch=false;
 	if (myCategoryId.length>0) {
@@ -583,8 +762,18 @@ div.myGreyGridTable {&#13;
 		var myData = {};
 		if (isSearch) {
 			data.isSearch=true;
-			var mySearch = input.q;			
-			myData = myU.getKbCategorySearchArticles(data.categoryId,mySearch,myFirstRow,myLastRow);
+			var mySearch = qSearch;			
+			myData = myU.getKbCategorySearchArticles(
+				data.categoryId,
+				mySearch,
+				myFirstRow,
+				myLastRow, 
+				{
+					"isSortAsc": myIsSortAsc,
+					"isSortDesc": myIsSortDesc,
+					"sortField": mySortField
+				}
+			);
 			var mySearchWordList = mySearch.split(' ');
 			for (var x=0,Lx=mySearchWordList.length;x<Lx;x++) 
 			{
@@ -594,13 +783,22 @@ div.myGreyGridTable {&#13;
 					var myResult = myData.articles[y].short_description.match(myRegEx);
 					if (myResult) {
 						for (var z=0,Lz=myResult.length;z<Lz;z++) {
-								myData.articles[y].short_description=myData.articles[y].short_description.replace(myResult[z],'<mark>'+myResult[z]+'</mark>');
+							myData.articles[y].short_description=myData.articles[y].short_description.replace(myResult[z],'<mark>'+myResult[z]+'</mark>');
 						}
 					}	
 				}				
 			}
 		} else {
-			myData = myU.getKbCategoryArticles(data.categoryId,myFirstRow,myLastRow);						
+			myData = myU.getKbCategoryArticles(
+				data.categoryId,
+				myFirstRow,
+				myLastRow, 
+				{
+					"isSortAsc": myIsSortAsc,
+					"isSortDesc": myIsSortDesc,
+					"sortField": mySortField
+				}
+			);						
 		}
 		var myArticles = myData.articles;
 		var myRowCount = myData.rowCount;
@@ -611,7 +809,7 @@ div.myGreyGridTable {&#13;
 		data.pagination.currentPage = myCurrentPage;
 		data.pagination.rowcount = myRowCount;
 		data.pagination.firstrow = myFirstRow;
-		data.pagination.lastrow = myLastRow;
+		data.pagination.lastrow = (myLastRow>myRowCount)?myRowCount:myLastRow;
 		data.pagination.countmsg = "Items #first to #last of #total";	
 		if (data.pagination.showPagination) {
 			data.pagination.countmsg = data.pagination.countmsg.replace('#first',data.pagination.firstrow+1);
@@ -627,7 +825,7 @@ div.myGreyGridTable {&#13;
         <sys_created_on>2019-01-30 14:26:17</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>b1e114ca1bd72b40715941d8cd4bcba9</sys_id>
-        <sys_mod_count>27</sys_mod_count>
+        <sys_mod_count>62</sys_mod_count>
         <sys_name>UTASSP KB Category Page  Widget 2</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -635,7 +833,7 @@ div.myGreyGridTable {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_b1e114ca1bd72b40715941d8cd4bcba9</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 17:00:37</sys_updated_on>
+        <sys_updated_on>2020-01-23 17:35:19</sys_updated_on>
         <template><![CDATA[<div>
   <div class="panel panel-{{::options.color}} b myShadow"  dummy="{{::c.myLog()}}">
     <div class="panel-heading">
@@ -644,58 +842,68 @@ div.myGreyGridTable {&#13;
         <h2 class="h4 panel-title">{{data.title}}</h2>
       </div>
       <div id="searchText" ng-show="c.isSearchDisplay" class="ng-hide myMarginBottom10px">
-       	<h2 class="h4 panel-title">Search: {{data.q}}</h2>
+        <h2 class="h4 panel-title">Search: {{data.q}}</h2>
       </div>
       <div id="searchInput" class="input-group input-group-sm mb-3">
-            <input 
-            	class="form-control" 
-				type="text"
-				placeholder="Search selected articles below..." 
-                aria-label="Search selected articles" 
-                aria-describedby="basic-addon1"
-                ng-keypress="crCatchArtSearch($event)";
-            >       
-            <span class="input-group-btn">
-              <button 
-                 name="search" 
-                 type="submit" 
-                 class="btn btn-outline-secondary"
-                 title="Search"
-                 aria-label="Search"
-                 ng-click="artSearch($event)">
-	              <i class="fa fa-search"></i>
-              </button>
-              <button 
-                 name="refresh" 
-                 type="submit"
-                 ng-show="c.isSearchDisplay"
-                 class="ng-hide btn btn-outline-secondary myRefreshButton"
-                 title="Reset to 'all'"
-                 aria-label="Reset to 'all'"
-                 ng-click="artSearchReset($event)">
-	              <i class="fa fa-refresh"></i>
-              </button>              
-            </span>	        
+        <input 
+               class="form-control" 
+               type="text"
+               placeholder="Search selected articles below..." 
+               aria-label="Search selected articles" 
+               aria-describedby="basic-addon1"
+               ng-keypress="crCatchArtSearch($event)";
+               >       
+        <span class="input-group-btn">
+          <button 
+                  name="search" 
+                  type="submit" 
+                  class="btn btn-outline-secondary"
+                  title="Search"
+                  aria-label="Search"
+                  ng-click="artSearch($event)">
+            <i class="fa fa-search"></i>
+          </button>
+          <button 
+                  name="refresh" 
+                  type="submit"
+                  ng-show="c.isSearchDisplay"
+                  class="ng-hide btn btn-outline-secondary myRefreshButton"
+                  title="Reset to 'all'"
+                  aria-label="Reset to 'all'"
+                  ng-click="artSearchReset($event)">
+            <i class="fa fa-refresh"></i>
+          </button>              
+        </span>	        
       </div>
-      
+
     </div>
     <div class="panel-body">
       <div ng-if="(data.articles.length > 0)">
         <div class="myDivTable myGreyGridTable">
           <div class="myDivTableHeading">
             <div class="myDivTableRow">
-              <div class="myDivTableHead myCol1">Description</div>
-              <div class="myDivTableHead myCol2">Rating</div>
-              <div class="myDivTableHead myCol3">Published</div>
-              <div class="myDivTableHead myDefMedUpShow myCol4">Author</div>
+              <div id="divHdrNumber" class="myDivTableHead myCtr myCol0" title="Click to sort..." ng-click="colSort($event)">Number
+                <i id="iconNumberSortId" ng-show="data.isSortOn.number" class="ng-hide fa fa-caret-up"></i>
+              </div>
+              <div id="divHdrDescription" class="myDivTableHead myCol1" title="Click to sort..." ng-click="colSort($event)">Description
+                <i id="iconDescriptionSortId" ng-show="data.isSortOn.description" class="ng-hide fa fa-caret-up"></i>
+              </div>
+              <div id="divHdrRating" class="myDivTableHead myCtr myCol2" title="Click to sort..." ng-click="colSort($event)">Rating
+                <i id="iconRatingSortId" ng-show="data.isSortOn.rating" class="ng-hide fa fa-caret-up"></i>
+              </div>
+              <div id="divHdrPublished" class="myDivTableHead myCtr myCol3" title="Click to sort..." ng-click="colSort($event)">Published
+                <i id="iconPublishedSortId" ng-show="data.isSortOn.published" class="ng-hide fa fa-caret-up"></i>
+              </div>
+              <div id="divHdrAuthor" class="myDivTableHead myCtr myDefMedUpShow myCol4" title="Click to sort..." ng-click="colSort($event)">Author
+                <i id="iconAuthorSortId" ng-show="data.isSortOn.author" class="ng-hide fa fa-caret-up"></i>
+              </div>
             </div>
           </div>
           <div class="myDivTableBody">
             <a  ng-repeat="article in data.articles" ng-href="?id=utassp01_kb_article&sys_id={{article.sys_id}}&catid={{data.categoryId}}&pageid={{data.pageId}}" class="myDivTableRow">
+              <div class="myDivTableCell myCtr myCol0">{{article.kbnumber}}</div>
               <div class="myDivTableCell myCol1" ng-bind-html="article.short_description"></div>
-              <div class="myDivTableCell myCtr myCol2">
-                {{article.rating}}                
-              </div>
+              <div class="myDivTableCell myCtr myCol2">{{article.rating}}</div>
               <div class="myDivTableCell myCtr myCol3">{{article.published}}</div>
               <div class="myDivTableCell myDefMedUpShow myCol4">{{article.author}}</div>
             </a>
@@ -706,10 +914,11 @@ div.myGreyGridTable {&#13;
         <div class="myDivTable myGreyGridTable">
           <div class="myDivTableHeading">
             <div class="myDivTableRow">
+              <div class="myDivTableHead myCtr myCol0">Number</div>
               <div class="myDivTableHead myCol1">Description</div>
-              <div class="myDivTableHead myCol2">Rating</div>
+              <div class="myDivTableHead myCtr myCol2">Rating</div>
               <div class="myDivTableHead myCtr myCol3">Published</div>
-              <div class="myDivTableHead myDefMedUpShow myCol4">Author</div>
+              <div class="myDivTableHead myCtr myDefMedUpShow myCol4">Author</div>
             </div>
           </div>
         </div>

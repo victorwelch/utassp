@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_module">
+    <sys_ui_module action="DELETE">
+        <active>true</active>
+        <application display_value="Utassp Table Lookup">aa8ce7addbccd4147020d8965e9619c9</application>
+        <filter/>
+        <name>Utassp Table Lookups</name>
+        <order/>
+        <path/>
+        <path_relative_to_root>false</path_relative_to_root>
+        <roles>x_287765_utassp.utassp_table_lookup_user</roles>
+        <sys_class_name>sys_ui_module</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2020-04-08 16:13:57</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_id>668ce7addbccd4147020d8965e9619cc</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Utassp Table Lookups</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sys_ui_module_668ce7addbccd4147020d8965e9619cc</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2020-04-08 16:13:57</sys_updated_on>
+        <table>x_287765_utassp_table_lookup</table>
+        <uncancelable>false</uncancelable>
+        <view_name/>
+    </sys_ui_module>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="utassp">2e58c8624f112300f006121f9310c726</application>
+        <comments/>
+        <file_path/>
+        <instance_id>5a5766b099da014870acd38ad3bda438</instance_id>
+        <instance_name>utadev</instance_name>
+        <name>sys_ui_module_668ce7addbccd4147020d8965e9619cc</name>
+        <order/>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_module"><sys_ui_module action="INSERT_OR_UPDATE"><active>true</active><application display_value="Utassp Table Lookup">aa8ce7addbccd4147020d8965e9619c9</application><filter/><name>Utassp Table Lookups</name><order/><path/><path_relative_to_root>false</path_relative_to_root><roles>x_287765_utassp.utassp_table_lookup_user</roles><sys_class_name>sys_ui_module</sys_class_name><sys_created_by>welchv</sys_created_by><sys_created_on>2020-04-08 16:13:57</sys_created_on><sys_customer_update>false</sys_customer_update><sys_domain>global</sys_domain><sys_id>668ce7addbccd4147020d8965e9619cc</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Utassp Table Lookups</sys_name><sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package><sys_policy/><sys_replace_on_upgrade>false</sys_replace_on_upgrade><sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope><sys_update_name>sys_ui_module_668ce7addbccd4147020d8965e9619cc</sys_update_name><sys_updated_by>welchv</sys_updated_by><sys_updated_on>2020-04-08 16:13:57</sys_updated_on><table>x_287765_utassp_table_lookup</table><uncancelable>false</uncancelable><view_name/></sys_ui_module></record_update>]]></payload>
+        <payload_hash>-1802291020</payload_hash>
+        <record_name>Utassp Table Lookups</record_name>
+        <reverted_from/>
+        <source>788b43981bc03f04df92a7d4bd4bcb48</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2020-04-08 16:13:57</sys_created_on>
+        <sys_id>6e8ce7addbccd4147020d8965e9619ce</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1715a91d0d90000001</sys_recorded_at>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2020-04-08 16:13:57</sys_updated_on>
+        <type>Module</type>
+        <u_link>[code]&lt;a title="sys_ui_module_668ce7addbccd4147020d8965e9619cc" class="linked" href="sys_ui_module.do?sys_id=668ce7addbccd4147020d8965e9619cc"&gt;sys_ui_module_668ce7addbccd4147020d8965e9619cc&lt;/a&gt;[/code]</u_link>
+        <update_guid>668ce7ada0ccd4149c93d1351cb3e6ce</update_guid>
+        <update_guid_history>668ce7ada0ccd4149c93d1351cb3e6ce:-1802291020</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2020-04-08 16:20:20</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="sys_ui_module">sys_ui_module</sys_db_object>
+        <sys_id>423caedcb6d549c8a38fb2022610df24</sys_id>
+        <sys_metadata>668ce7addbccd4147020d8965e9619cc</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Utassp Table Lookups</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_scope_delete display_value="">4e892d72dd3742d1bab838492aebccb1</sys_scope_delete>
+        <sys_update_name>sys_ui_module_668ce7addbccd4147020d8965e9619cc</sys_update_name>
+        <sys_update_version display_value="sys_ui_module_668ce7addbccd4147020d8965e9619cc">6e8ce7addbccd4147020d8965e9619ce</sys_update_version>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2020-04-08 16:20:20</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

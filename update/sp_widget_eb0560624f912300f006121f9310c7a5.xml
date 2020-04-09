@@ -208,7 +208,7 @@ li.header-menu-item  &gt; a {&#13;
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs){
 	var myU = new u_utassp();
-	data.uSettings=myU.utilGetInstanceSettings();
+	data.uSettings=myU.utilGetInstanceSettings($sp);
 	// *** Start: Debug only code *** //
 	data.infotag = '';
 	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
@@ -241,13 +241,13 @@ li.header-menu-item  &gt; a {&#13;
 				//myItem.label = myItem.label.replace('Portal ','');
 				//data.menu.items[0] = myItem;
 			}
-		} 		
+		}
 	}
 
 	data.isLoggedIn = isLoggedIn;
-// 	data.isLoggedIn = GlideSession.get().isLoggedIn();
-// 	if (data.isLoggedIn)
-// 		data.cartWidget = $sp.getWidget("sc-shopping-cart", {cartTemplate: "small_shopping_cart.html", auto_update_cart:options.auto_update_cart});
+//	data.isLoggedIn = GlideSession.get().isLoggedIn();
+//	if (data.isLoggedIn)
+//		data.cartWidget = $sp.getWidget("sc-shopping-cart", {cartTemplate: "small_shopping_cart.html", auto_update_cart:options.auto_update_cart});
 })($sp, input, data, options, gs);]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
@@ -255,7 +255,7 @@ li.header-menu-item  &gt; a {&#13;
         <sys_created_on>2018-10-24 19:01:20</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>eb0560624f912300f006121f9310c7a5</sys_id>
-        <sys_mod_count>58</sys_mod_count>
+        <sys_mod_count>60</sys_mod_count>
         <sys_name>UTASSP Header Menu Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -263,7 +263,7 @@ li.header-menu-item  &gt; a {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_eb0560624f912300f006121f9310c7a5</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 16:55:02</sys_updated_on>
+        <sys_updated_on>2019-04-02 16:28:11</sys_updated_on>
         <template><![CDATA[<ul class="nav navbar-nav" aria-label="${Header menu}" dummy="{{::c.myLog()}}">
   <div class="header-loader" ng-show="loadingIndicator">
     <div class="hidden-xs sp-loading-indicator la-sm">

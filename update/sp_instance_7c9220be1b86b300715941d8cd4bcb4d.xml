@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>custom</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <roles/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="2">b09220be1b86b300715941d8cd4bcb4c</sp_column>
+        <sp_widget display_value="UTASSP KB Category Page Public Widget ">48677cbe1bc6b300715941d8cd4bcb25</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2019-06-18 16:27:13</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>7c9220be1b86b300715941d8cd4bcb4d</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>KB Article List</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_instance_7c9220be1b86b300715941d8cd4bcb4d</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2019-06-18 18:03:07</sys_updated_on>
+        <title>KB Article List</title>
+        <url/>
+        <widget_parameters><![CDATA[{
+	"knowledge_base": {
+		"value": "Public Knowledge Base",
+		"displayValue": "Public Knowledge Base"
+	},
+	"maxitems": {
+		"value": 20,
+		"displayValue": "20"
+	},
+	"color": {
+		"value": "custom",
+		"displayValue": "Custom"
+	}
+}]]></widget_parameters>
+    </sp_instance>
+    <sys_translated_text action="delete_multiple" query="documentkey=7c9220be1b86b300715941d8cd4bcb4d"/>
+</record_update>

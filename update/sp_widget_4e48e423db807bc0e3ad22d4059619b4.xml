@@ -6,11 +6,11 @@
 	c.scope = $scope;
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>div.panel-heading {&#13;
-	margin-bottom:5px;&#13;
-}&#13;
-div.panel-body {&#13;
-	padding:0;&#13;
+        <css>div.panel-heading {
+	margin-bottom:5px;
+}
+div.panel-body {
+	padding:0;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>

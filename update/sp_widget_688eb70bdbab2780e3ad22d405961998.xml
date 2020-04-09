@@ -102,7 +102,8 @@
 			if (myIcon.hasClass('fa-minus')) {
 				myIcon.toggleClass('fa-minus');
 				myIcon.toggleClass('fa-plus');				
-			} 
+			}
+			console.log('*****: '+JSON.stringify(myObj));
 			$rootScope.$broadcast('onServiceSelected', myObj);		
 		}
 	}
@@ -344,7 +345,7 @@ li&gt;div.myLeafLiDiv {
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
 	var myU = new u_utassp();
-	data.uSettings=myU.utilGetInstanceSettings();	
+	data.uSettings=myU.utilGetInstanceSettings($sp);	
 	// *** Start: Debug only code *** //
 	data.infotag = '';
 	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
@@ -365,7 +366,7 @@ li&gt;div.myLeafLiDiv {
         <sys_created_on>2019-02-15 20:29:38</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>688eb70bdbab2780e3ad22d405961998</sys_id>
-        <sys_mod_count>167</sys_mod_count>
+        <sys_mod_count>173</sys_mod_count>
         <sys_name>UTASSP Business Service Tree 2 Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -373,7 +374,7 @@ li&gt;div.myLeafLiDiv {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_688eb70bdbab2780e3ad22d405961998</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 16:18:55</sys_updated_on>
+        <sys_updated_on>2020-01-28 14:37:14</sys_updated_on>
         <template><![CDATA[<div id="myMobileInfoDivId" ng-if="c.isHeadingActive==false" class="myNoGrid">
   <h3>Something wrong?<br>Incident report form.</h3>
   <p>Using the "tree picker" below, select the service you are having a problem with.</p>					    
@@ -415,7 +416,8 @@ li&gt;div.myLeafLiDiv {
 	              		id="{{i2.id}}" 
   	            		idnumber="{{i2.idnumber}}" 
 	              		sysid="{{i2.sysid}}" 
-  	            		nodetype="{{i2.nodetype}}">
+  	            		nodetype="{{i2.nodetype}}"
+                        name= "{{i2.name}}">
                   	<div ng-class="i2.nodetype=='leaf' ? 'myLeafLiDiv' : 'myTreeLiDiv'"
                          ng-click="divClick($event)">
                 			<i class="fa" ng-class="{'fa-bullseye': i2.nodetype=='leaf', 'fa-folder-plus': i2.nodetype=='tree' && data.flatlist[i2.idnumber].ulstate=='collapsed', 'fa-folder-minus': i2.nodetype=='tree' && data.flatlist[i2.idnumber].ulstate!='collapsed'}"></i>                      

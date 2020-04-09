@@ -391,7 +391,7 @@ div.myGreyGridTable {&#13;
         <roles/>
         <script><![CDATA[(function ($sp, input, data, options, gs) {
 	var myU = new u_utassp();
-	data.uSettings=myU.utilGetInstanceSettings();
+	data.uSettings=myU.utilGetInstanceSettings($sp);
 	// *** Start: Debug only code *** //
 	data.infotag = '';
 	if (myU.utilIsValueValidAndTrue(data.uSettings.isDebugOn)) {
@@ -547,7 +547,7 @@ div.myGreyGridTable {&#13;
         <sys_created_on>2019-01-28 20:33:46</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>91d29f551bdfa740715941d8cd4bcb4b</sys_id>
-        <sys_mod_count>12</sys_mod_count>
+        <sys_mod_count>13</sys_mod_count>
         <sys_name>UTASSP KB All Categories Page  Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -555,7 +555,7 @@ div.myGreyGridTable {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_91d29f551bdfa740715941d8cd4bcb4b</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-03-03 17:09:54</sys_updated_on>
+        <sys_updated_on>2019-04-02 16:38:20</sys_updated_on>
         <template><![CDATA[<div>
   <div class="panel panel-{{::options.color}} b myShadow"  dummy="{{::c.myLog()}}">
     <div class="panel-heading">
