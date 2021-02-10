@@ -182,8 +182,10 @@ div.myLinkModal {&#13;
         <dynamic_title_structure/>
         <id>utassp01_report_incident</id>
         <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
         <public>false</public>
         <roles/>
+        <seo_script/>
         <short_description>Display a Catalog Item</short_description>
         <sys_class_name>sp_page</sys_class_name>
         <sys_created_by>welchv</sys_created_by>
@@ -200,6 +202,7 @@ div.myLinkModal {&#13;
         <sys_updated_by>welchv</sys_updated_by>
         <sys_updated_on>2019-03-07 01:41:14</sys_updated_on>
         <title>UTASSP Report Incident</title>
+        <use_seo_script>false</use_seo_script>
     </sp_page>
     <sys_translated_text action="delete_multiple" query="documentkey=6e13ec1e1ba7e380715941d8cd4bcbaa"/>
 </record_update>

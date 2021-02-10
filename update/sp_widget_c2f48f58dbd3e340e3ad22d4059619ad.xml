@@ -132,60 +132,68 @@ label[for="password"] {&#13;
         <public>true</public>
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
-	options.show_panel = options.show_panel == "true" || options.show_panel == true;
-	if (input && input.action === "multi_factor_auth_setup") {
-		if (gs.getSession().getProperty("setup_multifactor_authn")) {
-			gs.getSession().putProperty("nav_to", input.directTo);
-			gs.getSession().putProperty("starting_page", input.directTo);
-			gs.getSession().putProperty("is_direct_redirect", "true");
-		}
-		return;
-	}
-	
-	// We don't want to set a starting page until we've begun the login process.
-	var myGlobal = new global.u_utaglobalapi();
-	var myU = new u_utassp();
-	var myRefUrl =  (myGlobal.u_GlideTransactionHeader()).toString();	
-	var mySubStrStart = myRefUrl.indexOf('?');
-	var myRefUrlEndPart = myRefUrl.slice(mySubStrStart);
-	
-	var isHomePage = (!myU.utilIsValueValid(myRefUrlEndPart)) ||
-  				     (myRefUrlEndPart.indexOf('index')>-1) ||
-					 (myRefUrlEndPart.indexOf('dummy')>-1);
-	if (input && input.action === "set_sso_destination") {	
- 		var myPortalGr = $sp.getPortalRecord();
-		var myUrlSuffix = myPortalGr.getDisplayValue('url_suffix');
-		if (myU.utilIsValueValid(myUrlSuffix)) {
-			myUrlSuffix = '/'+myUrlSuffix;
-			if (!isHomePage) {
-				myUrlSuffix += myRefUrlEndPart;				
-			}
-		} else {
-			myUrlSuffix  = '';
-		}
-		myGlobal.u_gs_getSession_putProperty("nav_to", null);
-		myGlobal.u_gs_getSession_putProperty("starting_page",myUrlSuffix);
-		return;
-	}
+    options.show_panel = options.show_panel == "true" || options.show_panel == true;
+    if (input && input.action === "multi_factor_auth_setup") {
+        if (gs.getSession().getProperty("setup_multifactor_authn")) {
+            gs.getSession().putProperty("nav_to", input.directTo);
+            gs.getSession().putProperty("starting_page", input.directTo);
+            gs.getSession().putProperty("is_direct_redirect", "true");
+        }
+        return; 
+    }
 
-	data.errorMsg = gs.getMessage("There was an error processing your request");
-	data.errorMsg2 = gs.getMessage("An error has occurred - please contact your system administrator");
-	data.passwordMsg = gs.getMessage("Password");
-	data.usernameMsg = gs.getMessage("User name");
-	//data.forgetMe = GlideProperties.getBoolean("glide.ui.forgetme");
-	data.forgetMe = myGlobal.u_GlideProperties.getBoolean("glide.ui.forgetme");
-	//data.forgetMeDefault = GlideProperties.getBoolean('glide.ui.remember.me.default', true);
-	data.forgetMeDefault = myGlobal.u_GlideProperties.getBoolean('glide.ui.remember.me.default', true);
-	data.is_logged_in = gs.getSession().isLoggedIn();
-	var bypass_sso = options.bypass_sso == "true";
-	//data.multisso_enabled = !bypass_sso && GlideProperties.getBoolean("glide.authenticate.multisso.enabled");			
-	data.multisso_enabled = !bypass_sso &&  myGlobal.u_GlideProperties.getBoolean("glide.authenticate.multisso.enabled");			
-	//data.default_idp = GlideProperties.get("glide.authenticate.sso.redirect.idp");
-	data.default_idp = myGlobal.u_GlideProperties.get("glide.authenticate.sso.redirect.idp");
-	//data.pageURI = new GlideSPUtil().getPageUri();
-	data.pageURI = myGlobal.u_GlideSPUtil_getPageUri();
-	//data.multiFactorAuthEnabled = GlideProperties.getBoolean('glide.authenticate.multifactor', false);
-	data.multiFactorAuthEnabled = myGlobal.u_GlideProperties.getBoolean('glide.authenticate.multifactor', false);
+    // We don't want to set a starting page until we've begun the login process.
+	var myRefUrlEndPart;
+    var myKbSysId = $sp.getParameter('kbsysid');
+	
+    if (myKbSysId) {
+        myKbSysId = myKbSysId.toString();
+		myRefUrlEndPart = '?id=utassp01_kb_article&sys_id='+myKbSysId;
+    }
+    var myU = new u_utassp();
+    var myGlobal = new global.u_utaglobalapi();
+	/*
+    var myRefUrl = myGlobal.u_GlideTransactionHeader();
+    var mySubStrStart = myRefUrl.indexOf('?');
+    var myRefUrlEndPart = myRefUrl.slice(mySubStrStart);
+    */
+    var isHomePage = (!myU.utilIsValueValid(myRefUrlEndPart)) ||
+						(myRefUrlEndPart.indexOf('index') > -1) ||
+						(myRefUrlEndPart.indexOf('dummy') > -1);
+    if (input && input.action === "set_sso_destination") {
+        var myPortalGr = $sp.getPortalRecord();
+        var myUrlSuffix = myPortalGr.getDisplayValue('url_suffix');
+        if (myU.utilIsValueValid(myUrlSuffix)) {
+            myUrlSuffix = '/' + myUrlSuffix;
+            if (!isHomePage) {
+                myUrlSuffix += myRefUrlEndPart;
+            }
+        } else {
+            myUrlSuffix = '';
+        }
+        myGlobal.u_gs_getSession_putProperty("nav_to", null);
+        myGlobal.u_gs_getSession_putProperty("starting_page", myUrlSuffix);
+        return;
+    }
+
+    data.errorMsg = gs.getMessage("There was an error processing your request");
+    data.errorMsg2 = gs.getMessage("An error has occurred - please contact your system administrator");
+    data.passwordMsg = gs.getMessage("Password");
+    data.usernameMsg = gs.getMessage("User name");
+    //data.forgetMe = GlideProperties.getBoolean("glide.ui.forgetme");
+    data.forgetMe = myGlobal.u_GlideProperties.getBoolean("glide.ui.forgetme");
+    //data.forgetMeDefault = GlideProperties.getBoolean('glide.ui.remember.me.default', true);
+    data.forgetMeDefault = myGlobal.u_GlideProperties.getBoolean('glide.ui.remember.me.default', true);
+    data.is_logged_in = gs.getSession().isLoggedIn();
+    var bypass_sso = options.bypass_sso == "true";
+    //data.multisso_enabled = !bypass_sso && GlideProperties.getBoolean("glide.authenticate.multisso.enabled");			
+    data.multisso_enabled = !bypass_sso && myGlobal.u_GlideProperties.getBoolean("glide.authenticate.multisso.enabled");
+    //data.default_idp = GlideProperties.get("glide.authenticate.sso.redirect.idp");
+    data.default_idp = myGlobal.u_GlideProperties.get("glide.authenticate.sso.redirect.idp");
+    //data.pageURI = new GlideSPUtil().getPageUri();
+    data.pageURI = myGlobal.u_GlideSPUtil_getPageUri();
+    //data.multiFactorAuthEnabled = GlideProperties.getBoolean('glide.authenticate.multifactor', false);
+    data.multiFactorAuthEnabled = myGlobal.u_GlideProperties.getBoolean('glide.authenticate.multifactor', false);
 })($sp, input, data, options, gs);]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
@@ -193,7 +201,7 @@ label[for="password"] {&#13;
         <sys_created_on>2019-01-25 16:59:15</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>c2f48f58dbd3e340e3ad22d4059619ad</sys_id>
-        <sys_mod_count>54</sys_mod_count>
+        <sys_mod_count>75</sys_mod_count>
         <sys_name>UTASSP Login Widget 4</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -201,7 +209,7 @@ label[for="password"] {&#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_c2f48f58dbd3e340e3ad22d4059619ad</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-11-01 22:19:47</sys_updated_on>
+        <sys_updated_on>2020-06-17 13:54:50</sys_updated_on>
         <template><![CDATA[<div ng-if="!data.is_logged_in"> 
   <form ng-if="!c.externalLoginMode" class="form-signin" ng-submit="c.login(c.username, c.password)" method="post">
 		<div ng-class="{'panel panel-default': c.options.show_panel}">

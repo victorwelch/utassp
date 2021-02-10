@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_widget_dependency">
     <m2m_sp_widget_dependency action="INSERT_OR_UPDATE">
         <sp_dependency display_value="kbv2_style_sheet_css_dependency">b56bc7491b37eb80715941d8cd4bcb71</sp_dependency>
-        <sp_widget display_value="UTASSP KB Article Page Widget">6e466ba5db28c81079f4d144ce961942</sp_widget>
+        <sp_widget display_value="UTASSP KB Article Page Widget 2">6e466ba5db28c81079f4d144ce961942</sp_widget>
         <sys_class_name>m2m_sp_widget_dependency</sys_class_name>
         <sys_created_by>welchv</sys_created_by>
         <sys_created_on>2019-10-17 16:06:54</sys_created_on>

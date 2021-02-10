@@ -129,8 +129,10 @@
         <dynamic_title_structure/>
         <id>utassp02_kb_public_knowledge_base</id>
         <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
         <public>true</public>
         <roles/>
+        <seo_script/>
         <short_description/>
         <sys_class_name>sp_page</sys_class_name>
         <sys_created_by>welchv</sys_created_by>
@@ -147,6 +149,7 @@
         <sys_updated_by>welchv</sys_updated_by>
         <sys_updated_on>2019-07-16 21:38:29</sys_updated_on>
         <title>UTASSP Public Knowledge Base</title>
+        <use_seo_script>false</use_seo_script>
     </sp_page>
     <sys_translated_text action="delete_multiple" query="documentkey=392028f7db2e734079f4d144ce96196d"/>
 </record_update>

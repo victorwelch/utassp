@@ -140,7 +140,7 @@ a.kbLink &gt; div.kbCard &gt; span.kb-card-details &gt; span.kb-count { &#13;
         <internal>false</internal>
         <link/>
         <name>UTASSP KB Link Widget</name>
-        <option_schema>[{"name":"knowledge_base","label":"Knowledge Base","type":"choice","choices":[{"label":"Business Affairs Internal","value":"Business Affairs Internal"},{"label":"Business Affairs Knowledge Base","value":"Business Affairs Knowledge Base"},{"label":"OIT Internal","value":"OIT Internal"},{"label":"OIT Knowledge Base","value":"OIT Knowledge Base"},{"label":"Public Knowledge Base","value":"Public Knowledge Base"}]}]</option_schema>
+        <option_schema>[{"name":"knowledge_base","label":"Knowledge Base","type":"choice","choices":[{"label":"Business Affairs Internal","value":"Business Affairs Internal"},{"label":"Business Affairs Knowledge Base","value":"Business Affairs Knowledge Base"},{"label":"OIT Internal","value":"OIT Internal"},{"label":"OIT Knowledge Base","value":"OIT Knowledge Base"},{"label":"Help Desk Internal","value":"Help Desk Internal"},{"label":"Public Knowledge Base","value":"Public Knowledge Base"}]}]</option_schema>
         <public>false</public>
         <roles/>
         <script><![CDATA[(function($sp, input, data, options, gs) {
@@ -196,7 +196,7 @@ a.kbLink &gt; div.kbCard &gt; span.kb-card-details &gt; span.kb-count { &#13;
         <sys_created_on>2018-11-07 20:14:04</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>9dfbf4434fa12300f006121f9310c73c</sys_id>
-        <sys_mod_count>30</sys_mod_count>
+        <sys_mod_count>31</sys_mod_count>
         <sys_name>UTASSP KB Link Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -204,7 +204,7 @@ a.kbLink &gt; div.kbCard &gt; span.kb-card-details &gt; span.kb-count { &#13;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_9dfbf4434fa12300f006121f9310c73c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-07-16 21:48:11</sys_updated_on>
+        <sys_updated_on>2020-07-16 20:56:40</sys_updated_on>
         <template><![CDATA[<div ng-if='data.canRead==true' class='myPanel' dummy="{{::c.myLog()}}">
   <a class="kbLink" ng-href="{{::data.href}}">
     <div class="kbCard kbCard-border-left-{{::options.color}}">

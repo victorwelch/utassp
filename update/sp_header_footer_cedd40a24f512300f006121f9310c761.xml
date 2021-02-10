@@ -658,6 +658,7 @@ span.myHiLite {&#13;
 })($sp, input, data, options, gs);
 ]]></script>
         <servicenow>false</servicenow>
+        <static>false</static>
         <sys_class_name>sp_header_footer</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-24 17:19:56</sys_created_on>

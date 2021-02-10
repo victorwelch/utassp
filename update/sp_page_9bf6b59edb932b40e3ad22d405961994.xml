@@ -129,8 +129,10 @@
         <dynamic_title_structure/>
         <id>utassp02_kb_business_affairs_knowledge</id>
         <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
         <public>false</public>
         <roles/>
+        <seo_script/>
         <short_description>UTASSP Business Affairs Knowledge</short_description>
         <sys_class_name>sp_page</sys_class_name>
         <sys_created_by>welchv</sys_created_by>
@@ -147,6 +149,7 @@
         <sys_updated_by>welchv</sys_updated_by>
         <sys_updated_on>2019-01-31 20:13:46</sys_updated_on>
         <title>UTASSP Business Affairs Knowledge Base</title>
+        <use_seo_script>false</use_seo_script>
     </sp_page>
     <sys_translated_text action="delete_multiple" query="documentkey=9bf6b59edb932b40e3ad22d405961994"/>
 </record_update>

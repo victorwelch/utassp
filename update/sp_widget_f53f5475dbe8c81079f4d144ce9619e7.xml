@@ -50,6 +50,7 @@
             }
         );
     } else {
+		//debugger;
         var urlObj = new URL($scope.data.newHref);
         var newHost = urlObj.host.toLowerCase();
         if ((newHost) && (newHost.indexOf('service-now.com') < 0)) {
@@ -81,7 +82,9 @@
 			
             $timeout(
                 function() {
+					//debugger;
                     $location.path(c.data.newPath);
+					//$window.location.hreF = $location.url();
                 }
             );
         }
@@ -99,76 +102,76 @@
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
         <name>UTASSP KB Article Redirect Widget</name>
-        <option_schema>[&#13;
-  {&#13;
-    "name": "color",&#13;
-    "label": "Color",&#13;
-    "type": "choice",&#13;
-    "choices": [&#13;
-      {&#13;
-        "label": "Default",&#13;
-        "value": "default"&#13;
-      },&#13;
-      {&#13;
-        "label": "Custom",&#13;
-        "value": "custom"&#13;
-      },&#13;
-      {&#13;
-        "label": "Primary",&#13;
-        "value": "primary"&#13;
-      },&#13;
-      {&#13;
-        "label": "Success",&#13;
-        "value": "success"&#13;
-      },&#13;
-      {&#13;
-        "label": "Info",&#13;
-        "value": "info"&#13;
-      },&#13;
-      {&#13;
-        "label": "Warning",&#13;
-        "value": "warning"&#13;
-      },&#13;
-      {&#13;
-        "label": "Danger",&#13;
-        "value": "danger"&#13;
-      }&#13;
-    ]&#13;
-  },&#13;
-  {&#13;
-    "name": "knowledge_base",&#13;
-    "label": "Knowledge Base",&#13;
-    "type": "choice",&#13;
-    "choices": [&#13;
-      {&#13;
-        "label": "Business Affairs Internal",&#13;
-        "value": "Business Affairs Internal"&#13;
-      },&#13;
-      {&#13;
-        "label": "Business Affairs Knowledge Base",&#13;
-        "value": "Business Affairs Knowledge Base"&#13;
-      },&#13;
-      {&#13;
-        "label": "OIT Internal",&#13;
-        "value": "OIT Internal"&#13;
-      },&#13;
-      {&#13;
-        "label": "OIT Knowledge Base",&#13;
-        "value": "OIT Knowledge Base"&#13;
-      },&#13;
-      {&#13;
-        "label": "Public Knowledge Base",&#13;
-        "value": "Public Knowledge Base"&#13;
-      }&#13;
-    ]&#13;
-  },&#13;
-  {&#13;
-    "hint": "Maximum number of elements that are shown",&#13;
-    "name": "maxitems",&#13;
-    "default_value": "20",&#13;
-    "label": "Max number of elements shown in the list (only positive numbers &gt; 0, 20 otherwise)",&#13;
-    "type": "integer"&#13;
-  }&#13;
+        <option_schema>[
+  {
+    "name": "color",
+    "label": "Color",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Default",
+        "value": "default"
+      },
+      {
+        "label": "Custom",
+        "value": "custom"
+      },
+      {
+        "label": "Primary",
+        "value": "primary"
+      },
+      {
+        "label": "Success",
+        "value": "success"
+      },
+      {
+        "label": "Info",
+        "value": "info"
+      },
+      {
+        "label": "Warning",
+        "value": "warning"
+      },
+      {
+        "label": "Danger",
+        "value": "danger"
+      }
+    ]
+  },
+  {
+    "name": "knowledge_base",
+    "label": "Knowledge Base",
+    "type": "choice",
+    "choices": [
+      {
+        "label": "Business Affairs Internal",
+        "value": "Business Affairs Internal"
+      },
+      {
+        "label": "Business Affairs Knowledge Base",
+        "value": "Business Affairs Knowledge Base"
+      },
+      {
+        "label": "OIT Internal",
+        "value": "OIT Internal"
+      },
+      {
+        "label": "OIT Knowledge Base",
+        "value": "OIT Knowledge Base"
+      },
+      {
+        "label": "Public Knowledge Base",
+        "value": "Public Knowledge Base"
+      }
+    ]
+  },
+  {
+    "hint": "Maximum number of elements that are shown",
+    "name": "maxitems",
+    "default_value": "20",
+    "label": "Max number of elements shown in the list (only positive numbers &gt; 0, 20 otherwise)",
+    "type": "integer"
+  }
 ]</option_schema>
         <public>true</public>
         <roles/>
@@ -191,12 +194,18 @@
     var myUrl = gs.getProperty('glide.servlet.uri');
     var URL = new global.u_URL(myUrl);
     URL.pathname = $sp.getPortalRecord().getValue('url_suffix');
+	var mySysId = $sp.getParameter('sys_id');
+	//gs.info('mySysId: {0}', mySysId);
+	var isSysId = myU.utilIsValueValid(mySysId);
+	//gs.info('isSysId: {0}',isSysId);
     var myKbNum = $sp.getParameter('kbnumber');
+	//gs.info('myKbNum: {0}',  myKbNum);
     //var myLevel = $sp.getParameter('level');
 	//gs.info('kbar server: level: '+JSON.stringify(myLevel));
     var isKbNum = myU.utilIsValueValid(myKbNum);
+	//gs.info('isKbNum: {0}',  isKbNum);
     //var isLevel = myU.utilIsValueValid(myLevel);
-    if (isKbNum) {
+	if (isKbNum) {
         var isFound = false;
         var articleData = {};
         if (!isLoggedIn) {
@@ -229,8 +238,17 @@
             //URL.searchParams.set('id', 'utassp02_kb_public_knowledge_base');
             URL.searchParams.set('id', 'utassp01_index');
         }
-    }
+    } else 	if (isSysId) {
+		var gr = new GlideRecord('kb_knowledge');
+		if (gr.get(mySysId)){
+			myKbNum = gr.number;			
+		}
+		URL.searchParams.set('id', 'utassp01_kb_article');
+		URL.searchParams.set('sys_id',mySysId);
+		URL.searchParams.set('kbnumber', myKbNum);
+	}
     //populate the 'data' variable
+	gs.info('data.newHref: {0}',data);
     data.newHref = URL.getURL();
 })($sp, input, data, options, gs);]]></script>
         <servicenow>false</servicenow>
@@ -239,7 +257,7 @@
         <sys_created_on>2019-10-17 20:15:36</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>f53f5475dbe8c81079f4d144ce9619e7</sys_id>
-        <sys_mod_count>134</sys_mod_count>
+        <sys_mod_count>145</sys_mod_count>
         <sys_name>UTASSP KB Article Redirect Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -247,7 +265,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_f53f5475dbe8c81079f4d144ce9619e7</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2020-02-05 21:50:37</sys_updated_on>
+        <sys_updated_on>2020-06-12 21:02:23</sys_updated_on>
         <template><![CDATA[<div> 
 </div> 
 

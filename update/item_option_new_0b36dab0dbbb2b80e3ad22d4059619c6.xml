@@ -17,6 +17,7 @@
         <do_not_select_first>false</do_not_select_first>
         <dynamic_default_value/>
         <dynamic_ref_qual/>
+        <enable_also_request_for>false</enable_also_request_for>
         <example_text/>
         <field>impact</field>
         <global>false</global>
@@ -49,6 +50,8 @@
         <reference/>
         <reference_qual/>
         <reference_qual_condition/>
+        <rich_text/>
+        <roles_to_use_also_request_for/>
         <scale_max>5</scale_max>
         <scale_min>0</scale_min>
         <show_help>false</show_help>

@@ -108,8 +108,10 @@
         <dynamic_title_structure/>
         <id>utassp01_my_tickets</id>
         <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
         <public>false</public>
         <roles/>
+        <seo_script/>
         <short_description>UTASSP View Tickets</short_description>
         <sys_class_name>sp_page</sys_class_name>
         <sys_created_by>welchv</sys_created_by>
@@ -126,6 +128,7 @@
         <sys_updated_by>welchv</sys_updated_by>
         <sys_updated_on>2019-02-12 23:24:36</sys_updated_on>
         <title>UTASSP My Tickets</title>
+        <use_seo_script>false</use_seo_script>
     </sp_page>
     <sys_translated_text action="delete_multiple" query="documentkey=59a9855a1b2be380715941d8cd4bcbbc"/>
 </record_update>

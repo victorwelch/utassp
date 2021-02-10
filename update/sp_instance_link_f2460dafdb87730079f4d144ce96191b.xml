@@ -9,13 +9,13 @@
         <kb_article/>
         <kb_category/>
         <kb_topic/>
-        <order>1</order>
+        <order>6</order>
         <roles/>
         <sc_cat_item/>
         <sc_category display_value="Website Support">31d9f063db87730079f4d144ce9619da</sc_category>
         <short_description/>
         <size>md</size>
-        <sp_column display_value="2">9a4fdc6e4f512300f006121f9310c7ee</sp_column>
+        <sp_column display_value="1">124fdc6e4f512300f006121f9310c7eb</sp_column>
         <sp_page/>
         <sp_widget display_value="UTASSP Catalog Category Widget">4bc5ba97db98b304e3ad22d40596191a</sp_widget>
         <sys_class_name>sp_instance_link</sys_class_name>
@@ -23,7 +23,7 @@
         <sys_created_on>2019-08-09 20:01:31</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>f2460dafdb87730079f4d144ce96191b</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>Website Support</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -31,7 +31,7 @@
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_instance_link_f2460dafdb87730079f4d144ce96191b</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2019-08-09 20:09:16</sys_updated_on>
+        <sys_updated_on>2020-04-30 14:43:15</sys_updated_on>
         <title>Website Support</title>
         <type>sc_category</type>
         <u_image display_value="utassp_website_support_img.png">ec5701efdb87730079f4d144ce9619c0</u_image>

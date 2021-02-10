@@ -6,8 +6,10 @@
         <dynamic_title_structure/>
         <id>kbar</id>
         <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
         <public>true</public>
         <roles/>
+        <seo_script/>
         <short_description/>
         <sys_class_name>sp_page</sys_class_name>
         <sys_created_by>welchv</sys_created_by>
@@ -24,6 +26,7 @@
         <sys_updated_by>welchv</sys_updated_by>
         <sys_updated_on>2019-11-01 22:17:31</sys_updated_on>
         <title>UTASSP Knowledge Base Artircle Redirect</title>
+        <use_seo_script>false</use_seo_script>
     </sp_page>
     <sys_translated_text action="delete_multiple" query="documentkey=7c9e9c75dbe8c81079f4d144ce961925"/>
 </record_update>

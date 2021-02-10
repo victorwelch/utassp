@@ -21,9 +21,126 @@
     //
 
     c.data.trustedText = $sce.trustAsHtml(c.data.text);
+    $scope.newWindow = {};
+    $scope.printPage = function(ev) {
+        //
+        function rmStyleId(styleItem, iCtr) {
+            var newStyleItem = styleItem;
+            var reTest1 = /data-page-title=|widget=/
+            var reTest2 = /="UTASSP KB Article"|="UTASSP KB Article Page Widget"/
+            if (reTest1.test(styleItem)) {
+                newStyleItem = '';
+                if (reTest2.test(styleItem)) {
+                    newStyleItem = styleItem;
+                    var matchResult = [];
+                    var newId = 'style' + iCtr.toString().padStart(3, '0');
+                    var oldIdStr = '';
+                    var oldIdAttribStr = '';
+                    var rePid = /(data-page-id="([^"]+)")/i;
+                    var reId = /(id="([^"]+)")/i;
+                    var reUtil;
+                    if (rePid.test(newStyleItem)) {
+                        matchResult = newStyleItem.match(rePid);
+                        oldIdAttribStr = matchResult[1];
+                        oldIdStr = matchResult[2];
+                        reUtil = new RegExp('\.page-' + oldIdStr + ' ', 'g');
+                        newStyleItem = newStyleItem.replace(reUtil, '');
+                        newStyleItem = newStyleItem.replace(oldIdAttribStr, 'id="' + newId + '"');
 
+                    } else if (reId.test(newStyleItem)) {
+                        matchResult = newStyleItem.match(reId);
+                        oldIdAttribStr = matchResult[1];
+                        oldIdStr = matchResult[2];
+                        oldIdStr = oldIdStr.replace('-s', '');
+                        reUtil = new RegExp('\.' + oldIdStr + ' ', 'g');
+                        newStyleItem = newStyleItem.replace(reUtil, '')
+                        newStyleItem = newStyleItem.replace(oldIdAttribStr, 'id="' + newId + '"');
+                    }
+                }
+            }
+            return newStyleItem;
+        };
+        //
+        var isFirefox = typeof InstallTrigger !== 'undefined';
+        var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+        if (!(isFirefox || isChrome)) {
+            alert(
+                "This functionality only available on Chrome or Firefox browsers!"
+            );
+            return;
+        }
+        var printContents = document.getElementById('printarea').innerHTML;
+        $scope.newWindow = window.open('', '_blank', 'toolbar=0,location=0,directories=0,status=1,menubar=0,titlebar=0,scrollbars=1,resizable=1');
+        if ($scope.newWindow) {
+            var newHtmlTemplate = '<html><head><title>Print Article</title>';
+            var linkList = $('link');
+            var styleList = $('style');
+            for (var i = 0, iEnd = linkList.length; i < iEnd; i++) {
+                newHtmlTemplate += linkList[i].outerHTML;
+            }
+            for (var j = 0, jEnd = styleList.length; j < jEnd; j++) {
+                newHtmlTemplate += rmStyleId(styleList[j].outerHTML, j);
+            }
+            newHtmlTemplate += '</head><body>';
+            var printContent = $("#printarea").html();
+            printContent = printContent.replace('div id="print_btn"', 'div id="print_btn" style="display:none"');
+            printContent = printContent.replace('div id="copylink_btn"', 'div id="print_btn" style="display:none"');
+            newHtmlTemplate += printContent;
+            newHtmlTemplate += '</body></html>';
+            $scope.newWindow.document.open();
+            $scope.newWindow.document.write(newHtmlTemplate);
+            $scope.newWindow.document.close();
+            $scope.newWindow.addEventListener(
+                'afterprint',
+                function(event) {
+                    $scope.newWindow.close();
+                }
+            );
+            $scope.newWindow.addEventListener(
+                'load',
+                function(event) {
+                    setTimeout(
+                        function() {
+                            $scope.newWindow.print();
+                        },
+                        100
+                    );
+                }
+            );
+        } else {
+            alert('Unable to open print window.  Check Pop-Up Blocker.');
+        }
+    };
+    $scope.kblink = '';
+    $scope.copylinksuccess = false;
+    $scope.copyLink = function(ev) {
+        $scope.kblink = 'https://kb.uta.edu/' + c.data.number.replace(/kb/i, '');
+        setTimeout(
+            function() {
+                try {
+                    navigator.clipboard.writeText($scope.kblink).then(function() {
+                        $scope.copylinksuccess = true;
+                    });
+                    setTimeout(
+                        function() {
+                            if ($scope.copylinksuccess) {
+                                alert('Article URL copied successfully to clipboard!');
+                            } else {
+                                prompt("Unable to copy URL due to browser limitation. Hand copy from here: ", $scope.kblink);
+                            }
+                        },
+                        100
+                    );
+                } catch (ex) {
+                    prompt("Unable to copy URL due to browser limitation. Hand copy from here: ", $scope.kblink);
+                }
+            },
+            100
+        );
+    };
     $scope.myLinkHandler = function(ev) {
         //
+		//debugger;
         //ev.preventDefault();
         ev.stopPropagation();
         //
@@ -48,9 +165,14 @@
         var newUrlObj = new URL(newHref);
         var isKbViewRef = (newHref.indexOf('kb_view.do') > -1);
         var isGoUtaEdu = (newUrlObj.hostname.indexOf('go.uta.edu') > -1);
-        var isServiceNow = (newUrlObj.hostname.indexOf('service-now') > -1)
+        var isServiceNow = (newUrlObj.hostname.indexOf('service-now') > -1);
+        var isServiceNowKbArticle = false;
+        if (isServiceNow) {
+            isServiceNowKbArticle = (newUrlObj.href.indexOf('_kb_article') > -1)
+        }
+        var isKbUtaEdu = (newUrlObj.hostname.indexOf('kb.uta.edu') > -1);
         var kbNumber;
-		$location.search('level',null);
+        $location.search('level', null);
         if (isKbViewRef) {
             isMsIeEdge = (newUrlObj.searchParams) ? false : true;
             if (isMsIeEdge) {
@@ -66,26 +188,27 @@
             if (isKbNumber) {
                 $location.search('kbnumber', kbNumber);
             } else {
-                $location.search('kbnumber', 'kb0000000')
+                $location.search('kbnumber', 'kb0000000');
             }
-			$window.bc = $rootScope.bc;
             $timeout(
                 function() {
+					//debugger;
                     $location.path('/selfservice2');
-                    $window.location.hreF = $location.url();
+                    //$window.location.hreF = $location.url();
                 }
             );
         } else if (isGoUtaEdu) {
-            if (                
+            if (
                 (newUrlObj.pathname.indexOf('mymav') > -1)
             ) {
                 $location.search('id', 'kbar');
                 $location.search('kbnumber', 'kb0011170');
-				$window.bc = $rootScope.bc;
+                $window.bc = $rootScope.bc;
                 $timeout(
                     function() {
+						//debugger;
                         $location.path('/selfservice2');
-                        $window.location.hreF = $location.url();
+                        //$window.location.hreF = $location.url();
                     }
                 );
             } else if (newUrlObj.pathname.indexOf('/kb0') == 0) {
@@ -94,8 +217,9 @@
                 $location.search('kbnumber', kbNumber);
                 $timeout(
                     function() {
+						//debugger;
                         $location.path('/selfservice2');
-                        $window.location.hreF = $location.url();
+                        //$window.location.href = $location.url();
                     }
                 );
             } else {
@@ -106,13 +230,25 @@
                     }
                 );
             }
-        } else if (isServiceNow) {
-            var newPath = newUrlObj.pathname;
-            var newSp;
-            var isMsIeEdge = (newUrlObj.searchParams) ? false : true;
+        } else if (isKbUtaEdu) {
+            kbNumber = newUrlObj.pathname.substring(1);
+            var re = /kb/i;
+            if (!(re.test(kbNumber))) {
+                kbNumber = 'kb' + kbNumber;
+            }
+            $location.search('id', 'kbar');
+            $location.search('kbnumber', kbNumber);
+            $timeout(
+                function() {
+					//debugger;
+                    $location.path('/selfservice2');
+                    //$window.location.href = $location.url();
+                }
+            );
+        } else if (isServiceNowKbArticle) {
             if (isMsIeEdge) {
                 newSp = u_cutassp.getParamList(newUrlObj.search);
-                for (pkey in newSp) {
+                for (var pkey in newSp) {
                     $location.search(pkey, newSp[pkey]);
                 }
             } else {
@@ -123,7 +259,34 @@
                     }
                 );
             }
-            c.data.newPath = newPath;
+            $location.search('id', 'kbar');
+			$location.search('kbnumber',null);
+            $timeout(
+                function() {
+					//debugger;
+                    $location.path('/selfservice2');
+                    //$window.location.href = $location.url();
+                }
+            );
+        } else if (isServiceNow) {
+            var newPath = newUrlObj.pathname;
+            var newSp;
+            isMsIeEdge = (newUrlObj.searchParams) ? false : true;
+            if (isMsIeEdge) {
+                newSp = u_cutassp.getParamList(newUrlObj.search);
+                for (var pkey in newSp) {
+                    $location.search(pkey, newSp[pkey]);
+                }
+            } else {
+                newSp = newUrlObj.searchParams;
+                newSp.forEach(
+                    function(value, key) {
+                        $location.search(key, value);
+                    }
+                );
+            }
+            if (newPath.indexOf(utassp01_kb_article))
+                c.data.newPath = newPath;
             $timeout(
                 function() {
                     $location.path(c.data.newPath);
@@ -150,24 +313,58 @@
     });
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>td {
-	padding: .5em;
-  	line-height: 1em;
-}
-#myBlankerDiv {
-  display:none;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
-  z-index:1040;
-  opacity:0.5;
-  background-color:#888; 
-  background-image: url(waitspinner.gif);
-  background-size: 200px 200px;  
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;   
+        <css>td {&#13;
+	padding: .5em;&#13;
+  	line-height: 1em;&#13;
+}&#13;
+/* ********************************************** */&#13;
+/* KB Header -- make sure display is inline-block */&#13;
+div.pull-left {&#13;
+  display:inline-block;  &#13;
+}&#13;
+div.pull-right {&#13;
+  display:inline-block;  &#13;
+}&#13;
+&#13;
+/* ************************* */&#13;
+/* KB Header Info div        */&#13;
+div.kbPanel {&#13;
+  padding:5px;&#13;
+  display:inline-block;&#13;
+}&#13;
+/* ************************* */&#13;
+/* Opaque Div &amp; Wait Spinner */&#13;
+#myBlankerDiv {&#13;
+  display:none;&#13;
+  top:0;&#13;
+  bottom:0;&#13;
+  left:0;&#13;
+  right:0;&#13;
+  z-index:1040;&#13;
+  opacity:0.5;&#13;
+  background-color:#888; &#13;
+  background-image: url(waitspinner.gif);&#13;
+  background-size: 200px 200px;  &#13;
+  background-repeat: no-repeat;&#13;
+  background-attachment: fixed;&#13;
+  background-position: center;   &#13;
+}&#13;
+/* ***************** */&#13;
+/* Panel Heading Div */&#13;
+.panel-heading {&#13;
+  display:inline-block;&#13;
+  width:100%;&#13;
+  /*padding:10px 15px;*/&#13;
+}&#13;
+/* ************ */&#13;
+/* Print button */&#13;
+div.mybtn {&#13;
+  	/*margin-top: -7px;*/&#13;
+    margin-left: 2px;&#13;
+    padding: 5px 10px;&#13;
+    font-size: 12px;&#13;
+    line-height: 1.5;&#13;
+    border-radius: 3px;&#13;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -178,7 +375,7 @@
         <id>utassp02_kb_article_page_widget</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
-        <name>UTASSP KB Article Page Widget</name>
+        <name>UTASSP KB Article Page Widget 2</name>
         <option_schema>[&#13;
    {&#13;
       "name":"show_star_rating",&#13;
@@ -216,7 +413,31 @@
 	//
 	var myGlobal = new global.u_utaglobalapi();
 	var mySysId = $sp.getParameter('sys_id');
-	var articleGR = new GlideRecord("kb_knowledge");
+	var myKbNumber = $sp.getParameter('kbnumber');
+	//
+	var articleGR;
+	//
+	if ((mySysId) && !(myKbNumber)) {
+		articleGR =  new GlideRecord("kb_knowledge");
+		var dummy=articleGR.get(mySysId);
+		myKbNumber = articleGR.number;
+		articleGR = new GlideRecord("kb_knowledge");
+		articleGR.addQuery('active','true');
+		articleGR.addQuery('workflow_state','published');
+		articleGR.addQuery('number',myKbNumber);
+		articleGR.query();
+		articleGR.next();
+		mySysId=articleGR.sys_id;
+	} else if (myKbNumber) {
+		articleGR =  new GlideRecord("kb_knowledge");
+		articleGR.addQuery('active','true');
+		articleGR.addQuery('workflow_state','published');
+		articleGR.addQuery('number',myKbNumber);
+		articleGR.query();
+		articleGR.next();
+		mySysId=articleGR.sys_id;
+	}
+	articleGR =  new GlideRecord("kb_knowledge");
 	articleGR.get(mySysId);
 	var recordIsValid = articleGR.isValidRecord();
 	var isPublic = articleGR.u_public;
@@ -269,6 +490,7 @@
 		}
 		//
 		data.number = articleGR.getValue('number');
+		data.display_number = articleGR.getValue('display_number');
 		data.rating = articleGR.getValue('rating');
 		data.direct = false;
 		if (articleGR.direct) {
@@ -284,64 +506,83 @@
         <sys_created_on>2019-10-17 16:06:54</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>6e466ba5db28c81079f4d144ce961942</sys_id>
-        <sys_mod_count>140</sys_mod_count>
-        <sys_name>UTASSP KB Article Page Widget</sys_name>
+        <sys_mod_count>242</sys_mod_count>
+        <sys_name>UTASSP KB Article Page Widget 2</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_6e466ba5db28c81079f4d144ce961942</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2020-02-05 21:50:24</sys_updated_on>
-        <template><![CDATA[<div ng-if="data.isvalid" class="panel panel-{{options.color}} b" dummy="{{::c.myLog()}}">
-  
-  <div class="panel-heading"> 
-      <h2 class="panel-title h4">
-          <span class="pull-left">{{::data.short_description}}</span>&nbsp;
-          <span class="pull-right">{{::data.number}}</span>
-      </h2>
-  </div>
+        <sys_updated_on>2020-06-16 15:10:26</sys_updated_on>
+        <template><![CDATA[<div id="printarea">
+    <div ng-if="data.isvalid" class="panel panel-{{options.color}} b" dummy="{{::c.myLog()}}">
 
-  <div class="panel-body m-b-lg wrapper-lg">
+        <div class="panel-heading">
+            <h2 class="panel-title h4">
+                <div class="pull-left kbPanel">{{::data.short_description}}</div>
+                <div class="pull-right">
+                        <div class="kbPanel">{{::data.display_number}}</div>
+                        <div id="print_btn" ng-click="printPage($event)"
+                            class="btn btn-sm btn-default mybtn" aria-label="${Print button}" tabindex="998">
+                            <i class="fa fa-print" aria-hidden="true"></i>${&nbsp;Print}
+                        </div>
+                        <div id="copylink_btn" ng-click="copyLink($event)"
+                            class="btn btn-sm btn-default mybtn" aria-label="${Print button}" tabindex="999">
+                            <i class="fa fa-clipboard" aria-hidden="true"></i>${&nbsp;Copy Link}
+                        </div>
+                </div>
+            </h2>
+        </div>
+          
+        <div class="panel-body m-b-lg wrapper-lg">
 
-    <div class="row m-b-lg b-b">
-        <span class="author pad-right" ng-if="data.author">
-          <glyph sn-char="user" class="pad-right" />
-          ${Authored by {{::data.author}}}
-        </span>
-        <span ng-if="data.sys_view_count == 1" class="views pad-right">
-          <span class="pad-right">&#8226;</span> <glyph sn-char="eye-open" class="pad-right" />
-          ${{{::data.sys_view_count}} View}
-        </span>
-        <span ng-if="data.sys_view_count > 1" class="views pad-right">
-          <span class="pad-right">&#8226;</span> <glyph sn-char="eye-open" class="pad-right" />
-          ${{{::data.sys_view_count}}}
-        </span>
-        <span class="published pad-right">
-          <span class="pad-right">&#8226;</span> <glyph sn-char="calendar" class="pad-right" />
-          <span>
-            Published ${{{::data.publishedDaysAgo}}}
-          </span>
-        </span>
-        <span ng-if="data.rating > 0 && !data.direct" title="{{::data.rating}} rating">
-          <span class="pad-right">&#8226;</span> <uib-rating ng-model="::data.rating" max="5" readonly="true" aria-label="${Article rating} - ${Read Only}"/>
-        </span>
+            <div class="row m-b-lg b-b">
+                <span class="author pad-right" ng-if="data.author">
+                    <glyph sn-char="user" class="pad-right" />
+                    ${Authored by {{::data.author}}}
+                </span>
+                <span ng-if="data.sys_view_count == 1" class="views pad-right">
+                    <span class="pad-right">&#8226;</span>
+                    <glyph sn-char="eye-open" class="pad-right" />
+                    ${{{::data.sys_view_count}} View}
+                </span>
+                <span ng-if="data.sys_view_count > 1" class="views pad-right">
+                    <span class="pad-right">&#8226;</span>
+                    <glyph sn-char="eye-open" class="pad-right" />
+                    ${{{::data.sys_view_count}}}
+                </span>
+                <span class="published pad-right">
+                    <span class="pad-right">&#8226;</span>
+                    <glyph sn-char="calendar" class="pad-right" />
+                    <span>
+                        Published ${{{::data.publishedDaysAgo}}}
+                    </span>
+                </span>
+                <span ng-if="data.rating > 0 && !data.direct" title="{{::data.rating}} rating">
+                    <span class="pad-right">&#8226;</span>
+                    <uib-rating ng-model="::data.rating" max="5" readonly="true"
+                        aria-label="${Article rating} - ${Read Only}" />
+                </span>
+            </div>
+
+            <div ng-if="!data.direct" class="kb_article" ng-bind-html="::data.trustedText" style="overflow-x:auto;">
+            </div>
+
+            <h4 ng-if="data.direct">
+                ${View or download the attachments below}
+            </h4>
+            <div ng-if="::data.showAttachments || data.direct" class="b-t m-t">
+                <sp-attachment-manager table="'kb_knowledge'" sys-id="::data.sys_id" omit-edit="true">
+                </sp-attachment-manager>
+            </div>
+
+        </div>
     </div>
-
-    <div ng-if="!data.direct" class="kb_article" ng-bind-html="::data.trustedText" style="overflow-x:auto;"></div>
-
-    <h4 ng-if="data.direct">
-      ${View or download the attachments below}
-    </h4>
-    <div ng-if="::data.showAttachments || data.direct" class="b-t m-t">
-      <sp-attachment-manager table="'kb_knowledge'" sys-id="::data.sys_id" omit-edit="true"></sp-attachment-manager>
-    </div>
-
-  </div>
 </div>
 
 <div ng-if="!data.isvalid">
-  ${Article not found}
+    ${Article not found}
 </div>
 <div id="myBlankerDiv">
 </div>]]></template>

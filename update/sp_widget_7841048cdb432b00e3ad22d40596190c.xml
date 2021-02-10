@@ -18,7 +18,7 @@
 		return '';
 	};
 	//
-	debugger;
+	//debugger;
 	var absUrl = $location.absUrl();
 	var urlObj = new URL(absUrl);
 	var paramList = u_cutassp.getParamList(urlObj.search);
@@ -49,7 +49,7 @@
 	else
 	{
 		//We are not at the home page, so process the breadrumb stack
-		debugger;
+		//debugger;
 		if (isRootScopeBc && !isHeaderMenu) {
 			var isSamePage = false;
 			var isBackNav = false;
@@ -192,17 +192,30 @@
 	        url: '?id=utassp01_index&ishdrmenu=1',
 	        level: 0
 	    }
+		var redirUrlStr='';
 	    if ((l$rootScope.bc) && (l$rootScope.bc.length > 0)) {
 	        l$rootScope.bc.pop();
 	        if (l$rootScope.bc.length > 0) {
 	            breadItem = l$rootScope.bc.pop();
+				try {
+					var testUrl = new URL(breadItem.url);
+					redirUrlStr=breadItem.url;
+				} catch(ex) {
+					 redirUrlStr=
+						l$location.protocol()+'://'+
+						l$location.host()+
+						l$location.path()+
+						breadItem.url;					
+				}
 	        }
-	    }
-		var redirUrlStr=
-			l$location.protocol()+'://'+
-			l$location.host()+
-			l$location.path()+
-			breadItem.url;
+	    } else {
+			redirUrlStr=
+				l$location.protocol()+'://'+
+				l$location.host()+
+				l$location.path()+
+				breadItem.url;			
+		}
+		
 		var redirUrlObj = new URL(redirUrlStr);
 		var newPath = redirUrlObj.pathname;
 		l$location.search('');
@@ -236,6 +249,7 @@
  		var newUrlObj = new URL(newUrl);
  		var oldUrlObj = new URL(oldUrl);
  		var isMsIeEdge = (newUrlObj.searchParams) ? false : true;
+		var buffStr='';
  		if (isMsIeEdge) {
  		    var newSp = u_cutassp.getParamList(newUrlObj.search);
  		    if ((newSp.id) && (newSp.id.indexOf('kbar') > -1)) {
@@ -244,7 +258,8 @@
  		        $window.ignorePopState = true;
  		    }
  		} else {
- 		    if ((newUrlObj.searchParams.get('id').indexOf('kbar') > -1)) {
+			buffStr=newUrlObj.searchParams.get('id');
+ 		    if ((buffStr) && (buffStr.indexOf('kbar') > -1)) {
  		        $window.ignorePopState = false;
  		    } else {
  		        $window.ignorePopState = true;
@@ -381,7 +396,7 @@ margin-top: 10px;
         <sys_created_on>2019-01-11 21:50:02</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>7841048cdb432b00e3ad22d40596190c</sys_id>
-        <sys_mod_count>249</sys_mod_count>
+        <sys_mod_count>256</sys_mod_count>
         <sys_name>UTASSP Breadcrumbs Std Widget 3</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -389,7 +404,7 @@ margin-top: 10px;
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_7841048cdb432b00e3ad22d40596190c</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2020-02-05 21:50:06</sys_updated_on>
+        <sys_updated_on>2020-11-12 15:59:54</sys_updated_on>
         <template><![CDATA[<div ng-hide="c.isHomePage" class="ng-show myDivDisplayFlexToggle myDivFlexWrap"  dummy="{{::c.myLog()}}">
   <ul class="nav nav-pills nav-sm myBcFontSize myDivDisplayFlexToggle" aria-label="${Navigation breadcrumbs}">
     <li class="myDivDisplayFlexToggle"><a ng-href="?id={{::portal.homepage_dv}}">${Home}</a></li>

@@ -129,8 +129,10 @@
         <dynamic_title_structure/>
         <id>utassp01_kb_business_affairs_internal</id>
         <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
         <public>false</public>
         <roles/>
+        <seo_script/>
         <short_description/>
         <sys_class_name>sp_page</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -147,6 +149,7 @@
         <sys_updated_by>welchv</sys_updated_by>
         <sys_updated_on>2019-01-31 20:14:24</sys_updated_on>
         <title>UTASSP Business Affairs Internal</title>
+        <use_seo_script>false</use_seo_script>
     </sp_page>
     <sys_translated_text action="delete_multiple" query="documentkey=09b7a7bc4fb12300f006121f9310c79b"/>
 </record_update>

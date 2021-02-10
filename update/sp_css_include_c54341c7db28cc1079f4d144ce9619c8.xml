@@ -2,7 +2,7 @@
     <sp_css_include action="INSERT_OR_UPDATE">
         <name>font-awesome.min</name>
         <source>local</source>
-        <sp_css display_value="font-awesome.min.css">bb920587db28cc1079f4d144ce961901</sp_css>
+        <sp_css display_value="vwfont-awesome.min.css">bb920587db28cc1079f4d144ce961901</sp_css>
         <sys_class_name>sp_css_include</sys_class_name>
         <sys_created_by>welchv</sys_created_by>
         <sys_created_on>2019-10-21 20:06:20</sys_created_on>

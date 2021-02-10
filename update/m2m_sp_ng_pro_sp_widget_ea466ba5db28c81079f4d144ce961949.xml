@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_ng_pro_sp_widget">
     <m2m_sp_ng_pro_sp_widget action="INSERT_OR_UPDATE">
         <sp_angular_provider display_value="spAttachmentManager">06e836f0d722120023c84f80de6103a1</sp_angular_provider>
-        <sp_widget display_value="UTASSP KB Article Page Widget">6e466ba5db28c81079f4d144ce961942</sp_widget>
+        <sp_widget display_value="UTASSP KB Article Page Widget 2">6e466ba5db28c81079f4d144ce961942</sp_widget>
         <sys_class_name>m2m_sp_ng_pro_sp_widget</sys_class_name>
         <sys_created_by>welchv</sys_created_by>
         <sys_created_on>2019-10-17 16:06:54</sys_created_on>

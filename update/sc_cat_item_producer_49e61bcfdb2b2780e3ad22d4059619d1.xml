@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_producer">
     <sc_cat_item_producer action="INSERT_OR_UPDATE">
+        <access_type>restricted</access_type>
         <active>true</active>
         <availability>on_both</availability>
         <billable>false</billable>
@@ -13,6 +14,7 @@
         <description/>
         <display_price_property>never</display_price_property>
         <entitlement_script/>
+        <flow_designer_flow/>
         <group/>
         <hide_sp>false</hide_sp>
         <icon/>
@@ -81,6 +83,7 @@ current.assignment_group = producer.u_business_service.support_group;
         <template display_value="">dde6d703db6b2780e3ad22d4059619d4</template>
         <type>item</type>
         <u_business_service/>
+        <u_cat_item_flag>false</u_cat_item_flag>
         <u_category/>
         <u_owner/>
         <use_sc_layout>true</use_sc_layout>

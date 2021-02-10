@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
+    <sp_page action="INSERT_OR_UPDATE">
+        <category>kb</category>
+        <css>@media  (min-width: 768px) {
+	.container {
+		width: 762px;
+	}
+}
+@media  (min-width: 800px) {
+	.container {
+		width: 794px;
+	}
+}
+@media  (min-width: 810px) {
+	.container {
+		width: 804px;
+	}
+}
+@media  (min-width: 880px) {
+	.container {
+		width: 874px;
+	}
+}
+@media  (min-width: 890px) {
+	.container {
+		width: 884px;
+	}
+}
+@media  (min-width: 900px) {
+	.container {
+		width: 894px;
+	}
+}
+@media  (min-width: 910px) {
+	.container {
+		width: 904px;
+	}
+}
+@media  (min-width: 920px) {
+	.container {
+		width: 914px;
+	}
+}
+@media  (min-width: 930px) {
+	.container {
+		width: 924px;
+	}
+}
+@media  (min-width: 940px) {
+	.container {
+		width: 934px;
+	}
+}
+@media  (min-width: 950px) {
+	.container {
+		width: 944px;
+	}
+}
+@media  (min-width: 960px) {
+	.container {
+		width: 950px;
+	}
+}
+@media  (min-width: 970px) {
+	.container {
+		width: 960px;
+	}
+}
+@media  (min-width: 990px) {
+	.container {
+		width: 980px;
+	}
+}
+@media  (min-width: 1002px) {
+	.container {
+		width: 992px;
+	}
+}
+@media  (min-width: 1010px) {
+	.container {
+		width: 1000px;
+	}
+}
+@media  (min-width: 1060px) {
+	.container {
+		width: 1050px;
+	}
+}
+@media  (min-width: 1110px) {
+	.container {
+		width: 1100px;
+	}
+}
+@media (min-width: 1150px) {
+	.container {
+		width: 1140px;
+	}
+}
+@media  (min-width: 1200px) {
+	.container {
+		width: 1170px;
+	}
+}
+/*
+
+*/
+@media (max-width: 834) {
+  h2.h4 {
+    font-size:15px;
+  }
+}
+
+// Medium devices (tablets, 768px and less)
+@media (max-width: 768px) { 
+  h2.h4 {
+    font-size:14px;
+    font-weight:normal;
+  }  
+}
+
+// Small devices (landscape phones, 576px and less)
+@media (max-width: 576px) { 
+  h2.h4 {
+    font-size:12px;
+    font-weight:normal;
+  }    
+}</css>
+        <draft>false</draft>
+        <dynamic_title_structure/>
+        <id>utassp02_kb_help_desk_admin_internal</id>
+        <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
+        <public>false</public>
+        <roles/>
+        <seo_script/>
+        <short_description/>
+        <sys_class_name>sp_page</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2020-08-17 15:15:51</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>e88786731b2a54100d1e32af034bcbb8</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>utassp02_kb_help_desk_admin_internal</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_page_e88786731b2a54100d1e32af034bcbb8</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2020-08-17 15:16:49</sys_updated_on>
+        <title>UTASSP Help Desk Admin Internal</title>
+        <use_seo_script>false</use_seo_script>
+    </sp_page>
+    <sys_translated_text action="delete_multiple" query="documentkey=e88786731b2a54100d1e32af034bcbb8"/>
+</record_update>

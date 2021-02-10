@@ -22,6 +22,7 @@ $btn-default-bg: #fff;
 $text-muted: #979797;
 </css_variables>
         <default>true</default>
+        <hide_portal_name>false</hide_portal_name>
         <homepage display_value="utassp01_index">096b84224f512300f006121f9310c7a7</homepage>
         <icon>6dfa510f1b3723c0715941d8cd4bcb71</icon>
         <kb_knowledge_base display_value="Knowledge">dfc19531bf2021003f07e2c1ac0739ab</kb_knowledge_base>

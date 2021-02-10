@@ -52,7 +52,7 @@
         <update_guid_history>a778fb65cef14c14082b315138024d27:-1588001904,dcb637e180f14c14b5516c2ed1047848:-594521737</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Record deleted 12-18-2019 15:10:10">ad4ebba1dbf9c8107020d8965e961962</sys_audit_delete>
+        <sys_audit_delete display_value="">ad4ebba1dbf9c8107020d8965e961962</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>welchv</sys_created_by>
         <sys_created_on>2019-12-18 21:10:10</sys_created_on>

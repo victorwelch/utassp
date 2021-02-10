@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_rel_widget_clone">
     <sp_rel_widget_clone action="INSERT_OR_UPDATE">
-        <child display_value="UTASSP KB Article Page Widget">6e466ba5db28c81079f4d144ce961942</child>
+        <child display_value="UTASSP KB Article Page Widget 2">6e466ba5db28c81079f4d144ce961942</child>
         <cloned>2018-11-13 21:02:22</cloned>
         <last_validated>2018-11-13 21:02:22</last_validated>
         <parent display_value="KB Article Page">c6545050ff223100ba13ffffffffffe8</parent>

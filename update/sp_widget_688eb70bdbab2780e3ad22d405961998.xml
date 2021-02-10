@@ -366,7 +366,7 @@ li&gt;div.myLeafLiDiv {
         <sys_created_on>2019-02-15 20:29:38</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>688eb70bdbab2780e3ad22d405961998</sys_id>
-        <sys_mod_count>173</sys_mod_count>
+        <sys_mod_count>177</sys_mod_count>
         <sys_name>UTASSP Business Service Tree 2 Widget</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
@@ -374,7 +374,7 @@ li&gt;div.myLeafLiDiv {
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_widget_688eb70bdbab2780e3ad22d405961998</sys_update_name>
         <sys_updated_by>welchv</sys_updated_by>
-        <sys_updated_on>2020-01-28 14:37:14</sys_updated_on>
+        <sys_updated_on>2021-01-26 17:36:58</sys_updated_on>
         <template><![CDATA[<div id="myMobileInfoDivId" ng-if="c.isHeadingActive==false" class="myNoGrid">
   <h3>Something wrong?<br>Incident report form.</h3>
   <p>Using the "tree picker" below, select the service you are having a problem with.</p>					    
@@ -407,7 +407,7 @@ li&gt;div.myLeafLiDiv {
               sysid="{{i1.sysid}}" 
               nodetype="{{i1.nodetype}}">
             	<div ng-class="i1.nodetype=='leaf' ? 'myLeafLiDiv' : 'myTreeLiDiv'" ng-click="divClick($event)">
-                <i class="fa" ng-class="{'fa-bullseye': i1.nodetype=='leaf', 'fa-folder-plus': i1.nodetype=='tree' && data.flatlist[i1.idnumber].ulstate=='collapsed', 'fa-folder-minus': i1.nodetype=='tree' && data.flatlist[i1.idnumber].ulstate!='collapsed'}"></i>
+                <i ng-class="{'fa fa-bullseye': i1.nodetype=='leaf', 'fa fa-plus-square': i1.nodetype=='tree' && data.flatlist[i1.idnumber].ulstate=='collapsed', 'far fa-minus-square': i1.nodetype=='tree' && data.flatlist[i1.idnumber].ulstate!='collapsed'}"></i>
                 {{i1.name}}
               </div>
               <!-- nested repeat i2 -->
@@ -420,7 +420,7 @@ li&gt;div.myLeafLiDiv {
                         name= "{{i2.name}}">
                   	<div ng-class="i2.nodetype=='leaf' ? 'myLeafLiDiv' : 'myTreeLiDiv'"
                          ng-click="divClick($event)">
-                			<i class="fa" ng-class="{'fa-bullseye': i2.nodetype=='leaf', 'fa-folder-plus': i2.nodetype=='tree' && data.flatlist[i2.idnumber].ulstate=='collapsed', 'fa-folder-minus': i2.nodetype=='tree' && data.flatlist[i2.idnumber].ulstate!='collapsed'}"></i>                      
+                			<i ng-class="{'fa fa-bullseye': i2.nodetype=='leaf', 'fa fa-plus-square': i2.nodetype=='tree' && data.flatlist[i2.idnumber].ulstate=='collapsed', 'far fa-minus-square': i2.nodetype=='tree' && data.flatlist[i2.idnumber].ulstate!='collapsed'}"></i>                      
                       {{i2.name}}
                   	</div>                
                     <!-- nested repeat i3 -->
@@ -432,7 +432,7 @@ li&gt;div.myLeafLiDiv {
                           nodetype="{{i3.nodetype}}">
                           <div ng-class="i3.nodetype=='leaf' ? 'myLeafLiDiv' : 'myTreeLiDiv'"
                                ng-click="divClick($event)">
-						                <i class="fa" ng-class="{'fa-bullseye': i3.nodetype=='leaf', 'fa-folder-plus': i3.nodetype=='tree' && data.flatlist[i3.idnumber].ulstate=='collapsed', 'fa-folder-minus': i3.nodetype=='tree' && data.flatlist[i3.idnumber].ulstate!='collapsed'}"></i>				                            
+						                <i ng-class="{'fa fa-bullseye': i3.nodetype=='leaf', 'fa fa-plus-square': i3.nodetype=='tree' && data.flatlist[i3.idnumber].ulstate=='collapsed', 'far fa-minus-square': i3.nodetype=='tree' && data.flatlist[i3.idnumber].ulstate!='collapsed'}"></i>				                            
                             {{i3.name}}
                           </div>                
                           <!-- nested repeat i4 -->
@@ -445,7 +445,7 @@ li&gt;div.myLeafLiDiv {
                                 nodetype="{{i4.nodetype}}">
                                 <div ng-class="i4.nodetype=='leaf' ? 'myLeafLiDiv' : 'myTreeLiDiv'"
                                      ng-click="divClick($event)">
-                									<i class="fa" ng-class="{'fa-bullseye': i4.nodetype=='leaf', 'fa-folder-plus': i4.nodetype=='tree' && data.flatlist[i4.idnumber].ulstate=='collapsed', 'fa-folder-minus': i4.nodetype=='tree' && data.flatlist[i4.idnumber].ulstate!='collapsed'}"></i>
+                									<i ng-class="{'fa fa-bullseye': i4.nodetype=='leaf', 'fa fa-plus-square': i4.nodetype=='tree' && data.flatlist[i4.idnumber].ulstate=='collapsed', 'far fa-minus-square': i4.nodetype=='tree' && data.flatlist[i4.idnumber].ulstate!='collapsed'}"></i>
                                   {{i4.name}}
                                 </div>                
                                 <!-- nested repeat i5 -->
@@ -458,7 +458,7 @@ li&gt;div.myLeafLiDiv {
                                       nodetype="{{i5.nodetype}}">
                                       <div ng-class="i5.nodetype=='leaf' ? 'myLeafLiDiv' : 'myTreeLiDiv'"
                                            ng-click="divClick($event)">
-                												<i class="fa" ng-class="{'fa-bullseye': i5.nodetype=='leaf', 'fa-folder-plus': i5.nodetype=='tree' && data.flatlist[i5.idnumber].ulstate=='collapsed', 'fa-folder-minus': i5.nodetype=='tree' && data.flatlist[i5.idnumber].ulstate!='collapsed'}"></i>								                                        
+                												<i ng-class="{'fa fa-bullseye': i5.nodetype=='leaf', 'fa fa-plus-square': i5.nodetype=='tree' && data.flatlist[i5.idnumber].ulstate=='collapsed', 'far fa-minus-square: i5.nodetype=='tree' && data.flatlist[i5.idnumber].ulstate!='collapsed'}"></i>								                                        
                                         {{i5.name}}
                                       </div>                
                                   </li>

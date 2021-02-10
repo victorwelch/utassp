@@ -66,6 +66,7 @@ footer a {&#13;
 	data.time = new GlideDateTime().getDisplayValue();
 })($sp, input, data, options, gs);]]></script>
         <servicenow>false</servicenow>
+        <static>false</static>
         <sys_class_name>sp_header_footer</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-24 18:01:38</sys_created_on>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance_link">
+    <sp_instance_link action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>info</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <kb_article/>
+        <kb_category/>
+        <kb_topic/>
+        <order>1</order>
+        <roles/>
+        <sc_cat_item/>
+        <sc_category/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="2">8eb9dee1db4654507020d8965e961999</sp_column>
+        <sp_page display_value="utassp02_kb_help_desk_admin_internal">e88786731b2a54100d1e32af034bcbb8</sp_page>
+        <sp_widget display_value="UTASSP KB Link Widget">9dfbf4434fa12300f006121f9310c73c</sp_widget>
+        <sys_class_name>sp_instance_link</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2020-08-17 15:05:26</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>00250ebf1be654100d1e32af034bcb94</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Help Desk Admin Internal Link</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_instance_link_00250ebf1be654100d1e32af034bcb94</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2020-08-17 15:19:12</sys_updated_on>
+        <title>Help Desk Admin Internal Link</title>
+        <type>page</type>
+        <u_image/>
+        <url/>
+        <widget_parameters><![CDATA[{
+	"knowledge_base": {
+		"value": "Help Desk Admin Internal",
+		"displayValue": "Help Desk Admin Internal"
+	}
+}]]></widget_parameters>
+    </sp_instance_link>
+    <sys_translated_text action="delete_multiple" query="documentkey=00250ebf1be654100d1e32af034bcb94"/>
+</record_update>

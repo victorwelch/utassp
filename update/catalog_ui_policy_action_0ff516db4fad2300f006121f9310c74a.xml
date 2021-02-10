@@ -12,18 +12,18 @@
         <sys_created_on>2018-11-08 21:26:45</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>0ff516db4fad2300f006121f9310c74a</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name>parent_incident</sys_name>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>u_room</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>catalog_ui_policy_action_0ff516db4fad2300f006121f9310c74a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-11-08 21:26:45</sys_updated_on>
+        <sys_updated_on>2020-05-31 06:04:41</sys_updated_on>
         <table/>
         <ui_policy display_value="Show/hide previous incident">81651a9b4fad2300f006121f9310c704</ui_policy>
-        <variable>parent_incident</variable>
+        <variable>u_room</variable>
         <variable_set/>
         <visible>true</visible>
     </catalog_ui_policy_action>

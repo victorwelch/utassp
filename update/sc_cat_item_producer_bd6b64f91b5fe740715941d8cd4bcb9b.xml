@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_producer">
     <sc_cat_item_producer action="INSERT_OR_UPDATE">
+        <access_type>restricted</access_type>
         <active>true</active>
         <availability>on_both</availability>
         <billable>false</billable>
@@ -14,6 +15,7 @@
 <p>&nbsp;</p>]]></description>
         <display_price_property>never</display_price_property>
         <entitlement_script/>
+        <flow_designer_flow/>
         <group display_value="Help Desk" name="Help Desk">ac1b7cbd6f7da500d03fcb512e3ee4e0</group>
         <hide_sp>false</hide_sp>
         <icon/>
@@ -85,6 +87,7 @@ if(getRecordProducerData.get('bd6b64f91b5fe740715941d8cd4bcb9b')) //itself
         <template display_value="">fd6b68f91b5fe740715941d8cd4bcb70</template>
         <type>item</type>
         <u_business_service/>
+        <u_cat_item_flag>false</u_cat_item_flag>
         <u_category display_value="General Inquiry">45ae3cad6fbbe2007a07fee09d3ee497</u_category>
         <u_owner display_value="David Cruz">c4485aad6fb3490028235d65ad3ee494</u_owner>
         <use_sc_layout>true</use_sc_layout>

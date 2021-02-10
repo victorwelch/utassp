@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_theme_css_include">
+    <m2m_sp_theme_css_include action="DELETE">
+        <order>400</order>
+        <sp_css_include display_value="font-awesome.min">c54341c7db28cc1079f4d144ce9619c8</sp_css_include>
+        <sp_theme display_value="UTASSP Theme">9ce358664f512300f006121f9310c728</sp_theme>
+        <sys_class_name>m2m_sp_theme_css_include</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2021-01-25 23:15:09</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>ef2d3c731bbd6050614b993f034bcb50</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>font-awesome.min.UTASSP Theme</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>m2m_sp_theme_css_include_ef2d3c731bbd6050614b993f034bcb50</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2021-01-26 17:03:39</sys_updated_on>
+    </m2m_sp_theme_css_include>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="utassp">2e58c8624f112300f006121f9310c726</application>
+        <comments/>
+        <file_path/>
+        <instance_id>5a5766b099da014870acd38ad3bda438</instance_id>
+        <instance_name>utadev</instance_name>
+        <name>m2m_sp_theme_css_include_ef2d3c731bbd6050614b993f034bcb50</name>
+        <order/>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_theme_css_include"><m2m_sp_theme_css_include action="INSERT_OR_UPDATE"><order>400</order><sp_css_include display_value="font-awesome.min">c54341c7db28cc1079f4d144ce9619c8</sp_css_include><sp_theme display_value="UTASSP Theme">9ce358664f512300f006121f9310c728</sp_theme><sys_class_name>m2m_sp_theme_css_include</sys_class_name><sys_created_by>welchv</sys_created_by><sys_created_on>2021-01-25 23:15:09</sys_created_on><sys_customer_update>false</sys_customer_update><sys_id>ef2d3c731bbd6050614b993f034bcb50</sys_id><sys_mod_count>2</sys_mod_count><sys_name>font-awesome.min.UTASSP Theme</sys_name><sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package><sys_policy/><sys_replace_on_upgrade>false</sys_replace_on_upgrade><sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope><sys_update_name>m2m_sp_theme_css_include_ef2d3c731bbd6050614b993f034bcb50</sys_update_name><sys_updated_by>welchv</sys_updated_by><sys_updated_on>2021-01-26 17:03:39</sys_updated_on></m2m_sp_theme_css_include></record_update>]]></payload>
+        <payload_hash>-1166607048</payload_hash>
+        <record_name>font-awesome.min.UTASSP Theme</record_name>
+        <reverted_from/>
+        <source>b5fab8ff1b7d6050614b993f034bcb99</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2021-01-26 17:03:39</sys_created_on>
+        <sys_id>abb1b0c41b8aa050614b993f034bcbe6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1773fa69c5f0000001</sys_recorded_at>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2021-01-26 17:03:39</sys_updated_on>
+        <type>Stylesheets</type>
+        <u_link>[code]&lt;a title="m2m_sp_theme_css_include_ef2d3c731bbd6050614b993f034bcb50" class="linked" href="m2m_sp_theme_css_include.do?sys_id=ef2d3c731bbd6050614b993f034bcb50"&gt;m2m_sp_theme_css_include_ef2d3c731bbd6050614b993f034bcb50&lt;/a&gt;[/code]</u_link>
+        <update_guid>23b1b0c4f08aa050a9276f72e83eb1e6</update_guid>
+        <update_guid_history>23b1b0c4f08aa050a9276f72e83eb1e6:-1166607048,1c4d3c735cbd605044bc7c4ed450ad8f:518549465,232d3c7359bd60502acf32f74111aa53:1163860995</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Record deleted 01-26-2021 11:04:36">99f170c41b8aa050614b993f034bcbd5</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2021-01-26 17:04:36</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="m2m_sp_theme_css_include">m2m_sp_theme_css_include</sys_db_object>
+        <sys_id>6777c272d47d419a9aaaf03f189b4721</sys_id>
+        <sys_metadata>ef2d3c731bbd6050614b993f034bcb50</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>font-awesome.min.UTASSP Theme</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_scope_delete display_value="">4e892d72dd3742d1bab838492aebccb1</sys_scope_delete>
+        <sys_update_name>m2m_sp_theme_css_include_ef2d3c731bbd6050614b993f034bcb50</sys_update_name>
+        <sys_update_version display_value="m2m_sp_theme_css_include_ef2d3c731bbd6050614b993f034bcb50">abb1b0c41b8aa050614b993f034bcbe6</sys_update_version>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2021-01-26 17:04:36</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

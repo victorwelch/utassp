@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_push_notif_app_install">
+    <sys_push_notif_app_install action="INSERT_OR_UPDATE">
+        <active>false</active>
+        <last_registered_on>2020-12-21 15:26:16</last_registered_on>
+        <sys_class_name>sys_push_notif_app_install</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2020-06-08 14:25:44</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>5ccc9519db59d0107c295434ce96192c</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>es3UlZnzJcI:APA91bEimnioU1z3Q9U6Bjo4iPOJXU2m5xnMr1ZYaq8XbzPytnWVoIDpJPaRm2M3gcB-O2vGwGBIhhawbweDRo81KIWZRS8n3svDhQ29RKUCnlJn-gQH7zWT0Bv3MumitUZsk_Oq22S1</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_push_application_id display_value="ServiceNow Mobile Application">05ed2fb177002300258da2e2c81061c2</sys_push_application_id>
+        <sys_push_platform_id display_value="Google">53e75f30ff0002009738ffffffffff12</sys_push_platform_id>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sys_push_notif_app_install_5ccc9519db59d0107c295434ce96192c</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2020-12-21 15:26:32</sys_updated_on>
+        <sys_user_id display_value="Victor Welch">0d3f5ba5137eb2008ee9b2d96144b057</sys_user_id>
+        <token>es3UlZnzJcI:APA91bEimnioU1z3Q9U6Bjo4iPOJXU2m5xnMr1ZYaq8XbzPytnWVoIDpJPaRm2M3gcB-O2vGwGBIhhawbweDRo81KIWZRS8n3svDhQ29RKUCnlJn-gQH7zWT0Bv3MumitUZsk_Oq22S1</token>
+    </sys_push_notif_app_install>
+</record_update>

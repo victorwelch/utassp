@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_search_source">
+    <sp_search_source action="INSERT_OR_UPDATE">
+        <advanced_typeahead_config>false</advanced_typeahead_config>
+        <condition/>
+        <data_fetch_script><![CDATA[(function(query) {
+	var myGlobal = new global.u_utaglobalapi();
+    var myU = new u_utassp();
+	var results = [];
+
+	var kb = new GlideRecord('kb_knowledge');
+	kb.addQuery('workflow_state', 'published');
+	kb.addQuery('valid_to', '>=', myGlobal.u_GlideDateGetLocalDate());
+	// *** Necessary logic for multiple KB's
+	var KbbSysId = myU.utilGetSysId('kb_knowledge_base','title','Help Desk Internal');
+	kb.addQuery('kb_knowledge_base', KbbSysId);		
+	// ***
+	kb.addQuery('123TEXTQUERY321', query);
+	if (data.limit > 0) { kb.setLimit(data.limit); }
+	kb.query();
+	data.article_count = kb.getRowCount();
+
+	var kbCount = 0;
+	while (kb.next()) {
+		// data.limit?
+		if (data.limit>0 && kbCount >= data.limit) break;	
+		
+		// Does user have permission to see this item?
+		if ($sp)
+		{
+			if (!$sp.canReadRecord("kb_knowledge", kb.getUniqueValue()))
+				continue;
+		}
+
+		var article = {};
+		$sp.getRecordDisplayValues(article, kb, 'sys_id,number,short_description,published,text');
+		article.publishedUTC = kb.getValue('published');
+		article.type = "kb";
+		if (!article.text)
+			article.text = "";
+		article.text = $sp.stripHTML(article.text) + "";
+		article.text = article.text.substring(0, 200);
+		article.score = parseInt(kb.ir_query_score.getDisplayValue());
+		article.label = article.short_description;
+		article.primary = article.short_description;
+		article.url = '?id=utassp01_kb_article&sys_id=' + kb.getUniqueValue() + '&pageid=utassp01_search';
+		results.push(article);
+		kbCount++;
+	}
+	if ($sp) 
+	{
+		$sp.logSearch('kb_knowledge', data.q, kb.getRowCount());		
+	}
+
+	return results;
+})(query);]]></data_fetch_script>
+        <display_fields/>
+        <enable_typeahead>true</enable_typeahead>
+        <facet_generation_script><![CDATA[(function(query, facetService, searchResults) {
+	/* Calculate your facets here using facetService */
+	/* var stateFacet = facetService.createFacet('State', 'state'); */
+	/* stateFacet.addFacetItem('Facet Item Label', '123'); */
+
+})(query, facetService, searchResults);]]></facet_generation_script>
+        <id>help_desk_internal</id>
+        <is_scripted_source>true</is_scripted_source>
+        <name>Help Desk Internal</name>
+        <page/>
+        <pagination_supported>false</pagination_supported>
+        <primary_display_field/>
+        <roles/>
+        <search_page_template><![CDATA[<div>
+  <a href="{{item.url}}" class="h4 text-primary m-b-sm block">  
+    <i class="fa fa-book m-r-sm"></i>
+    <span ng-bind-html="highlight(item.short_description, data.q)"></span></a>
+  <p ng-bind-html="highlight(item.text, data.q)"></p>
+  <span class="text-muted">${Article}: {{item.number}}</span>
+  <span class="text-muted">
+    <span class="m-l-xs m-r-xs" aria-hidden="true"> &middot; </span>
+    ${Published}: <sn-day-ago date="item.publishedUTC"/>
+  </span>
+</div>]]></search_page_template>
+        <source_table/>
+        <sys_class_name>sp_search_source</sys_class_name>
+        <sys_created_by>welchv</sys_created_by>
+        <sys_created_on>2020-07-16 21:24:06</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>b088ee69db8654507020d8965e961966</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Help Desk Internal</sys_name>
+        <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
+        <sys_update_name>sp_search_source_b088ee69db8654507020d8965e961966</sys_update_name>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2020-07-16 21:24:06</sys_updated_on>
+        <typeahead_glyph/>
+        <typeahead_template/>
+    </sp_search_source>
+    <sys_translated_text action="delete_multiple" query="documentkey=b088ee69db8654507020d8965e961966"/>
+</record_update>

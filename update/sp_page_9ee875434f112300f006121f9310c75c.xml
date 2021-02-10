@@ -115,8 +115,10 @@ section.page, main.body {
         <dynamic_title_structure/>
         <id>utassp01_select_affected_service</id>
         <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
         <public>true</public>
         <roles/>
+        <seo_script/>
         <short_description/>
         <sys_class_name>sp_page</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -133,6 +135,7 @@ section.page, main.body {
         <sys_updated_by>welchv</sys_updated_by>
         <sys_updated_on>2019-02-12 19:45:17</sys_updated_on>
         <title>UTASSP Select Affected Service</title>
+        <use_seo_script>false</use_seo_script>
     </sp_page>
     <sys_translated_text action="delete_multiple" query="documentkey=9ee875434f112300f006121f9310c75c"/>
 </record_update>

@@ -3,7 +3,7 @@
         <advanced_typeahead_config>false</advanced_typeahead_config>
         <condition/>
         <data_fetch_script><![CDATA[(function(query) {
-	var myGlobal = new u_utaglobalapi();
+	var myGlobal = new global.u_utaglobalapi();
 	var myU = new u_utassp();
 	var results = [];
 
@@ -85,15 +85,15 @@
         <sys_created_on>2018-12-05 19:29:05</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>97ddfcc04f922300f006121f9310c7c7</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>Business Affairs Knowledge Base</sys_name>
         <sys_package display_value="utassp" source="x_287765_utassp">2e58c8624f112300f006121f9310c726</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="utassp">2e58c8624f112300f006121f9310c726</sys_scope>
         <sys_update_name>sp_search_source_97ddfcc04f922300f006121f9310c7c7</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-12-05 23:11:38</sys_updated_on>
+        <sys_updated_by>welchv</sys_updated_by>
+        <sys_updated_on>2020-09-15 19:43:12</sys_updated_on>
         <typeahead_glyph/>
         <typeahead_template/>
     </sp_search_source>
